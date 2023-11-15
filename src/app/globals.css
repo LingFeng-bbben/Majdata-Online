@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 20, 20, 20;
-  --background-end-rgb: 20, 20, 20;
+  --foreground-rgb: 255, 255, 255, 100;
+  --background-start: 20, 20, 20;
 }
 
 
@@ -14,21 +13,32 @@ body {
   caret-color: transparent;
   overflow-y: scroll;
   transition: all 0.2s;
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(var(--background-start));
+}
+
+.bg{
+  background-image: url('/6thbg.webp');
+  position: fixed;
+  z-index: -99;
+  height: 100%;
+  width: 100%;
+  aspect-ratio: 1;
+  filter: blur(3px) brightness(80%);
+}
+
+.seprate{
+  height: 20px;
+  background-color: rgb(var(--background-start));
 }
 
 h1 {
+  background-color: rgb(var(--background-start));
   color:whitesmoke;
   text-align:center;
   font-size: 3rem;
   font-weight:bold ;
   user-select:none;
-  margin-top: 20px;
+
 }
 
 @media screen and (max-width: 500px) {
@@ -44,7 +54,6 @@ h1 {
     font-size: 2rem;
     font-weight:bold ;
     user-select:none;
-    margin-top: 20px;
   }
 }
 
@@ -55,6 +64,7 @@ h1 {
   display: inline;
 }
 .links{
+  background-color: rgb(var(--background-start));
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -91,7 +101,7 @@ img.songImg{
 }
 
 .songCard {
-  
+  background-color: rgb(var(--background-start));
   border: 1px solid whitesmoke;
   border-radius: 10px;
   padding: 0.8rem;
@@ -228,6 +238,7 @@ img.songImg{
 
 @media screen and (min-width: 500px) {
   .majViewPort{
+    margin-top: 15px;
     width:70%;
     height: 40rem;
     transform: translate(21.5%,0);
@@ -242,8 +253,6 @@ img.songImg{
   }
 }
 
-
-
 .majPlaceHolder{
   width: 100%;
   height: 100%;
@@ -251,3 +260,35 @@ img.songImg{
   line-height: 20rem;
 }
 
+.userinput{
+  caret-color: white;
+  background-color: black;
+  border: 1px solid whitesmoke;
+  height: 2rem;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.formbox{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  width: 20%;
+}
+
+@media screen and (max-width: 500px) {
+  .formbox{
+    width: 100%;
+  }
+}
+
+.inputHint{
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+
+*:disabled{
+  background-color: rgb(92, 0, 0);
+}

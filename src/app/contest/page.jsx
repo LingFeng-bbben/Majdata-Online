@@ -3,28 +3,24 @@ import React, { useState } from 'react';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
-import Majdata from './majdata'
-import UserInfo from './userinfo';
-
-const apiroot = 'http://101.132.193.53:5003/api'
+import Majdata from '../majdata'
+const apiroot = 'http://101.132.193.53:5001/api'
 
 export default function Page() {
   return (
     <>
+      <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./salt.webp" onClick={()=>alert("不要点我 操你妈")}></img>MajOnline.Beta</h1>
+      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 6TH</h1>
       <div className='links'>
-      <div className='linkContent'><a href='./filebase'>MMFC文件库</a></div>
-      <div className='linkContent'><a href='./contest'>MMFC 6th</a></div>
-      <UserInfo apiroot={apiroot}/>
-      </div>
-      
+      <div className='linkContent'><a href='../'>返回</a></div>
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/6thstart'>6th报名窗口</a></div>
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/'>打分会场</a></div>      </div>
       <Majdata />
       <TheList />
     </>
   )
 }
-
 
 
 function CoverPic({id}){
@@ -37,7 +33,7 @@ function CoverPic({id}){
         
       </PhotoView>
     </PhotoProvider>
-    {/* <div className='songId'>{id}</div> */}
+    <div className='songId'>{id}</div>
     </>
 );
 }
@@ -90,8 +86,7 @@ function TheList() {
   if (isLoading) {
     return <div className='loading'>Loading List...</div>;
   }
-  if(data==''||data==undefined) return <div>failed to load</div>;
-  data.sort((a, b) => { return b.Timestamp - a.Timestamp; });
+  data.sort((a, b) => { return b.Id - a.Id; });
 
   const filterBySearch = (e) => {
     let dataf = data.filter(o => (
@@ -116,7 +111,7 @@ function TheList() {
         <div className='songInfo'>
           <div className='songTitle'>{o.Title}</div>
           <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
-          <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          <div className='songDesigner'>By: {o.Designer}</div>
           <Levels levels={o.Levels} songid={o.Id} />
         </div>
       </div>
