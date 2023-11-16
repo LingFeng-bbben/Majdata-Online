@@ -3,8 +3,7 @@ import React from 'react';
 import 'react-photo-view/dist/react-photo-view.css';
 import md5 from 'js-md5'
 import { useRouter } from 'next/navigation'
-
-const apiroot = 'http://101.132.193.53:5003/api'
+import { apiroot3 } from '../apiroot';
 
 export default function Page() {
   return (
@@ -32,7 +31,7 @@ function Register(){
       return
     }
     formData.set('password',md5(formData.get('password')))
-    const response = await fetch(apiroot+'/User/Register', {
+    const response = await fetch(apiroot3+'/User/Register', {
       method: 'POST',
       body: formData,
     })

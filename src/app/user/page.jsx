@@ -1,11 +1,12 @@
 'use client'
-import React from 'react';
+import {React} from 'react';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
-//import useSWR from 'swr';
+import useSWR from 'swr';
 import { useRouter } from 'next/navigation'
 import UserInfo from '../userinfo';
+import { apiroot3 } from '../apiroot';
 
-const apiroot = 'http://101.132.193.53:5003/api'
 
 export default function Page() {
   return (
@@ -14,11 +15,12 @@ export default function Page() {
       <h1><img className="xxlb"src="./salt.webp" onClick={()=>alert("不要点我 操你妈")}></img>MajOnline.Beta</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
-      <UserInfo apiroot={apiroot}/>
+      <UserInfo apiroot={apiroot3}/>
       <Logout/>
       </div>
       {/* <UserInfoDetail/> */}
       <Uploader/>
+      <TheList/>
     </>
   )
 }
@@ -79,7 +81,7 @@ function Uploader(){
     document.getElementById("submitbutton").disabled = true;
     document.getElementById("submitbutton").textContent = "上传中啦等一会啦";
     }
-    const response = await fetch(apiroot+'/Uploader/Chart', {
+    const response = await fetch(apiroot3+'/Uploader/Chart', {
       method: 'POST',
       body: formData,
     })
@@ -107,4 +109,88 @@ function Uploader(){
       </form>
     </div>
   )
+}
+
+
+function CoverPic({id}){
+  let url = apiroot3 + `/Image/${id}` 
+  let urlfull = apiroot3 +`/ImageFull/${id}` 
+  return (
+    <><PhotoProvider bannerVisible={false} loadingElement={<div>Loading...</div>}>
+      <PhotoView src={urlfull} >
+        <img className="songImg" src={url} alt="" />
+        
+      </PhotoView>
+    </PhotoProvider>
+    {/* <div className='songId'>{id}</div> */}
+    </>
+);
+}
+
+
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
+
+function getUsername(){
+  const token = getCookie('token')
+  const { data, error, isLoading } = useSWR(apiroot3 + "/User/Info/" + token, fetcher);
+  if(error) return ""
+  if(isLoading) return ""
+  return data.Username
+}
+
+function TheList() {
+  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
+  var username = getUsername()
+  if (error) return <div>failed to load</div>;
+  if (isLoading) {
+    return <div className='loading'>Loading List...</div>;
+  }
+  if(data==''||data==undefined) return <div>failed to load</div>;
+
+  data.sort((a, b) => { return b.Timestamp - a.Timestamp; });
+
+  const dataf = data.filter(o => (
+    o.Uploader == username
+  ))
+
+
+
+  const list = dataf.map(o => (
+    <div key={o.Id}>
+      <div className="songCard">
+        <CoverPic id={o.Id} />
+        <div className='songInfo'>
+          <div className='songTitle'>{o.Title}</div>
+          <div className='songArtist'>{o.Id}</div>
+          <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          <Delbutton songid={o.Id}/>
+        </div>
+      </div>
+    </div>));
+  // 渲染数据
+  return (<>
+    <div className='theList'>{list}</div>
+  </>);
+}
+
+function Delbutton({songid}){
+  return <div className='songLevel' id="lv3" onClick={async ()=>{
+    let ret = confirm("真的要删除吗(不可恢复)\n(没有任何机会)");
+    if(ret){
+      const formData = new FormData()
+      formData.set('token', getCookie('token'))
+      formData.set('songid', songid)
+      const response = await fetch(apiroot3+'/Uploader/Delete', {
+      method: 'POST',
+      body: formData,
+      })
+      if (response.status !=200){
+        alert(await response.text())
+        return
+      }
+      alert('删除成功')
+      if (typeof window !== 'undefined') location.reload()
+    }
+  }} >X</div>
 }

@@ -4,8 +4,8 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import Majdata from '../majdata'
+import { apiroot2 } from '../apiroot';
 
-const apiroot = 'http://101.132.193.53:5002/api'
 
 export default function Page() {
   return (
@@ -14,7 +14,7 @@ export default function Page() {
       <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 文件库</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
-      <div className='linkContent'><a href='https://www.maimaimfc.ink/libraryupload'>上传</a></div>
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/libraryupload'>上传(前往MMFC)</a></div>
       <div className='linkContent' onClick={()=>alert(
         "在MMFC主站的文件库中上传的谱面会出现在此处，整点刷新\n点击谱面的难度，maj就会载入\n搜索框可以搜id/标题/谱师/艺术家/等级"
         )}> ? </div>
@@ -27,8 +27,8 @@ export default function Page() {
 
 
 function CoverPic({id}){
-  let url = apiroot + `/Image/${id}` 
-  let urlfull = apiroot +`/ImageFull/${id}` 
+  let url = apiroot2 + `/Image/${id}` 
+  let urlfull = apiroot2 +`/ImageFull/${id}` 
   return (
     <><PhotoProvider bannerVisible={false} loadingElement={<div>Loading...</div>}>
       <PhotoView src={urlfull} >
@@ -57,7 +57,7 @@ function Levels({levels, songid}){
 
   const levelClickCallback = e =>{
     scrollToTop()
-    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot + '\n' +songid +'\n'+e.target.id)
+    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot2 + '\n' +songid +'\n'+e.target.id)
   }
   return(
     <>
@@ -82,7 +82,7 @@ function SearchBar({onChange}){
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 function TheList() {
-  const { data, error, isLoading } = useSWR(apiroot + "/SongList", fetcher);
+  const { data, error, isLoading } = useSWR(apiroot2 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
 
   if (error) return <div>failed to load</div>;

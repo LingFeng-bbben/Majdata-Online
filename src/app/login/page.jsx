@@ -3,8 +3,7 @@ import React from 'react';
 import 'react-photo-view/dist/react-photo-view.css';
 import md5 from 'js-md5'
 import { useRouter } from 'next/navigation'
-
-const apiroot = 'http://101.132.193.53:5003/api'
+import { apiroot3 } from '../apiroot';
 
 export default function Page() {
   return (
@@ -28,7 +27,7 @@ function Login(){
  
     const formData = new FormData(event.currentTarget)
     formData.set('password',md5(formData.get('password')))
-    const response = await fetch(apiroot+'/User/Login', {
+    const response = await fetch(apiroot3+'/User/Login', {
       method: 'POST',
       body: formData,
     })
@@ -36,9 +35,8 @@ function Login(){
       alert(await response.text())
       return
     }
-    alert('登录成功')
     document.cookie = 'token='+await response.text()
-    router.push('../')
+    router.push('./user')
   }
   return (
     <div className='theList'>

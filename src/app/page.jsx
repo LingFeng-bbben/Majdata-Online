@@ -5,8 +5,7 @@ import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import Majdata from './majdata'
 import UserInfo from './userinfo';
-
-const apiroot = 'http://101.132.193.53:5003/api'
+import { apiroot3 } from './apiroot';
 
 export default function Page() {
   return (
@@ -16,7 +15,7 @@ export default function Page() {
       <div className='links'>
       <div className='linkContent'><a href='./filebase'>MMFC文件库</a></div>
       <div className='linkContent'><a href='./contest'>MMFC 6th</a></div>
-      <UserInfo apiroot={apiroot}/>
+      <UserInfo apiroot={apiroot3}/>
       </div>
       
       <Majdata />
@@ -25,11 +24,9 @@ export default function Page() {
   )
 }
 
-
-
 function CoverPic({id}){
-  let url = apiroot + `/Image/${id}` 
-  let urlfull = apiroot +`/ImageFull/${id}` 
+  let url = apiroot3 + `/Image/${id}` 
+  let urlfull = apiroot3 +`/ImageFull/${id}` 
   return (
     <><PhotoProvider bannerVisible={false} loadingElement={<div>Loading...</div>}>
       <PhotoView src={urlfull} >
@@ -58,7 +55,7 @@ function Levels({levels, songid}){
 
   const levelClickCallback = e =>{
     scrollToTop()
-    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot + '\n' +songid +'\n'+e.target.id)
+    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot3 + '\n' +songid +'\n'+e.target.id)
   }
   return(
     <>
@@ -83,7 +80,7 @@ function SearchBar({onChange}){
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 function TheList() {
-  const { data, error, isLoading } = useSWR(apiroot + "/SongList", fetcher);
+  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
 
   if (error) return <div>failed to load</div>;

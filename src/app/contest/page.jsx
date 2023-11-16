@@ -4,7 +4,7 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import Majdata from '../majdata'
-const apiroot = 'http://101.132.193.53:5001/api'
+import { apiroot1 } from '../apiroot';
 
 export default function Page() {
   return (
@@ -24,8 +24,8 @@ export default function Page() {
 
 
 function CoverPic({id}){
-  let url = apiroot + `/Image/${id}` 
-  let urlfull = apiroot +`/ImageFull/${id}` 
+  let url = apiroot1 + `/Image/${id}` 
+  let urlfull = apiroot1 +`/ImageFull/${id}` 
   return (
     <><PhotoProvider bannerVisible={false} loadingElement={<div>Loading...</div>}>
       <PhotoView src={urlfull} >
@@ -54,7 +54,7 @@ function Levels({levels, songid}){
 
   const levelClickCallback = e =>{
     scrollToTop()
-    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot + '\n' +songid +'\n'+e.target.id)
+    window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot1 + '\n' +songid +'\n'+e.target.id)
   }
   return(
     <>
@@ -79,7 +79,7 @@ function SearchBar({onChange}){
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 function TheList() {
-  const { data, error, isLoading } = useSWR(apiroot + "/SongList", fetcher);
+  const { data, error, isLoading } = useSWR(apiroot1 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
 
   if (error) return <div>failed to load</div>;
