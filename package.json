@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "bcryptjs-react": "^2.4.6",
     "js-md5": "^0.8.3",
+    "jszip": "^3.10.1",
     "next": "14.0.2",
     "react": "^18",
     "react-dom": "^18",

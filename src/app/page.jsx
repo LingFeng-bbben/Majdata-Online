@@ -6,6 +6,8 @@ import useSWR from 'swr';
 import Majdata from './majdata'
 import UserInfo from './userinfo';
 import { apiroot3 } from './apiroot';
+import JSZip from 'jszip';
+import axios from 'axios';
 
 export default function Page() {
   return (
@@ -58,15 +60,15 @@ function Levels({levels, songid}){
     window.unitySendMessage("HandleJSMessages","ReceiveMessage",'jsnmsl\n'+apiroot3 + '\n' +songid +'\n'+e.target.id)
   }
   return(
-    <>
-    <div className='songLevel'  id="lv0" onClick={levelClickCallback}>{levels[0]}</div>
-    <div className='songLevel'  id="lv1" onClick={levelClickCallback}>{levels[1]}</div>
-    <div className='songLevel'  id="lv2" onClick={levelClickCallback}>{levels[2]}</div>
-    <div className='songLevel'  id="lv3" onClick={levelClickCallback}>{levels[3]}</div>
-    <div className='songLevel'  id="lv4" onClick={levelClickCallback}>{levels[4]}</div>
-    <div className='songLevel'  id="lv5" onClick={levelClickCallback}>{levels[5]}</div>
-    <div className='songLevel'  id="lv6" onClick={levelClickCallback}>{levels[6]}</div>
-    </>
+    <div >
+    <div className='songLevel'  id="lv0" style={{display:levels[0]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[0]}</div>
+    <div className='songLevel'  id="lv1" style={{display:levels[1]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[1]}</div>
+    <div className='songLevel'  id="lv2" style={{display:levels[2]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[2]}</div>
+    <div className='songLevel'  id="lv3" style={{display:levels[3]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[3]}</div>
+    <div className='songLevel'  id="lv4" style={{display:levels[4]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[4]}</div>
+    <div className='songLevel'  id="lv5" style={{display:levels[5]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[5]}</div>
+    <div className='songLevel'  id="lv6" style={{display:levels[6]=='-'?'none':'unset'}} onClick={levelClickCallback}>{levels[6]}</div>
+    </div>
   )
 }
 
@@ -106,15 +108,48 @@ function TheList() {
     return <SearchBar onChange={filterBySearch} />;
   }
 
+  async function fetchFile(url) {
+    const response = await axios.get(url,{responseType:'blob'})
+    return response.data
+  }
+
+  function downloadFile(url, fileName) {
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  const downloadSong = props => ()=>{
+    const zip = new JSZip();
+    //alert(props.id)
+    zip.file('track.mp3',fetchFile(apiroot3+"/Track/"+props.id));
+    zip.file('bg.jpg',fetchFile(apiroot3+"/ImageFull/"+props.id));
+    zip.file('maidata.txt',fetchFile(apiroot3+"/Maidata/"+props.id));
+
+    zip.generateAsync({ type: "blob" }).then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      downloadFile(url, props.title);
+  });
+  
+  }
+
   const list = filteredList.map(o => (
     <div key={o.Id}>
       <div className="songCard">
         <CoverPic id={o.Id} />
         <div className='songInfo'>
-          <div className='songTitle'>{o.Title}</div>
+          <div className='songTitle' id={o.Id}>{o.Title}</div>
           <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
           <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          <div className='songLevel downloadButtonBox' onClick={downloadSong({id:o.Id,title:o.Title})}>
+            <svg className='downloadButton' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+          </div>
           <Levels levels={o.Levels} songid={o.Id} />
+          
         </div>
       </div>
     </div>));
