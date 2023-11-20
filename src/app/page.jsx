@@ -8,8 +8,11 @@ import UserInfo from './userinfo';
 import { apiroot3 } from './apiroot';
 import JSZip from 'jszip';
 import axios from 'axios';
+import Tippy, {useSingleton} from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 export default function Page() {
+  const [source, target] = useSingleton();
   return (
     <>
       <div className='seprate'></div>
@@ -21,7 +24,8 @@ export default function Page() {
       </div>
       
       <Majdata />
-      <TheList />
+      <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
+      <TheList tippy={target}/>
     </>
   )
 }
@@ -81,7 +85,7 @@ function SearchBar({onChange}){
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-function TheList() {
+function TheList({tippy}) {
   const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
 
@@ -95,6 +99,7 @@ function TheList() {
   const filterBySearch = (e) => {
     let dataf = data.filter(o => (
       o.Designer?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      o.Uploader?.toLowerCase().includes(e.target.value.toLowerCase()) ||
       o.Title?.toLowerCase().includes(e.target.value.toLowerCase()) ||
       o.Artist?.toLowerCase().includes(e.target.value.toLowerCase()) ||
       o.Levels.some(i => i == e.target.value) ||
@@ -142,9 +147,16 @@ function TheList() {
       <div className="songCard">
         <CoverPic id={o.Id} />
         <div className='songInfo'>
-          <div className='songTitle' id={o.Id}>{o.Title}</div>
-          <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
-          <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          <Tippy content={o.Title} singleton={tippy}>
+            <div className='songTitle' id={o.Id}>{o.Title}</div>
+          </Tippy>
+          <Tippy content={o.Artist} singleton={tippy}>
+            <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
+          </Tippy>
+          <Tippy content={o.Uploader +"@"+ o.Designer} singleton={tippy}>
+            <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          </Tippy>
+          
           <div className='songLevel downloadButtonBox' onClick={downloadSong({id:o.Id,title:o.Title})}>
             <svg className='downloadButton' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
           </div>

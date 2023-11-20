@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "bcryptjs-react": "^2.4.6",
@@ -20,6 +21,7 @@
     "react-photo-view": "^1.2.3",
     "react-unity-webgl": "^9.4.3",
     "swr": "^2.2.4",
+    "tippy.js": "^6.3.7",
     "webgl-nextjs": "^1.0.6"
   },
   "devDependencies": {

@@ -5,8 +5,11 @@ import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import Majdata from '../majdata'
 import { apiroot1 } from '../apiroot';
+import Tippy, {useSingleton} from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 export default function Page() {
+  const [source, target] = useSingleton();
   return (
     <>
       <div className='bg'></div>
@@ -15,9 +18,10 @@ export default function Page() {
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
       <div className='linkContent'><a href='https://www.maimaimfc.ink/6thstart'>6th报名窗口</a></div>
-      <div className='linkContent'><a href='https://www.maimaimfc.ink/'>打分会场</a></div>      </div>
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest'>打分会场</a></div>      </div>
       <Majdata />
-      <TheList />
+      <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
+      <TheList tippy={target}/>
     </>
   )
 }
@@ -78,7 +82,7 @@ function SearchBar({onChange}){
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-function TheList() {
+function TheList({tippy}) {
   const { data, error, isLoading } = useSWR(apiroot1 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
 
@@ -109,9 +113,15 @@ function TheList() {
       <div className="songCard">
         <CoverPic id={o.Id} />
         <div className='songInfo'>
-          <div className='songTitle'>{o.Title}</div>
-          <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
-          <div className='songDesigner'>By: {o.Designer}</div>
+          <Tippy content={o.Title} singleton={tippy}>
+            <div className='songTitle' id={o.Id}>{o.Title}</div>
+          </Tippy>
+          <Tippy content={o.Artist} singleton={tippy}>
+            <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
+          </Tippy>
+          <Tippy content={o.Designer} singleton={tippy}>
+            <div className='songDesigner'>{o.Designer== "" || o.Designer == null ? "-" :o.Designer}</div>
+          </Tippy>
           <Levels levels={o.Levels} songid={o.Id} />
         </div>
       </div>
