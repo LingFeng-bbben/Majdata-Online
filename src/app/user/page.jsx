@@ -6,9 +6,11 @@ import useSWR from 'swr';
 import { useRouter } from 'next/navigation'
 import UserInfo from '../userinfo';
 import { apiroot3 } from '../apiroot';
-
+import Tippy, {useSingleton} from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 export default function Page() {
+  const [source, target] = useSingleton();
   return (
     <>
       <div className='seprate'></div>
@@ -20,7 +22,8 @@ export default function Page() {
       </div>
       {/* <UserInfoDetail/> */}
       <Uploader/>
-      <TheList/>
+      <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
+      <TheList tippy={target}/>
     </>
   )
 }
@@ -139,7 +142,7 @@ function getUsername(){
   return data.Username
 }
 
-function TheList() {
+function TheList({tippy}) {
   const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
   var username = getUsername()
   if (error) return <div>failed to load</div>;
@@ -161,9 +164,15 @@ function TheList() {
       <div className="songCard">
         <CoverPic id={o.Id} />
         <div className='songInfo'>
-          <div className='songTitle'>{o.Title}</div>
-          <div className='songArtist'>{o.Id}</div>
-          <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          <Tippy content={o.Title} singleton={tippy}>
+            <div className='songTitle'>{o.Title}</div>
+          </Tippy>
+          <Tippy content={o.Id} singleton={tippy}>
+            <div className='songArtist'>{o.Id}</div>
+          </Tippy>
+          <Tippy content={o.Uploader +"@"+ o.Designer} singleton={tippy}>
+            <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
+          </Tippy>
           <Delbutton songid={o.Id}/>
         </div>
       </div>
