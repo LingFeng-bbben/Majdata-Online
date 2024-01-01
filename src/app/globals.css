@@ -16,6 +16,11 @@ body {
   background-color: rgb(var(--background-start));
 }
 
+p{
+  text-align: center;
+  margin: 1rem;
+}
+
 .bg{
   background-image: url('/6thbg.webp');
   position: fixed;
@@ -140,7 +145,7 @@ img.songImg{
   white-space:nowrap; 
   overflow:hidden; 
   text-overflow:ellipsis;
-  margin-bottom: 2.3rem;
+  margin-bottom: 0.5rem;
   font-size: 0.8rem;
 }
 
@@ -299,4 +304,16 @@ img.songImg{
   stroke: white;
   width: 100%;
   height: 100%;
+}
+
+.shareButton{
+  fill: white;
+  stroke: white;
+  width: 100%;
+  height: 100%;
+  padding: 1px;
+}
+
+.downloadButtonBox{
+  margin-top: 0.5rem;
 }

@@ -14,13 +14,19 @@ export default function Page() {
   return (
     <>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./salt.webp" onClick={()=>alert("不要点我 操你妈")}></img>MajOnline.Beta</h1>
+      <h1><img className="xxlb"src="./salt.webp" onClick={()=>alert("不要点我 操你妈")}></img>Majdata.Net</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
       <UserInfo apiroot={apiroot3}/>
       <Logout/>
       </div>
       {/* <UserInfoDetail/> */}
+      <p>在这里上传你的谱面。点击上传即代表你承认以下事项：</p>
+      <p>1. 上传的谱面是你自己写的或合作写的，又或是谱面原作者同意上传</p>
+      <p>2. 此谱面可以公开，自由下载</p>
+      <p>3. 公开这张谱面不会侵害第三方权益</p>
+      <p>4. 这张谱面至少可以被一种编辑器读取：majdata/maipad/astrodx/simai 等</p>
+      <p>一些tips：如果谱面太长请标上[FULL], 如果是宴谱/观赏谱请写入Original难度</p>
       <Uploader/>
       <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
       <TheList tippy={target}/>

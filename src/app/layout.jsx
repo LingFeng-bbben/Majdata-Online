@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata= {
   title: 'Majdata Online',
-  description: '马季打他',
+  description: 'Majdata Online is a place to share maimai fanmade charts',
 }
 
 export default function RootLayout({children}) {

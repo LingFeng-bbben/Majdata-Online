@@ -7,7 +7,6 @@ import Majdata from '../majdata'
 import { apiroot1 } from '../apiroot';
 import Tippy, {useSingleton} from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { usePathname } from 'next/navigation'
 
 export default function Page() {
   const [source, target] = useSingleton();
