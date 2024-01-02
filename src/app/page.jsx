@@ -12,6 +12,8 @@ import Tippy, {useSingleton} from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -20,13 +22,28 @@ export default function Page() {
   return (
     <>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./salt.webp" onClick={()=>alert("不要点我 操你妈")}></img>Majdata.Net</h1>
+      <h1><img className="xxlb"src="./salt.webp" onClick={()=>
+        toast.error('不要点我 操你妈', {
+          position: "top-center",
+          autoClose: 500
+      })}></img>Majdata.Net</h1>
       <div className='links'>
       {initSearch?
       <div className='linkContent'><a href='./'>返回</a></div>:
       <div className='linkContent'><a href='./filebase'>MMFC文件库</a></div>
       }
-      
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        />
       {/* <div className='linkContent'><a href='./contest'>MMFC 6th</a></div> */}
       <UserInfo apiroot={apiroot3}/>
       </div>
@@ -162,10 +179,18 @@ function TheList({tippy, initSearch}) {
     });
   }
 
-  const shareSong = props => () => {
-    if(navigator.clipboard.writeText('https://majdata.net/?s='+props.id)){
-      alert('已复制到剪贴板\n'+'https://majdata.net/?s='+props.id);
-    }
+  const shareSong = props => async() => {
+    await navigator.clipboard.writeText('https://majdata.net/?s='+props.id)
+    toast.success('已复制到剪贴板', {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
 
   const list = filteredList.map(o => (
