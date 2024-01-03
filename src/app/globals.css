@@ -25,10 +25,11 @@ p{
   background-image: url('/6thbg.webp');
   position: fixed;
   z-index: -99;
+  background-size: 100%;
   height: 100%;
   width: 100%;
   aspect-ratio: 1;
-  filter: blur(3px) brightness(80%);
+  filter: blur(20px) brightness(50%);
 }
 
 .seprate{
@@ -316,4 +317,20 @@ img.songImg{
 
 .downloadButtonBox{
   margin-top: 0.5rem;
+}
+
+.LazyLoad {
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.is-visible {
+  opacity: 1;
+}
+
+.footerImage{
+  width: 10%;
+  margin: 3rem;
+  margin-left: 45%;
+  margin-right: 45%;
 }
