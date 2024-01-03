@@ -247,7 +247,7 @@ function TheList({ tippy, initSearch }) {
   };
 
   const shareSong = (props) => async () => {
-    await navigator.clipboard.writeText("https://majdata.net/?s=" + props.id);
+    await navigator.clipboard.writeText("https://majdata.net/song?id=" + props.id);
     toast.success("已复制到剪贴板", {
       position: "bottom-center",
       autoClose: 3000,
