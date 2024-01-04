@@ -334,3 +334,33 @@ img.songImg{
   margin-left: 45%;
   margin-right: 45%;
 }
+
+.commentbox{
+  height: 6rem;
+  width: 16rem;
+}
+
+.CommentCard{
+  background-color: rgb(var(--background-start));
+  border: 1px solid whitesmoke;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin: 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 2px 2px 5px gray;
+  width: 20rem;
+}
+
+.CommentUser{
+  color: whitesmoke;
+  text-align: left;
+  margin: 0.3rem;
+  font-weight: bold;
+}
+
+.CommentContent{
+  text-align: left;
+  margin: 0.6rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
