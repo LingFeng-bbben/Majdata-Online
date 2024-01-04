@@ -165,7 +165,8 @@ function SearchBar({ onChange }) {
   );
 }
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = async (...args) =>
+  await fetch(...args).then(async (res) => res.json());
 
 function TheList({ tippy, initSearch }) {
   const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
@@ -247,7 +248,9 @@ function TheList({ tippy, initSearch }) {
   };
 
   const shareSong = (props) => async () => {
-    await navigator.clipboard.writeText("https://majdata.net/song?id=" + props.id);
+    await navigator.clipboard.writeText(
+      "https://majdata.net/song?id=" + props.id
+    );
     toast.success("已复制到剪贴板", {
       position: "bottom-center",
       autoClose: 3000,
@@ -314,6 +317,7 @@ function TheList({ tippy, initSearch }) {
                 <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
               </svg>
             </div>
+            <InteractCount songid={o.Id} />
           </div>
         </div>
       </LazyLoad>
@@ -329,5 +333,35 @@ function TheList({ tippy, initSearch }) {
       />
       <div className="theList">{list}</div>
     </>
+  );
+}
+
+function InteractCount({ songid }) {
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/Interact/" + songid,
+    fetcher
+  );
+  if (error) return <div></div>;
+  if (isLoading) {
+    return <div>..</div>;
+  }
+  if (data == "" || data == undefined) return <div>?</div>;
+  const commentcount = Object.entries(data.CommentsList).length;
+  return (
+    <div>
+      <div className="commentBox downloadButtonBox">
+        <svg
+          className="commentIco"
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+        >
+          <path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+        </svg>
+      </div>
+      <div className="commentNumber">{commentcount}</div>
+      
+    </div>
   );
 }

@@ -364,3 +364,23 @@ img.songImg{
   overflow: auto;
   white-space: pre-wrap;
 }
+
+.commentIco{
+  fill: white;
+  stroke: white;
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+}
+
+.commentNumber{
+  padding-top:0.5rem ;
+  padding-left: 4.3rem;
+  font-size: 0.8rem;
+}
+
+.commentBox{
+  width: 1.3rem;
+  height: 1.3rem;
+  float: left;
+}
