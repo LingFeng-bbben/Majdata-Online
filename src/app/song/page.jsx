@@ -66,8 +66,9 @@ export default function Page() {
         interactive={true}
       />
       <SongInfo id={param} tippy={target} />
+      <LikeSender songid={param} />
       <CommentSender songid={param} />
-      <CommentList songid={param}/>
+      <CommentList songid={param} />
     </>
   );
 }
@@ -304,23 +305,82 @@ function getCookie(cname) {
   return "";
 }
 
+function LikeSender({ songid }) {
+  const { data, error, isLoading, mutate } = useSWR(
+    apiroot3 + "/Interact/" + songid,
+    fetcher
+  );
+  if (error) return <div>..?</div>;
+  if (isLoading) {
+    return <div>..</div>;
+  }
+  if (data == "" || data == undefined) return <div>failed to load</div>;
+  const likecount = data.LikeList.length;
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.set("token", getCookie("token"));
+    formData.set("type", "like");
+    formData.set("content", "like");
+    const response = await fetch(apiroot3 + "/Interact/" + songid, {
+      method: "POST",
+      body: formData,
+    });
+    if (response.status == 200) {
+      toast.success("点赞成功");
+      mutate();
+    } else if (response.status == 400) {
+      toast.error("点赞失败：登录了吗？");
+    } else {
+      toast.error("点赞失败：登录了吗？");
+    }
+  };
+  return (
+    <>
+      <div className="theList">
+        <button
+          className="linkContent"
+          id="submitbutton"
+          type="button"
+          onClick={onSubmit}
+        >
+          <svg
+            className="commentIco"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 -960 960 960"
+            width="24"
+          >
+            <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
+          </svg>
+        </button>
+        <p>{likecount}</p>
+      </div>
+      <div className="theList">
+        {data.LikeList.map((o) => (
+          <p key={o}>{o}</p>
+        ))}
+      </div>
+    </>
+  );
+}
+
 function CommentSender({ songid }) {
   const [comment, SetCommnet] = useState("");
-  const onSubmit = async() => {
-    const formData = new FormData()
-    formData.set('token',getCookie('token'))
-    formData.set('type','comment')
-    formData.set('content',comment)
-    const response = await fetch(apiroot3+'/Interact/'+songid, {
-      method: 'POST',
+  const onSubmit = async () => {
+    const formData = new FormData();
+    formData.set("token", getCookie("token"));
+    formData.set("type", "comment");
+    formData.set("content", comment);
+    const response = await fetch(apiroot3 + "/Interact/" + songid, {
+      method: "POST",
       body: formData,
-    })
-    if (response.status ==200){
-      toast.success("评论成功")
-    }else if(response.status ==400){
-      toast.error("评论失败：空的哟？")
-    }else{
-      toast.error("评论失败：登录了吗？")
+    });
+    if (response.status == 200) {
+      toast.success("评论成功");
+    } else if (response.status == 400) {
+      toast.error("评论失败：登录了吗？");
+    } else {
+      toast.error("评论失败：登录了吗？");
     }
   };
   return (
@@ -329,25 +389,25 @@ function CommentSender({ songid }) {
         <p className="inputHint">评论</p>
       </div>
       <div className="theList">
-      <textarea
-        className="userinput commentbox"
-        type="text"
-        onChange={() => SetCommnet(event.target.value)}
-      />
-      <button
-        className="linkContent"
-        id="submitbutton"
-        type="button"
-        onClick={onSubmit}
-      >
-        发表
-      </button>
-    </div>
+        <textarea
+          className="userinput commentbox"
+          type="text"
+          onChange={() => SetCommnet(event.target.value)}
+        />
+        <button
+          className="linkContent"
+          id="submitbutton"
+          type="button"
+          onClick={onSubmit}
+        >
+          发表
+        </button>
+      </div>
     </>
   );
 }
 
-function CommentList({songid}){
+function CommentList({ songid }) {
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/Interact/" + songid,
     fetcher,
@@ -359,7 +419,7 @@ function CommentList({songid}){
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
   const commentList = Object.entries(data.CommentsList).reverse();
-  console.log(commentList)
+  console.log(commentList);
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
       <div className="CommentCard">
@@ -367,8 +427,6 @@ function CommentList({songid}){
         <p className="CommentContent">{o[1]}</p>
       </div>
     </div>
-  ))
-  return(<div className="theList">
-    {objlist}
-  </div>);
+  ));
+  return <div className="theList">{objlist}</div>;
 }
