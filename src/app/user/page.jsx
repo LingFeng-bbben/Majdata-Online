@@ -8,6 +8,7 @@ import UserInfo from '../userinfo';
 import { apiroot3 } from '../apiroot';
 import Tippy, {useSingleton} from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import InteractCount from "../interact"
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -171,7 +172,9 @@ function TheList({tippy}) {
         <CoverPic id={o.Id} />
         <div className='songInfo'>
           <Tippy content={o.Title} singleton={tippy}>
-            <div className='songTitle'>{o.Title}</div>
+          <div className="songTitle" id={o.Id}>
+                <a href={"/song?id=" + o.Id}>{o.Title}</a>
+              </div>
           </Tippy>
           <Tippy content={o.Id} singleton={tippy}>
             <div className='songArtist'>{o.Id}</div>
@@ -180,6 +183,7 @@ function TheList({tippy}) {
             <div className='songDesigner'>{o.Uploader +"@"+ o.Designer}</div>
           </Tippy>
           <Delbutton songid={o.Id}/>
+          <InteractCount songid={o.Id}/>
         </div>
       </div>
     </div>));

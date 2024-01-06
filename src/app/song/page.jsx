@@ -339,7 +339,7 @@ function LikeSender({ songid }) {
       <div className="theList">
         <button
           className="linkContent"
-          id="submitbutton"
+          id="submitbuttonlike"
           type="button"
           onClick={onSubmit}
         >
@@ -371,16 +371,29 @@ function CommentSender({ songid }) {
     formData.set("token", getCookie("token"));
     formData.set("type", "comment");
     formData.set("content", comment);
+
+    if (typeof window !== "undefined") {
+      document.getElementById("submitbutton").disabled = true;
+      document.getElementById("submitbutton").textContent = "请稍后";
+    }
+
     const response = await fetch(apiroot3 + "/Interact/" + songid, {
       method: "POST",
       body: formData,
     });
     if (response.status == 200) {
       toast.success("评论成功");
+      if (typeof window !== "undefined") {
+        document.getElementById("commentcontent").textContent = "";
+      }
     } else if (response.status == 400) {
       toast.error("评论失败：登录了吗？");
     } else {
       toast.error("评论失败：登录了吗？");
+    }
+    if (typeof window !== "undefined") {
+      document.getElementById("submitbutton").disabled = false;
+      document.getElementById("submitbutton").textContent = "发表";
     }
   };
   return (
@@ -390,6 +403,7 @@ function CommentSender({ songid }) {
       </div>
       <div className="theList">
         <textarea
+          id="commentcontent"
           className="userinput commentbox"
           type="text"
           onChange={() => SetCommnet(event.target.value)}
