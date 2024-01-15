@@ -81,7 +81,7 @@ function SongInfo({ id, tippy }) {
   );
   if (error) return <div>failed to load</div>;
   if (isLoading) {
-    return <div className="loading">Loading SongInfo...</div>;
+    return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
 
@@ -192,7 +192,7 @@ function CoverPic({ id }) {
     <>
       <PhotoProvider
         bannerVisible={false}
-        loadingElement={<div>Loading...</div>}
+        loadingElement={<div className="loading"></div>}
       >
         <PhotoView src={urlfull}>
           <img className="songImg" loading="lazy" src={url} alt="" />
@@ -312,7 +312,7 @@ function LikeSender({ songid }) {
   );
   if (error) return <div>..?</div>;
   if (isLoading) {
-    return <div>..</div>;
+    return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
   const likecount = data.LikeList.length;
@@ -368,6 +368,11 @@ function CommentSender({ songid }) {
   const [comment, SetCommnet] = useState("");
   const onSubmit = async () => {
     const formData = new FormData();
+    if(comment==""){
+      toast.error("说点什么吧？");
+      return;
+    }
+      
     formData.set("token", getCookie("token"));
     formData.set("type", "comment");
     formData.set("content", comment);
@@ -376,15 +381,17 @@ function CommentSender({ songid }) {
       document.getElementById("submitbutton").disabled = true;
       document.getElementById("submitbutton").textContent = "请稍后";
     }
-
+    const sending = toast.loading("正在邮件轰炸...");
     const response = await fetch(apiroot3 + "/Interact/" + songid, {
       method: "POST",
       body: formData,
     });
+    toast.done(sending)
     if (response.status == 200) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
+        SetCommnet("")
       }
     } else if (response.status == 400) {
       toast.error("评论失败：登录了吗？");
@@ -395,6 +402,7 @@ function CommentSender({ songid }) {
       document.getElementById("submitbutton").disabled = false;
       document.getElementById("submitbutton").textContent = "发表";
     }
+    
   };
   return (
     <>
@@ -429,7 +437,7 @@ function CommentList({ songid }) {
   );
   if (error) return <div>failed to load</div>;
   if (isLoading) {
-    return <div className="loading">Loading Comments...</div>;
+    return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
   const commentList = Object.entries(data.CommentsList).reverse();

@@ -80,7 +80,7 @@ function CoverPic({ id }) {
     <>
       <PhotoProvider
         bannerVisible={false}
-        loadingElement={<div>Loading...</div>}
+        loadingElement={<div className="loading"></div>}
       >
         <PhotoView src={urlfull}>
           <img className="songImg" loading="lazy" src={url} alt="" />
@@ -197,7 +197,7 @@ function TheList({ tippy, initSearch }) {
 
   if (error) return <div>failed to load</div>;
   if (isLoading) {
-    return <div className="loading">Loading List...</div>;
+    return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
   data.sort((a, b) => {

@@ -202,12 +202,6 @@ img.songImg{
   user-select:none;
 }
 
-.loading{
-  color:whitesmoke;
-  text-align:center;
-  font-size: 20px;
-  font-weight:bold ;
-}
 
 .searchInput{
   caret-color: white;
@@ -386,4 +380,30 @@ img.songImg{
   float: left;
   border: 1px solid transparent;
   border-radius: 5px;
+}
+
+.loading {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgb(var(--background-start));
+  border-top-color: white;
+  border-radius: 50%;
+  margin: auto;
+  animation: spin 0.1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    border-top-color: rgb(209, 134, 252);
+  }
+
+  50% {
+    transform: rotate(180deg);
+    border-top-color: rgb(151, 239, 255);
+  }
+  100% {
+    transform: rotate(360deg);
+    border-top-color: rgb(255, 255, 255);
+  }
 }
