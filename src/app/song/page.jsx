@@ -384,7 +384,7 @@ function CommentSender({ songid }) {
     if (response.status == 200) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
-        document.getElementById("commentcontent").textContent = "";
+        document.getElementById("commentcontent").value = "";
       }
     } else if (response.status == 400) {
       toast.error("评论失败：登录了吗？");
