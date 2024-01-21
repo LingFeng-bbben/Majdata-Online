@@ -1,0 +1,98 @@
+.eventLogoContainer {
+  text-align: center;
+  font-weight: 1000;
+  width: 100%;
+  position: relative;
+  font-family: emoji;
+  user-select: none;
+}
+
+.eventLogoSub {
+  color: transparent;
+  position: absolute;
+  width: 100%;
+  letter-spacing: 1px;
+}
+
+.eventLogoSub#l8 {
+  -webkit-text-stroke: white 8px;
+  z-index: 4;
+  position: absolute;
+  translate: 0 0.5px;
+  transform: scale(1, 1.02);
+}
+
+.eventLogoSub#l7 {
+  -webkit-text-stroke: rgb(87, 202, 255) 7px;
+  z-index: 5;
+  position: absolute;
+  translate: 0 0.5px;
+  transform: scale(1, 1.02);
+}
+
+.eventLogoSub#l6 {
+  -webkit-text-stroke: black 5.5px;
+  z-index: 6;
+  position: absolute;
+  translate: 0 1px;
+}
+
+.eventLogoSub#l5 {
+  -webkit-text-stroke: rgb(90, 91, 139) 5px;
+  z-index: 7;
+  position: absolute;
+}
+
+.eventLogoSub#l4 {
+  -webkit-text-stroke: transparent 3px;
+  background: -webkit-linear-gradient(rgb(255, 199, 245), rgb(130, 207, 227));
+  -webkit-background-clip: text;
+  z-index: 8;
+  position: absolute;
+}
+
+.eventLogoSub#l3 {
+  -webkit-text-stroke: rgb(92, 93, 142) 1px;
+  z-index: 9;
+  position: absolute;
+}
+
+.eventLogoSub#l2 {
+  color: white;
+  z-index: 10;
+  position: relative;
+}
+.fursvg {
+  width: 100px;
+  margin: auto;
+  z-index: auto;
+  fill: url(#myLinearGradient1);
+}
+.eventbgContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: tdspin 5s ease-in-out infinite;
+}
+
+@keyframes tdspin {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(-1, 1);
+  }
+  60% {
+    transform: scale(1, 1);
+  }
+}
+
+.eventContent {
+    text-align: center;
+}
+.eventPrize{
+    width: 300px;
+    margin: auto;
+    border: 1px solid whitesmoke;
+  border-radius: 10px;
+}

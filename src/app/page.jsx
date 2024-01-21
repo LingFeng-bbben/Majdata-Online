@@ -13,8 +13,11 @@ import { useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./eventstyle.css";
+import EventLogo from "./eventcompos"
 import LazyLoad from "react-lazy-load";
-import InteractCount from "./interact"
+import InteractCount from "./interact";
+import Link from 'next/link'
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -39,28 +42,30 @@ export default function Page() {
       <div className="links">
         {initSearch ? (
           <div className="linkContent">
-            <a href="./">返回</a>
+            <Link href="./">返回</Link>
           </div>
         ) : (
           <div className="linkContent">
-            <a href="./filebase">MMFC文件库</a>
+            <Link href="./filebase">MMFC文件库</Link>
           </div>
         )}
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        {/* <div className='linkContent'><a href='./contest'>MMFC 6th</a></div> */}
+
+        {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
         <UserInfo apiroot={apiroot3} />
       </div>
+      <EventLogo />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Tippy
         singleton={source}
         animation="fade"
@@ -99,7 +104,7 @@ function Levels({ levels, songid }) {
   }
 
   return (
-    <a href={"/song?id=" + songid}>
+    <Link href={"/song?id=" + songid}>
       <div
         className="songLevel"
         id="lv0"
@@ -149,7 +154,7 @@ function Levels({ levels, songid }) {
       >
         {levels[6]}
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -272,19 +277,19 @@ function TheList({ tippy, initSearch }) {
           <div className="songInfo">
             <Tippy content={o.Title} singleton={tippy}>
               <div className="songTitle" id={o.Id}>
-                <a href={"/song?id=" + o.Id}>{o.Title}</a>
+                <Link href={"/song?id=" + o.Id}>{o.Title}</Link>
               </div>
             </Tippy>
             <Tippy content={o.Artist} singleton={tippy}>
               <div className="songArtist">
-                <a href={"/song?id=" + o.Id}>
+                <Link href={"/song?id=" + o.Id}>
                   {o.Artist == "" || o.Artist == null ? "-" : o.Artist}
-                </a>
+                </Link>
               </div>
             </Tippy>
             <Tippy content={o.Uploader + "@" + o.Designer} singleton={tippy}>
               <div className="songDesigner">
-                <a href={"/song?id=" + o.Id}>{o.Uploader + "@" + o.Designer}</a>
+                <Link href={"/song?id=" + o.Id}>{o.Uploader + "@" + o.Designer}</Link>
               </div>
             </Tippy>
 
@@ -336,5 +341,3 @@ function TheList({ tippy, initSearch }) {
     </>
   );
 }
-
-

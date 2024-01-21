@@ -14,6 +14,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Page() {
   const [source, target] = useSingleton();
+  if(getCookie("token")==""){
+    if (typeof window !== "undefined") {
+    location.href="/login"
+    }
+    return (<p>请先登录</p>);
+  }
   return (
     <>
       <div className="seprate"></div>
@@ -121,6 +127,7 @@ function Logout() {
 
 function Uploader() {
   const router = useRouter();
+  
   async function onSubmit(event) {
     event.preventDefault();
 
