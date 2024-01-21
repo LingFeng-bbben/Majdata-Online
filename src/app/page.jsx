@@ -14,10 +14,10 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
-import EventLogo from "./eventcompos"
+import EventLogo from "./eventcompos";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./interact";
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -45,9 +45,14 @@ export default function Page() {
             <Link href="./">返回</Link>
           </div>
         ) : (
-          <div className="linkContent">
-            <Link href="./filebase">MMFC文件库</Link>
-          </div>
+          <>
+            <div className="linkContent">
+              <Link href="./filebase">MMFC文件库</Link>
+            </div>
+            <div className="linkContent">
+              <Link href="./dydy">DYDY公告板</Link>
+            </div>
+          </>
         )}
 
         {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
@@ -277,19 +282,19 @@ function TheList({ tippy, initSearch }) {
           <div className="songInfo">
             <Tippy content={o.Title} singleton={tippy}>
               <div className="songTitle" id={o.Id}>
-                <Link href={"/song?id=" + o.Id}>{o.Title}</Link>
+                <a href={"/song?id=" + o.Id}>{o.Title}</a>
               </div>
             </Tippy>
             <Tippy content={o.Artist} singleton={tippy}>
               <div className="songArtist">
-                <Link href={"/song?id=" + o.Id}>
+                <a href={"/song?id=" + o.Id}>
                   {o.Artist == "" || o.Artist == null ? "-" : o.Artist}
-                </Link>
+                </a>
               </div>
             </Tippy>
             <Tippy content={o.Uploader + "@" + o.Designer} singleton={tippy}>
               <div className="songDesigner">
-                <Link href={"/song?id=" + o.Id}>{o.Uploader + "@" + o.Designer}</Link>
+                <a href={"/song?id=" + o.Id}>{o.Uploader + "@" + o.Designer}</a>
               </div>
             </Tippy>
 
