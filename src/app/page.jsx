@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
@@ -23,6 +23,17 @@ export default function Page() {
   const [source, target] = useSingleton();
   const searchParams = useSearchParams();
   const initSearch = searchParams.get("s");
+  function saveScrollPosition() {
+    var scrollY = window.scrollY || document.documentElement.scrollTop;
+    localStorage.setItem("scrollPosition", scrollY);
+  }
+
+  window.addEventListener("beforeunload", saveScrollPosition);
+
+   function onListLoadScroll() {
+    var savedScrollY = localStorage.getItem("scrollPosition") || 0;
+    window.scrollTo(0, savedScrollY);
+  }
   return (
     <>
       <div className="seprate"></div>
@@ -77,7 +88,7 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <TheList tippy={target} initSearch={initSearch} />
+      <TheList tippy={target} initSearch={initSearch} onLoad={onListLoadScroll}/>
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -179,10 +190,11 @@ function SearchBar({ onChange }) {
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function TheList({ tippy, initSearch }) {
+function TheList({ tippy, initSearch, onLoad }) {
   const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
   const [initS, setInitS] = new useState(false);
+  const [isLoaded, setIsLoaded] = new useState(false);
   const debounced = useDebouncedCallback(
     // function
     (value) => {
@@ -204,6 +216,12 @@ function TheList({ tippy, initSearch }) {
     // delay in ms
     500
   );
+  useEffect(()=>{
+    console.log("effect")
+    if(isLoaded){
+      onLoad();
+    }
+  })
 
   if (error) return <div>failed to load</div>;
   if (isLoading) {
@@ -276,7 +294,7 @@ function TheList({ tippy, initSearch }) {
 
   const list = filteredList.map((o) => (
     <div key={o.Id}>
-      <LazyLoad height={160} width={352}>
+      <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.Id} />
           <div className="songInfo">
@@ -334,6 +352,12 @@ function TheList({ tippy, initSearch }) {
       </LazyLoad>
     </div>
   ));
+
+  if(!isLoaded){
+    setIsLoaded(true);
+    console.log("scroll")
+  }
+
   // 渲染数据
   return (
     <>
