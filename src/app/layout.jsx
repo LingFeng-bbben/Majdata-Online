@@ -20,6 +20,7 @@ export const metadata= {
 export default function RootLayout({children}) {
   return (
     <html lang="en">
+      <meta name="theme-color" content="#FFFFFF" />
       <body className={inter.className}>{children}</body>
     </html>
   )

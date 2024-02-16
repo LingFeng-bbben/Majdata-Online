@@ -69,6 +69,7 @@ export default function Page() {
       <LikeSender songid={param} />
       <CommentSender songid={param} />
       <CommentList songid={param} />
+      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }

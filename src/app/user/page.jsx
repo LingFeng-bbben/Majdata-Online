@@ -69,6 +69,7 @@ export default function Page() {
         interactive={true}
       />
       <TheList tippy={target} />
+      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }
