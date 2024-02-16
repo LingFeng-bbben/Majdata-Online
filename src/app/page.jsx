@@ -24,16 +24,22 @@ export default function Page() {
   const searchParams = useSearchParams();
   const initSearch = searchParams.get("s");
   function saveScrollPosition() {
-    var scrollY = window.scrollY || document.documentElement.scrollTop;
-    localStorage.setItem("scrollPosition", scrollY);
+    if (typeof window !== "undefined") {
+      var scrollY = window.scrollY || document.documentElement.scrollTop;
+
+      localStorage.setItem("scrollPosition", scrollY);
+    }
+  }
+  if (typeof window !== "undefined") {
+    window.addEventListener("beforeunload", saveScrollPosition);
+  }
+  function onListLoadScroll() {
+    if (typeof window !== "undefined") {
+      var savedScrollY = localStorage.getItem("scrollPosition") || 0;
+      window.scrollTo(0, savedScrollY);
+    }
   }
 
-  window.addEventListener("beforeunload", saveScrollPosition);
-
-   function onListLoadScroll() {
-    var savedScrollY = localStorage.getItem("scrollPosition") || 0;
-    window.scrollTo(0, savedScrollY);
-  }
   return (
     <>
       <div className="seprate"></div>
@@ -69,6 +75,7 @@ export default function Page() {
         {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
         <UserInfo apiroot={apiroot3} />
       </div>
+      <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>⇡</div>
       <EventLogo />
       <ToastContainer
         position="bottom-center"
@@ -88,7 +95,11 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <TheList tippy={target} initSearch={initSearch} onLoad={onListLoadScroll}/>
+      <TheList
+        tippy={target}
+        initSearch={initSearch}
+        onLoad={onListLoadScroll}
+      />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -216,12 +227,11 @@ function TheList({ tippy, initSearch, onLoad }) {
     // delay in ms
     500
   );
-  useEffect(()=>{
-    console.log("effect")
-    if(isLoaded){
+  useEffect(() => {
+    if (isLoaded) {
       onLoad();
     }
-  })
+  });
 
   if (error) return <div>failed to load</div>;
   if (isLoading) {
@@ -353,9 +363,8 @@ function TheList({ tippy, initSearch, onLoad }) {
     </div>
   ));
 
-  if(!isLoaded){
+  if (!isLoaded) {
     setIsLoaded(true);
-    console.log("scroll")
   }
 
   // 渲染数据

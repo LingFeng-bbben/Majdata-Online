@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
-import Link from 'next/link'
 
 export default function EventLogo() {
     const text1 = "THE M@JNET";
     const text2 = "集赞大赛";
     return (
-      <Link href={"/event"}>
+      <a href={"/event"}>
         <div className="eventLogoContainer" style={{ fontSize: "25px", marginBottom:"-15px"  }}>
           <div className="eventLogoSub">{text1}</div>
           <div className="eventLogoSub" id="l8">
@@ -102,7 +101,7 @@ export default function EventLogo() {
           
         </div>
         
-      </Link>
+      </a>
     );
   }
   

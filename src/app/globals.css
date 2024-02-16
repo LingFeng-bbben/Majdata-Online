@@ -5,10 +5,9 @@
 :root {
   --foreground-rgb: 255, 255, 255, 100;
   --background-start: 20, 20, 20;
-  scrollbar-color: rgb(50,50,50) rgb(var(--background-start));
+  scrollbar-color: rgb(50, 50, 50) rgb(var(--background-start));
   scrollbar-width: thin;
 }
-
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -17,14 +16,13 @@ body {
   background-color: rgb(var(--background-start));
 }
 
-
-p{
+p {
   text-align: center;
   margin: 1rem;
 }
 
-.bg{
-  background-image: url('/6thbg.webp');
+.bg {
+  background-image: url("/6thbg.webp");
   position: fixed;
   z-index: -99;
   background-size: 100%;
@@ -34,22 +32,21 @@ p{
   filter: blur(20px) brightness(50%);
 }
 
-.seprate{
+.seprate {
   height: 20px;
   background-color: rgb(var(--background-start));
 }
 
 h1 {
   background-color: rgb(var(--background-start));
-  color:whitesmoke;
-  text-align:center;
+  color: whitesmoke;
+  text-align: center;
   font-size: 3rem;
-  font-weight:bold ;
-  user-select:none;
-
+  font-weight: bold;
+  user-select: none;
 }
 
-.links{
+.links {
   background-color: rgb(var(--background-start));
   display: flex;
   flex-direction: row;
@@ -58,7 +55,7 @@ h1 {
 }
 
 @media screen and (max-width: 500px) {
-  .xxlb{
+  .xxlb {
     width: 2rem;
     border-radius: 5px;
     margin-right: 20px;
@@ -66,14 +63,14 @@ h1 {
     display: inline;
   }
   h1 {
-    color:whitesmoke;
-    text-align:center;
+    color: whitesmoke;
+    text-align: center;
     font-size: 2rem;
-    font-weight:bold ;
-    user-select:none;
+    font-weight: bold;
+    user-select: none;
   }
-  .links{
-    background-color: rgb(30,30,30);
+  .links {
+    background-color: rgb(30, 30, 30);
     display: flex;
     position: fixed;
     flex-direction: row;
@@ -83,7 +80,7 @@ h1 {
   }
 }
 
-.xxlb{
+.xxlb {
   width: 5rem;
   border-radius: 5px;
   margin-right: 20px;
@@ -107,13 +104,13 @@ h1 {
   box-shadow: 2px 2px 5px gray;
 }
 
-.theList{
+.theList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-img.songImg{
+img.songImg {
   float: left;
   border-radius: 10px;
   border: 1px solid gray;
@@ -126,46 +123,45 @@ img.songImg{
   border: 1px solid whitesmoke;
   border-radius: 10px;
   padding: 0.8rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem;
+  margin: auto;
   box-shadow: 2px 2px 5px gray;
   height: 10rem;
   width: 20rem;
   overflow: hidden;
 }
 
-.songInfo{
+.songInfo {
   margin-left: 8.9rem;
   /* border: 1px solid red; */
 }
 
-.songTitle{
-  white-space:nowrap; 
-  overflow:hidden; 
-  text-overflow:ellipsis;
+.songTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 1rem;
   margin-bottom: 5px;
-  font-weight:bold ;
+  font-weight: bold;
 }
 
-.songArtist{
-  white-space:nowrap; 
-  overflow:hidden; 
-  text-overflow:ellipsis;
+.songArtist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 0.3rem;
   font-size: 0.8rem;
   font-style: italic;
 }
 
-.songDesigner{
-  white-space:nowrap; 
-  overflow:hidden; 
-  text-overflow:ellipsis;
+.songDesigner {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 0.5rem;
   font-size: 0.8rem;
 }
 
-.songLevel{
+.songLevel {
   float: left;
   text-align: center;
   text-shadow: 1px 1px gray;
@@ -178,51 +174,50 @@ img.songImg{
   border: 1px solid gray;
   overflow: hidden;
   cursor: pointer;
-  user-select:none;
+  user-select: none;
 }
 
-.songLevel:hover{
+.songLevel:hover {
   border: 2px solid white;
 }
 
-#lv0.songLevel{
+#lv0.songLevel {
   background-color: rgb(111, 171, 250);
 }
-#lv1.songLevel{
+#lv1.songLevel {
   background-color: rgb(93, 212, 93);
 }
-#lv2.songLevel{
+#lv2.songLevel {
   background-color: rgb(202, 202, 84);
 }
-#lv3.songLevel{
+#lv3.songLevel {
   background-color: rgb(255, 91, 91);
 }
-#lv4.songLevel{
+#lv4.songLevel {
   background-color: rgb(134, 23, 134);
 }
-#lv5.songLevel{
+#lv5.songLevel {
   background-color: rgb(189, 63, 189);
 }
-#lv6.songLevel{
+#lv6.songLevel {
   background-color: rgb(255, 145, 0);
 }
 
-.songId{
+.songId {
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;           
+  z-index: 1;
   position: absolute;
   padding-left: 3px;
   padding-right: 4px;
   border-radius: 10px 0px;
-  user-select:none;
+  user-select: none;
 }
 
-
-.searchInput{
+.searchInput {
   caret-color: white;
   background-color: black;
   border: 1px solid whitesmoke;
-  text-align:center;
+  text-align: center;
   width: 20rem;
   height: 2rem;
   margin: 10px;
@@ -230,53 +225,51 @@ img.songImg{
   box-shadow: 2px 2px 5px gray;
 }
 
-.searchDiv{
+.searchDiv {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.majViewPort{
+.majViewPort {
   margin-bottom: 15px;
   background-color: black;
 }
 
-@media screen and (max-width: 500px) {
-  .majViewPort{
-    width:100%;
-    aspect-ratio: 1;
-  }
-  .majCanvas{
-    width: 100%;
-    height: 100%;
-  }
+.majViewPort {
+  width: 100%;
+  aspect-ratio: 1;
+}
+.majCanvas {
+  width: 100%;
+  height: 100%;
 }
 
-@media screen and (min-width: 500px) {
-  .majViewPort{
+@media screen and (min-width: 700px) {
+  .majViewPort {
     margin-top: 15px;
-    width:70%;
+    width: 70%;
     height: 40rem;
-    transform: translate(21.5%,0);
+    transform: translate(21.5%, 0);
     border: 1px solid whitesmoke;
     box-shadow: 2px 2px 5px gray;
     border-radius: 10px;
   }
-  .majCanvas{
+  .majCanvas {
     width: 100%;
     height: 100%;
     border-radius: 10px;
   }
 }
 
-.majPlaceHolder{
+.majPlaceHolder {
   width: 100%;
   height: 100%;
   text-align: center;
   line-height: 20rem;
 }
 
-.userinput{
+.userinput {
   caret-color: white;
   background-color: black;
   border: 1px solid whitesmoke;
@@ -287,37 +280,37 @@ img.songImg{
   box-shadow: 2px 2px 5px gray;
 }
 
-.formbox{
+.formbox {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   justify-content: center;
   width: 20%;
 }
 
 @media screen and (max-width: 500px) {
-  .formbox{
+  .formbox {
     width: 100%;
   }
 }
 
-.inputHint{
+.inputHint {
   padding-left: 1rem;
   padding-right: 1rem;
   margin-top: 1rem;
 }
 
-*:disabled{
+*:disabled {
   background-color: rgb(92, 0, 0);
 }
 
-.downloadButton{
+.downloadButton {
   fill: white;
   stroke: white;
   width: 100%;
   height: 100%;
 }
 
-.shareButton{
+.shareButton {
   fill: white;
   stroke: white;
   width: 100%;
@@ -325,32 +318,35 @@ img.songImg{
   padding: 1px;
 }
 
-.downloadButtonBox{
+.downloadButtonBox {
   margin-top: 0.5rem;
 }
 
 .LazyLoad {
   opacity: 0;
   transition: all 0.2s ease-in-out;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
 }
 
 .is-visible {
   opacity: 1;
 }
 
-.footerImage{
+.footerImage {
   width: 10%;
   margin: 3rem;
   margin-left: 45%;
   margin-right: 45%;
 }
 
-.commentbox{
+.commentbox {
   height: 6rem;
   width: 16rem;
 }
 
-.CommentCard{
+.CommentCard {
   background-color: rgb(var(--background-start));
   border: 1px solid whitesmoke;
   border-radius: 10px;
@@ -361,21 +357,21 @@ img.songImg{
   width: 20rem;
 }
 
-.CommentUser{
+.CommentUser {
   color: whitesmoke;
   text-align: left;
   margin: 0.3rem;
   font-weight: bold;
 }
 
-.CommentContent{
+.CommentContent {
   text-align: left;
   margin: 0.6rem;
   overflow: auto;
   white-space: pre-wrap;
 }
 
-.commentIco{
+.commentIco {
   fill: white;
   stroke: white;
   width: 100%;
@@ -383,12 +379,12 @@ img.songImg{
   padding: 3px;
 }
 
-.commentNumber{
+.commentNumber {
   text-align: center;
   font-size: 0.8rem;
 }
 
-.commentBox{
+.commentBox {
   margin-left: 3px;
   width: 1.3rem;
   height: 1.3rem;
@@ -423,4 +419,19 @@ img.songImg{
   }
 }
 
-
+.topButton {
+  position: fixed;
+  right: 1.3rem;
+  bottom: 5rem;
+  width: 40px;
+  height: 40px;
+  z-index: 99999;
+  background: rgb(40, 40, 40);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.3rem;
+  user-select: none;
+  padding-top: 0.3rem;
+  border-radius: 100%;
+  box-shadow: 0px 0px 5px white;
+}
