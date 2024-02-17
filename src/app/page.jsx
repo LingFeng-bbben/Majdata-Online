@@ -41,19 +41,19 @@ export default function Page() {
       window.scrollTo(0, savedScrollY);
     }
   }
-  if(!isInitSorted){
-    if(initSort == "likep") setSortType(1);
-    if(initSort == "commp") setSortType(2);
-    setIsInitSorted(true)
+  if (!isInitSorted) {
+    if (initSort == "likep") setSortType(1);
+    if (initSort == "commp") setSortType(2);
+    setIsInitSorted(true);
   }
 
-  function onSortClick(){
+  function onSortClick() {
     localStorage.setItem("scrollPosition", 0);
-    setSortType(sortType+1);
-    if(sortType>=2) setSortType(0);
+    setSortType(sortType + 1);
+    if (sortType >= 2) setSortType(0);
     console.log(sortType);
   }
-  const words = ["","likep","commp"];
+  const words = ["", "likep", "commp"];
   return (
     <>
       <div className="seprate"></div>
@@ -80,7 +80,10 @@ export default function Page() {
             <div className="linkContent">
               <a href="./filebase">文件库</a>
             </div>
-            <div className="linkContent" style={{boxShadow:"0px 0px 3px gold"}}>
+            <div
+              className="linkContent"
+              style={{ boxShadow: "0px 0px 3px gold" }}
+            >
               <a href="./contest">MMFC7</a>
             </div>
             <div className="linkContent">
@@ -92,8 +95,19 @@ export default function Page() {
         {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
         <UserInfo apiroot={apiroot3} />
       </div>
-      <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>顶</div>
-      <div className="topButton sortButton" onClick={onSortClick}>序</div>
+      <div
+        className="topButton"
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            window.scrollTo(0, 0);
+          }
+        }}
+      >
+        顶
+      </div>
+      <div className="topButton sortButton" onClick={onSortClick}>
+        序
+      </div>
       <EventLogo />
       <ToastContainer
         position="bottom-center"
@@ -210,7 +224,7 @@ function SearchBar({ onChange, initS }) {
       <input
         type="text"
         className="searchInput"
-        placeholder={!initS?"Search":initS}
+        placeholder={!initS ? "Search" : initS}
         onChange={onChange}
       />
     </div>
@@ -221,40 +235,53 @@ const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
 function TheList({ tippy, initSearch, onLoad, sort }) {
-  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList?sort="+sort, fetcher);
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/SongList?sort=" + sort,
+    fetcher
+  );
   const [filteredList, setFilteredList] = new useState(data);
-  const [initS, setInitS] = new useState(false);
   const [isLoaded, setIsLoaded] = new useState(false);
+  const [sKey, setSKey] = new useState(initSearch);
+  const [lastS, setLastS] = new useState("");
+  const [lastSo, setLastSo] = new useState(sort);
   const debounced = useDebouncedCallback(
     // function
     (value) => {
-      let url="/";
-      if (value) {
-        let dataf = data.filter(
-          (o) =>
-            o.Designer?.toLowerCase().includes(value.toLowerCase()) ||
-            o.Uploader?.toLowerCase().includes(value.toLowerCase()) ||
-            o.Title?.toLowerCase().includes(value.toLowerCase()) ||
-            o.Artist?.toLowerCase().includes(value.toLowerCase()) ||
-            o.Levels.some((i) => i == value) ||
-            o.Id == value
-        );
-        url += "?s="+value
-        setFilteredList(dataf);
-      } else {
-        setFilteredList(data);
+      let url = "/";
+      if (value != lastS || sort != lastSo) {
+        if (value && value != "") {
+          let dataf = data.filter(
+            (o) =>
+              o.Designer?.toLowerCase().includes(value.toLowerCase()) ||
+              o.Uploader?.toLowerCase().includes(value.toLowerCase()) ||
+              o.Title?.toLowerCase().includes(value.toLowerCase()) ||
+              o.Artist?.toLowerCase().includes(value.toLowerCase()) ||
+              o.Levels.some((i) => i == value) ||
+              o.Id == value
+          );
+          setFilteredList(dataf);
+          setLastS(value);
+        } else {
+          setFilteredList(data);
+          setLastS("");
+        }
+        setLastSo(sort);
+        setIsLoaded(true);
       }
-      if(sort){
-        url += "?sort="+sort
+
+      if (lastS) {
+        url += "?s=" + lastS;
       }
-      window.history.pushState({},0,url)
-      setIsLoaded(true);
+      if (lastSo) {
+        url += "&sort=" + sort;
+      }
+      window.history.pushState({}, 0, url);
     },
     // delay in ms
     500
   );
   useEffect(() => {
-    //console.log('effect')
+    console.log("effect");
     if (isLoaded) {
       //console.log('onload')
       onLoad();
@@ -262,23 +289,19 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
   });
   if (error) return <div>failed to load</div>;
   if (isLoading) {
-    return <div className="loading"></div>;
-  }
-  if (data == "" || data == undefined) return <div>failed to load</div>;
-  debounced("");
-  if (filteredList == undefined) {
     return (
-      <SearchBar
-        onChange={(e) => {
-          debounced(e.target.value);
-        }}
-      />
+      <>
+        <SearchBar />
+        <div className="loading"></div>
+      </>
     );
   }
+  if (data == "" || data == undefined) return <div>failed to load: data is empty</div>;
 
-  if (!initS && initSearch) {
-    debounced(initSearch);
-    setInitS(true);
+  debounced(sKey);
+
+  if (filteredList == undefined) {
+    return <SearchBar />;
   }
 
   async function fetchFile(url) {
@@ -386,16 +409,12 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     </div>
   ));
 
-  if (!isLoaded && !initSearch) {
-    setIsLoaded(true);
-  }
-
   // 渲染数据
   return (
     <>
       <SearchBar
         onChange={(e) => {
-          debounced(e.target.value);
+          setSKey(e.target.value);
           localStorage.setItem("scrollPosition", 0);
         }}
         initS={initSearch}
