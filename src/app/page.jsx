@@ -21,8 +21,11 @@ import Link from "next/link";
 
 export default function Page() {
   const [source, target] = useSingleton();
+  const [sortType, setSortType] = useState(0);
+  const [isInitSorted, setIsInitSorted] = useState(false);
   const searchParams = useSearchParams();
   const initSearch = searchParams.get("s");
+  const initSort = searchParams.get("sort");
   function saveScrollPosition() {
     if (typeof window !== "undefined") {
       var scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -39,7 +42,19 @@ export default function Page() {
       window.scrollTo(0, savedScrollY);
     }
   }
+  if(!isInitSorted){
+    if(initSort == "likep") setSortType(1);
+    if(initSort == "commp") setSortType(2);
+    setIsInitSorted(true)
+  }
 
+  function onSortClick(){
+    localStorage.setItem("scrollPosition", 0);
+    setSortType(sortType+1);
+    if(sortType>=2) setSortType(0);
+    console.log(sortType);
+  }
+  const words = ["","likep","commp"];
   return (
     <>
       <div className="seprate"></div>
@@ -59,15 +74,18 @@ export default function Page() {
       <div className="links">
         {initSearch ? (
           <div className="linkContent">
-            <Link href="./">返回</Link>
+            <a href="./">返回</a>
           </div>
         ) : (
           <>
             <div className="linkContent">
-              <Link href="./filebase">MMFC文件库</Link>
+              <Link href="./filebase">文件库</Link>
+            </div>
+            <div className="linkContent" style={{boxShadow:"0px 0px 3px gold"}}>
+              <Link href="./contest">MMFC7</Link>
             </div>
             <div className="linkContent">
-              <Link href="./dydy">DYDY公告板</Link>
+              <Link href="./dydy">DD板</Link>
             </div>
           </>
         )}
@@ -75,7 +93,8 @@ export default function Page() {
         {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
         <UserInfo apiroot={apiroot3} />
       </div>
-      <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>⇡</div>
+      <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>顶</div>
+      <div className="topButton sortButton" onClick={onSortClick}>序</div>
       <EventLogo />
       <ToastContainer
         position="bottom-center"
@@ -99,6 +118,7 @@ export default function Page() {
         tippy={target}
         initSearch={initSearch}
         onLoad={onListLoadScroll}
+        sort={words[sortType]}
       />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
@@ -185,13 +205,13 @@ function Levels({ levels, songid }) {
   );
 }
 
-function SearchBar({ onChange }) {
+function SearchBar({ onChange, initS }) {
   return (
     <div className="searchDiv">
       <input
         type="text"
         className="searchInput"
-        placeholder="Search"
+        placeholder={!initS?"Search":initS}
         onChange={onChange}
       />
     </div>
@@ -201,14 +221,15 @@ function SearchBar({ onChange }) {
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function TheList({ tippy, initSearch, onLoad }) {
-  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
+function TheList({ tippy, initSearch, onLoad, sort }) {
+  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList?sort="+sort, fetcher);
   const [filteredList, setFilteredList] = new useState(data);
   const [initS, setInitS] = new useState(false);
   const [isLoaded, setIsLoaded] = new useState(false);
   const debounced = useDebouncedCallback(
     // function
     (value) => {
+      let url="/";
       if (value) {
         let dataf = data.filter(
           (o) =>
@@ -219,31 +240,34 @@ function TheList({ tippy, initSearch, onLoad }) {
             o.Levels.some((i) => i == value) ||
             o.Id == value
         );
+        url += "?s="+value
         setFilteredList(dataf);
       } else {
         setFilteredList(data);
       }
+      if(sort){
+        url += "?sort="+sort
+      }
+      window.history.pushState({},0,url)
+      setIsLoaded(true);
     },
     // delay in ms
     500
   );
   useEffect(() => {
+    //console.log('effect')
     if (isLoaded) {
+      //console.log('onload')
       onLoad();
     }
   });
-
   if (error) return <div>failed to load</div>;
   if (isLoading) {
     return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
-  data.sort((a, b) => {
-    return b.Timestamp - a.Timestamp;
-  });
-
+  debounced("");
   if (filteredList == undefined) {
-    setFilteredList(data);
     return (
       <SearchBar
         onChange={(e) => {
@@ -363,7 +387,7 @@ function TheList({ tippy, initSearch, onLoad }) {
     </div>
   ));
 
-  if (!isLoaded) {
+  if (!isLoaded && !initSearch) {
     setIsLoaded(true);
   }
 
@@ -373,7 +397,9 @@ function TheList({ tippy, initSearch, onLoad }) {
       <SearchBar
         onChange={(e) => {
           debounced(e.target.value);
+          localStorage.setItem("scrollPosition", 0);
         }}
+        initS={initSearch}
       />
       <div className="theList">{list}</div>
     </>

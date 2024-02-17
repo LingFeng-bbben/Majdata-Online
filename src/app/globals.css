@@ -29,7 +29,7 @@ p {
   height: 100%;
   width: 100%;
   aspect-ratio: 1;
-  filter: blur(20px) brightness(50%);
+  filter: blur(5px) brightness(50%);
 }
 
 .seprate {
@@ -52,6 +52,7 @@ h1 {
   flex-direction: row;
   justify-content: center;
   z-index: 9999;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
@@ -232,7 +233,6 @@ img.songImg {
 }
 
 .majViewPort {
-  margin-bottom: 15px;
   background-color: black;
   width: 100%;
   aspect-ratio: 1;
@@ -334,9 +334,9 @@ img.songImg {
 
 .footerImage {
   width: 10%;
-  margin: 3rem;
-  margin-left: 45%;
-  margin-right: 45%;
+  margin: auto;
+  margin-top: 3rem;
+  margin-bottom: 50rem;
 }
 
 .commentbox {
@@ -427,9 +427,35 @@ img.songImg {
   background: rgb(40, 40, 40);
   text-align: center;
   vertical-align: middle;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   user-select: none;
   padding-top: 0.3rem;
   border-radius: 100%;
   box-shadow: 0px 0px 5px white;
+}
+
+.sortButton{
+  bottom: 8rem;
+}
+
+.uploadDate{
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.songDescription{
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: auto;
+  padding: 20%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  margin-top: 0rem;
+}
+@media screen and (min-width: 700px) {
+  .songDescription{
+    width: 70%;
+  }
 }

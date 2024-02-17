@@ -21,6 +21,7 @@ export default function RootLayout({children}) {
   return (
     <html lang="en">
       <meta name="theme-color" content="#FFFFFF" />
+      <link rel="icon" type='image/x-icon' href='favicon.ico'/>
       <body className={inter.className}>{children}</body>
     </html>
   )
