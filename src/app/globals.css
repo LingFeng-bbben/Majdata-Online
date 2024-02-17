@@ -9,14 +9,18 @@
   scrollbar-width: thin;
 }
 
-body {
+div{
   color: rgb(var(--foreground-rgb));
+}
+
+body {
   caret-color: transparent;
   transition: all 0.2s;
   background-color: rgb(var(--background-start));
 }
 
 p {
+  color: rgb(var(--foreground-rgb));
   text-align: center;
   margin: 1rem;
 }

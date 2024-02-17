@@ -17,7 +17,6 @@ import "./eventstyle.css";
 import EventLogo from "./eventcompos";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./interact";
-import Link from "next/link";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -79,13 +78,13 @@ export default function Page() {
         ) : (
           <>
             <div className="linkContent">
-              <Link href="./filebase">文件库</Link>
+              <a href="./filebase">文件库</a>
             </div>
             <div className="linkContent" style={{boxShadow:"0px 0px 3px gold"}}>
-              <Link href="./contest">MMFC7</Link>
+              <a href="./contest">MMFC7</a>
             </div>
             <div className="linkContent">
-              <Link href="./dydy">DD板</Link>
+              <a href="./dydy">DD板</a>
             </div>
           </>
         )}
@@ -151,7 +150,7 @@ function Levels({ levels, songid }) {
   }
 
   return (
-    <Link href={"/song?id=" + songid}>
+    <a href={"/song?id=" + songid}>
       <div
         className="songLevel"
         id="lv0"
@@ -201,7 +200,7 @@ function Levels({ levels, songid }) {
       >
         {levels[6]}
       </div>
-    </Link>
+    </a>
   );
 }
 
