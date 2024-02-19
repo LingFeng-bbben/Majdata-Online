@@ -344,6 +344,8 @@ img.songImg {
 }
 
 .commentbox {
+  color: white;
+  margin: auto;
   height: 6rem;
   width: 16rem;
 }
@@ -356,14 +358,13 @@ img.songImg {
   margin: 1rem;
   margin-bottom: 0.5rem;
   box-shadow: 2px 2px 5px gray;
-  width: 20rem;
+  width: 21rem;
 }
 
 .CommentUser {
-  color: whitesmoke;
+  color: gray;
   text-align: left;
   margin: 0.3rem;
-  font-weight: bold;
 }
 
 .CommentContent {

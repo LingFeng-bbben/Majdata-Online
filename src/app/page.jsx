@@ -271,10 +271,13 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
 
       if (lastS) {
         url += "?s=" + lastS;
-      }
+        if (lastSo) {
+          url += "&sort=" + sort;
+        }
+      }else{
       if (lastSo) {
-        url += "&sort=" + sort;
-      }
+        url += "?sort=" + sort;
+      }}
       window.history.pushState({}, 0, url);
     },
     // delay in ms

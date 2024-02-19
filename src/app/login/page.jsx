@@ -74,8 +74,8 @@ function Login() {
       toast.error(await response.text());
       return;
     }
-    document.cookie = "token=" + (await response.text());
-    router.push("./user");
+    document.cookie = "token=" + (await response.text()) + ";max-age=604800";
+    router.push("/");
   }
   return (
     <div className="theList">
