@@ -40,7 +40,15 @@ export default function Page() {
       </h1>
       <div className="links">
         <div className="linkContent">
-          <div onClick={()=>{if (typeof window !== "undefined") {window.history.back()}}}>返回</div>
+          <div
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.history.back();
+              }
+            }}
+          >
+            返回
+          </div>
         </div>
         <ToastContainer
           position="bottom-center"
@@ -180,11 +188,11 @@ function SongInfo({ id, tippy }) {
               <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
             </svg>
           </div>
-          
         </div>
-        
       </div>
-      <div className="uploadDate">{new Date(o.timestamp*1000).toLocaleString()}</div>
+      <div className="uploadDate">
+        {new Date(o.timestamp * 1000).toLocaleString()}
+      </div>
     </div>
   );
 }
@@ -372,11 +380,11 @@ function CommentSender({ songid }) {
   const [comment, SetCommnet] = useState("");
   const onSubmit = async () => {
     const formData = new FormData();
-    if(comment==""){
+    if (comment == "") {
       toast.error("说点什么吧？");
       return;
     }
-      
+
     formData.set("token", getCookie("token"));
     formData.set("type", "comment");
     formData.set("content", comment);
@@ -390,12 +398,12 @@ function CommentSender({ songid }) {
       method: "POST",
       body: formData,
     });
-    toast.done(sending)
+    toast.done(sending);
     if (response.status == 200) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
-        SetCommnet("")
+        SetCommnet("");
       }
     } else if (response.status == 400) {
       toast.error("评论失败：登录了吗？");
@@ -406,7 +414,6 @@ function CommentSender({ songid }) {
       document.getElementById("submitbutton").disabled = false;
       document.getElementById("submitbutton").textContent = "发表";
     }
-    
   };
   return (
     <>
@@ -420,6 +427,8 @@ function CommentSender({ songid }) {
           type="text"
           onChange={() => SetCommnet(event.target.value)}
         />
+      </div>
+      <div className="theList">
         <button
           className="linkContent"
           id="submitbutton"

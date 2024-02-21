@@ -464,3 +464,35 @@ img.songImg {
     width: 70%;
   }
 }
+
+.fancyDownloadButton{
+  width: 200px;
+  font-size: 30px;
+  text-align: center;
+  text-shadow: black 0px 0px 5px;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  animation: glowing 20s linear infinite;
+  
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+.biliPlayer{
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  margin-top: 10px;
+}
+@media screen and (max-width: 500px) {
+  .biliPlayer{
+  width: 100%;
+}}

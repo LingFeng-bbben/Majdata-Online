@@ -89,6 +89,9 @@ export default function Page() {
             <div className="linkContent">
               <a href="./dydy">DD板</a>
             </div>
+            <div className="linkContent">
+              <a href="./edit">Edit</a>
+            </div>
           </>
         )}
 

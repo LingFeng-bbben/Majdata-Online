@@ -116,6 +116,7 @@ export default function Page() {
           </p>
         </PhotoProvider>
       </div>
+      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }
