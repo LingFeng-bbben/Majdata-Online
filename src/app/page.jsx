@@ -14,7 +14,6 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
-import EventLogo from "./eventcompos";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./interact";
 
@@ -77,20 +76,17 @@ export default function Page() {
           </div>
         ) : (
           <>
-            <div className="linkContent">
-              <a href="./filebase">文件库</a>
-            </div>
             <div
               className="linkContent"
               style={{ boxShadow: "0px 0px 3px gold" }}
             >
-              <a href="./contest">MMFC7</a>
+              <a href="./contest">MMFC</a>
             </div>
             <div className="linkContent">
-              <a href="./dydy">DD板</a>
+              <a href="./dydy">匿名板</a>
             </div>
             <div className="linkContent">
-              <a href="./edit">Edit</a>
+              <a href="./edit">编辑器</a>
             </div>
           </>
         )}
@@ -111,7 +107,7 @@ export default function Page() {
       <div className="topButton sortButton" onClick={onSortClick}>
         序
       </div>
-      <EventLogo />
+      {/* <EventLogo /> */}
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

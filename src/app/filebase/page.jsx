@@ -13,7 +13,7 @@ export default function Page() {
       <div className='seprate'></div>
       <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 文件库</h1>
       <div className='links'>
-      <div className='linkContent'><a href='../'>返回</a></div>
+      <div className='linkContent'><a href='./contest'>返回</a></div>
       <div className='linkContent'><a href='https://www.maimaimfc.ink/libraryupload'>上传(前往MMFC)</a></div>
       <div className='linkContent' onClick={()=>alert(
         "在MMFC主站的文件库中上传的谱面会出现在此处，整点刷新\n点击谱面的难度，maj就会载入\n搜索框可以搜id/标题/谱师/艺术家/等级"
