@@ -340,7 +340,7 @@ img.songImg {
   width: 10%;
   margin: auto;
   margin-top: 3rem;
-  margin-bottom: 50rem;
+  margin-bottom: 25rem;
 }
 
 .commentbox {
@@ -496,3 +496,9 @@ img.songImg {
   .biliPlayer{
   width: 100%;
 }}
+.notReady{
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+}

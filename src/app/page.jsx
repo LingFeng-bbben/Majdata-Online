@@ -289,7 +289,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
       onLoad();
     }
   });
-  if (error) return <div>failed to load</div>;
+  if (error) return <div className='notReady'>已闭店</div>;
   if (isLoading) {
     return (
       <>

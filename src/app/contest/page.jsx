@@ -15,13 +15,10 @@ export default function Page() {
     <>
       <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 7TH</h1>
+      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 8TH</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
-      <div className="linkContent">
-              <a href="./filebase">文件库</a>
-            </div>
-      <div className='linkContent'><a href='https://www.maimaimfc.ink/6thstart' target="_blank" rel="noreferrer">7th报名窗口</a></div>
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div>
       <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">打分会场</a></div>      </div>
       <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>顶</div>
       <Majdata />
@@ -93,7 +90,7 @@ function TheList({tippy}) {
   const { data, error, isLoading } = useSWR(apiroot1 + "/SongList", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
   const [desInfo, setDesInfo] = new useState("点击难度载入谱面哟");
-  if (error) return <div>failed to load</div>;
+  if (error) return <div className='notReady'>已闭店</div>;
   if (isLoading) {
     return <div className='loading'></div>;
   }
