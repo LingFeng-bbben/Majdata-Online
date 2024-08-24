@@ -80,7 +80,7 @@ export default function Page() {
               className="linkContent"
               style={{ boxShadow: "0px 0px 3px gold" }}
             >
-              <a href="./contest">MMFC</a>
+              <a href="./contest">妹妹唱歌</a>
             </div>
             <div className="linkContent">
               <a href="./dydy">匿名板</a>

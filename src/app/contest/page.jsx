@@ -15,11 +15,13 @@ export default function Page() {
     <>
       <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 8TH</h1>
+      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>妹妹唱歌</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
-      <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div>
-      <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">打分会场</a></div>      </div>
+
+      {/* <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div> */}
+      <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">打分会场</a></div>      
+      </div>
       <div className="topButton" onClick={()=>{if (typeof window !== "undefined") {window.scrollTo(0, 0)}}}>顶</div>
       <Majdata />
       <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
@@ -94,6 +96,7 @@ function TheList({tippy}) {
   if (isLoading) {
     return <div className='loading'></div>;
   }
+
   data.sort((a, b) => { return b.Id - a.Id; });
 
   const filterBySearch = (e) => {
