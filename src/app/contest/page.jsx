@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>妹妹唱歌</h1>
+      <h1><img className="xxlb"src="./xxlb.jpg" onClick={()=>alert("不要点我 操你妈")}></img>MMFC 10TH</h1>
       <div className='links'>
       <div className='linkContent'><a href='../'>返回</a></div>
 
@@ -26,7 +26,7 @@ export default function Page() {
       <Majdata />
       <Tippy singleton={source} animation='fade' placement='top-start' interactive={true}/>
       <TheList tippy={target}/>
-      <img className="footerImage" style={{width:"30%"}} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
+      <img className="footerImage" style={{width:"150px"}} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
     </>
   )
 }

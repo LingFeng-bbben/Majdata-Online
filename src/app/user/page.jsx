@@ -153,7 +153,7 @@ function Uploader() {
       return;
     }
     toast.success("上传成功");
-    router.push("../");
+    // router.push("../");
   }
   return (
     <div className="theList">
