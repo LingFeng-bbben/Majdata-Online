@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Inter } from 'next/font/google'
+import { Suspense } from "react";
 import './globals.css'
 import React from 'react'
 
@@ -22,7 +23,9 @@ export default function RootLayout({children}) {
     <html lang="en">
       <meta name="theme-color" content="#FFFFFF" />
       <link rel="icon" type='image/x-icon' href='favicon.ico'/>
+      <Suspense>
       <body className={inter.className}>{children}</body>
+      </Suspense>
     </html>
   )
 }
