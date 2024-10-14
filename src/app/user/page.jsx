@@ -1,5 +1,5 @@
 "use client";
-import { React } from "react";
+import { React, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
@@ -14,7 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Page() {
   const [source, target] = useSingleton();
-  if(getCookie("token")==""){
+  const [cookie, setCookie] = useState();
+  
+  if(cookie==""){
+    setCookie(getCookie("token"));
     if (typeof window !== "undefined") {
     location.href="/login"
     }
