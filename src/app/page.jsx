@@ -363,6 +363,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
 
     zip.generateAsync({ type: "blob" }).then((blob) => {
       const url = window.URL.createObjectURL(blob);
+      toast.success(props.title + "下载成功");
       downloadFile(url, props.title + ".zip");
     });
   };

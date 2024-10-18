@@ -11,6 +11,7 @@ import "tippy.js/dist/tippy.css";
 import InteractCount from "../interact";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -136,26 +137,37 @@ function Uploader() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const uploading = toast.loading("正在爆速上传...")
+    const uploading = toast.loading("正在爆速上传...",{ hideProgressBar: false })
     formData.set("token", getCookie("token"));
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton").disabled = true;
       document.getElementById("submitbutton").textContent = "上传中啦等一会啦";
     }
-    const response = await fetch(apiroot3 + "/Uploader/Chart", {
-      method: "POST",
-      body: formData,
+    try{
+      const response = await axios.post(apiroot3 + "/Uploader/Chart", formData,{
+        onUploadProgress: function (progressEvent) {
+          if (progressEvent.lengthComputable) {
+            const progress = progressEvent.loaded / progressEvent.total;
+            toast.update(uploading, { progress });
+          }
+      }
     });
-    toast.done(uploading);
-    if (response.status != 200) {
-      toast.error(await response.text(),{autoClose: false});
+      toast.done(uploading);
+      toast.success(response.data);
+      await sleep(2000);
+      window.location.reload();
+    }catch(e){
+      toast.done(uploading);
+      toast.error(e.response.data,{autoClose: false});
       if (typeof window !== "undefined") {
         document.getElementById("submitbutton").textContent = "上传";
         document.getElementById("submitbutton").disabled = false;
       }
       return;
+    }finally{
+      toast.done(uploading);
     }
-    toast.success("上传成功");
+    
     // router.push("../");
   }
   return (
@@ -167,7 +179,7 @@ function Uploader() {
         <input className="userinput" type="file" name="formfiles" />
         <div className="inputHint">track</div>
         <input className="userinput" type="file" name="formfiles" />
-        <div className="inputHint">bg.mp4(可选,限20M内)</div>
+        <div className="inputHint">bg.mp4/pv.mp4(可选,限20M内)</div>
         <input className="userinput" type="file" name="formfiles" />
         <button className="linkContent" id="submitbutton" type="submit">
           上传
@@ -175,6 +187,10 @@ function Uploader() {
       </form>
     </div>
   );
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function CoverPic({ id }) {
