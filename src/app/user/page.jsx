@@ -163,9 +163,11 @@ function Uploader() {
       <form className="formbox" onSubmit={onSubmit}>
         <div className="inputHint">maidata</div>
         <input className="userinput" type="file" name="formfiles" />
-        <div className="inputHint">bg</div>
+        <div className="inputHint">bg.png/bg.jpg</div>
         <input className="userinput" type="file" name="formfiles" />
         <div className="inputHint">track</div>
+        <input className="userinput" type="file" name="formfiles" />
+        <div className="inputHint">bg.mp4(可选,限20M内)</div>
         <input className="userinput" type="file" name="formfiles" />
         <button className="linkContent" id="submitbutton" type="submit">
           上传

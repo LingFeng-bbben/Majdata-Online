@@ -273,10 +273,11 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
         if (lastSo) {
           url += "&sort=" + sort;
         }
-      }else{
-      if (lastSo) {
-        url += "?sort=" + sort;
-      }}
+      } else {
+        if (lastSo) {
+          url += "?sort=" + sort;
+        }
+      }
       window.history.pushState({}, 0, url);
     },
     // delay in ms
@@ -289,7 +290,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
       onLoad();
     }
   });
-  if (error) return <div className='notReady'>已闭店</div>;
+  if (error) return <div className="notReady">已闭店</div>;
   if (isLoading) {
     return (
       <>
@@ -298,7 +299,8 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
       </>
     );
   }
-  if (data == "" || data == undefined) return <div>failed to load: data is empty</div>;
+  if (data == "" || data == undefined)
+    return <div>failed to load: data is empty</div>;
 
   debounced(sKey);
 
@@ -306,9 +308,27 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     return <SearchBar />;
   }
 
-  async function fetchFile(url) {
-    const response = await axios.get(url, { responseType: "blob" });
-    return response.data;
+  async function fetchFile(url, fileName) {
+    var t;
+    try {
+      t = toast.loading("Downloading " + fileName, { hideProgressBar: false });
+      var response = await axios.get(url, {
+        responseType: "blob",
+        onDownloadProgress: function (progressEvent) {
+          if (progressEvent.lengthComputable) {
+            const progress = progressEvent.loaded / progressEvent.total;
+            toast.update(t, { progress });
+          }
+        },
+      });
+      toast.done(t);
+      return response.data;
+    } catch (error) {
+      toast.done(t);
+      return undefined;
+    } finally {
+      toast.done(t);
+    }
   }
 
   function downloadFile(url, fileName) {
@@ -321,16 +341,29 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     document.body.removeChild(a);
   }
 
-  const downloadSong = (props) => () => {
+  const downloadSong = (props) => async () => {
     const zip = new JSZip();
     //alert(props.id)
-    zip.file("track.mp3", fetchFile(apiroot3 + "/Track/" + props.id));
-    zip.file("bg.jpg", fetchFile(apiroot3 + "/ImageFull/" + props.id));
-    zip.file("maidata.txt", fetchFile(apiroot3 + "/Maidata/" + props.id));
+    zip.file(
+      "track.mp3",
+      await fetchFile(apiroot3 + "/Track/" + props.id, "track.mp3")
+    );
+    zip.file(
+      "bg.jpg",
+      await fetchFile(apiroot3 + "/ImageFull/" + props.id, "bg.jpg")
+    );
+    zip.file(
+      "maidata.txt",
+      await fetchFile(apiroot3 + "/Maidata/" + props.id, "maidata.txt")
+    );
+    const video = await fetchFile(apiroot3 + "/Video/" + props.id, "bg.mp4");
+    if (video != undefined) {
+      zip.file("bg.mp4", video);
+    }
 
     zip.generateAsync({ type: "blob" }).then((blob) => {
       const url = window.URL.createObjectURL(blob);
-      downloadFile(url, props.title);
+      downloadFile(url, props.title + ".zip");
     });
   };
 
