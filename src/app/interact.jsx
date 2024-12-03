@@ -18,26 +18,17 @@ export default function InteractCount({ songid }) {
   if (data == "" || data == undefined) return <div>?</div>;
   const commentcount = Object.entries(data.CommentsList).length;
   const likecount = data.LikeList.length;
+  var playcount = data.PlayCount;
+  if (playcount == undefined) {
+    playcount = 0;
+  }
+  if(playcount >1000){
+    playcount = (playcount/1000).toFixed(1) + "k";
+  }
   return (
     <div>
-      <div className="commentBox downloadButtonBox">
-        <svg
-          className="commentIco"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 -960 960 960"
-          width="24"
-          style={
-            commentcount >= 5
-              ? { background: "gold", borderRadius:"5px", fill:"black" }
-              : { background: "transparent" }
-          }
-        >
-          <path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
-        </svg>
-      </div>
       <div className="commentBox downloadButtonBox commentNumber">
-        {commentcount}
+        {playcount}
       </div>
       <div className="commentBox downloadButtonBox">
         <svg
@@ -48,7 +39,7 @@ export default function InteractCount({ songid }) {
           width="24"
           style={
             likecount >= 5
-              ? { background: "gold", borderRadius:"5px", fill:"black" }
+              ? { background: "gold", borderRadius: "5px", fill: "black" }
               : { background: "transparent" }
           }
         >
@@ -58,6 +49,26 @@ export default function InteractCount({ songid }) {
       <div className="commentBox downloadButtonBox commentNumber">
         {likecount}
       </div>
+      <div className="commentBox downloadButtonBox">
+        <svg
+          className="commentIco"
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+          style={
+            commentcount >= 5
+              ? { background: "gold", borderRadius: "5px", fill: "black" }
+              : { background: "transparent" }
+          }
+        >
+          <path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+        </svg>
+      </div>
+      <div className="commentBox downloadButtonBox commentNumber">
+        {commentcount}
+      </div>
+      
     </div>
   );
 }

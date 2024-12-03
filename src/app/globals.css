@@ -392,8 +392,6 @@ img.songImg {
   width: 1.3rem;
   height: 1.3rem;
   float: left;
-  border: 1px solid transparent;
-  border-radius: 5px;
 }
 
 .loading {
