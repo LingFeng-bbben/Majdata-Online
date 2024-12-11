@@ -62,9 +62,10 @@ function Login() {
       return;
     }
     formData.set("password", md5(formData.get("password")));
-    const response = await fetch(apiroot3 + "/User/Login", {
+    const response = await fetch(apiroot3 + "/account/Login", {
       method: "POST",
       body: formData,
+      credentials: "include"
     });
     if (response.status != 200) {
       if(response.status ==404){
@@ -74,7 +75,7 @@ function Login() {
       toast.error(await response.text());
       return;
     }
-    document.cookie = "token=" + (await response.text()) + ";max-age=604800";
+    //document.cookie = "token=" + (await response.text()) + ";max-age=604800";
     router.push("/");
   }
   return (

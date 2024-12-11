@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TheHeader from "../header";
+
 export default function Page() {
   return (
     <>
@@ -22,14 +24,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <h1>
-        <img
-          className="xxlb"
-          src="./salt.webp"
-          onClick={() => alert("不要点我 操你妈")}
-        ></img>
-        MajOnline.Beta
-      </h1>
+      <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>
@@ -58,7 +53,7 @@ function Register() {
       return;
     }
     formData.set("password", md5(formData.get("password")));
-    const response = await fetch(apiroot3 + "/User/Register", {
+    const response = await fetch(apiroot3 + "/account/Register", {
       method: "POST",
       body: formData,
     });

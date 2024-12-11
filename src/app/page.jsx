@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./interact";
+import TheHeader from "./header";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -56,19 +57,7 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <h1>
-        <img
-          className="xxlb"
-          src="./salt.webp"
-          onClick={() =>
-            toast.error("不要点我 操你妈", {
-              position: "top-center",
-              autoClose: 500,
-            })
-          }
-        ></img>
-        Majdata.Net
-      </h1>
+      <TheHeader toast={toast}/>
       <div className="links">
         {initSearch ? (
           <div className="linkContent">
@@ -235,7 +224,7 @@ const fetcher = async (...args) =>
 
 function TheList({ tippy, initSearch, onLoad, sort }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/SongList?sort=" + sort,
+    apiroot3 + "/maichart/get?length=20&sort=" + sort,
     fetcher
   );
   const [filteredList, setFilteredList] = new useState(data);

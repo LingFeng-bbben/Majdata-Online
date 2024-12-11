@@ -12,29 +12,23 @@ import InteractCount from "../interact";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import TheHeader from "../header";
 
 export default function Page() {
   const [source, target] = useSingleton();
   const [cookie, setCookie] = useState();
-  
-  if(cookie==""){
+
+  if (cookie == "") {
     setCookie(getCookie("token"));
     if (typeof window !== "undefined") {
-    location.href="/login"
+      location.href = "/login";
     }
-    return (<p>请先登录</p>);
+    return <p>请先登录</p>;
   }
   return (
     <>
       <div className="seprate"></div>
-      <h1>
-        <img
-          className="xxlb"
-          src="./salt.webp"
-          onClick={() => alert("不要点我 操你妈")}
-        ></img>
-        Majdata.Net
-      </h1>
+      <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>
@@ -43,17 +37,17 @@ export default function Page() {
         <Logout />
       </div>
       <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {/* <UserInfoDetail/> */}
       <p>在这里上传你的谱面。点击上传即代表你承认以下事项：</p>
       <p>1. 上传的谱面是你自己写的或合作写的，又或是谱面原作者同意上传</p>
@@ -132,42 +126,49 @@ function Logout() {
 
 function Uploader() {
   //const router = useRouter();
-  
+
   async function onSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const uploading = toast.loading("正在爆速上传...",{ hideProgressBar: false })
+    const uploading = toast.loading("正在爆速上传...", {
+      hideProgressBar: false,
+    });
     formData.set("token", getCookie("token"));
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton").disabled = true;
       document.getElementById("submitbutton").textContent = "上传中啦等一会啦";
     }
-    try{
-      const response = await axios.post(apiroot3 + "/Uploader/Chart", formData,{
-        onUploadProgress: function (progressEvent) {
-          if (progressEvent.lengthComputable) {
-            const progress = progressEvent.loaded / progressEvent.total;
-            toast.update(uploading, { progress });
-          }
-      }
-    });
+    try {
+      const response = await axios.post(
+        apiroot3 + "/maichart/upload",
+        formData,
+        {
+          onUploadProgress: function (progressEvent) {
+            if (progressEvent.lengthComputable) {
+              const progress = progressEvent.loaded / progressEvent.total;
+              toast.update(uploading, { progress });
+            }
+          },
+          withCredentials: true,
+        }
+      );
       toast.done(uploading);
       toast.success(response.data);
       await sleep(2000);
       window.location.reload();
-    }catch(e){
+    } catch (e) {
       toast.done(uploading);
-      toast.error(e.response.data,{autoClose: false});
+      toast.error(e.response.data, { autoClose: false });
       if (typeof window !== "undefined") {
         document.getElementById("submitbutton").textContent = "上传";
         document.getElementById("submitbutton").disabled = false;
       }
       return;
-    }finally{
+    } finally {
       toast.done(uploading);
     }
-    
+
     // router.push("../");
   }
   return (
@@ -190,7 +191,7 @@ function Uploader() {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function CoverPic({ id }) {

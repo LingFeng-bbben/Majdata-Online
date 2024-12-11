@@ -7,6 +7,7 @@ import { apiroot3 } from "../apiroot";
 import useSWR from "swr";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import TheHeader from "../header";
 
 export default function Page() {
   const [pages, setPages] = useState([0]);
@@ -16,19 +17,7 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <h1>
-        <img
-          className="xxlb"
-          src="./salt.webp"
-          onClick={() =>
-            toast.error("不要点我 操你妈", {
-              position: "top-center",
-              autoClose: 500,
-            })
-          }
-        ></img>
-        Majdata.Net
-      </h1>
+      <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
           <a href="./">返回</a>
@@ -104,8 +93,8 @@ function CommentSender() {
       return;
     }
     if (imgfile != undefined) {
-      comment = 'null';
-      console.log(comment)
+      comment = "null";
+      console.log(comment);
     }
 
     formData.set("token", getCookie("token"));
@@ -127,7 +116,7 @@ function CommentSender() {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
-        document.getElementById("imagecontent").value='';
+        document.getElementById("imagecontent").value = "";
       }
     } else if (response.status == 400) {
       toast.error("评论失败：登录了吗？");

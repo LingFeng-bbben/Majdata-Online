@@ -13,6 +13,7 @@ import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TheHeader from "../header";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -25,19 +26,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${apiroot3}/Image/${param})` }}
       ></div>
       <div className="seprate"></div>
-      <h1>
-        <img
-          className="xxlb"
-          src="./salt.webp"
-          onClick={() =>
-            toast.error("不要点我 操你妈", {
-              position: "top-center",
-              autoClose: 500,
-            })
-          }
-        ></img>
-        Majdata.Net
-      </h1>
+      <TheHeader toast={toast}/>
       <div className="links">
         <div className="linkContent">
           <div
