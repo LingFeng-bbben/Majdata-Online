@@ -1,19 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { PhotoProvider, PhotoView } from "react-photo-view";
-import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
 import Majdata from "../majdata";
 import UserInfo from "../userinfo";
 import { apiroot3 } from "../apiroot";
-import JSZip from "jszip";
-import axios from "axios";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TheHeader from "../header";
+import Levels from "../levels";
+import CoverPic from "../cover";
+import {downloadSong} from "../download";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -23,7 +22,7 @@ export default function Page() {
     <>
       <div
         className="bg"
-        style={{ backgroundImage: `url(${apiroot3}/Image/${param})` }}
+        style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
       <div className="seprate"></div>
       <TheHeader toast={toast}/>
@@ -74,7 +73,7 @@ export default function Page() {
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 function SongInfo({ id, tippy }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/SongList/" + id,
+    apiroot3 + "/maichart/"+id+"/summary" ,
     fetcher
   );
   if (error) return <div>failed to load</div>;
@@ -83,65 +82,10 @@ function SongInfo({ id, tippy }) {
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
 
-  async function fetchFile(url, fileName) {
-    var t;
-    try {
-      t = toast.loading("Downloading " + fileName, { hideProgressBar: false });
-      var response = await axios.get(url, {
-        responseType: "blob",
-        onDownloadProgress: function (progressEvent) {
-          if (progressEvent.lengthComputable) {
-            const progress = progressEvent.loaded / progressEvent.total;
-            toast.update(t, { progress });
-          }
-        },
-      });
-      toast.done(t);
-      return response.data;
-    } catch (error) {
-      toast.done(t);
-      return undefined;
-    } finally {
-      toast.done(t);
-    }
+  const OnDownloadClick = (params) => async () =>{
+    await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
 
-  function downloadFile(url, fileName) {
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  const downloadSong = (props) => async () => {
-    const zip = new JSZip();
-    //alert(props.id)
-    zip.file(
-      "track.mp3",
-      await fetchFile(apiroot3 + "/Track/" + props.id, "track.mp3")
-    );
-    zip.file(
-      "bg.jpg",
-      await fetchFile(apiroot3 + "/ImageFull/" + props.id, "bg.jpg")
-    );
-    zip.file(
-      "maidata.txt",
-      await fetchFile(apiroot3 + "/Maidata/" + props.id, "maidata.txt")
-    );
-    const video = await fetchFile(apiroot3 + "/Video/" + props.id, "bg.mp4");
-    if (video != undefined) {
-      zip.file("bg.mp4", video);
-    }
-
-    zip.generateAsync({ type: "blob" }).then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      toast.success(props.title + "下载成功");
-      downloadFile(url, props.title + ".zip");
-    });
-  };
   const shareSong = (props) => async () => {
     await navigator.clipboard.writeText(
       "https://majdata.net/song?id=" + props.id
@@ -178,7 +122,7 @@ function SongInfo({ id, tippy }) {
             <div className="songDesigner">{o.uploader + "@" + o.designer}</div>
           </Tippy>
 
-          <Levels levels={o.levels} songid={o.id} />
+          <Levels levels={o.levels} songid={o.id} isPlayer={true} />
           <br />
           <div
             className="songLevel downloadButtonBox"
@@ -196,7 +140,7 @@ function SongInfo({ id, tippy }) {
           </div>
           <div
             className="songLevel downloadButtonBox"
-            onClick={downloadSong({ id: o.id, title: o.title })}
+            onClick={OnDownloadClick({ id: o.id, title: o.title })}
           >
             <svg
               className="downloadButton"
@@ -211,130 +155,10 @@ function SongInfo({ id, tippy }) {
         </div>
       </div>
       <div className="uploadDate">
-        {new Date(o.timestamp * 1000).toLocaleString()}
+        {o.timestamp}
       </div>
     </div>
   );
-}
-
-function CoverPic({ id }) {
-  let url = apiroot3 + `/Image/${id}`;
-  let urlfull = apiroot3 + `/ImageFull/${id}`;
-  return (
-    <>
-      <PhotoProvider
-        bannerVisible={false}
-        loadingElement={<div className="loading"></div>}
-      >
-        <PhotoView src={urlfull}>
-          <img className="songImg" loading="lazy" src={url} alt="" />
-        </PhotoView>
-      </PhotoProvider>
-      {/* <div className='songid'>{id}</div> */}
-    </>
-  );
-}
-
-function Levels({ levels, songid }) {
-  for (let i = 0; i < levels.length; i++) {
-    if (levels[i] == null) {
-      levels[i] = "-";
-    }
-  }
-  const scrollToTop = () => {
-    let sTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (sTop > 0.1) {
-      window.requestAnimationFrame(scrollToTop);
-      window.scrollTo(0, sTop - sTop / 9);
-    }
-  };
-
-  const levelClickCallback = (e) => {
-    scrollToTop();
-    window.unitySendMessage(
-      "HandleJSMessages",
-      "ReceiveMessage",
-      "jsnmsl\n" + apiroot3 + "\n" + songid + "\n" + e.target.id
-    );
-  };
-  return (
-    <div>
-      <div
-        className="songLevel"
-        id="lv0"
-        style={{ display: levels[0] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[0]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv1"
-        style={{ display: levels[1] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[1]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv2"
-        style={{ display: levels[2] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[2]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv3"
-        style={{ display: levels[3] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[3]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv4"
-        style={{ display: levels[4] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[4]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv5"
-        style={{ display: levels[5] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[5]}
-      </div>
-      <div
-        className="songLevel"
-        id="lv6"
-        style={{ display: levels[6] == "-" ? "none" : "unset" }}
-        onClick={levelClickCallback}
-      >
-        {levels[6]}
-      </div>
-    </div>
-  );
-}
-
-function getCookie(cname) {
-  let name = cname + "=";
-  if (typeof window !== "undefined") {
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-  }
-  return "";
 }
 
 function LikeSender({ songid }) {

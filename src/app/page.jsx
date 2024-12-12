@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import UserInfo from "./userinfo";
 import { apiroot3 } from "./apiroot";
-import JSZip from "jszip";
-import axios from "axios";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
@@ -17,6 +15,7 @@ import InteractCount from "./interact";
 import TheHeader from "./header";
 import CoverPic from "./cover";
 import Levels from "./levels";
+import {downloadSong} from "./download";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -126,8 +125,6 @@ export default function Page() {
   );
 }
 
-
-
 function SearchBar({ onChange, initS }) {
   return (
     <div className="searchDiv">
@@ -217,84 +214,12 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     return <SearchBar />;
   }
 
-  async function fetchFile(url, fileName) {
-    var t;
-    try {
-      t = toast.loading("Downloading " + fileName, { hideProgressBar: false });
-      var response = await axios.get(url, {
-        responseType: "blob",
-        onDownloadProgress: function (progressEvent) {
-          if (progressEvent.lengthComputable) {
-            const progress = progressEvent.loaded / progressEvent.total;
-            toast.update(t, { progress });
-          }
-        },
-      });
-      toast.done(t);
-      return response.data;
-    } catch (error) {
-      toast.done(t);
-      return undefined;
-    } finally {
-      toast.done(t);
-    }
+  const OnDownloadClick = (params) => async () =>{
+    await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
-
-  function downloadFile(url, fileName) {
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  const downloadSong = (props) => async () => {
-    const zip = new JSZip();
-    //alert(props.id)
-    zip.file(
-      "track.mp3",
-      await fetchFile(apiroot3 + "/Track/" + props.id, "track.mp3")
-    );
-    zip.file(
-      "bg.jpg",
-      await fetchFile(apiroot3 + "/ImageFull/" + props.id, "bg.jpg")
-    );
-    zip.file(
-      "maidata.txt",
-      await fetchFile(apiroot3 + "/Maidata/" + props.id, "maidata.txt")
-    );
-    const video = await fetchFile(apiroot3 + "/Video/" + props.id, "bg.mp4");
-    if (video != undefined) {
-      zip.file("bg.mp4", video);
-    }
-
-    zip.generateAsync({ type: "blob" }).then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      toast.success(props.title + "下载成功");
-      downloadFile(url, props.title + ".zip");
-    });
-  };
-
-  // const shareSong = (props) => async () => {
-  //   await navigator.clipboard.writeText(
-  //     "https://majdata.net/song?id=" + props.id
-  //   );
-  //   toast.success("已复制到剪贴板", {
-  //     position: "bottom-center",
-  //     autoClose: 3000,
-  //     hideProgressBar: true,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: "dark",
-  //   });
-  // };
 
   const list = filteredList.map((o) => (
-    <div key={o.Id}>
+    <div key={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.id} />
@@ -317,11 +242,11 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
               </div>
             </Tippy>
 
-            <Levels levels={o.levels} songid={o.id} />
+            <Levels levels={o.levels} songid={o.id} isPlayer={false}/>
             <br />
             <div
               className="songLevel downloadButtonBox"
-              onClick={downloadSong({ id: o.id, title: o.title })}
+              onClick={OnDownloadClick({ id: o.id, title: o.title})}
             >
               <svg
                 className="downloadButton"
