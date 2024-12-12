@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import TheHeader from "../header";
+import CoverPic from "../cover";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -72,39 +73,6 @@ export default function Page() {
   );
 }
 
-//const fetcher = (...args) => fetch(...args).then((res) => res.json())
-
-function getCookie(cname) {
-  let name = cname + "=";
-  if (typeof window !== "undefined") {
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-  }
-  return "";
-}
-
-// function UserInfoDetail(){
-//   const router = useRouter()
-//   const token = getCookie('token')
-//   if(token=='') router.push('./login')
-//   const { data, error, isLoading } = useSWR(apiroot + "/User/Info/" + token, fetcher);
-//   if(error) return <div className='linkContent'><a href='./login'>error</a></div>
-//   if(isLoading) return <div className='linkContent'><a href='./login'>...</a></div>
-//   return (<>
-//     {/* <div>{data.Username}</div>
-//     <div>{data.Email}</div> */}
-//   </>
-//   )
-// }
 
 function Logout() {
   const router = useRouter();
@@ -134,7 +102,6 @@ function Uploader() {
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: false,
     });
-    formData.set("token", getCookie("token"));
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton").disabled = true;
       document.getElementById("submitbutton").textContent = "上传中啦等一会啦";
@@ -194,30 +161,12 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function CoverPic({ id }) {
-  let url = apiroot3 + `/Image/${id}`;
-  let urlfull = apiroot3 + `/ImageFull/${id}`;
-  return (
-    <>
-      <PhotoProvider
-        bannerVisible={false}
-        loadingElement={<div className="loading"></div>}
-      >
-        <PhotoView src={urlfull}>
-          <img className="songImg" src={url} alt="" />
-        </PhotoView>
-      </PhotoProvider>
-      {/* <div className='songId'>{id}</div> */}
-    </>
-  );
-}
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (url) => fetch(url,{mode:"cors",credentials: "include"}).then((res) => res.json());
 
 function getUsername() {
-  const token = getCookie("token");
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/User/Info/" + token,
+    apiroot3 + "/account/info/",
     fetcher
   );
   if (error) return "";
@@ -226,7 +175,7 @@ function getUsername() {
 }
 
 function TheList({ tippy }) {
-  const { data, error, isLoading } = useSWR(apiroot3 + "/SongList", fetcher);
+  const { data, error, isLoading } = useSWR(apiroot3 + "/maichart/list", fetcher);
   var username = getUsername();
   if (error) return <div>failed to load</div>;
   if (isLoading) {
@@ -235,29 +184,29 @@ function TheList({ tippy }) {
   if (data == "" || data == undefined) return <div>failed to load</div>;
 
   data.sort((a, b) => {
-    return b.Timestamp - a.Timestamp;
+    return b.timestamp - a.timestamp;
   });
 
-  const dataf = data.filter((o) => o.Uploader == username);
+  const dataf = data.filter((o) => o.uploader == username);
 
   const list = dataf.map((o) => (
     <div key={o.Id}>
       <div className="songCard">
-        <CoverPic id={o.Id} />
+        <CoverPic id={o.id} />
         <div className="songInfo">
-          <Tippy content={o.Title} singleton={tippy}>
-            <div className="songTitle" id={o.Id}>
-              <a href={"/song?id=" + o.Id}>{o.Title}</a>
+          <Tippy content={o.title} singleton={tippy}>
+            <div className="songTitle" id={o.id}>
+              <a href={"/song?id=" + o.id}>{o.title}</a>
             </div>
           </Tippy>
-          <Tippy content={o.Id} singleton={tippy}>
+          <Tippy content={o.id} singleton={tippy}>
             <div className="songArtist">{o.Id}</div>
           </Tippy>
-          <Tippy content={o.Uploader + "@" + o.Designer} singleton={tippy}>
-            <div className="songDesigner">{o.Uploader + "@" + o.Designer}</div>
+          <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
+            <div className="songDesigner">{o.uploader + "@" + o.designer}</div>
           </Tippy>
-          <Delbutton songid={o.Id} />
-          <InteractCount songid={o.Id} />
+          <Delbutton songid={o.id} />
+          <InteractCount songid={o.id} />
         </div>
       </div>
     </div>
@@ -279,7 +228,6 @@ function Delbutton({ songid }) {
         let ret = confirm("真的要删除吗(不可恢复)\n(没有任何机会)");
         if (ret) {
           const formData = new FormData();
-          formData.set("token", getCookie("token"));
           formData.set("songid", songid);
           const response = await fetch(apiroot3 + "/Uploader/Delete", {
             method: "POST",

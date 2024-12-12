@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PhotoProvider, PhotoView } from "react-photo-view";
-import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
 import UserInfo from "./userinfo";
 import { apiroot3 } from "./apiroot";
@@ -17,6 +15,7 @@ import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./interact";
 import TheHeader from "./header";
+import CoverPic from "./cover";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -57,7 +56,7 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <TheHeader toast={toast}/>
+      <TheHeader toast={toast} />
       <div className="links">
         {initSearch ? (
           <div className="linkContent">
@@ -126,24 +125,6 @@ export default function Page() {
   );
 }
 
-function CoverPic({ id }) {
-  let url = apiroot3 + `/Image/${id}`;
-  let urlfull = apiroot3 + `/ImageFull/${id}`;
-  return (
-    <>
-      <PhotoProvider
-        bannerVisible={false}
-        loadingElement={<div className="loading"></div>}
-      >
-        <PhotoView src={urlfull}>
-          <img className="songImg" loading="lazy" src={url} alt="" />
-        </PhotoView>
-      </PhotoProvider>
-      {/* <div className='songId'>{id}</div> */}
-    </>
-  );
-}
-
 function Levels({ levels, songid }) {
   for (let i = 0; i < levels.length; i++) {
     if (levels[i] == null) {
@@ -156,49 +137,49 @@ function Levels({ levels, songid }) {
       <div
         className="songLevel"
         id="lv0"
-        style={{ display: levels[0] == "-" ? "none" : "unset" }}
+        style={{ display: levels[0] == "" ? "none" : "unset" }}
       >
         {levels[0]}
       </div>
       <div
         className="songLevel"
         id="lv1"
-        style={{ display: levels[1] == "-" ? "none" : "unset" }}
+        style={{ display: levels[1] == "" ? "none" : "unset" }}
       >
         {levels[1]}
       </div>
       <div
         className="songLevel"
         id="lv2"
-        style={{ display: levels[2] == "-" ? "none" : "unset" }}
+        style={{ display: levels[2] == "" ? "none" : "unset" }}
       >
         {levels[2]}
       </div>
       <div
         className="songLevel"
         id="lv3"
-        style={{ display: levels[3] == "-" ? "none" : "unset" }}
+        style={{ display: levels[3] == "" ? "none" : "unset" }}
       >
         {levels[3]}
       </div>
       <div
         className="songLevel"
         id="lv4"
-        style={{ display: levels[4] == "-" ? "none" : "unset" }}
+        style={{ display: levels[4] == "" ? "none" : "unset" }}
       >
         {levels[4]}
       </div>
       <div
         className="songLevel"
         id="lv5"
-        style={{ display: levels[5] == "-" ? "none" : "unset" }}
+        style={{ display: levels[5] == "" ? "none" : "unset" }}
       >
         {levels[5]}
       </div>
       <div
         className="songLevel"
         id="lv6"
-        style={{ display: levels[6] == "-" ? "none" : "unset" }}
+        style={{ display: levels[6] == "" ? "none" : "unset" }}
       >
         {levels[6]}
       </div>
@@ -224,7 +205,7 @@ const fetcher = async (...args) =>
 
 function TheList({ tippy, initSearch, onLoad, sort }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/get?length=20&sort=" + sort,
+    apiroot3 + "/maichart/list?sort=" + sort,
     fetcher
   );
   const [filteredList, setFilteredList] = new useState(data);
@@ -240,12 +221,12 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
         if (value && value != "") {
           let dataf = data.filter(
             (o) =>
-              o.Designer?.toLowerCase().includes(value.toLowerCase()) ||
-              o.Uploader?.toLowerCase().includes(value.toLowerCase()) ||
-              o.Title?.toLowerCase().includes(value.toLowerCase()) ||
-              o.Artist?.toLowerCase().includes(value.toLowerCase()) ||
-              o.Levels.some((i) => i == value) ||
-              o.Id == value
+              o.designer?.toLowerCase().includes(value.toLowerCase()) ||
+              o.uploader?.toLowerCase().includes(value.toLowerCase()) ||
+              o.title?.toLowerCase().includes(value.toLowerCase()) ||
+              o.artist?.toLowerCase().includes(value.toLowerCase()) ||
+              o.levels.some((i) => i == value) ||
+              o.id == value
           );
           setFilteredList(dataf);
           setLastS(value);
@@ -273,9 +254,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     500
   );
   useEffect(() => {
-    console.log("effect");
     if (isLoaded) {
-      //console.log('onload')
       onLoad();
     }
   });
@@ -377,31 +356,31 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     <div key={o.Id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
-          <CoverPic id={o.Id} />
+          <CoverPic id={o.id} />
           <div className="songInfo">
-            <Tippy content={o.Title} singleton={tippy}>
-              <div className="songTitle" id={o.Id}>
-                <a href={"/song?id=" + o.Id}>{o.Title}</a>
+            <Tippy content={o.title} singleton={tippy}>
+              <div className="songTitle" id={o.id}>
+                <a href={"/song?id=" + o.id}>{o.title}</a>
               </div>
             </Tippy>
-            <Tippy content={o.Artist} singleton={tippy}>
+            <Tippy content={o.artist} singleton={tippy}>
               <div className="songArtist">
-                <a href={"/song?id=" + o.Id}>
-                  {o.Artist == "" || o.Artist == null ? "-" : o.Artist}
+                <a href={"/song?id=" + o.id}>
+                  {o.artist == "" || o.artist == null ? "-" : o.artist}
                 </a>
               </div>
             </Tippy>
-            <Tippy content={o.Uploader + "@" + o.Designer} singleton={tippy}>
+            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
               <div className="songDesigner">
-                <a href={"/song?id=" + o.Id}>{o.Uploader + "@" + o.Designer}</a>
+                <a href={"/song?id=" + o.Id}>{o.uploader + "@" + o.designer}</a>
               </div>
             </Tippy>
 
-            <Levels levels={o.Levels} songid={o.Id} />
+            <Levels levels={o.levels} songid={o.id} />
             <br />
             <div
               className="songLevel downloadButtonBox"
-              onClick={downloadSong({ id: o.Id, title: o.Title })}
+              onClick={downloadSong({ id: o.id, title: o.title })}
             >
               <svg
                 className="downloadButton"
@@ -413,7 +392,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
                 <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
               </svg>
             </div>
-            <InteractCount songid={o.Id} />
+            <InteractCount songid={o.yd} />
           </div>
         </div>
       </LazyLoad>
