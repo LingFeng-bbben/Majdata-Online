@@ -1,5 +1,5 @@
 "use client";
-import { React, use } from "react";
+import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
@@ -69,10 +69,11 @@ function Logout() {
     <div
       className="linkContent"
       onClick={() => {
-        if (typeof window !== "undefined") {
-          document.cookie = "token=";
-          //TODO should be a request that disable the token
-        }
+          fetch(apiroot3 + "/account/Logout", {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+          });
         router.push("./login");
       }}
     >
@@ -173,14 +174,15 @@ function TheList({ tippy }) {
     fetcher
   );
   var username = getUsername();
-  if(username == undefined) {
-    location.href = "/login";
+  if (username == undefined) {
+    if (typeof window !== "undefined") location.href = "/login";
   }
   if (error) return <div>failed to load</div>;
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) return <div>failed to load</div>;
+  if (data == "" || data == undefined)
+    return <div className="notReady">空的哟，先上传一些吧！</div>;
 
   data.sort((a, b) => {
     return b.timestamp - a.timestamp;
@@ -226,12 +228,14 @@ function Delbutton({ songid }) {
       onClick={async () => {
         let ret = confirm("真的要删除吗(不可恢复)\n(没有任何机会)");
         if (ret) {
-          const formData = new FormData();
-          formData.set("songid", songid);
-          const response = await fetch(apiroot3 + "/Uploader/Delete", {
-            method: "POST",
-            body: formData,
-          });
+          const response = await fetch(
+            apiroot3 + "/maichart/delete?chartId=" + songid,
+            {
+              method: "POST",
+              mode: "cors",
+              credentials: "include",
+            }
+          );
           if (response.status != 200) {
             alert(await response.text());
             return;
