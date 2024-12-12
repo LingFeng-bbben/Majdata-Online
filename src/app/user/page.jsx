@@ -1,6 +1,5 @@
 "use client";
-import { React, useState } from "react";
-import { PhotoProvider, PhotoView } from "react-photo-view";
+import { React, use } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
@@ -17,15 +16,6 @@ import CoverPic from "../cover";
 
 export default function Page() {
   const [source, target] = useSingleton();
-  const [cookie, setCookie] = useState();
-
-  if (cookie == "") {
-    setCookie(getCookie("token"));
-    if (typeof window !== "undefined") {
-      location.href = "/login";
-    }
-    return <p>请先登录</p>;
-  }
   return (
     <>
       <div className="seprate"></div>
@@ -72,7 +62,6 @@ export default function Page() {
     </>
   );
 }
-
 
 function Logout() {
   const router = useRouter();
@@ -161,22 +150,32 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-
-const fetcher = (url) => fetch(url,{mode:"cors",credentials: "include"}).then((res) => res.json());
+const fetcher = (url) =>
+  fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
+    res.json()
+  );
 
 function getUsername() {
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/account/info/",
     fetcher
   );
-  if (error) return "";
+  if (error) {
+    return undefined;
+  }
   if (isLoading) return "";
   return data.Username;
 }
 
 function TheList({ tippy }) {
-  const { data, error, isLoading } = useSWR(apiroot3 + "/maichart/list", fetcher);
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/maichart/list",
+    fetcher
+  );
   var username = getUsername();
+  if(username == undefined) {
+    location.href = "/login";
+  }
   if (error) return <div>failed to load</div>;
   if (isLoading) {
     return <div className="loading"></div>;
