@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TheHeader from "../header";
 import Levels from "../levels";
 import CoverPic from "../cover";
-import {downloadSong} from "../download";
+import { downloadSong } from "../download";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -25,7 +25,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
       <div className="seprate"></div>
-      <TheHeader toast={toast}/>
+      <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
           <div
@@ -70,10 +70,10 @@ export default function Page() {
   );
 }
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (url) => fetch(url,{mode:"cors",credentials: "include"}).then((res) => res.json())
 function SongInfo({ id, tippy }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/"+id+"/summary" ,
+    apiroot3 + "/maichart/" + id + "/summary",
     fetcher
   );
   if (error) return <div>failed to load</div>;
@@ -82,7 +82,7 @@ function SongInfo({ id, tippy }) {
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
 
-  const OnDownloadClick = (params) => async () =>{
+  const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
 
@@ -163,7 +163,7 @@ function SongInfo({ id, tippy }) {
 
 function LikeSender({ songid }) {
   const { data, error, isLoading, mutate } = useSWR(
-    apiroot3 + "/Interact/" + songid,
+    apiroot3 + "/maichart/" + songid + "/interact",
     fetcher
   );
   if (error) return <div>..?</div>;
@@ -171,19 +171,20 @@ function LikeSender({ songid }) {
     return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
-  const likecount = data.LikeList.length;
-  var playcount = data.PlayCount;
+  const likecount = data.Likes.length;
+  var playcount = data.Plays;
   if (playcount == undefined) {
     playcount = 0;
   }
   const onSubmit = async () => {
     const formData = new FormData();
-    formData.set("token", getCookie("token"));
     formData.set("type", "like");
     formData.set("content", "like");
-    const response = await fetch(apiroot3 + "/Interact/" + songid, {
+    const response = await fetch(apiroot3 + "/maichart/" + songid + "/interact", {
       method: "POST",
       body: formData,
+      mode: "cors",
+      credentials: "include"
     });
     if (response.status == 200) {
       toast.success("点赞成功");
@@ -202,6 +203,7 @@ function LikeSender({ songid }) {
           id="submitbuttonlike"
           type="button"
           onClick={onSubmit}
+          style={{background: data.IsLiked?"green":""}}
         >
           <svg
             className="commentIco"
@@ -226,7 +228,7 @@ function LikeSender({ songid }) {
         <p>{playcount}</p>
       </div>
       <div className="theList">
-        {data.LikeList.map((o) => (
+        {data.Likes.map((o) => (
           <p key={o}>{o}</p>
         ))}
       </div>
@@ -243,7 +245,6 @@ function CommentSender({ songid }) {
       return;
     }
 
-    formData.set("token", getCookie("token"));
     formData.set("type", "comment");
     formData.set("content", comment);
 
@@ -252,9 +253,11 @@ function CommentSender({ songid }) {
       document.getElementById("submitbutton").textContent = "请稍后";
     }
     const sending = toast.loading("正在邮件轰炸...");
-    const response = await fetch(apiroot3 + "/Interact/" + songid, {
+    const response = await fetch(apiroot3 + "/maichart/" + songid + "/interact", {
       method: "POST",
       body: formData,
+      mode: "cors",
+      credentials: "include"
     });
     toast.done(sending);
     if (response.status == 200) {
@@ -302,7 +305,7 @@ function CommentSender({ songid }) {
 
 function CommentList({ songid }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/Interact/" + songid,
+    apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
     { refreshInterval: 3000 }
   );
@@ -311,13 +314,13 @@ function CommentList({ songid }) {
     return <div className="loading"></div>;
   }
   if (data == "" || data == undefined) return <div>failed to load</div>;
-  const commentList = Object.entries(data.CommentsList).reverse();
+  const commentList = data.Comments.reverse();
   console.log(commentList);
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
       <div className="CommentCard">
-        <p className="CommentUser">{o[0]}</p>
-        <p className="CommentContent">{o[1]}</p>
+        <p className="CommentUser">{o.Sender.Username+"@"+o.Timestamp}</p>
+        <p className="CommentContent">{o.Content}</p>
       </div>
     </div>
   ));

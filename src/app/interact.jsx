@@ -8,7 +8,7 @@ const fetcher = async (...args) =>
 
 export default function InteractCount({ songid }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/Interact/" + songid,
+    apiroot3 + "/maichart/" + songid + "/interactsum",
     fetcher
   );
   if (error) return <div></div>;
@@ -16,12 +16,9 @@ export default function InteractCount({ songid }) {
     return <div>..</div>;
   }
   if (data == "" || data == undefined) return <div>?</div>;
-  const commentcount = Object.entries(data.CommentsList).length;
-  const likecount = data.LikeList.length;
-  var playcount = data.PlayCount;
-  if (playcount == undefined) {
-    playcount = 0;
-  }
+  const commentcount = data.Comments;
+  const likecount = data.Likes;
+  var playcount = data.Plays;
   if(playcount >1000){
     playcount = (playcount/1000).toFixed(1) + "k";
   }
