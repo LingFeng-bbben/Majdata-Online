@@ -15,7 +15,7 @@ import InteractCount from "./interact";
 import TheHeader from "./header";
 import CoverPic from "./cover";
 import Levels from "./levels";
-import {downloadSong} from "./download";
+import { downloadSong } from "./download";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -43,16 +43,17 @@ export default function Page() {
   if (!isInitSorted) {
     if (initSort == "likep") setSortType(1);
     if (initSort == "commp") setSortType(2);
+    if (initSort == "playp") setSortType(3);
     setIsInitSorted(true);
   }
 
   function onSortClick() {
     localStorage.setItem("scrollPosition", 0);
     setSortType(sortType + 1);
-    if (sortType >= 2) setSortType(0);
+    if (sortType >= 3) setSortType(0);
     console.log(sortType);
   }
-  const words = ["", "likep", "commp"];
+  const words = ["", "likep", "commp", "playp"];
   return (
     <>
       <div className="seprate"></div>
@@ -113,7 +114,7 @@ export default function Page() {
       />
       <TheList
         tippy={target}
-        initSearch={initSearch}
+        initSearch={initSearch?initSearch:""}
         onLoad={onListLoadScroll}
         sort={words[sortType]}
       />
@@ -139,51 +140,17 @@ const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
 function TheList({ tippy, initSearch, onLoad, sort }) {
+  const [Search, setSearch] = new useState(initSearch);
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?sort=" + sort,
+    apiroot3 + "/maichart/list?sort=" + sort + "&search=" + Search,
     fetcher
   );
-  const [filteredList, setFilteredList] = new useState(data);
   const [isLoaded, setIsLoaded] = new useState(false);
-  const [sKey, setSKey] = new useState(initSearch);
-  const [lastS, setLastS] = new useState("");
-  const [lastSo, setLastSo] = new useState(sort);
+
   const debounced = useDebouncedCallback(
     // function
     (value) => {
-      let url = "/";
-      if (value != lastS || sort != lastSo) {
-        if (value && value != "") {
-          let dataf = data.filter(
-            (o) =>
-              o.designer?.toLowerCase().includes(value.toLowerCase()) ||
-              o.uploader?.toLowerCase().includes(value.toLowerCase()) ||
-              o.title?.toLowerCase().includes(value.toLowerCase()) ||
-              o.artist?.toLowerCase().includes(value.toLowerCase()) ||
-              o.levels.some((i) => i == value) ||
-              o.id == value
-          );
-          setFilteredList(dataf);
-          setLastS(value);
-        } else {
-          setFilteredList(data);
-          setLastS("");
-        }
-        setLastSo(sort);
-        setIsLoaded(true);
-      }
-
-      if (lastS) {
-        url += "?s=" + lastS;
-        if (lastSo) {
-          url += "&sort=" + sort;
-        }
-      } else {
-        if (lastSo) {
-          url += "?sort=" + sort;
-        }
-      }
-      window.history.pushState({}, 0, url);
+      setSearch(value)
     },
     // delay in ms
     500
@@ -202,20 +169,12 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
       </>
     );
   }
-  if (data == "" || data == undefined)
-    return <div className="notReady">空的</div>;
 
-  debounced(sKey);
-
-  if (filteredList == undefined) {
-    return <SearchBar />;
-  }
-
-  const OnDownloadClick = (params) => async () =>{
+  const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
 
-  const list = filteredList.map((o) => (
+  const list = data.map((o) => (
     <div key={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
@@ -239,11 +198,11 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
               </div>
             </Tippy>
 
-            <Levels levels={o.levels} songid={o.id} isPlayer={false}/>
+            <Levels levels={o.levels} songid={o.id} isPlayer={false} />
             <br />
             <div
               className="songLevel downloadButtonBox"
-              onClick={OnDownloadClick({ id: o.id, title: o.title})}
+              onClick={OnDownloadClick({ id: o.id, title: o.title })}
             >
               <svg
                 className="downloadButton"
@@ -267,7 +226,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     <>
       <SearchBar
         onChange={(e) => {
-          setSKey(e.target.value);
+          debounced(e.target.value);
           localStorage.setItem("scrollPosition", 0);
         }}
         initS={initSearch}
