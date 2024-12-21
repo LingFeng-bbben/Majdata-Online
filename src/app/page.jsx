@@ -71,9 +71,6 @@ export default function Page() {
               <a href="./contest">MMFC10</a>
             </div>
             <div className="linkContent">
-              <a href="./dydy">匿名板</a>
-            </div>
-            <div className="linkContent">
               <a href="./edit">编辑器</a>
             </div>
           </>

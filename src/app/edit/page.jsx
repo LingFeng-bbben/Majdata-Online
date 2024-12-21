@@ -72,9 +72,6 @@ export default function Page() {
           <div className="linkContent">
             <Link href="./">谱面分享站</Link>
           </div>
-          <div className="linkContent">
-            <Link href="./dydy">DD版</Link>
-          </div>
         </div>
       </div>
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
