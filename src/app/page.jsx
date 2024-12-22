@@ -20,10 +20,7 @@ import { downloadSong } from "./download";
 export default function Page() {
   const [source, target] = useSingleton();
   const [sortType, setSortType] = useState(0);
-  const [isInitSorted, setIsInitSorted] = useState(false);
-  const searchParams = useSearchParams();
-  const initSearch = searchParams.get("s");
-  const initSort = searchParams.get("sort");
+  const [isLoaded, setIsLoaded] = useState(false);
   function saveScrollPosition() {
     if (typeof window !== "undefined") {
       var scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -40,44 +37,40 @@ export default function Page() {
       window.scrollTo(0, savedScrollY);
     }
   }
-  if (!isInitSorted) {
-    if (initSort == "likep") setSortType(1);
-    if (initSort == "commp") setSortType(2);
-    if (initSort == "playp") setSortType(3);
-    setIsInitSorted(true);
-  }
 
+  useEffect(() => {
+    if (!isLoaded) {
+      const a = localStorage.getItem("sort")
+      setIsLoaded(true)
+      setSortType(a ? a : 0)
+    }
+  })
   function onSortClick() {
     localStorage.setItem("scrollPosition", 0);
-    setSortType(sortType + 1);
-    if (sortType >= 3) setSortType(0);
-    console.log(sortType);
+    var type = parseInt(sortType);
+    type += 1
+
+    if (sortType >= 3) type = 0
+    localStorage.setItem("sort", type);
+    setSortType(type)
+    console.log(type)
   }
   const words = ["", "likep", "commp", "playp"];
+  const cwords = ["序", "赞", "评", "播"];
   return (
     <>
       <div className="seprate"></div>
       <TheHeader toast={toast} />
       <div className="links">
-        {initSearch ? (
-          <div className="linkContent">
-            <a href="./">返回</a>
-          </div>
-        ) : (
-          <>
-            <div
-              className="linkContent"
-              style={{ boxShadow: "0px 0px 3px gold" }}
-            >
-              <a href="./contest">MMFC10</a>
-            </div>
-            <div className="linkContent">
-              <a href="./edit">编辑器</a>
-            </div>
-          </>
-        )}
-
-        {/* <div className='linkContent'><Link href='./contest'>MMFC 6th</Link></div> */}
+        <div
+          className="linkContent"
+          style={{ boxShadow: "0px 0px 3px gold" }}
+        >
+          <a href="./contest">MMFC10</a>
+        </div>
+        <div className="linkContent">
+          <a href="./edit">编辑器</a>
+        </div>
         <UserInfo apiroot={apiroot3} />
       </div>
       <div
@@ -91,7 +84,7 @@ export default function Page() {
         顶
       </div>
       <div className="topButton sortButton" onClick={onSortClick}>
-        序
+        {cwords[sortType]}
       </div>
       {/* <EventLogo /> */}
       <ToastContainer
@@ -114,7 +107,6 @@ export default function Page() {
       />
       <TheList
         tippy={target}
-        initSearch={initSearch?initSearch:""}
         onLoad={onListLoadScroll}
         sort={words[sortType]}
       />
@@ -129,8 +121,9 @@ function SearchBar({ onChange, initS }) {
       <input
         type="text"
         className="searchInput"
-        placeholder={!initS ? "Search" : initS}
+        placeholder={initS == "" ? "Search" : initS}
         onChange={onChange}
+        onClick={onChange}
       />
     </div>
   );
@@ -139,14 +132,20 @@ function SearchBar({ onChange, initS }) {
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function TheList({ tippy, initSearch, onLoad, sort }) {
-  const [Search, setSearch] = new useState(initSearch);
+function TheList({ tippy, onLoad, sort }) {
+  const [Search, setSearch] = new useState("");
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/list?sort=" + sort + "&search=" + Search,
     fetcher
   );
   const [isLoaded, setIsLoaded] = new useState(false);
-
+  useEffect(() => {
+    if(!isLoaded){
+    const a = localStorage.getItem("search")
+    setSearch(a ? a : "")
+    setIsLoaded(true)
+  }
+  })
   const debounced = useDebouncedCallback(
     // function
     (value) => {
@@ -155,11 +154,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
     // delay in ms
     500
   );
-  useEffect(() => {
-    if (isLoaded) {
-      onLoad();
-    }
-  });
+
   if (error) return <div className="notReady">已闭店</div>;
   if (isLoading) {
     return (
@@ -169,6 +164,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
       </>
     );
   }
+  localStorage.setItem("search", Search);
 
   const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast })
@@ -229,7 +225,7 @@ function TheList({ tippy, initSearch, onLoad, sort }) {
           debounced(e.target.value);
           localStorage.setItem("scrollPosition", 0);
         }}
-        initS={initSearch}
+        initS={Search}
       />
       <div className="theList">{list}</div>
     </>

@@ -70,7 +70,7 @@ function Login() {
       return;
     }
     //document.cookie = "token=" + (await response.text()) + ";max-age=604800";
-    router.push("/");
+    history.back()
   }
   return (
     <div className="theList">

@@ -28,15 +28,9 @@ export default function Page() {
       <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
-          <div
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.history.back();
-              }
-            }}
-          >
-            返回
-          </div>
+          <a href="/">
+            主页
+          </a>
         </div>
         <ToastContainer
           position="bottom-center"
