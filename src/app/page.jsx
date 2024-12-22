@@ -105,9 +105,8 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <TheList
+      <MainComp
         tippy={target}
-        onLoad={onListLoadScroll}
         sort={words[sortType]}
       />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
@@ -132,44 +131,86 @@ function SearchBar({ onChange, initS }) {
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function TheList({ tippy, onLoad, sort }) {
+function MainComp({ tippy, sort }) {
   const [Search, setSearch] = new useState("");
-  const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?sort=" + sort + "&search=" + Search,
-    fetcher
-  );
   const [isLoaded, setIsLoaded] = new useState(false);
+  const [pages, setPages] = useState([0]);
+  const [hasmore,setHasmore] = useState(true);
+  const addPage = () => {
+    setPages([...pages, pages.length]);
+  };
   useEffect(() => {
-    if(!isLoaded){
-    const a = localStorage.getItem("search")
-    setSearch(a ? a : "")
-    setIsLoaded(true)
-  }
+    if (!isLoaded) {
+      const a = localStorage.getItem("search")
+      setSearch(a ? a : "")
+      setIsLoaded(true)
+    }
+    localStorage.setItem("search", Search);
   })
   const debounced = useDebouncedCallback(
     // function
     (value) => {
       setSearch(value)
+      setHasmore(true)
+      setPages([0])
     },
     // delay in ms
     500
   );
 
+  const nextpage = hasmore?(<button
+    className="linkContent"
+    id="submitbutton"
+    type="button"
+    style={{ width: "100%", margin: "auto" }}
+    onClick={addPage}
+  >
+    下一页
+  </button>):null
+
+  // 渲染数据
+  return (
+    <>
+      <SearchBar
+        onChange={(e) => {
+          debounced(e.target.value);
+          localStorage.setItem("scrollPosition", 0);
+        }}
+        initS={Search}
+      />
+      <div className="theList">
+        {pages.map((o) => (
+          <SongList key={o}
+            tippy={tippy}
+            sort={sort}
+            search={Search}
+            page={o} 
+            setHasmore={setHasmore}/>
+        ))}
+        
+      </div>
+      {nextpage}
+    </>
+  );
+}
+
+function SongList({ tippy, sort, search, page, setHasmore }) {
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/maichart/list?sort=" + sort + "&search=" + search + "&page=" + page,
+    fetcher
+  );
   if (error) return <div className="notReady">已闭店</div>;
   if (isLoading) {
     return (
       <>
-        <SearchBar />
         <div className="loading"></div>
       </>
     );
   }
-  localStorage.setItem("search", Search);
-
   const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
-
+  if(data.length<10) setHasmore(false);
   const list = data.map((o) => (
     <div key={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
@@ -216,18 +257,5 @@ function TheList({ tippy, onLoad, sort }) {
       </LazyLoad>
     </div>
   ));
-
-  // 渲染数据
-  return (
-    <>
-      <SearchBar
-        onChange={(e) => {
-          debounced(e.target.value);
-          localStorage.setItem("scrollPosition", 0);
-        }}
-        initS={Search}
-      />
-      <div className="theList">{list}</div>
-    </>
-  );
+  return list;
 }
