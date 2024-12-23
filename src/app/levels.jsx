@@ -19,10 +19,15 @@ export default function Levels({ levels, songid, isPlayer }) {
       const levelClickCallback = (e) => {
         if(!isPlayer) return;
         scrollToTop();
+        const maichart = apiroot3 + "/maichart/" + songid
+        const maidata = maichart + "/chart"
+        const track = maichart + "/track"
+        const bg = maichart + "/image"
+        const mv = maichart + "/video"
         window.unitySendMessage(
           "HandleJSMessages",
           "ReceiveMessage",
-          "jsnmsl\n" + apiroot3 + "\n" + songid + "\n" + e.target.id
+          maidata + "\n" + track + "\n" + bg + "\n" + mv + "\n" + e.target.id
         );
       };
 

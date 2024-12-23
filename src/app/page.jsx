@@ -124,7 +124,7 @@ function MainComp({ tippy, sort }) {
       const a = localStorage.getItem("search")
       setSearch(a ? a : "")
       const b = localStorage.getItem("lastclickpage");
-      setPage(b ? b : 0)
+      setPage(parseInt( b ? b : 0))
       setIsLoaded(true)
     }
   })

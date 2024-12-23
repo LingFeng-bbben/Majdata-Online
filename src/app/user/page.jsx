@@ -184,14 +184,14 @@ function TheList({ tippy }) {
   if (data == "" || data == undefined)
     return <div className="notReady">空的哟，先上传一些吧！</div>;
 
-  data.sort((a, b) => {
-    return b.timestamp - a.timestamp;
-  });
-
+  // data.sort((a, b) => {
+  //   return b.Timestamp - a.Timestamp;
+  // });
+  console.log(data)
   const dataf = data.filter((o) => o.uploader == username);
 
   const list = dataf.map((o) => (
-    <div key={o.Id}>
+    <div key={o.id}>
       <div className="songCard">
         <CoverPic id={o.id} />
         <div className="songInfo">
@@ -201,7 +201,7 @@ function TheList({ tippy }) {
             </div>
           </Tippy>
           <Tippy content={o.id} singleton={tippy}>
-            <div className="songArtist">{o.Id}</div>
+            <div className="songArtist">{o.id}</div>
           </Tippy>
           <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
             <div className="songDesigner">{o.uploader + "@" + o.designer}</div>
