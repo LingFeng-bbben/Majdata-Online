@@ -5,7 +5,6 @@ import UserInfo from "./userinfo";
 import { apiroot3 } from "./apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,22 +20,6 @@ export default function Page() {
   const [source, target] = useSingleton();
   const [sortType, setSortType] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  function saveScrollPosition() {
-    if (typeof window !== "undefined") {
-      var scrollY = window.scrollY || document.documentElement.scrollTop;
-
-      localStorage.setItem("scrollPosition", scrollY);
-    }
-  }
-  if (typeof window !== "undefined") {
-    window.addEventListener("beforeunload", saveScrollPosition);
-  }
-  function onListLoadScroll() {
-    if (typeof window !== "undefined") {
-      var savedScrollY = localStorage.getItem("scrollPosition") || 0;
-      window.scrollTo(0, savedScrollY);
-    }
-  }
 
   useEffect(() => {
     if (!isLoaded) {
@@ -134,67 +117,76 @@ const fetcher = async (...args) =>
 function MainComp({ tippy, sort }) {
   const [Search, setSearch] = new useState("");
   const [isLoaded, setIsLoaded] = new useState(false);
-  const [pages, setPages] = useState([0]);
-  const [hasmore,setHasmore] = useState(true);
-  const addPage = () => {
-    setPages([...pages, pages.length]);
-  };
+  const [page, setPage] = useState(0);
+  const [maxpage, setMaxpage] = useState(999999);
   useEffect(() => {
     if (!isLoaded) {
       const a = localStorage.getItem("search")
       setSearch(a ? a : "")
+      const b = localStorage.getItem("lastclickpage");
+      setPage(b ? b : 0)
       setIsLoaded(true)
     }
-    localStorage.setItem("search", Search);
   })
   const debounced = useDebouncedCallback(
     // function
     (value) => {
       setSearch(value)
-      setHasmore(true)
-      setPages([0])
+      setPage(0)
+      setMaxpage(9999999999999)
+      localStorage.setItem("search", value);
     },
     // delay in ms
     500
   );
 
-  const nextpage = hasmore?(<button
-    className="linkContent"
-    id="submitbutton"
-    type="button"
-    style={{ width: "100%", margin: "auto" }}
-    onClick={addPage}
-  >
-    下一页
-  </button>):null
-
   // 渲染数据
   return (
     <>
       <SearchBar
-        onChange={(e) => {
-          debounced(e.target.value);
-          localStorage.setItem("scrollPosition", 0);
-        }}
+        onChange={(e) => debounced(e.target.value)}
         initS={Search}
       />
       <div className="theList">
-        {pages.map((o) => (
-          <SongList key={o}
-            tippy={tippy}
-            sort={sort}
-            search={Search}
-            page={o} 
-            setHasmore={setHasmore}/>
-        ))}
-        
+
+        <SongList key={page}
+          tippy={tippy}
+          sort={sort}
+          search={Search}
+          page={page}
+          setMax={setMaxpage} />
+
       </div>
-      {nextpage}
+      <div className="theList">
+        {page - 1 >= 0 ? <button
+          className="linkContent"
+          id="submitbutton"
+          type="button"
+          style={{ width: "100px", margin: "auto" }}
+          onClick={() => { setPage(page - 1); window.scrollTo(0, 200) }}
+        >
+          上一页
+        </button> : <div style={{ width: "100px", margin: "auto" }}></div>}
+
+        <h4>{page}</h4>
+        {page < maxpage ? <button
+          className="linkContent"
+          id="submitbutton"
+          type="button"
+          style={{ width: "100px", margin: "auto" }}
+          onClick={() => { setPage(page + 1); window.scrollTo(0, 200) }}
+        >
+          下一页
+        </button> : <div style={{ width: "100px", margin: "auto" }}></div>}
+
+
+      </div>
+
     </>
   );
 }
 
-function SongList({ tippy, sort, search, page, setHasmore }) {
+function SongList({ tippy, sort, search, page, setMax }) {
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/list?sort=" + sort + "&search=" + search + "&page=" + page,
     fetcher
@@ -210,9 +202,13 @@ function SongList({ tippy, sort, search, page, setHasmore }) {
   const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast })
   }
-  if(data.length<10) setHasmore(false);
+  const SavePosition = ({ id, page }) => {
+    localStorage.setItem("lastclickid", id);
+    localStorage.setItem("lastclickpage", page);
+  }
+  if (data.length < 30) setMax(page);
   const list = data.map((o) => (
-    <div key={o.id}>
+    <div key={o.id} id={o.id} onClick={() => SavePosition({ id: o.id, page: page })}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.id} />
