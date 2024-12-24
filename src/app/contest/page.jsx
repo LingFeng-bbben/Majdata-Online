@@ -106,7 +106,7 @@ function TheList({ tippy }) {
     return <div className='loading'></div>;
   }
 
-  data.sort((a, b) => { return b.Id - a.Id; });
+  data.sort((a, b) => { return b.id - a.id; });
 
   const filterBySearch = (e) => {
     let dataf = data.filter(o => (
