@@ -125,21 +125,21 @@ function TheList({ tippy }) {
   }
 
   const list = filteredList.map(o => (
-    <div key={o.Id}>
+    <div key={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
-          <CoverPic id={o.Id} />
+          <CoverPic id={o.id} />
           <div className='songInfo'>
-            <Tippy content={o.Title} singleton={tippy}>
-              <div className='songTitle' id={o.Id}>{o.Title}</div>
+            <Tippy content={o.title} singleton={tippy}>
+              <div className='songTitle' id={o.id}>{o.title}</div>
             </Tippy>
-            <Tippy content={o.Artist} singleton={tippy}>
-              <div className='songArtist'>{o.Artist == "" || o.Artist == null ? "-" : o.Artist}</div>
+            <Tippy content={o.artist} singleton={tippy}>
+              <div className='songArtist'>{o.artist == "" || o.artist == null ? "-" : o.artist}</div>
             </Tippy>
-            <Tippy content={o.Designer} singleton={tippy}>
-              <div className='songDesigner'>{o.Designer == "" || o.Designer == null ? "-" : o.Designer}</div>
+            <Tippy content={o.designer} singleton={tippy}>
+              <div className='songDesigner'>{o.designer == "" || o.designer == null ? "-" : o.designer}</div>
             </Tippy>
-            <Levels levels={o.Levels} songid={o.Id} onClick={() => setDesInfo(o.Description)} />
+            <Levels levels={o.levels} songid={o.id} onClick={() => setDesInfo(o.description)} />
           </div>
         </div>
       </LazyLoad>

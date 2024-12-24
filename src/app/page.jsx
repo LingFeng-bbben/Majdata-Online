@@ -135,6 +135,7 @@ function MainComp({ tippy, sort }) {
       setPage(0)
       setMaxpage(9999999999999)
       localStorage.setItem("search", value);
+      localStorage.setItem("lastclickpage", 0);
     },
     // delay in ms
     500
