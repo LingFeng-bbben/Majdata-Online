@@ -188,7 +188,7 @@ function MainComp({ tippy, sort }) {
 
 function SongList({ tippy, sort, search, page, setMax }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?sort=" + sort + "&search=" + search + "&page=" + page,
+    apiroot3 + "/maichart/list?sort=" + sort  + "&page=" + page + "&search=" + encodeURIComponent(search),
     fetcher
   );
   if (error) return <div className="notReady">已闭店</div>;
