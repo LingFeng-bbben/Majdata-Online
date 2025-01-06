@@ -500,3 +500,11 @@ img.songImg {
   text-align: center;
   font-size: 50px;
 }
+
+
+.hr-solid {
+  border: 0;
+  border-top: 3px solid #d0d0d553;
+  width: 70%;
+  margin: auto;
+}

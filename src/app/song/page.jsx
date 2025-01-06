@@ -28,9 +28,7 @@ export default function Page() {
       <TheHeader toast={toast} />
       <div className="links">
         <div className="linkContent">
-          <a href="/">
-            主页
-          </a>
+          <a href="/">主页</a>
         </div>
         <ToastContainer
           position="bottom-center"
@@ -57,6 +55,9 @@ export default function Page() {
       />
       <SongInfo id={param} tippy={target} />
       <LikeSender songid={param} />
+      <div className="hr-solid"></div>
+      <ScoreList songid={param} />
+      <div className="hr-solid"></div>
       <CommentSender songid={param} />
       <CommentList songid={param} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
@@ -64,7 +65,10 @@ export default function Page() {
   );
 }
 
-const fetcher = (url) => fetch(url,{mode:"cors",credentials: "include"}).then((res) => res.json())
+const fetcher = (url) =>
+  fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
+    res.json()
+  );
 function SongInfo({ id, tippy }) {
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
@@ -77,8 +81,8 @@ function SongInfo({ id, tippy }) {
   if (data == "" || data == undefined) return <div>failed to load</div>;
 
   const OnDownloadClick = (params) => async () => {
-    await downloadSong({ id: params.id, title: params.title, toast: toast })
-  }
+    await downloadSong({ id: params.id, title: params.title, toast: toast });
+  };
 
   const shareSong = (props) => async () => {
     await navigator.clipboard.writeText(
@@ -148,9 +152,7 @@ function SongInfo({ id, tippy }) {
           </div>
         </div>
       </div>
-      <div className="uploadDate">
-        {o.timestamp}
-      </div>
+      <div className="uploadDate">{o.timestamp}</div>
     </div>
   );
 }
@@ -174,12 +176,15 @@ function LikeSender({ songid }) {
     const formData = new FormData();
     formData.set("type", "like");
     formData.set("content", "like");
-    const response = await fetch(apiroot3 + "/maichart/" + songid + "/interact", {
-      method: "POST",
-      body: formData,
-      mode: "cors",
-      credentials: "include"
-    });
+    const response = await fetch(
+      apiroot3 + "/maichart/" + songid + "/interact",
+      {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+        credentials: "include",
+      }
+    );
     if (response.status == 200) {
       toast.success("点赞成功");
       mutate();
@@ -197,7 +202,7 @@ function LikeSender({ songid }) {
           id="submitbuttonlike"
           type="button"
           onClick={onSubmit}
-          style={{background: data.IsLiked?"green":""}}
+          style={{ background: data.IsLiked ? "green" : "" }}
         >
           <svg
             className="commentIco"
@@ -247,12 +252,15 @@ function CommentSender({ songid }) {
       document.getElementById("submitbutton").textContent = "请稍后";
     }
     const sending = toast.loading("正在邮件轰炸...");
-    const response = await fetch(apiroot3 + "/maichart/" + songid + "/interact", {
-      method: "POST",
-      body: formData,
-      mode: "cors",
-      credentials: "include"
-    });
+    const response = await fetch(
+      apiroot3 + "/maichart/" + songid + "/interact",
+      {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+        credentials: "include",
+      }
+    );
     toast.done(sending);
     if (response.status == 200) {
       toast.success("评论成功");
@@ -313,10 +321,78 @@ function CommentList({ songid }) {
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
       <div className="CommentCard">
-        <p className="CommentUser">{o.Sender.Username+"@"+o.Timestamp}</p>
+        <p className="CommentUser">{o.Sender.Username + "@" + o.Timestamp}</p>
         <p className="CommentContent">{o.Content}</p>
       </div>
     </div>
   ));
   return <div className="theList">{objlist}</div>;
+}
+
+function ScoreList({ songid }) {
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/maichart/" + songid + "/score",
+    fetcher,
+    { refreshInterval: 30000 }
+  );
+  if (error) return <div>failed to load</div>;
+  if (isLoading) {
+    return <div className="loading"></div>;
+  }
+  if (data == "" || data == undefined) return <div>failed to load</div>;
+  const scoreList = data.scores;
+  console.log(scoreList);
+  const objlist = scoreList.map((p, index) =>
+    p.length != 0 ? ScoreListLevel(p, index) : <></>
+  );
+  return (
+    <>
+      <div className="theList">
+        <div className="inputHint">排名</div>
+      </div>
+      <div className="theList">{objlist}</div>;
+    </>
+  );
+}
+
+function ScoreListLevel(scores, level) {
+  return (
+    <div>
+      <p>{getLevelName(level)}</p>{" "}
+      {scores.map((o, index) => scoreCard(o, index))}
+    </div>
+  );
+}
+
+function scoreCard(score, index) {
+  return (
+    <div key={score}>
+      <div className="CommentCard">
+        <p className="CommentUser">
+          第{index + 1}名 {score.player.username}
+        </p>
+        <p className="CommentContent">
+          {score.acc}% {getComboState(score.comboState)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function getLevelName(level) {
+  if (level == 0) return "Easy";
+  if (level == 1) return "Basic";
+  if (level == 2) return "Advanced";
+  if (level == 3) return "Expert";
+  if (level == 4) return "Master";
+  if (level == 5) return "Re:Master";
+  if (level == 6) return "UTAGE/Original";
+}
+
+function getComboState(state) {
+  if (state == 0) return "";
+  if (state == 1) return "FC";
+  if (state == 2) return "FC+";
+  if (state == 3) return "AP";
+  if (state == 3) return "AP+";
 }
