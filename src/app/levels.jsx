@@ -22,7 +22,7 @@ export default function Levels({ levels, songid, isPlayer }) {
         const maichart = apiroot3 + "/maichart/" + songid
         const maidata = maichart + "/chart"
         const track = maichart + "/track"
-        const bg = maichart + "/image"
+        const bg = maichart + "/image?fullImage=true"
         const mv = maichart + "/video"
         window.unitySendMessage(
           "HandleJSMessages",
