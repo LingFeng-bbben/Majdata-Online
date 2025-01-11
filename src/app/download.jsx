@@ -49,7 +49,7 @@ export async function downloadSong(props) {
   zip.file(
     "bg.jpg",
     await fetchFile(
-      apiroot3 + "/maichart/" + props.id + "/image",
+      apiroot3 + "/maichart/" + props.id + "/image?fullImage=true",
       "bg",
       props.toast
     )
