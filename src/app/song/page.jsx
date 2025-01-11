@@ -153,6 +153,9 @@ function SongInfo({ id, tippy }) {
         </div>
       </div>
       <div className="uploadDate">{o.timestamp}</div>
+      ID
+      <div className="uploadDate">{o.id}</div>
+      HASH <div className="uploadDate">{o.hash}</div>
     </div>
   );
 }
@@ -372,7 +375,7 @@ function scoreCard(score, index) {
           第{index + 1}名 {score.player.username}
         </p>
         <p className="CommentContent">
-          {score.acc}% {getComboState(score.comboState)}
+          {score.acc.toFixed(4)}% {getComboState(score.comboState)}
         </p>
       </div>
     </div>
