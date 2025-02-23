@@ -49,7 +49,7 @@ export default function Page() {
           className="linkContent"
           style={{ boxShadow: "0px 0px 3px gold" }}
         >
-          <a href="./contest">MMFC10</a>
+          <a href="./contest">MMFC11</a>
         </div>
         <div className="linkContent">
           <a href="./edit">编辑器</a>
