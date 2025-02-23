@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert("不要点我 操你妈")}></img>MMFC 10TH</h1>
+      <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert("不要点我 操你妈")}></img>MMFC 11TH</h1>
       <div className='links'>
         <div className='linkContent'><a href='../'>返回</a></div>
 
