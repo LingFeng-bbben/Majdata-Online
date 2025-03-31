@@ -88,6 +88,7 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
+      <a href="./fools" className="theList"><img src="/fools/title.png" alt="" /></a>
       <MainComp
         tippy={target}
         sort={words[sortType]}
