@@ -144,6 +144,16 @@ export default function Page() {
             />
           </PhotoView>
           <SongList search="8127dc4c-8682-427c-b7a3-f958e3503edb" />
+          <PhotoView src="/fools/国家队.jpg">
+            <img
+              width="100%"
+              className="songImg"
+              loading="lazy"
+              src="/fools/国家队.jpg"
+              alt=""
+            />
+          </PhotoView>
+          <SongList search="Random(" />
         </div>
       </PhotoProvider>
     </>
