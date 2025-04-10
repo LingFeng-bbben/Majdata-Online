@@ -51,6 +51,12 @@ export default function Page() {
         >
           <a href="./contest">MMFC11</a>
         </div>
+        <div
+          className="linkContent"
+           style={{ boxShadow: "0px 0px 3px gold" }}
+        >
+          <a href="./ranking">排行榜</a>
+        </div>
         <div className="linkContent">
           <a href="./edit">编辑器</a>
         </div>
