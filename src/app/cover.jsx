@@ -4,9 +4,14 @@ import { apiroot3 } from "./apiroot";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
-export default function CoverPic({ id }) {
+export default function CoverPic({ id, display }) {
   let url = apiroot3 + `/maichart/${id}/image`;
   let urlfull = apiroot3 + `/maichart/${id}/image?fullImage=true`;
+  let idDisplay = null;
+  if(display) {
+    idDisplay = (<div className='songId'>{display}</div> )
+  }
+  
   return (
     <>
       <PhotoProvider
@@ -17,7 +22,7 @@ export default function CoverPic({ id }) {
           <img className="songImg" loading="lazy" src={url} alt="" />
         </PhotoView>
       </PhotoProvider>
-      {/* <div className='songId'>{id}</div> */}
+      {idDisplay}
     </>
   );
 }

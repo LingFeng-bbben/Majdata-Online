@@ -50,6 +50,15 @@ h1 {
   user-select: none;
 }
 
+h2 {
+  background-color: rgb(var(--background-start));
+  color: whitesmoke;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  user-select: none;
+}
+
 .links {
   background-color: rgb(var(--background-start));
   display: flex;

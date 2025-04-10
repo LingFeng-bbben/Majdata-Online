@@ -34,11 +34,36 @@ export default function Page() {
         </div>
       </div>
       <div className="theList">
-        <img width="400px" src="/xmmcg/title.png" alt="" />
+        <h1>~推荐乐曲排行榜~</h1>
       </div>
       <div className="theList">
-        <SongList search="TeamXmmcg" />
+        这里会选出七天内最有人气的谱面哟！
       </div>
+      <div className="theList">
+        <h2>~游玩榜~</h2>
+      </div>
+      <div className="theList">
+        <SongList search="scorep" />
+      </div>
+      <div className="theList">
+        <h2>~点赞榜~</h2>
+      </div>
+      <div className="theList">
+        <SongList search="likep" />
+      </div>
+      <div className="theList">
+        <h2>~评论榜~</h2>
+      </div>
+      <div className="theList">
+        <SongList search="commp" />
+      </div>
+      <div className="theList">
+        <h2>~下载榜~</h2>
+      </div>
+      <div className="theList">
+        <SongList search="playp" />
+      </div>
+
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -49,7 +74,9 @@ const fetcher = async (...args) =>
 
 function SongList({ search }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?&page=0&search=" + encodeURIComponent(search),
+    apiroot3 +
+      "/maichart/list?&isRanking=true&sort=" +
+      encodeURIComponent(search),
     fetcher
   );
   if (error) return <div className="notReady">已闭店</div>;
@@ -60,11 +87,11 @@ function SongList({ search }) {
       </>
     );
   }
-  const list = data.map((o) => (
+  const list = data.map((o, index) => (
     <div key={o.id} id={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
-          <CoverPic id={o.id} />
+          <CoverPic id={o.id} display={"No." + (index + 1)} />
           <div className="songInfo">
             <div className="songTitle" id={o.id}>
               <a href={"/song?id=" + o.id}>{o.title}</a>
@@ -81,9 +108,7 @@ function SongList({ search }) {
             </div>
             <Levels levels={o.levels} songid={o.id} isPlayer={false} />
             <br />
-            <div
-              className="commentBox downloadButtonBox"
-            >
+            <div className="commentBox downloadButtonBox">
               <svg
                 className="downloadButton"
                 xmlns="http://www.w3.org/2000/svg"

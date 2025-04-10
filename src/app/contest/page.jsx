@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { PhotoProvider, PhotoView } from 'react-photo-view';
+import CoverPic from "../cover";
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import Majdata from '../majdata'
@@ -29,22 +29,6 @@ export default function Page() {
       <img className="footerImage" style={{ width: "150px" }} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
     </>
   )
-}
-
-
-function CoverPic({ id }) {
-  let url = apiroot1 + `/maichart/${id}/image`;
-  let urlfull = apiroot1 + `/maichart/${id}/image?fullImage=true`;
-  return (
-    <><PhotoProvider bannerVisible={false} loadingElement={<div>Loading...</div>}>
-      <PhotoView src={urlfull} >
-        <img className="songImg" src={url} alt="" />
-
-      </PhotoView>
-    </PhotoProvider>
-      <div className='songId'>{id}</div>
-    </>
-  );
 }
 
 function Levels({ levels, songid, onClick }) {
