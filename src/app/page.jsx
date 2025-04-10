@@ -47,7 +47,7 @@ export default function Page() {
       <div className="links">
         <div
           className="linkContent"
-          style={{ boxShadow: "0px 0px 3px gold" }}
+          // style={{ boxShadow: "0px 0px 3px gold" }}
         >
           <a href="./contest">MMFC11</a>
         </div>
@@ -88,7 +88,7 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <a href="./fools" className="theList"><img src="/fools/title.png" alt="" /></a>
+      <a href="./xmmcg" className="theList"><img width="400px" src="/xmmcg/title.png" alt="" /></a>
       <MainComp
         tippy={target}
         sort={words[sortType]}
