@@ -23,20 +23,20 @@ export default function Page() {
 
   useEffect(() => {
     if (!isLoaded) {
-      const a = localStorage.getItem("sort")
-      setIsLoaded(true)
-      setSortType(a ? a : 0)
+      const a = localStorage.getItem("sort");
+      setIsLoaded(true);
+      setSortType(a ? a : 0);
     }
-  })
+  });
   function onSortClick() {
     localStorage.setItem("scrollPosition", 0);
     var type = parseInt(sortType);
-    type += 1
+    type += 1;
 
-    if (sortType >= 3) type = 0
+    if (sortType >= 3) type = 0;
     localStorage.setItem("sort", type);
-    setSortType(type)
-    console.log(type)
+    setSortType(type);
+    console.log(type);
   }
   const words = ["", "likep", "commp", "playp"];
   const cwords = ["序", "赞", "评", "播"];
@@ -51,10 +51,7 @@ export default function Page() {
         >
           <a href="./contest">MMFC11</a>
         </div>
-        <div
-          className="linkContent"
-           style={{ boxShadow: "0px 0px 3px gold" }}
-        >
+        <div className="linkContent" style={{ boxShadow: "0px 0px 3px gold" }}>
           <a href="./ranking">排行榜</a>
         </div>
         <div className="linkContent">
@@ -94,11 +91,10 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <a href="./xmmcg" className="theList"><img width="400px" src="/xmmcg/title.png" alt="" /></a>
-      <MainComp
-        tippy={target}
-        sort={words[sortType]}
-      />
+      <a href="./xmmcg" className="theList">
+        <img width="400px" src="/xmmcg/title.png" alt="" />
+      </a>
+      <MainComp tippy={target} sort={words[sortType]} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -128,19 +124,19 @@ function MainComp({ tippy, sort }) {
   const [maxpage, setMaxpage] = useState(999999);
   useEffect(() => {
     if (!isLoaded) {
-      const a = localStorage.getItem("search")
-      setSearch(a ? a : "")
+      const a = localStorage.getItem("search");
+      setSearch(a ? a : "");
       const b = localStorage.getItem("lastclickpage");
-      setPage(parseInt( b ? b : 0))
-      setIsLoaded(true)
+      setPage(parseInt(b ? b : 0));
+      setIsLoaded(true);
     }
-  })
+  });
   const debounced = useDebouncedCallback(
     // function
     (value) => {
-      setSearch(value)
-      setPage(0)
-      setMaxpage(9999999999999)
+      setSearch(value);
+      setPage(0);
+      setMaxpage(9999999999999);
       localStorage.setItem("search", value);
       localStorage.setItem("lastclickpage", 0);
     },
@@ -151,52 +147,93 @@ function MainComp({ tippy, sort }) {
   // 渲染数据
   return (
     <>
-      <SearchBar
-        onChange={(e) => debounced(e.target.value)}
-        initS={Search}
-      />
+      <SearchBar onChange={(e) => debounced(e.target.value)} initS={Search} />
       <div className="theList">
-
-        <SongList key={page}
+        <SongList
+          key={page}
           tippy={tippy}
           sort={sort}
           search={Search}
           page={page}
-          setMax={setMaxpage} />
-
+          setMax={setMaxpage}
+        />
       </div>
       <div className="theList">
-        {page - 1 >= 0 ? <button
-          className="linkContent"
-          id="submitbutton"
-          type="button"
-          style={{ width: "100px", margin: "auto" }}
-          onClick={() => { setPage(page - 1); window.scrollTo(0, 200) }}
-        >
-          上一页
-        </button> : <div style={{ width: "100px", margin: "auto" }}></div>}
+        {page - 1 >= 0 ? (
+          <button
+            className="linkContent"
+            id="submitbutton"
+            type="button"
+            style={{ width: "100px", margin: "auto" }}
+            onClick={() => {
+              setPage(page - 1);
+              window.scrollTo(0, 200);
+            }}
+          >
+            上一页
+          </button>
+        ) : (
+          <div style={{ width: "100px", margin: "auto" }}></div>
+        )}
 
-        <h4>{page}</h4>
-        {page < maxpage ? <button
-          className="linkContent"
-          id="submitbutton"
-          type="button"
-          style={{ width: "100px", margin: "auto" }}
-          onClick={() => { setPage(page + 1); window.scrollTo(0, 200) }}
-        >
-          下一页
-        </button> : <div style={{ width: "100px", margin: "auto" }}></div>}
-
-
+        <input
+          type="number"
+          value={page}
+          className="searchInput"
+          style={{ width: "100px"}}
+          onChange={(event) => {
+            if(event.target.value !== "")
+              setPage(parseInt( event.target.value));
+            else
+              setPage(0);
+          }}
+          min="0"
+          step="1"
+        />
+        {page < maxpage ? (
+          <button
+            className="linkContent"
+            id="submitbutton"
+            type="button"
+            style={{ width: "100px", margin: "auto" }}
+            onClick={() => {
+              setPage(page + 1);
+              window.scrollTo(0, 200);
+            }}
+          >
+            下一页
+          </button>
+        ) : (
+          <div style={{ width: "100px", margin: "auto" }}></div>
+        )}
       </div>
-
+      <div className="theList">
+        <button
+          className="linkContent"
+          id="submitbutton"
+          type="button"
+          style={{ width: "100px", margin: "auto" }}
+          onClick={() => {
+            setPage(0);
+            window.scrollTo(0, 200);
+          }}
+        >
+          回首页
+        </button>
+      </div>
     </>
   );
 }
 
 function SongList({ tippy, sort, search, page, setMax }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?sort=" + sort  + "&page=" + page + "&search=" + encodeURIComponent(search),
+    apiroot3 +
+      "/maichart/list?sort=" +
+      sort +
+      "&page=" +
+      page +
+      "&search=" +
+      encodeURIComponent(search),
     fetcher
   );
   if (error) return <div className="notReady">已闭店</div>;
@@ -208,15 +245,19 @@ function SongList({ tippy, sort, search, page, setMax }) {
     );
   }
   const OnDownloadClick = (params) => async () => {
-    await downloadSong({ id: params.id, title: params.title, toast: toast })
-  }
+    await downloadSong({ id: params.id, title: params.title, toast: toast });
+  };
   const SavePosition = ({ id, page }) => {
     localStorage.setItem("lastclickid", id);
     localStorage.setItem("lastclickpage", page);
-  }
+  };
   if (data.length < 30) setMax(page);
   const list = data.map((o) => (
-    <div key={o.id} id={o.id} onClick={() => SavePosition({ id: o.id, page: page })}>
+    <div
+      key={o.id}
+      id={o.id}
+      onClick={() => SavePosition({ id: o.id, page: page })}
+    >
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.id} />
