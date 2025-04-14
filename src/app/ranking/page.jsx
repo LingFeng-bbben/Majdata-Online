@@ -104,8 +104,14 @@ function SongList({ search }) {
             </div>
 
             <div className="songDesigner">
-              <a href={"/song?id=" + o.Id}>{o.uploader + "@" + o.designer}</a>
-            </div>
+                <a href={"/space?id=" + o.uploader}>
+                  <img
+                    className="smallIcon"
+                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                  />
+                  {o.uploader + "@" + o.designer}
+                </a>
+              </div>
             <Levels levels={o.levels} songid={o.id} isPlayer={false} />
             <br />
             <div className="commentBox downloadButtonBox">
