@@ -83,6 +83,10 @@ function Introduction({ username }) {
               const { ...rest } = props;
               return <ol style={{listStyleType: "disc"}} {...rest} />;
             },
+            img(props) {
+              const { ...rest } = props;
+              return <img style={{margin:"auto"}} {...rest} />;
+            },
           }}
         >
           {data.introduction}
