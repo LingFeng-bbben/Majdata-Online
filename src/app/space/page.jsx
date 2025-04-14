@@ -10,8 +10,14 @@ import TheHeader from "../header";
 import LazyLoad from "react-lazy-load";
 import CoverPic from "../cover";
 import useSWR from "swr";
+import { useSearchParams } from "next/navigation";
+
+import "github-markdown-css/github-markdown-dark.css";
+import Markdown from "react-markdown";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+  const username = searchParams.get("id");
   return (
     <>
       <ToastContainer
@@ -33,14 +39,56 @@ export default function Page() {
           <a href="../">返回</a>
         </div>
       </div>
+
+      <Introduction username={username} />
       <div className="theList">
-        <img width="400px" src="/xmmcg/title.png" alt="" />
-      </div>
-      <div className="theList">
-        <SongList search="uploader:TeamXmmcg" />
+        <SongList search={"uploader:" + username} />
       </div>
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
+  );
+}
+
+function Introduction({ username }) {
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/account/intro?username=" + encodeURIComponent(username),
+    fetcher
+  );
+  if (error) return <div className="notReady">已闭店</div>;
+  if (isLoading) {
+    return (
+      <>
+        <div className="loading"></div>
+      </>
+    );
+  }
+  return (
+    <div>
+      <div className="theList">
+        <img
+          className="bigIcon"
+          src={apiroot3 + "/account/Icon?username=" + username}
+        />
+        <h1>{data.username}</h1>
+      </div>
+      <p>注册于{data.joinDate}</p>
+      <article className="markdown-body">
+        <Markdown
+          components={{
+            ol(props) {
+              const { ...rest } = props;
+              return <ol type="1" {...rest} />;
+            },
+            ul(props) {
+              const { ...rest } = props;
+              return <ol style={{listStyleType: "disc"}} {...rest} />;
+            },
+          }}
+        >
+          {data.introduction}
+        </Markdown>
+      </article>
+    </div>
   );
 }
 
@@ -77,14 +125,17 @@ function SongList({ search }) {
             </div>
 
             <div className="songDesigner">
-            {o.designer}
-              {/* <a href={"/song?id=" + o.Id}>{o.uploader + "@" + o.designer}</a> */}
+              <a href={"/space?id=" + o.uploader}>
+                <img
+                  className="smallIcon"
+                  src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                />
+                {o.designer}
+              </a>
             </div>
             <Levels levels={o.levels} songid={o.id} isPlayer={false} />
             <br />
-            <div
-              className="commentBox downloadButtonBox"
-            >
+            <div className="commentBox downloadButtonBox">
               <svg
                 className="downloadButton"
                 xmlns="http://www.w3.org/2000/svg"

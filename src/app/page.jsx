@@ -180,12 +180,11 @@ function MainComp({ tippy, sort }) {
           type="number"
           value={page}
           className="searchInput"
-          style={{ width: "100px"}}
+          style={{ width: "100px" }}
           onChange={(event) => {
-            if(event.target.value !== "")
-              setPage(parseInt( event.target.value));
-            else
-              setPage(0);
+            if (event.target.value !== "")
+              setPage(parseInt(event.target.value));
+            else setPage(0);
           }}
           min="0"
           step="1"
@@ -276,7 +275,13 @@ function SongList({ tippy, sort, search, page, setMax }) {
             </Tippy>
             <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
               <div className="songDesigner">
-                <a href={"/song?id=" + o.Id}>{o.uploader + "@" + o.designer}</a>
+                <a href={"/space?id=" + o.uploader}>
+                  <img
+                    className="smallIcon"
+                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                  />
+                  {o.uploader + "@" + o.designer}
+                </a>
               </div>
             </Tippy>
 

@@ -117,7 +117,15 @@ function SongInfo({ id, tippy }) {
             </div>
           </Tippy>
           <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-            <div className="songDesigner">{o.uploader + "@" + o.designer}</div>
+            <div className="songDesigner">
+              <a href={"/space?id=" + o.uploader}>
+                <img
+                  className="smallIcon"
+                  src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                />
+                {o.uploader + "@" + o.designer}
+              </a>
+            </div>
           </Tippy>
 
           <Levels levels={o.levels} songid={o.id} isPlayer={true} />
@@ -324,7 +332,15 @@ function CommentList({ songid }) {
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
       <div className="CommentCard">
-        <p className="CommentUser">{o.Sender.Username + "@" + o.Timestamp}</p>
+        <a href={"/space?id=" + o.Sender.Username}>
+          <p className="CommentUser">
+            <img
+              className="smallIcon"
+              src={apiroot3 + "/account/Icon?username=" + o.Sender.Username}
+            />
+            {o.Sender.Username + "@" + o.Timestamp}
+          </p>
+        </a>
         <p className="CommentContent">{o.Content}</p>
       </div>
     </div>
@@ -372,7 +388,14 @@ function scoreCard(score, index) {
     <div key={score}>
       <div className="CommentCard">
         <p className="CommentUser">
-          第{index + 1}名 {score.player.username}
+          第{index + 1}名{" "}
+          <a href={"/space?id=" + score.player.username}>
+            <img
+              className="smallIcon"
+              src={apiroot3 + "/account/Icon?username=" + score.player.username}
+            />
+            {score.player.username}
+          </a>
         </p>
         <p className="CommentContent">
           {score.acc.toFixed(4)}% {getComboState(score.comboState)}

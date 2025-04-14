@@ -40,7 +40,13 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      {/* <UserInfoDetail/> */}
+      <h1>创作空间</h1>
+      <div className="theList">
+      <a className="linkContent" href={"/space?id=" + getUsername()}>点我前往个人主页</a>
+      </div>
+      <IconUploader />
+      <IntroUploader username={getUsername()} />
+      <h1>谱面上传</h1>
       <p>在这里上传你的谱面。点击上传即代表你承认以下事项：</p>
       <p>1. 上传的谱面是你自己写的或合作写的，又或是谱面原作者同意上传</p>
       <p>2. 此谱面可以公开，自由下载</p>
@@ -58,6 +64,10 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
+      <h1>谱面管理</h1>
+      <p>
+        点击x删除谱面哟
+      </p>
       <TheList tippy={target} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
@@ -148,6 +158,130 @@ function Uploader() {
   );
 }
 
+function IconUploader() {
+  async function onSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const uploading = toast.loading("正在爆速上传...", {
+      hideProgressBar: false,
+    });
+    if (typeof window !== "undefined") {
+      document.getElementById("submitbutton2").disabled = true;
+      document.getElementById("submitbutton2").textContent = "上传中啦等一会啦";
+    }
+    try {
+      const response = await axios.post(apiroot3 + "/account/Icon", formData, {
+        onUploadProgress: function (progressEvent) {
+          if (progressEvent.lengthComputable) {
+            const progress = progressEvent.loaded / progressEvent.total;
+            toast.update(uploading, { progress });
+          }
+        },
+        withCredentials: true,
+      });
+      toast.done(uploading);
+      toast.success(response.data);
+      await sleep(2000);
+      window.location.reload();
+    } catch (e) {
+      toast.done(uploading);
+      toast.error(e.response.data, { autoClose: false });
+      if (typeof window !== "undefined") {
+        document.getElementById("submitbutton2").textContent = "上传";
+        document.getElementById("submitbutton2").disabled = false;
+      }
+      return;
+    } finally {
+      toast.done(uploading);
+    }
+  }
+  return (
+    <div className="theList">
+      <img
+        className="bigIcon"
+        src={apiroot3 + "/account/Icon?username=" + getUsername()}
+      />
+      <form className="formbox" onSubmit={onSubmit}>
+        <div className="inputHint">头像 (5M之内)</div>
+        <input className="userinput" type="file" name="pic" />
+        <button className="linkContent" id="submitbutton2" type="submit">
+          上传
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function IntroUploader({ username }) {
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/account/intro?username=" + encodeURIComponent(username),
+    fetcher
+  );
+
+  if (error) {
+    return undefined;
+  }
+  if (isLoading) return <div className="loading"></div>;
+
+  async function onSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const uploading = toast.loading("正在爆速上传...", {
+      hideProgressBar: false,
+    });
+    if (typeof window !== "undefined") {
+      document.getElementById("submitbutton3").disabled = true;
+      document.getElementById("submitbutton3").textContent = "上传中啦等一会啦";
+    }
+    try {
+      const response = await axios.post(apiroot3 + "/account/intro", formData, {
+        onUploadProgress: function (progressEvent) {
+          if (progressEvent.lengthComputable) {
+            const progress = progressEvent.loaded / progressEvent.total;
+            toast.update(uploading, { progress });
+          }
+        },
+        withCredentials: true,
+      });
+      toast.done(uploading);
+      toast.success(response.data);
+      await sleep(2000);
+      window.location.reload();
+    } catch (e) {
+      toast.done(uploading);
+      toast.error(e.response.data, { autoClose: false });
+      if (typeof window !== "undefined") {
+        document.getElementById("submitbutton3").textContent = "上传";
+        document.getElementById("submitbutton3").disabled = false;
+      }
+      return;
+    } finally {
+      toast.done(uploading);
+    }
+  }
+
+  return (
+    <div className="theList">
+      <form className="introbox" onSubmit={onSubmit}>
+        <div className="inputHint">自我介绍 (支持Markdown)</div>
+        <textarea
+          className="userinput introbox-inner"
+          name="content"
+          id="IntroBox"
+        >
+          {data.introduction}
+        </textarea>
+
+        <button className="linkContent" id="submitbutton3" type="submit">
+          上传
+        </button>
+      </form>
+    </div>
+  );
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -171,7 +305,9 @@ function getUsername() {
 
 function TheList({ tippy }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list",
+    apiroot3 +
+      "/maichart/list?search=uploader:" +
+      encodeURIComponent(getUsername()),
     fetcher
   );
   var username = getUsername();
@@ -185,13 +321,7 @@ function TheList({ tippy }) {
   if (data == "" || data == undefined)
     return <div className="notReady">空的哟，先上传一些吧！</div>;
 
-  // data.sort((a, b) => {
-  //   return b.Timestamp - a.Timestamp;
-  // });
-  console.log(data);
-  const dataf = data.filter((o) => o.uploader == username);
-
-  const list = dataf.map((o) => (
+  const list = data.map((o) => (
     <div key={o.id}>
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
