@@ -245,6 +245,19 @@ img.songImg {
   justify-content: center;
 }
 
+.sortSelect {
+  caret-color: white;
+  background-color: black;
+  border: 1px solid whitesmoke;
+  text-align: center;
+  height: 2rem;
+  width: auto;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px gray;
+  min-width: 60px;
+}
+
 .majViewPort {
   background-color: black;
   width: 100%;
