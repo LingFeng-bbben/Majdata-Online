@@ -54,7 +54,6 @@ export default function Page() {
       >
         顶
       </div>
-      {/* <EventLogo /> */}
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -73,7 +72,7 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-        <a href="./xmmcg" className="theList" style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}>
+        <a href="./space?id=TeamXmmcg" className="theList" style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}>
             <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
         </a>
       <MainComp tippy={target} />
@@ -91,6 +90,7 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 className="searchInput"
                 placeholder={initS === "" ? "Search" : initS}
                 onChange={onChange}
+                onClick={onChange}
             />
             <select
                 value={sortType}
