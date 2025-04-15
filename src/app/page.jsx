@@ -91,9 +91,9 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <a href="./xmmcg" className="theList">
-        <img width="400px" src="/xmmcg/title.png" alt="" />
-      </a>
+        <a href="./xmmcg" className="theList" style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}>
+            <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
+        </a>
       <MainComp tippy={target} sort={words[sortType]} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
