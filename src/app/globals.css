@@ -118,6 +118,14 @@ h2 {
   box-shadow: 2px 2px 5px gray;
 }
 
+.pagingButton{
+  border: 1px solid #333;
+}
+
+.pagingButton:hover{
+  border: 1px solid #fff;
+}
+
 .theList {
   display: flex;
   flex-wrap: wrap;
@@ -232,7 +240,7 @@ img.songImg {
   background-color: black;
   border: 1px solid whitesmoke;
   text-align: center;
-  width: 20rem;
+  width: 15rem;
   height: 2rem;
   margin: 10px;
   border-radius: 10px;
@@ -251,7 +259,7 @@ img.songImg {
   border: 1px solid whitesmoke;
   text-align: center;
   height: 2rem;
-  width: auto;
+  width: 2rem;
   margin: 10px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px gray;

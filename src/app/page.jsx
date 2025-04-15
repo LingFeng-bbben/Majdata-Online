@@ -169,7 +169,7 @@ function MainComp({ tippy }) {
       <div className="theList">
         {page - 1 >= 0 ? (
           <button
-            className="linkContent"
+            className="pagingButton linkContent"
             id="submitbutton"
             type="button"
             style={{ width: "100px", margin: "auto" }}
@@ -199,7 +199,7 @@ function MainComp({ tippy }) {
         />
         {page < maxpage ? (
           <button
-            className="linkContent"
+            className="pagingButton linkContent"
             id="submitbutton"
             type="button"
             style={{ width: "100px", margin: "auto" }}
