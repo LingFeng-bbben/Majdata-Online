@@ -100,6 +100,29 @@ function Uploader() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const filesNecessary = formData.getAll("formfiles");
+
+    const fileChecks = [
+      { file: filesNecessary[0], name: "maidata.txt" },
+      { file: filesNecessary[1], name: "bg.png/bg.jpg" },
+      { file: filesNecessary[2], name: "track" },
+    ];
+
+    let missedFiles = [];
+
+    for (const { file, name } of fileChecks) {
+      if (!file || file.name === "" || file.size === 0) {
+        missedFiles.push(name);
+      }
+    }
+
+    if (missedFiles.length > 0) {
+      for (const file of missedFiles) {
+        toast.error("没有选中" + file)
+      }
+      return;
+    }
+
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: false,
     });
@@ -161,8 +184,13 @@ function Uploader() {
 function IconUploader() {
   async function onSubmit(event) {
     event.preventDefault();
-
     const formData = new FormData(event.currentTarget);
+    const file = formData.get("pic");
+
+    if (!file || file.size === 0) {
+      toast.error("你还没有选择文件哦！");
+      return;
+    }
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: false,
     });
@@ -201,7 +229,7 @@ function IconUploader() {
       <img
         className="bigIcon"
         src={apiroot3 + "/account/Icon?username=" + getUsername()}
-      />
+       alt=""/>
       <form className="formbox" onSubmit={onSubmit}>
         <div className="inputHint">头像 (5M之内)</div>
         <input className="userinput" type="file" name="pic" />
@@ -228,6 +256,11 @@ function IntroUploader({ username }) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const content = formData.get("content");
+    if (!content || content.trim() === "") {
+      toast.error("你还没有填写自我介绍哦");
+      return;
+    }
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: false,
     });
@@ -270,8 +303,8 @@ function IntroUploader({ username }) {
           className="userinput introbox-inner"
           name="content"
           id="IntroBox"
+          defaultValue={data.introduction}
         >
-          {data.introduction}
         </textarea>
 
         <button className="linkContent" id="submitbutton3" type="submit">
