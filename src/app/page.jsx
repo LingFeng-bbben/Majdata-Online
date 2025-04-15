@@ -28,18 +28,7 @@ export default function Page() {
       setSortType(a ? a : 0);
     }
   });
-  function onSortClick() {
-    localStorage.setItem("scrollPosition", 0);
-    var type = parseInt(sortType);
-    type += 1;
-
-    if (sortType >= 3) type = 0;
-    localStorage.setItem("sort", type);
-    setSortType(type);
-    console.log(type);
-  }
   const words = ["", "likep", "commp", "playp"];
-  const cwords = ["序", "赞", "评", "播"];
   return (
     <>
       <div className="seprate"></div>
@@ -69,9 +58,6 @@ export default function Page() {
       >
         顶
       </div>
-      <div className="topButton sortButton" onClick={onSortClick}>
-        {cwords[sortType]}
-      </div>
       {/* <EventLogo /> */}
       <ToastContainer
         position="bottom-center"
@@ -100,37 +86,55 @@ export default function Page() {
   );
 }
 
-function SearchBar({ onChange, initS }) {
-  return (
-    <div className="searchDiv">
-      <input
-        type="text"
-        className="searchInput"
-        placeholder={initS == "" ? "Search" : initS}
-        onChange={onChange}
-        onClick={onChange}
-      />
-    </div>
-  );
+function SearchBar({ onChange, initS, sortType, onSortChange }) {
+    return (
+        <div className="searchDiv">
+            <input
+                type="text"
+                className="searchInput"
+                placeholder={initS === "" ? "Search" : initS}
+                onChange={onChange}
+                onClick={onChange}
+            />
+            <select
+                value={sortType}
+                onChange={(e) => {
+                    const val = parseInt(e.target.value);
+                    onSortChange(val);
+                }}
+                className="sortSelect"
+            >
+                <option value={0}>序</option>
+                <option value={1}>赞</option>
+                <option value={2}>评</option>
+                <option value={3}>播</option>
+            </select>
+        </div>
+    );
 }
 
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function MainComp({ tippy, sort }) {
+function MainComp({ tippy }) {
   const [Search, setSearch] = new useState("");
   const [isLoaded, setIsLoaded] = new useState(false);
   const [page, setPage] = useState(0);
   const [maxpage, setMaxpage] = useState(999999);
+  const [sortType, setSortType] = useState(0);
+
   useEffect(() => {
     if (!isLoaded) {
       const a = localStorage.getItem("search");
-      setSearch(a ? a : "");
       const b = localStorage.getItem("lastclickpage");
+      const s = localStorage.getItem("sort");
+      setSearch(a ? a : "");
       setPage(parseInt(b ? b : 0));
       setIsLoaded(true);
+      setSortType(s ? parseInt(s) : 0);
     }
-  });
+  }, [isLoaded]);
+
   const debounced = useDebouncedCallback(
     // function
     (value) => {
@@ -144,15 +148,24 @@ function MainComp({ tippy, sort }) {
     500
   );
 
+    const onSortChange = (val) => {
+        setSortType(val);
+        localStorage.setItem("sort", val);
+        setPage(0);
+        localStorage.setItem("lastclickpage", 0);
+    };
+
+    const sortWords = ["", "likep", "commp", "playp"];
+
   // 渲染数据
   return (
     <>
-      <SearchBar onChange={(e) => debounced(e.target.value)} initS={Search} />
+      <SearchBar onChange={(e) => debounced(e.target.value)} initS={Search} sortType={sortType} onSortChange={onSortChange} />
       <div className="theList">
         <SongList
           key={page}
           tippy={tippy}
-          sort={sort}
+          sort={sortWords[sortType]}
           search={Search}
           page={page}
           setMax={setMaxpage}
