@@ -68,7 +68,11 @@ function Login() {
       return;
     }
     //document.cookie = "token=" + (await response.text()) + ";max-age=604800";
-    history.back()
+    if (document.referrer && document.referrer !== location.href) {
+      history.back();
+    } else {
+      window.location.href = "/";
+    }
   }
   return (
     <div className="theList">
