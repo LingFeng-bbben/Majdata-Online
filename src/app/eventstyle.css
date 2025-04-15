@@ -62,12 +62,14 @@
   z-index: 10;
   position: relative;
 }
+
 .fursvg {
   width: 100px;
   margin: auto;
   z-index: auto;
   fill: url(#myLinearGradient1);
 }
+
 .eventbgContainer {
   position: absolute;
   width: 100%;
@@ -90,6 +92,7 @@
 .eventContent {
     text-align: center;
 }
+
 .eventPrize{
     width: 300px;
     margin: auto;
