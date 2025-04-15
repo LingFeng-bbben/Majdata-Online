@@ -18,17 +18,13 @@ import { downloadSong } from "./download";
 
 export default function Page() {
   const [source, target] = useSingleton();
-  const [sortType, setSortType] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (!isLoaded) {
-      const a = localStorage.getItem("sort");
       setIsLoaded(true);
-      setSortType(a ? a : 0);
     }
-  });
-  const words = ["", "likep", "commp", "playp"];
+  }, [isLoaded]);
   return (
     <>
       <div className="seprate"></div>
@@ -80,13 +76,14 @@ export default function Page() {
         <a href="./xmmcg" className="theList" style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}>
             <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
         </a>
-      <MainComp tippy={target} sort={words[sortType]} />
+      <MainComp tippy={target} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
+    const sortOptions = ["序", "赞", "评", "播"];
     return (
         <div className="searchDiv">
             <input
@@ -94,7 +91,6 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 className="searchInput"
                 placeholder={initS === "" ? "Search" : initS}
                 onChange={onChange}
-                onClick={onChange}
             />
             <select
                 value={sortType}
@@ -104,10 +100,9 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 }}
                 className="sortSelect"
             >
-                <option value={0}>序</option>
-                <option value={1}>赞</option>
-                <option value={2}>评</option>
-                <option value={3}>播</option>
+                {sortOptions.map((label, i) => (
+                    <option key={i} value={i}>{label}</option>
+                ))}
             </select>
         </div>
     );
@@ -117,8 +112,8 @@ const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
 function MainComp({ tippy }) {
-  const [Search, setSearch] = new useState("");
-  const [isLoaded, setIsLoaded] = new useState(false);
+  const [Search, setSearch] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
   const [maxpage, setMaxpage] = useState(999999);
   const [sortType, setSortType] = useState(0);
