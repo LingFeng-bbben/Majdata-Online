@@ -78,7 +78,7 @@ function SongInfo({ id, tippy }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) return <div>failed to load</div>;
+  if (data == "" || data === undefined) return <div>failed to load</div>;
 
   const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast });
@@ -122,7 +122,7 @@ function SongInfo({ id, tippy }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                />
+                 alt={o.uploader}/>
                 {o.uploader + "@" + o.designer}
               </a>
             </div>
@@ -160,10 +160,39 @@ function SongInfo({ id, tippy }) {
           </div>
         </div>
       </div>
+
       <div className="uploadDate">{o.timestamp}</div>
-      ID
-      <div className="uploadDate">{o.id}</div>
-      HASH <div className="uploadDate">{o.hash}</div>
+
+      <div className="uploadMeta">
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">ID:</div>
+          <div className="uploadMetaContent">{o.id}</div>
+        </div>
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">HASH:</div>
+          <div className="uploadMetaContent">{o.hash}</div>
+        </div>
+        <div className="uploadMetaLabel">Tags:</div>
+        <div className="uploadMetaContent tagList">
+          {o.tags && o.tags.length > 0 ? (
+              o.tags.map((tag, index) => (
+                  <Tippy content="搜索标签" key={index}>
+        <span
+            className="tag"
+            onClick={() => {
+              localStorage.setItem("search", tag)
+              window.location.href = "/"
+            }}
+        >
+          {tag}
+        </span>
+                  </Tippy>
+              ))
+          ) : (
+              <span style={{ color: "#999", fontStyle: "italic" }}>暂无标签</span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
