@@ -27,7 +27,7 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="/">主页</a>
         </div>
         <div className="linkContent">
           <a href="./login">登录</a>

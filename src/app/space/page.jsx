@@ -10,38 +10,42 @@ import {useSearchParams} from "next/navigation";
 
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
-import {RecentPlayed,CoverPic,MajdataLogo,InteractCount,Levels} from "../widgets";
+import {RecentPlayed, CoverPic, MajdataLogo, InteractCount, Levels, UserInfo, Logout} from "../widgets";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const username = searchParams.get("id");
   return (
     <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
+        <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+        />
+        <div className="seprate"></div>
+        <MajdataLogo />
+        <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="/">主页</a>
         </div>
-      </div>
+          <UserInfo />
+          <Logout></Logout>
+        </div>
 
-      <Introduction username={username} />
-        <p>上传的谱面</p>
-        <SongList search={"uploader:" + username} />
-        <p>最近游玩的谱面</p>
+        <Introduction username={username} />
+        <div className="hr-solid"></div>
+        <h2>最近游玩的谱面</h2>
         <RecentPlayed username={username} />
+        <div className="hr-solid"></div>
+        <h2>上传的谱面</h2>
+        <SongList search={"uploader:" + username} />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );

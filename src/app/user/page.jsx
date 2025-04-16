@@ -5,6 +5,7 @@ import "tippy.js/dist/tippy.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {Logout,MajdataLogo,UserInfo} from "../widgets";
+import getUsername from "../utils/getUsername";
 
 export default function Page() {
   return (
@@ -13,7 +14,7 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="/">主页</a>
         </div>
         <UserInfo />
         <Logout />
@@ -36,6 +37,9 @@ export default function Page() {
         </div>
         <div className="linkContent">
           <a href="./user/profile">个人设置</a>
+        </div>
+        <div className="linkContent">
+          <a href={"/space?id=" + getUsername()}>个人主页</a>
         </div>
       </div>
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
