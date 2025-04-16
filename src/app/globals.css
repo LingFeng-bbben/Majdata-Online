@@ -154,7 +154,7 @@ img.songImg {
 
 .songCardContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(21rem, 0.5fr));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 20.6rem));
   justify-content: center;
   gap: 0.6rem;
   padding: 0.5rem;
@@ -637,6 +637,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .uploadMeta {
   margin-top: 10px;
   font-size: 14px;
+  width: 22rem;
 }
 
 .uploadMetaRow {

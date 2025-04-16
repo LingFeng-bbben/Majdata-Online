@@ -1,15 +1,15 @@
 "use client";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
-import {apiroot3} from "../apiroot";
-import Tippy, {useSingleton} from "@tippyjs/react";
+import { apiroot3 } from "../apiroot";
+import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import {useSearchParams} from "next/navigation";
-import {toast, ToastContainer} from "react-toastify";
+import { useSearchParams } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {downloadSong} from "../download";
-import {getLevelName,getComboState} from "../utils";
-import {CoverPic, Levels, Majdata, MajdataLogo, UserInfo} from "../widgets";
+import { downloadSong } from "../download";
+import { getLevelName, getComboState } from "../utils";
+import { CoverPic, Levels, Majdata, MajdataLogo, UserInfo } from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -119,7 +119,8 @@ function SongInfo({ id, tippy }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                 alt={o.uploader}/>
+                  alt={o.uploader}
+                />
                 {o.uploader + "@" + o.designer}
               </a>
             </div>
@@ -158,9 +159,13 @@ function SongInfo({ id, tippy }) {
         </div>
       </div>
 
-      <div className="uploadDate">{o.timestamp}</div>
+      <div className="uploadDate"></div>
 
       <div className="uploadMeta">
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">Time:</div>
+          <div className="uploadMetaContent">{o.timestamp}</div>
+        </div>
         <div className="uploadMetaRow">
           <div className="uploadMetaLabel">ID:</div>
           <div className="uploadMetaContent">{o.id}</div>
@@ -169,25 +174,29 @@ function SongInfo({ id, tippy }) {
           <div className="uploadMetaLabel">HASH:</div>
           <div className="uploadMetaContent">{o.hash}</div>
         </div>
-        <div className="uploadMetaLabel">Tags:</div>
-        <div className="uploadMetaContent tagList">
-          {o.tags && o.tags.length > 0 ? (
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">Tags:</div>
+          <div className="uploadMetaContent tagList">
+            {o.tags && o.tags.length > 0 ? (
               o.tags.map((tag, index) => (
-                  <Tippy content="搜索标签" key={index}>
-        <span
-            className="tag"
-            onClick={() => {
-              localStorage.setItem("search", tag)
-              window.location.href = "/"
-            }}
-        >
-          {tag}
-        </span>
-                  </Tippy>
+                <Tippy content="搜索标签" key={index}>
+                  <span
+                    className="tag"
+                    onClick={() => {
+                      localStorage.setItem("search", tag);
+                      window.location.href = "/";
+                    }}
+                  >
+                    {tag}
+                  </span>
+                </Tippy>
               ))
-          ) : (
-              <span style={{ color: "#999", fontStyle: "italic" }}>暂无标签</span>
-          )}
+            ) : (
+              <span style={{ color: "#999", fontStyle: "italic" }}>
+                暂无标签
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -266,14 +275,14 @@ function LikeSender({ songid }) {
       <div className="theList">
         {data.Likes.map((o) => (
           <a key={o} href={"/space?id=" + o}>
-          <p>
-            <img
-              className="smallIcon"
-              src={apiroot3 + "/account/Icon?username=" + o}
-            />
-            {o}
-          </p>
-        </a>
+            <p>
+              <img
+                className="smallIcon"
+                src={apiroot3 + "/account/Icon?username=" + o}
+              />
+              {o}
+            </p>
+          </a>
         ))}
       </div>
     </>
@@ -438,4 +447,3 @@ function scoreCard(score, index) {
     </div>
   );
 }
-
