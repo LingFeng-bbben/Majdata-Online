@@ -40,12 +40,15 @@ export default function Page() {
         </div>
 
         <Introduction username={username} />
-        <div className="hr-solid"></div>
+        
         <h2>最近游玩的谱面</h2>
-        <RecentPlayed username={username} />
         <div className="hr-solid"></div>
+        <RecentPlayed username={username} />
+        
         <h2>上传的谱面</h2>
+        <div className="hr-solid"></div>
         <SongList search={"uploader:" + username} />
+        
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );

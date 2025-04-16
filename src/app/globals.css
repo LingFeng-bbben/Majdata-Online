@@ -154,10 +154,10 @@ img.songImg {
 
 .songCardContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(21rem, 0.5fr));
   justify-content: center;
-  gap: 1.8rem;
-  padding: 1rem;
+  gap: 0.6rem;
+  padding: 0.5rem;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;

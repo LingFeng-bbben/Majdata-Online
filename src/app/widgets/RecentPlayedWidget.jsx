@@ -29,12 +29,6 @@ export default function RecentPlayed({username}) {
                     <CoverPic id={o.chartId}/>
                     <div className="songInfo">
                         <div className="songTitle" id={o.chartId}>
-                            <Level
-                                level={o.level}
-                                difficulty={o.difficulty}
-                                songid={o.chartId}
-                                isPlayer={false}
-                            />
                             <a href={"/song?id=" + o.chartId}>{o.title}</a>
                         </div>
 
@@ -54,7 +48,13 @@ export default function RecentPlayed({username}) {
                                 {o.designer}
                             </a>
                         </div>
-                        <div className="songAcc">{o.acc}</div>
+                        <Level
+                                level={o.level}
+                                difficulty={o.difficulty}
+                                songid={o.chartId}
+                                isPlayer={false}
+                            />
+                        <div className="songAcc" style={{color: "yellow"}}>{o.acc}</div>
                         <br/>
                         <div className="songAcc">{getComboState(o.comboState)}</div>
                     </div>
