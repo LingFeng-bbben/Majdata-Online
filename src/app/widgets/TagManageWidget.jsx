@@ -184,7 +184,6 @@ const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef
             >
                 Tags管理窗口
             </div>
-            <button style={{ position: 'absolute', top: '10px', right: '16px', padding: '6px 12px' }} onClick={uploadTags}>更新Tags</button>
             <div style={{ padding: '16px' }}>
                 <div className="uploadMetaRow">
                     <div className="uploadMetaLabel">Tags:</div>
@@ -260,6 +259,13 @@ const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef
                             setTags(newTags);
                         }}>{tag}</span>
                     ))}
+                </div>
+                <br/>
+                <div className="hr-solid"/>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                    <button style={{ padding: '6px 12px', border: '1px solid whitesmoke', borderRadius: '5px' }} onClick={uploadTags}>
+                        更新Tags
+                    </button>
                 </div>
             </div>
         </div>
