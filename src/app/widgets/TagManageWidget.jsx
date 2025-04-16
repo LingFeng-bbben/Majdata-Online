@@ -129,10 +129,14 @@ const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef
         });
 
         if (!response.ok) {
-            toast.error(response.statusText);
+            toast.error("好像上传失败惹……");
         } else {
             //TODO: 刷新页面，重载数据，应该可以热重载，之后研究
-            window.location.reload();
+            if (window.location.pathname === "/user/charts") {
+                window.location.reload();
+            } else {
+                toast.success("上传成功了喵");
+            }
         }
 
         return response;
