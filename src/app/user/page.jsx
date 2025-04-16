@@ -3,16 +3,16 @@ import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
-import UserInfo from "../userinfo";
+import UserInfo from "../widgets/UserInfo";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import InteractCount from "../interact";
+import InteractCount from "../widgets/InteractCount";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import TheHeader from "../header";
-import CoverPic from "../cover";
+import TheHeader from "../widgets/TheHeader";
+import CoverPic from "../widgets/CoverPic";
 import LazyLoad from "react-lazy-load";
 
 export default function Page() {
@@ -25,7 +25,7 @@ export default function Page() {
         <div className="linkContent">
           <a href="../">返回</a>
         </div>
-        <UserInfo apiroot={apiroot3} />
+        <UserInfo />
         <Logout />
       </div>
       <ToastContainer

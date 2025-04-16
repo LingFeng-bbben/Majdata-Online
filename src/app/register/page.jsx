@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
+import TheHeader from "../widgets/TheHeader";
 
 export default function Page() {
   return (

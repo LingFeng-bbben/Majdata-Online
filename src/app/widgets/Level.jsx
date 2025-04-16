@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {makeLevelClickCallback} from "./utils/scrollAndCallback";
+import {makeLevelClickCallback} from "../utils/scrollAndCallback";
 
 export default function Level({level, difficulty, songid, isPlayer}){
     const levelClickCallback = makeLevelClickCallback(songid, isPlayer);

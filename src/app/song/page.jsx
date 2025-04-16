@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import useSWR from "swr";
-import Majdata from "../majdata";
-import UserInfo from "../userinfo";
+import Majdata from "../widgets/Majdata";
+import UserInfo from "../widgets/UserInfo";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
-import Levels from "../levels";
-import CoverPic from "../cover";
+import TheHeader from "../widgets/TheHeader";
+import Levels from "../widgets/Levels";
+import CoverPic from "../widgets/CoverPic";
 import { downloadSong } from "../download";
 
 export default function Page() {
@@ -43,7 +43,7 @@ export default function Page() {
           theme="dark"
         />
         {/* <div className='linkContent'><a href='./contest'>MMFC 6th</a></div> */}
-        <UserInfo apiroot={apiroot3} />
+        <UserInfo />
       </div>
 
       <Majdata />

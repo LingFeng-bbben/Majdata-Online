@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import CoverPic from "../cover";
+import CoverPic from "../widgets/CoverPic";
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
-import Majdata from '../majdata'
+import Majdata from '../widgets/Majdata'
 import { apiroot1 } from '../apiroot';
 import Tippy, { useSingleton } from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';

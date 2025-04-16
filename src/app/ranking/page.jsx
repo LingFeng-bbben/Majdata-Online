@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import Levels from "../levels";
-import InteractCount from "../interact";
+import Levels from "../widgets/Levels";
+import InteractCount from "../widgets/InteractCount";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
+import TheHeader from "../widgets/TheHeader";
 import LazyLoad from "react-lazy-load";
-import CoverPic from "../cover";
+import CoverPic from "../widgets/CoverPic";
 import useSWR from "swr";
 
 export default function Page() {

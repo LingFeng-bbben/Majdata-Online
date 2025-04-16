@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import UserInfo from "./userinfo";
+import UserInfo from "./widgets/UserInfo";
 import { apiroot3 } from "./apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -10,10 +10,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
-import InteractCount from "./interact";
-import TheHeader from "./header";
-import CoverPic from "./cover";
-import Levels from "./levels";
+import InteractCount from "./widgets/InteractCount";
+import TheHeader from "./widgets/TheHeader";
+import CoverPic from "./widgets/CoverPic";
+import Levels from "./widgets/Levels";
 import { downloadSong } from "./download";
 
 export default function Page() {
@@ -42,7 +42,7 @@ export default function Page() {
         <div className="linkContent">
           <a href="./edit">编辑器</a>
         </div>
-        <UserInfo apiroot={apiroot3} />
+        <UserInfo />
       </div>
       <div
         className="topButton"
