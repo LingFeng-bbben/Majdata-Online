@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
+import Level from "../level";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -44,6 +45,7 @@ export default function Page() {
       <div className="theList">
         <SongList search={"uploader:" + username} />
       </div>
+        <Recent10 />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -68,7 +70,7 @@ function Introduction({ username }) {
         <img
           className="bigIcon"
           src={apiroot3 + "/account/Icon?username=" + username}
-        />
+         alt={username}/>
         <h1>{data.username}</h1>
       </div>
       <p>注册于{data.joinDate}</p>
@@ -95,6 +97,70 @@ function Introduction({ username }) {
     </div>
   );
 }
+
+function Recent10(){
+    const { data, error, isLoading } = useSWR(
+        apiroot3 + "/account/Recent?username=bbben",
+        fetcher
+    );
+    if (error) return <div className="notReady">已闭店</div>;
+    if (isLoading) {
+        return (
+            <>
+                <div className="loading"></div>
+            </>
+        );
+    }
+    console.log(data);
+    const list = data.map((o) =>(
+        <div key={o.chartId} id={o.chartId}>
+            <LazyLoad>
+                <div className="songCard">
+                    <CoverPic id={o.chartId} />
+                    <div className="songInfo">
+                        <div className="songTitle" id={o.chartId}>
+                            <Level level={o.level} difficulty={o.difficulty} songid={o.chartId} isPlayer={false}></Level>
+                            <a href={"/song?id=" + o.chartId}>{o.title}</a>
+                        </div>
+
+                        <div className="songArtist">
+                            <a href={"/song?id=" + o.chartId}>
+                                {o.artist == "" || o.artist == null ? "-" : o.artist}
+                            </a>
+                        </div>
+
+                        <div className="songDesigner">
+                            <a href={"/space?id=" + o.uploader}>
+                                <img
+                                    className="smallIcon"
+                                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                                    alt={o.uploader}/>
+                                {o.designer}
+                            </a>
+                        </div>
+                        <div className="songAcc">{o.acc}</div>
+                        <br />
+                        <div className="commentBox downloadButtonBox">
+                            <svg
+                                className="downloadButton"
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24"
+                                viewBox="0 -960 960 960"
+                                width="24"
+                            >
+                                <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                            </svg>
+                        </div>
+                        <InteractCount songid={o.chartId} />
+                        <br />
+                    </div>
+                </div>
+            </LazyLoad>
+        </div>
+    ))
+    return list;
+}
+
 
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
@@ -133,7 +199,7 @@ function SongList({ search }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                />
+                 alt={o.uploader}/>
                 {o.designer}
               </a>
             </div>

@@ -199,6 +199,18 @@ img.songImg {
   user-select: none;
 }
 
+.songAcc {
+  float: left;
+  text-align: center;
+  text-shadow: 1px 1px gray;
+  margin: 0.1rem;
+  height: 1.3rem;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  overflow: hidden;
+  user-select: none;
+}
+
 .songLevel:hover {
   border: 2px solid white;
 }
