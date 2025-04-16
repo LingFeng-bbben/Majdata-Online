@@ -176,7 +176,7 @@ const fetcher = async (...args) =>
 
 function SongList({ search }) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 + "/maichart/list?&page=0&search=" + encodeURIComponent(search),
+    apiroot3 + "/maichart/list?search=" + encodeURIComponent(search),
     fetcher
   );
   if (error) return <div className="notReady">已闭店</div>;
