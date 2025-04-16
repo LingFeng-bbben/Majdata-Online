@@ -107,7 +107,7 @@ function UploadedChartsList({ tippy }) {
                             </div>
                         </Tippy>
                         <Delbutton songid={o.id} />
-                        <div className="songLevel" style={{ background: "green" }}>
+                        <div className="songLevelNoShadow" style={{ background: "green" }}>
                             <TagManageWidget songid={o.id} /></div>
                         <br/>
                         <div className="commentBox downloadButtonBox">

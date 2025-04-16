@@ -4,6 +4,7 @@ import Tippy from "@tippyjs/react";
 import useSWR from "swr";
 import {apiroot3} from "../apiroot";
 import {toast} from "react-toastify";
+import {sleep} from "../utils";
 
 export default function TagManageWidget({songid}) {
     const [isWindowOpen, setIsWindowOpen] = useState(false);
@@ -119,6 +120,9 @@ const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef
 
     const uploadTags = async () => {
         console.log("向", apiroot3 + "/maichart/" + songid + "/tags", "发", JSON.stringify(tags))
+        const uploading = toast.loading("正在爆速上传...", {
+            hideProgressBar: true,
+        });
         const response = await fetch(apiroot3 + "/maichart/" + songid + "/tags", {
             method: 'POST',
             headers: {
@@ -127,15 +131,16 @@ const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef
             body: JSON.stringify(tags),
             credentials: 'include'
         });
+        toast.done(uploading);
 
         if (!response.ok) {
             toast.error("好像上传失败惹……");
         } else {
             //TODO: 刷新页面，重载数据，应该可以热重载，之后研究
-            if (window.location.pathname === "/user/charts") {
+            toast.success("上传成功了喵");
+            if (window.location.pathname !== "/user/charts") {
+                await sleep(1000);
                 window.location.reload();
-            } else {
-                toast.success("上传成功了喵");
             }
         }
 
