@@ -4,7 +4,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import Levels from "../widgets/Levels";
 import InteractCount from "../widgets/InteractCount";
 import { apiroot3 } from "../apiroot";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TheHeader from "../widgets/TheHeader";
 import LazyLoad from "react-lazy-load";
@@ -34,7 +34,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <TheHeader />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>

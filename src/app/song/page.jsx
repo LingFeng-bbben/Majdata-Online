@@ -25,7 +25,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <TheHeader />
       <div className="links">
         <div className="linkContent">
           <a href="/">主页</a>

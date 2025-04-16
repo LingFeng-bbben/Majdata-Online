@@ -1,8 +1,9 @@
 'use client'
 import React from "react";
+import { toast } from "react-toastify";
 
-export default function TheHeader({toast}){
-    return(      <h1>
+export default function TheHeader(){
+    return(<h1>
         <img
           className="xxlb"
           src="./salt.webp"
@@ -11,8 +12,7 @@ export default function TheHeader({toast}){
               position: "top-center",
               autoClose: 500,
             })
-          }
-        ></img>
+          } alt="xxlb"></img>
         Majdata.Net
-      </h1>)
+    </h1>)
 }

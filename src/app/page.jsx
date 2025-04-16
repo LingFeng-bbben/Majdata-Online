@@ -28,7 +28,7 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <TheHeader />
       <div className="links">
         <div
           className="linkContent"

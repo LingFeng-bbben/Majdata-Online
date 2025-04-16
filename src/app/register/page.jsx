@@ -24,7 +24,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <TheHeader />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>
