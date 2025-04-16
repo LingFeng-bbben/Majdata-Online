@@ -23,4 +23,4 @@ export default function makeLevelClickCallback (songid, isPlayer) {
             `${maidata}\n${track}\n${bg}\n${mv}\n${e.target.id}`
         );
     };
-};
+}

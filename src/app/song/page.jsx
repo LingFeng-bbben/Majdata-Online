@@ -11,8 +11,6 @@ import { downloadSong } from "../download";
 import { getLevelName, getComboState } from "../utils";
 import {
   CoverPic,
-  FloatingTagButton,
-  FloatingTagWindow,
   Levels,
   Majdata,
   MajdataLogo,
