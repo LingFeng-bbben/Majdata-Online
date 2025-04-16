@@ -611,3 +611,36 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 15px;
   }
 }
+
+.recent10 {
+  border: 2px solid #ccc; /* 灰色边框 */
+  border-radius: 8px;     /* 可选：圆角 */
+  padding: 16px;          /* 可选：内边距 */
+  margin-top: 16px;       /* 可选：和上面隔开一点 */
+}
+
+.songCardContainer {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  row-gap: 0rem;
+  justify-content: center;
+}
+
+.songCardWrapper {
+  flex: 1 1 200px; /* The item can shrink, grow, and has a base width of 200px */
+  max-width: 300px; /* Limit the max width to prevent it from getting too large */
+}
+
+@media (max-width: 768px) {
+  .songCardWrapper {
+    flex: 1 1 150px; /* On smaller screens, each card will take up less space */
+  }
+}
+
+@media (max-width: 480px) {
+  .songCardWrapper {
+    flex: 1 1 100%; /* On very small screens, cards will stack vertically */
+  }
+}

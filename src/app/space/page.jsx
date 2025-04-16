@@ -42,9 +42,7 @@ export default function Page() {
       </div>
 
       <Introduction username={username} />
-      <div className="theList">
         <SongList search={"uploader:" + username} />
-      </div>
         <Recent10 />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
@@ -98,11 +96,12 @@ function Introduction({ username }) {
   );
 }
 
-function Recent10(){
+function Recent10() {
     const { data, error, isLoading } = useSWR(
         apiroot3 + "/account/Recent?username=bbben",
         fetcher
     );
+
     if (error) return <div className="notReady">已闭店</div>;
     if (isLoading) {
         return (
@@ -111,15 +110,22 @@ function Recent10(){
             </>
         );
     }
+
     console.log(data);
-    const list = data.map((o) =>(
-        <div key={o.chartId} id={o.chartId}>
-            <LazyLoad>
+
+    const list = data.map((o) => (
+        <div key={o.chartId} id={o.chartId} className="songCardWrapper">
+            <LazyLoad height={165} width={352} offset={300}>
                 <div className="songCard">
                     <CoverPic id={o.chartId} />
                     <div className="songInfo">
                         <div className="songTitle" id={o.chartId}>
-                            <Level level={o.level} difficulty={o.difficulty} songid={o.chartId} isPlayer={false}></Level>
+                            <Level
+                                level={o.level}
+                                difficulty={o.difficulty}
+                                songid={o.chartId}
+                                isPlayer={false}
+                            />
                             <a href={"/song?id=" + o.chartId}>{o.title}</a>
                         </div>
 
@@ -134,7 +140,8 @@ function Recent10(){
                                 <img
                                     className="smallIcon"
                                     src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                                    alt={o.uploader}/>
+                                    alt={o.uploader}
+                                />
                                 {o.designer}
                             </a>
                         </div>
@@ -157,10 +164,10 @@ function Recent10(){
                 </div>
             </LazyLoad>
         </div>
-    ))
-    return list;
-}
+    ));
 
+    return <div className="songCardContainer">{list}</div>;
+}
 
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
@@ -179,7 +186,7 @@ function SongList({ search }) {
     );
   }
   const list = data.map((o) => (
-    <div key={o.id} id={o.id}>
+    <div key={o.id} id={o.id} className="songCardWrapper">
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.id} />
@@ -223,5 +230,5 @@ function SongList({ search }) {
       </LazyLoad>
     </div>
   ));
-  return list;
+    return <div className="songCardContainer">{list}</div>;
 }
