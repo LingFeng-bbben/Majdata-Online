@@ -9,7 +9,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { downloadSong } from "../download";
 import { getLevelName, getComboState } from "../utils";
-import { CoverPic, Levels, Majdata, MajdataLogo, UserInfo } from "../widgets";
+import {
+  CoverPic,
+  FloatingTagButton,
+  FloatingTagWindow,
+  Levels,
+  Majdata,
+  MajdataLogo,
+  TagManageWidget,
+  UserInfo
+} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -51,6 +60,7 @@ export default function Page() {
         interactive={true}
       />
       <SongInfo id={param} tippy={target} />
+      <TagManageWidget songid={param} />
       <LikeSender songid={param} />
       <div className="hr-solid"></div>
       <ScoreList songid={param} />

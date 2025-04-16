@@ -10,3 +10,4 @@ export { default as Majdata } from "./Majdata";
 export { default as MajdataLogo } from "./MajdataLogo";
 export { default as RecentPlayed } from "./RecentPlayedWidget";
 export { default as UserInfo } from "./UserInfo";
+export { default as TagManageWidget } from "./TagManageWidget";
