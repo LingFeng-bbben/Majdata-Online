@@ -8,7 +8,7 @@ export const scrollToTop = () => {
     }
 };
 
-export const makeLevelClickCallback = (songid, isPlayer) => {
+export default function makeLevelClickCallback (songid, isPlayer) {
     return (e) => {
         if (!isPlayer) return;
         scrollToTop();

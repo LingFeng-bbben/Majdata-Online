@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import UserInfo from "../widgets/UserInfo";
 import "tippy.js/dist/tippy.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MajdataLogo from "../widgets/MajdataLogo";
-import Logout from "../utils/logout";
+import {Logout,MajdataLogo,UserInfo} from "../widgets";
 
 export default function Page() {
   return (

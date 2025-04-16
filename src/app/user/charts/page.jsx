@@ -2,19 +2,14 @@
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import useSWR from "swr";
-import UserInfo from "../../widgets/UserInfo";
 import { apiroot3 } from "../../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import InteractCount from "../../widgets/InteractCount";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MajdataLogo from "../../widgets/MajdataLogo";
-import CoverPic from "../../widgets/CoverPic";
 import LazyLoad from "react-lazy-load";
-import getUsername from "../../utils/getUsername";
-import Logout from "../../utils/logout";
-import ChartUploader from "../../widgets/ChartUploader";
+import { getUsername } from "../../utils";
+import { UserInfo,Logout,ChartUploader,CoverPic,MajdataLogo,InteractCount } from "../../widgets"
 
 export default function Page() {
     const [source, target] = useSingleton();

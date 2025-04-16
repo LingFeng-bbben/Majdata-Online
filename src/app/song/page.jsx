@@ -1,20 +1,15 @@
 "use client";
 import React, {useState} from "react";
 import useSWR from "swr";
-import Majdata from "../widgets/Majdata";
-import UserInfo from "../widgets/UserInfo";
 import {apiroot3} from "../apiroot";
 import Tippy, {useSingleton} from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import {useSearchParams} from "next/navigation";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MajdataLogo from "../widgets/MajdataLogo";
-import Levels from "../widgets/Levels";
-import CoverPic from "../widgets/CoverPic";
 import {downloadSong} from "../download";
-import {getLevelName} from "../utils/getLevelName";
-import {getComboState} from "../utils/getComboState";
+import {getLevelName,getComboState} from "../utils";
+import {CoverPic, Levels, Majdata, MajdataLogo, UserInfo} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();

@@ -5,7 +5,7 @@ import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MajdataLogo from "../widgets/MajdataLogo";
+import {MajdataLogo} from "../widgets";
 
 export default function Page() {
   return (

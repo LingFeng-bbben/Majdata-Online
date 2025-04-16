@@ -1,12 +1,11 @@
 import useSWR from "swr";
 import {apiroot3} from "../apiroot";
 import LazyLoad from "react-lazy-load";
-import CoverPic from "./CoverPic";
-import Level from "./Level";
+import {Level, CoverPic } from "./";
 import React from "react";
-import {getComboState} from "../utils/getComboState";
+import {getComboState} from "../utils";
 
-export function RecentPlayed({username}) {
+export default function RecentPlayed({username}) {
     const fetcher = async (...args) =>
         await fetch(...args).then(async (res) => res.json());
     const {data, error, isLoading} = useSWR(

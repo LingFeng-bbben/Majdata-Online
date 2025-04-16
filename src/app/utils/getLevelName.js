@@ -1,4 +1,4 @@
-export function getLevelName(level) {
+export default function getLevelName(level) {
     if (level == 0) return "Easy";
     if (level == 1) return "Basic";
     if (level == 2) return "Advanced";

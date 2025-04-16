@@ -1,15 +1,12 @@
 "use client";
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import Levels from "../widgets/Levels";
-import InteractCount from "../widgets/InteractCount";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MajdataLogo from "../widgets/MajdataLogo";
 import LazyLoad from "react-lazy-load";
-import CoverPic from "../widgets/CoverPic";
 import useSWR from "swr";
+import {CoverPic, InteractCount, Levels, MajdataLogo} from "../widgets";
 
 export default function Page() {
   return (

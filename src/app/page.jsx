@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import UserInfo from "./widgets/UserInfo";
 import { apiroot3 } from "./apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -10,11 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
-import InteractCount from "./widgets/InteractCount";
-import MajdataLogo from "./widgets/MajdataLogo";
-import CoverPic from "./widgets/CoverPic";
-import Levels from "./widgets/Levels";
 import { downloadSong } from "./download";
+import {CoverPic, InteractCount, Levels, MajdataLogo, UserInfo} from "./widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();

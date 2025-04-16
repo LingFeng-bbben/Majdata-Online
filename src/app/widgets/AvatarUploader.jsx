@@ -2,7 +2,7 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import {apiroot3} from "../apiroot";
 import React from "react";
-import getUsername from "../utils/getUsername"
+import {sleep, getUsername} from "../utils";
 
 export default function AvatarUploader() {
     async function onSubmit(event) {

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {makeLevelClickCallback} from "../utils/scrollAndCallback";
+import {MakeLevelClickCallback} from "../utils";
 
 export default function Levels({ levels, songid, isPlayer }) {
     for (let i = 0; i < levels.length; i++) {
@@ -8,7 +8,7 @@ export default function Levels({ levels, songid, isPlayer }) {
         levels[i] = "-";
       }
     }
-    const levelClickCallback = makeLevelClickCallback(songid, isPlayer);
+    const levelClickCallback = MakeLevelClickCallback(songid, isPlayer);
 
     return (
         <div>
