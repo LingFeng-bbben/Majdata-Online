@@ -1,18 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import useSWR from "swr";
 import Majdata from "../widgets/Majdata";
 import UserInfo from "../widgets/UserInfo";
-import { apiroot3 } from "../apiroot";
-import Tippy, { useSingleton } from "@tippyjs/react";
+import {apiroot3} from "../apiroot";
+import Tippy, {useSingleton} from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { useSearchParams } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import {useSearchParams} from "next/navigation";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TheHeader from "../widgets/TheHeader";
 import Levels from "../widgets/Levels";
 import CoverPic from "../widgets/CoverPic";
-import { downloadSong } from "../download";
+import {downloadSong} from "../download";
+import {getLevelName} from "../utils/getLevelName";
+import {getComboState} from "../utils/getComboState";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -434,20 +436,3 @@ function scoreCard(score, index) {
   );
 }
 
-function getLevelName(level) {
-  if (level == 0) return "Easy";
-  if (level == 1) return "Basic";
-  if (level == 2) return "Advanced";
-  if (level == 3) return "Expert";
-  if (level == 4) return "Master";
-  if (level == 5) return "Re:Master";
-  if (level == 6) return "UTAGE/Original";
-}
-
-function getComboState(state) {
-  if (state == 0) return "";
-  if (state == 1) return "FC";
-  if (state == 2) return "FC+";
-  if (state == 3) return "AP";
-  if (state == 4) return "AP+";
-}
