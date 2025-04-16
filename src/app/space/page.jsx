@@ -1,49 +1,54 @@
 "use client";
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import Levels from "../levels";
-import InteractCount from "../interact";
-import { apiroot3 } from "../apiroot";
-import { ToastContainer, toast } from "react-toastify";
+import {apiroot3} from "../apiroot";
+import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
 import LazyLoad from "react-lazy-load";
-import CoverPic from "../cover";
 import useSWR from "swr";
-import { useSearchParams } from "next/navigation";
+import {useSearchParams} from "next/navigation";
 
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
+import {RecentPlayed, CoverPic, MajdataLogo, InteractCount, Levels, UserInfo, Logout} from "../widgets";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const username = searchParams.get("id");
   return (
     <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <TheHeader toast={toast} />
-      <div className="links">
+        <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+        />
+        <div className="seprate"></div>
+        <MajdataLogo />
+        <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="/">主页</a>
         </div>
-      </div>
+          <UserInfo />
+          <Logout></Logout>
+        </div>
 
-      <Introduction username={username} />
-      <div className="theList">
+        <Introduction username={username} />
+        
+        <h2>最近游玩的谱面</h2>
+        <div className="hr-solid"></div>
+        <RecentPlayed username={username} />
+        
+        <h2>上传的谱面</h2>
+        <div className="hr-solid"></div>
         <SongList search={"uploader:" + username} />
-      </div>
+        
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -68,7 +73,7 @@ function Introduction({ username }) {
         <img
           className="bigIcon"
           src={apiroot3 + "/account/Icon?username=" + username}
-        />
+         alt={username}/>
         <h1>{data.username}</h1>
       </div>
       <p>注册于{data.joinDate}</p>
@@ -113,7 +118,7 @@ function SongList({ search }) {
     );
   }
   const list = data.map((o) => (
-    <div key={o.id} id={o.id}>
+    <div key={o.id} id={o.id} className="songCardWrapper">
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
           <CoverPic id={o.id} />
@@ -133,7 +138,7 @@ function SongList({ search }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                />
+                 alt={o.uploader}/>
                 {o.designer}
               </a>
             </div>
@@ -157,5 +162,5 @@ function SongList({ search }) {
       </LazyLoad>
     </div>
   ));
-  return list;
+    return <div className="songCardContainer">{list}</div>;
 }

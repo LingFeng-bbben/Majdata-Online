@@ -1,13 +1,12 @@
 'use client'
 import React, { useState } from 'react';
-import CoverPic from "../cover";
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
-import Majdata from '../majdata'
 import { apiroot1 } from '../apiroot';
 import Tippy, { useSingleton } from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import LazyLoad from "react-lazy-load";
+import {CoverPic, Majdata} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();

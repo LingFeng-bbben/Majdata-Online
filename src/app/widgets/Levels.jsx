@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { apiroot3 } from "./apiroot";
+import {MakeLevelClickCallback} from "../utils";
 
 export default function Levels({ levels, songid, isPlayer }) {
     for (let i = 0; i < levels.length; i++) {
@@ -8,28 +8,7 @@ export default function Levels({ levels, songid, isPlayer }) {
         levels[i] = "-";
       }
     }
-    const scrollToTop = () => {
-        let sTop = document.documentElement.scrollTop || document.body.scrollTop;
-        if (sTop > 0.1) {
-          window.requestAnimationFrame(scrollToTop);
-          window.scrollTo(0, sTop - sTop / 9);
-        }
-      };
-    
-      const levelClickCallback = (e) => {
-        if(!isPlayer) return;
-        scrollToTop();
-        const maichart = apiroot3 + "/maichart/" + songid
-        const maidata = maichart + "/chart"
-        const track = maichart + "/track"
-        const bg = maichart + "/image?fullImage=true"
-        const mv = maichart + "/video"
-        window.unitySendMessage(
-          "HandleJSMessages",
-          "ReceiveMessage",
-          maidata + "\n" + track + "\n" + bg + "\n" + mv + "\n" + e.target.id
-        );
-      };
+    const levelClickCallback = MakeLevelClickCallback(songid, isPlayer);
 
     return (
         <div>

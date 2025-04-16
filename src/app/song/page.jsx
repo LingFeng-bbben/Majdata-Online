@@ -1,18 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import useSWR from "swr";
-import Majdata from "../majdata";
-import UserInfo from "../userinfo";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
-import Levels from "../levels";
-import CoverPic from "../cover";
 import { downloadSong } from "../download";
+import { getLevelName, getComboState } from "../utils";
+import {
+  CoverPic,
+  FloatingTagButton,
+  FloatingTagWindow,
+  Levels,
+  Majdata,
+  MajdataLogo,
+  TagManageWidget,
+  UserInfo
+} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -25,7 +31,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="/">主页</a>
@@ -43,7 +49,7 @@ export default function Page() {
           theme="dark"
         />
         {/* <div className='linkContent'><a href='./contest'>MMFC 6th</a></div> */}
-        <UserInfo apiroot={apiroot3} />
+        <UserInfo />
       </div>
 
       <Majdata />
@@ -78,7 +84,7 @@ function SongInfo({ id, tippy }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) return <div>failed to load</div>;
+  if (data == "" || data === undefined) return <div>failed to load</div>;
 
   const OnDownloadClick = (params) => async () => {
     await downloadSong({ id: params.id, title: params.title, toast: toast });
@@ -122,6 +128,7 @@ function SongInfo({ id, tippy }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                  alt={o.uploader}
                 />
                 {o.uploader + "@" + o.designer}
               </a>
@@ -160,10 +167,48 @@ function SongInfo({ id, tippy }) {
           </div>
         </div>
       </div>
-      <div className="uploadDate">{o.timestamp}</div>
-      ID
-      <div className="uploadDate">{o.id}</div>
-      HASH <div className="uploadDate">{o.hash}</div>
+
+      <div className="uploadDate"></div>
+
+      <div className="uploadMeta">
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">Time:</div>
+          <div className="uploadMetaContent">{o.timestamp}</div>
+        </div>
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">ID:</div>
+          <div className="uploadMetaContent">{o.id}</div>
+        </div>
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">HASH:</div>
+          <div className="uploadMetaContent">{o.hash}</div>
+        </div>
+        <div className="uploadMetaRow">
+          <div className="uploadMetaLabel">Tags:</div>
+          <div className="uploadMetaContent tagList">
+            {o.tags && o.tags.length > 0 ? (
+              o.tags.map((tag, index) => (
+                <Tippy content="搜索标签" key={index}>
+                  <span
+                    className="tag"
+                    onClick={() => {
+                      localStorage.setItem("search", tag);
+                      window.location.href = "/";
+                    }}
+                  >
+                    {tag}
+                  </span>
+                </Tippy>
+              ))
+            ) : (
+              <span style={{ color: "#999", fontStyle: "italic" }}>
+                暂无标签
+              </span>
+            )}
+            <TagManageWidget songid={o.id} className="tag" style={{backgroundColor:"green"}} ></TagManageWidget>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -239,7 +284,15 @@ function LikeSender({ songid }) {
       </div>
       <div className="theList">
         {data.Likes.map((o) => (
-          <p key={o}>{o}</p>
+          <a key={o} href={"/space?id=" + o}>
+            <p>
+              <img
+                className="smallIcon"
+                src={apiroot3 + "/account/Icon?username=" + o}
+              />
+              {o}
+            </p>
+          </a>
         ))}
       </div>
     </>
@@ -403,22 +456,4 @@ function scoreCard(score, index) {
       </div>
     </div>
   );
-}
-
-function getLevelName(level) {
-  if (level == 0) return "Easy";
-  if (level == 1) return "Basic";
-  if (level == 2) return "Advanced";
-  if (level == 3) return "Expert";
-  if (level == 4) return "Master";
-  if (level == 5) return "Re:Master";
-  if (level == 6) return "UTAGE/Original";
-}
-
-function getComboState(state) {
-  if (state == 0) return "";
-  if (state == 1) return "FC";
-  if (state == 2) return "FC+";
-  if (state == 3) return "AP";
-  if (state == 4) return "AP+";
 }

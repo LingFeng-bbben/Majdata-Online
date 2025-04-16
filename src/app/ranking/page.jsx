@@ -1,15 +1,12 @@
 "use client";
 import React from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import Levels from "../levels";
-import InteractCount from "../interact";
 import { apiroot3 } from "../apiroot";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
 import LazyLoad from "react-lazy-load";
-import CoverPic from "../cover";
 import useSWR from "swr";
+import {CoverPic, InteractCount, Levels, MajdataLogo} from "../widgets";
 
 export default function Page() {
   return (
@@ -27,7 +24,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>

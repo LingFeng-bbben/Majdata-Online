@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../header";
+import {MajdataLogo} from "../widgets";
 
 export default function Page() {
   return (
@@ -24,10 +24,10 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader toast={toast} />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="/">主页</a>
         </div>
         <div className="linkContent">
           <a href="./login">登录</a>
