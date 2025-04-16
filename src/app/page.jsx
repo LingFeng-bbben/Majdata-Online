@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
 import InteractCount from "./widgets/InteractCount";
-import TheHeader from "./widgets/TheHeader";
+import MajdataLogo from "./widgets/MajdataLogo";
 import CoverPic from "./widgets/CoverPic";
 import Levels from "./widgets/Levels";
 import { downloadSong } from "./download";
@@ -28,7 +28,7 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <TheHeader />
+      <MajdataLogo />
       <div className="links">
         <div
           className="linkContent"

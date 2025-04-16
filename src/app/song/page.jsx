@@ -9,7 +9,7 @@ import "tippy.js/dist/tippy.css";
 import {useSearchParams} from "next/navigation";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../widgets/TheHeader";
+import MajdataLogo from "../widgets/MajdataLogo";
 import Levels from "../widgets/Levels";
 import CoverPic from "../widgets/CoverPic";
 import {downloadSong} from "../download";
@@ -27,7 +27,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
       <div className="seprate"></div>
-      <TheHeader />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="/">主页</a>

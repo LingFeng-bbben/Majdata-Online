@@ -5,7 +5,7 @@ import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../widgets/TheHeader";
+import MajdataLogo from "../widgets/MajdataLogo";
 
 export default function Page() {
   return (
@@ -23,7 +23,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>

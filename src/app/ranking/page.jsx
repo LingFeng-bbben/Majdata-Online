@@ -6,7 +6,7 @@ import InteractCount from "../widgets/InteractCount";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TheHeader from "../widgets/TheHeader";
+import MajdataLogo from "../widgets/MajdataLogo";
 import LazyLoad from "react-lazy-load";
 import CoverPic from "../widgets/CoverPic";
 import useSWR from "swr";
@@ -27,7 +27,7 @@ export default function Page() {
         theme="dark"
       />
       <div className="seprate"></div>
-      <TheHeader />
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="../">返回</a>
