@@ -4,7 +4,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {Logout,MajdataLogo,UserInfo} from "../widgets";
+import { Logout, MajdataLogo, UserInfo } from "../widgets";
 import getUsername from "../utils/getUsername";
 
 export default function Page() {
@@ -31,20 +31,20 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      <div className="links">
-        <div className="linkContent">
-          <a href="./user/charts">谱面管理</a>
-        </div>
-        <div className="linkContent">
-          <a href="./user/profile">个人设置</a>
-        </div>
-        <div className="linkContent">
-          <a href={"/space?id=" + getUsername()}>个人主页</a>
-        </div>
-      </div>
+
+      <a href="./user/charts">
+        <div className="fancyDownloadButton">谱面管理 </div>
+      </a>
+
+      <a href="./user/profile">
+        <div className="fancyDownloadButton">个人设置 </div>
+      </a>
+
+      <a href={"/space?id=" + getUsername()}>
+        <div className="fancyDownloadButton">个人主页 </div>
+      </a>
+
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }
-
-
