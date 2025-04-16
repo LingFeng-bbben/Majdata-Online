@@ -265,7 +265,15 @@ function LikeSender({ songid }) {
       </div>
       <div className="theList">
         {data.Likes.map((o) => (
-          <p key={o}>{o}</p>
+          <a key={o} href={"/space?id=" + o}>
+          <p>
+            <img
+              className="smallIcon"
+              src={apiroot3 + "/account/Icon?username=" + o}
+            />
+            {o}
+          </p>
+        </a>
         ))}
       </div>
     </>
