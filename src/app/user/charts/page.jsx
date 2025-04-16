@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LazyLoad from "react-lazy-load";
 import { getUsername } from "../../utils";
-import { UserInfo,Logout,ChartUploader,CoverPic,MajdataLogo,InteractCount } from "../../widgets"
+import {UserInfo, Logout, ChartUploader, CoverPic, MajdataLogo, InteractCount, TagManageWidget} from "../../widgets"
 
 export default function Page() {
     const [source, target] = useSingleton();
@@ -107,7 +107,9 @@ function UploadedChartsList({ tippy }) {
                             </div>
                         </Tippy>
                         <Delbutton songid={o.id} />
-                        <br />
+                        <div className="songLevel" style={{ background: "green" }}>
+                            <TagManageWidget songid={o.id} /></div>
+                        <br/>
                         <div className="commentBox downloadButtonBox">
                             <svg
                                 className="downloadButton"

@@ -60,7 +60,6 @@ export default function Page() {
         interactive={true}
       />
       <SongInfo id={param} tippy={target} />
-      <TagManageWidget songid={param} />
       <LikeSender songid={param} />
       <div className="hr-solid"></div>
       <ScoreList songid={param} />
@@ -206,6 +205,7 @@ function SongInfo({ id, tippy }) {
                 暂无标签
               </span>
             )}
+            <TagManageWidget songid={o.id} className="tag" style={{backgroundColor:"green"}} ></TagManageWidget>
           </div>
         </div>
       </div>
