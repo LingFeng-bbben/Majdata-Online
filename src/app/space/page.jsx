@@ -42,7 +42,9 @@ export default function Page() {
       </div>
 
       <Introduction username={username} />
+        <p>上传的谱面</p>
         <SongList search={"uploader:" + username} />
+        <p>Recent10</p>
         <Recent10 />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>

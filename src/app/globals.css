@@ -152,6 +152,35 @@ img.songImg {
   overflow: hidden;
 }
 
+.songCardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  justify-content: center;
+  gap: 1.8rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.songCardWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .songCardWrapper {
+    flex: 1 1 150px; /* On smaller screens, each card will take up less space */
+  }
+}
+
+@media (max-width: 480px) {
+  .songCardWrapper {
+    flex: 1 1 100%; /* On very small screens, cards will stack vertically */
+  }
+}
+
 .songInfo {
   margin-left: 8.9rem;
   /* border: 1px solid red; */
@@ -609,38 +638,5 @@ input[type="number"]::-webkit-inner-spin-button {
 @media (max-width: 767px) {
   .markdown-body {
     padding: 15px;
-  }
-}
-
-.recent10 {
-  border: 2px solid #ccc; /* 灰色边框 */
-  border-radius: 8px;     /* 可选：圆角 */
-  padding: 16px;          /* 可选：内边距 */
-  margin-top: 16px;       /* 可选：和上面隔开一点 */
-}
-
-.songCardContainer {
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 2rem;
-  row-gap: 0rem;
-  justify-content: center;
-}
-
-.songCardWrapper {
-  flex: 1 1 200px; /* The item can shrink, grow, and has a base width of 200px */
-  max-width: 300px; /* Limit the max width to prevent it from getting too large */
-}
-
-@media (max-width: 768px) {
-  .songCardWrapper {
-    flex: 1 1 150px; /* On smaller screens, each card will take up less space */
-  }
-}
-
-@media (max-width: 480px) {
-  .songCardWrapper {
-    flex: 1 1 100%; /* On very small screens, cards will stack vertically */
   }
 }
