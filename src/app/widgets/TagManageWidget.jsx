@@ -73,18 +73,17 @@ const TagManageTag = forwardRef(function TagManageTag({onClick}, ref) {
       className="tag"
       style={{
         zIndex: 1000,
-        backgroundColor: "green"
+        backgroundColor: "green",
       }}
-    >
-      <svg
+    ><svg
         className="downloadButton"
         xmlns="http://www.w3.org/2000/svg"
         height="16"
-        viewBox="-20 -20 512 512"
+        viewBox="0 -960 960 960"
         width="16"
       >
         <path
-          d="M345 39.1L472.8 168.4c52.4 53 52.4 138.2 0 191.2L360.8 472.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4 0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM0 229.5L0 80C0 53.5 21.5 32 48 32l149.5 0c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5 0 90.5L277.3 442.7c-25 25-65.5 25-90.5 0l-168-168C6.7 262.7 0 246.5 0 229.5zM144 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/>
+          d="M480-160v-80h120l180-240-180-240H160v200H80v-200q0-33 23.5-56.5T160-800h440q19 0 36 8.5t28 23.5l216 288-216 288q-11 15-28 23.5t-36 8.5H480Zm-10-320ZM200-120v-120H80v-80h120v-120h80v120h120v80H280v120h-80Z"/>
       </svg>
     </button>
   )
@@ -183,13 +182,13 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
 
   const uploadTags = async () => {
     console.log("向", apiroot3 + "/maichart/" + songid + (
-      isInPrivatePage ? "/tags" : "/tagsPublic"
+      isInPrivatePage ? "/tags" : "/publictags"
     ), "发", JSON.stringify(tags))
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: true,
     });
     const response = await fetch(apiroot3 + "/maichart/" + songid + (
-      isInPrivatePage ? "/tags" : "/tagsPublic"
+      isInPrivatePage ? "/tags" : "/publictags"
     ), {
       method: 'POST',
       headers: {
@@ -252,7 +251,8 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
         backgroundColor: 'black',
         zIndex: 1001,
         cursor: dragging ? 'grabbing' : 'default',
-        border: "1px solid whitesmoke"
+        border: "1px solid whitesmoke",
+        fontSize: "1rem",
       }}
     >
       <div
@@ -264,7 +264,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
           userSelect: 'none'
         }}
       >
-        {window.location.pathname === "/user/charts" ? "Tags管理窗口（上传者）" : "Tags管理窗口（玩家）"}
+        {window.location.pathname === "/user/charts" ? "作者Tags管理" : "玩家Tags管理"}
       </div>
       <div style={{padding: '16px'}}>
         <div className="uploadMetaRow">
@@ -295,7 +295,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
         <div style={{marginTop: '12px', display: 'flex', gap: '8px'}}>
           <input
             type="text"
-            placeholder="输入标签"
+            placeholder="自定标签"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             style={{marginLeft: '4px', flex: 1, padding: '6px 8px', borderRadius: '4px', border: '1px solid #ccc'}}
