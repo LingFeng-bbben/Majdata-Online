@@ -158,9 +158,26 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
   );
 
   useEffect(() => {
-    if (data && data.tags) {
-      setTags(data.tags);
+    if (!data) {
+      return;
     }
+    if (window.location.pathname === "/user/charts") {
+      if (data.tags !== undefined) {
+        setTags(data.tags);
+      }
+      else {
+        toast.error("没有Tags字段")
+      }
+    }
+    else {
+      if (data.publicTags !== undefined) {
+        setTags(data.publicTags);
+      }
+      else {
+        toast.error("没有publicTags字段")
+      }
+    }
+    console.log(tags)
   }, [data]);
 
   const uploadTags = async () => {
@@ -242,7 +259,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
           userSelect: 'none'
         }}
       >
-        Tags管理窗口
+        {window.location.pathname === "/user/charts" ? "Tags管理窗口（上传者）" : "Tags管理窗口（玩家）"}
       </div>
       <div style={{padding: '16px'}}>
         <div className="uploadMetaRow">

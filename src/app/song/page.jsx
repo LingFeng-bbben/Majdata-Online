@@ -194,9 +194,15 @@ function SongInfo({id, tippy}) {
         <div className="uploadMetaRow">
           <div className="uploadMetaLabel">Tags:</div>
           <div className="uploadMetaContent tagList">
-            {o.tags && o.tags.length > 0 ? (
-              o.tags.map((tag, index) => (
-                <Tippy content="搜索标签" key={index}>
+            {(
+               o.tags || o.publicTags
+             ) && (
+               o.tags.length > 0 || o.publicTags.length > 0
+             ) ? (
+               <>
+                 {
+                   o.tags.map((tag, index) => (
+                     <Tippy content="搜索标签" key={index}>
                   <span
                     className="tag"
                     onClick={() => {
@@ -206,9 +212,24 @@ function SongInfo({id, tippy}) {
                   >
                     {tag}
                   </span>
-                </Tippy>
-              ))
-            ) : (
+                     </Tippy>
+                   ))
+                 }
+                 {o.publicTags?.map((tag, index) => (
+                   <Tippy content="搜索标签" key={index}>
+                  <span
+                    className="tag tagPublic"
+                    onClick={() => {
+                      localStorage.setItem("search", tag);
+                      window.location.href = "/";
+                    }}
+                  >
+                    {tag}
+                  </span>
+                   </Tippy>
+                 ))}
+               </>
+             ) : (
                <span style={{color: "#999", fontStyle: "italic"}}>
                 暂无标签
               </span>
