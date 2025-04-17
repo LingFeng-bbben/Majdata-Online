@@ -10,6 +10,7 @@ import {useSearchParams} from "next/navigation";
 
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
+import remarkGfm from 'remark-gfm'
 import {RecentPlayed, CoverPic, MajdataLogo, InteractCount, Levels, UserInfo, Logout} from "../widgets";
 
 export default function Page() {
@@ -81,6 +82,7 @@ function Introduction({username}) {
       <p>注册于{data.joinDate}</p>
       <article className="markdown-body">
         <Markdown
+          remarkPlugins={[remarkGfm]}
           components={{
             ol(props) {
               const {...rest} = props;
