@@ -252,7 +252,7 @@ function LikeSender({ songid }) {
     <>
       <div className="theList">
         <button
-          className="linkContent"
+          className="linkContentWithBorder"
           id="submitbuttonlike"
           type="button"
           onClick={onSubmit}
@@ -287,7 +287,7 @@ function LikeSender({ songid }) {
               <img
                 className="smallIcon"
                 src={apiroot3 + "/account/Icon?username=" + o}
-              />
+               alt={o}/>
               {o}
             </p>
           </a>
@@ -301,7 +301,7 @@ function CommentSender({ songid }) {
   const [comment, SetCommnet] = useState("");
   const onSubmit = async () => {
     const formData = new FormData();
-    if (comment == "") {
+    if (comment === "") {
       toast.error("说点什么吧？");
       return;
     }
@@ -324,13 +324,13 @@ function CommentSender({ songid }) {
       }
     );
     toast.done(sending);
-    if (response.status == 200) {
+    if (response.status === 200) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
         SetCommnet("");
       }
-    } else if (response.status == 400) {
+    } else if (response.status === 400) {
       toast.error("评论失败：登录了吗？");
     } else {
       toast.error("评论失败：登录了吗？");
@@ -355,7 +355,7 @@ function CommentSender({ songid }) {
       </div>
       <div className="theList">
         <button
-          className="linkContent"
+          className="linkContentWithBorder"
           id="submitbutton"
           type="button"
           onClick={onSubmit}

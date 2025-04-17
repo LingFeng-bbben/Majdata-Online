@@ -111,10 +111,27 @@ h2 {
   transition: all 0.2s;
 }
 
+.linkContentWithBorder {
+  /* background-color: red; */
+  border-radius: 10px;
+  margin: 10px;
+  padding: 5px;
+  color: gainsboro;
+  border: 1px solid whitesmoke;
+  transition: all 0.2s;
+}
+
 .linkContent:hover {
   background-color: rgb(46, 46, 46);
   color: white;
   border: 1px solid whitesmoke;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.linkContentWithBorder:hover {
+  background-color: rgb(46, 46, 46);
+  color: white;
+  border: 1px solid #3B82F6;
   box-shadow: 2px 2px 5px gray;
 }
 
