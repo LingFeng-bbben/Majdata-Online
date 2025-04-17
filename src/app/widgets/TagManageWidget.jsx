@@ -97,6 +97,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
   const [newTag, setNewTag] = useState("");
   const [activeCategory, setActiveCategory] = useState('曲库来源');
   const [tags, setTags] = useState([]);
+  const isInPrivatePage = window.location.pathname === "/user/charts";
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -161,7 +162,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
     if (!data) {
       return;
     }
-    if (window.location.pathname === "/user/charts") {
+    if (isInPrivatePage) {
       if (data.tags !== undefined) {
         setTags(data.tags);
       }
@@ -181,11 +182,15 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
   }, [data]);
 
   const uploadTags = async () => {
-    console.log("向", apiroot3 + "/maichart/" + songid + "/tags", "发", JSON.stringify(tags))
+    console.log("向", apiroot3 + "/maichart/" + songid + (
+      isInPrivatePage ? "/tags" : "/tagsPublic"
+    ), "发", JSON.stringify(tags))
     const uploading = toast.loading("正在爆速上传...", {
       hideProgressBar: true,
     });
-    const response = await fetch(apiroot3 + "/maichart/" + songid + "/tags", {
+    const response = await fetch(apiroot3 + "/maichart/" + songid + (
+      isInPrivatePage ? "/tags" : "/tagsPublic"
+    ), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
