@@ -17,49 +17,51 @@ export default function Page() {
   const username = searchParams.get("id");
   return (
     <>
-        <ToastContainer
-            position="bottom-center"
-            autoClose={3000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-        />
-        <div className="seprate"></div>
-        <MajdataLogo />
-        <div className="links">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div className="seprate"></div>
+      <MajdataLogo/>
+      <div className="links">
         <div className="linkContent">
           <a href="/">主页</a>
         </div>
-          <UserInfo />
-          <Logout></Logout>
-        </div>
+        <UserInfo/>
+        <Logout></Logout>
+      </div>
 
-        <Introduction username={username} />
-        
-        <h2>最近游玩的谱面</h2>
-        <div className="hr-solid"></div>
-        <RecentPlayed username={username} />
-        
-        <h2>上传的谱面</h2>
-        <div className="hr-solid"></div>
-        <SongList search={"uploader:" + username} />
-        
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
+      <Introduction username={username}/>
+
+      <h2>最近游玩的谱面</h2>
+      <div className="hr-solid"></div>
+      <RecentPlayed username={username}/>
+
+      <h2>上传的谱面</h2>
+      <div className="hr-solid"></div>
+      <SongList search={"uploader:" + username}/>
+
+      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt=""/>
     </>
   );
 }
 
-function Introduction({ username }) {
-  const { data, error, isLoading } = useSWR(
+function Introduction({username}) {
+  const {data, error, isLoading} = useSWR(
     apiroot3 + "/account/intro?username=" + encodeURIComponent(username),
     fetcher
   );
-  if (error) return <div className="notReady">已闭店</div>;
+  if (error) {
+    return <div className="notReady">已闭店</div>;
+  }
   if (isLoading) {
     return (
       <>
@@ -73,7 +75,7 @@ function Introduction({ username }) {
         <img
           className="bigIcon"
           src={apiroot3 + "/account/Icon?username=" + username}
-         alt={username}/>
+          alt={username}/>
         <h1>{data.username}</h1>
       </div>
       <p>注册于{data.joinDate}</p>
@@ -81,16 +83,16 @@ function Introduction({ username }) {
         <Markdown
           components={{
             ol(props) {
-              const { ...rest } = props;
+              const {...rest} = props;
               return <ol type="1" {...rest} />;
             },
             ul(props) {
-              const { ...rest } = props;
+              const {...rest} = props;
               return <ol style={{listStyleType: "disc"}} {...rest} />;
             },
             img(props) {
-              const { ...rest } = props;
-              return <img style={{margin:"auto"}} {...rest} />;
+              const {...rest} = props;
+              return <img style={{margin: "auto"}} {...rest} />;
             },
           }}
         >
@@ -104,12 +106,14 @@ function Introduction({ username }) {
 const fetcher = async (...args) =>
   await fetch(...args).then(async (res) => res.json());
 
-function SongList({ search }) {
-  const { data, error, isLoading } = useSWR(
+function SongList({search}) {
+  const {data, error, isLoading} = useSWR(
     apiroot3 + "/maichart/list?search=" + encodeURIComponent(search),
     fetcher
   );
-  if (error) return <div className="notReady">已闭店</div>;
+  if (error) {
+    return <div className="notReady">已闭店</div>;
+  }
   if (isLoading) {
     return (
       <>
@@ -121,7 +125,7 @@ function SongList({ search }) {
     <div key={o.id} id={o.id} className="songCardWrapper">
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
-          <CoverPic id={o.id} />
+          <CoverPic id={o.id}/>
           <div className="songInfo">
             <div className="songTitle" id={o.id}>
               <a href={"/song?id=" + o.id}>{o.title}</a>
@@ -138,12 +142,12 @@ function SongList({ search }) {
                 <img
                   className="smallIcon"
                   src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                 alt={o.uploader}/>
+                  alt={o.uploader}/>
                 {o.designer}
               </a>
             </div>
-            <Levels levels={o.levels} songid={o.id} isPlayer={false} />
-            <br />
+            <Levels levels={o.levels} songid={o.id} isPlayer={false}/>
+            <br/>
             <div className="commentBox downloadButtonBox">
               <svg
                 className="downloadButton"
@@ -152,15 +156,16 @@ function SongList({ search }) {
                 viewBox="0 -960 960 960"
                 width="24"
               >
-                <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                <path
+                  d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
               </svg>
             </div>
-            <InteractCount songid={o.id} />
-            <br />
+            <InteractCount songid={o.id}/>
+            <br/>
           </div>
         </div>
       </LazyLoad>
     </div>
   ));
-    return <div className="songCardContainer">{list}</div>;
+  return <div className="songCardContainer">{list}</div>;
 }
