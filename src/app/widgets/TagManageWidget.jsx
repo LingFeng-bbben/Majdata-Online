@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, forwardRef } from 'react';
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import React from "react";
 import Tippy from "@tippyjs/react";
 import useSWR from "swr";
@@ -6,27 +6,43 @@ import {apiroot3} from "../apiroot";
 import {toast} from "react-toastify";
 import {sleep} from "../utils";
 
-export default function TagManageWidget({songid, newClassName=''}) {
+const TagManageWidget = forwardRef(function TagManageWidget({ songid, newClassName = '' }, ref){
     const [isWindowOpen, setIsWindowOpen] = useState(false);
     const buttonRef = useRef(null);
     const windowRef = useRef(null);
 
+    useImperativeHandle(ref, () => ({
+        toggleWindow: () => {
+            console.log("from",isWindowOpen,"to",!isWindowOpen)
+            setIsWindowOpen((prev) => !prev)
+        },
+        openWindow: () => setIsWindowOpen(true),
+        closeWindow: () => setIsWindowOpen(false),
+    }));
+
     return (
-        <div className={`songLevel downloadButtonBox ${newClassName}`}>
-            <TagManageButton
-                ref={buttonRef}
-                onClick={() => setIsWindowOpen(!isWindowOpen)}
+      <div className={`songLevel downloadButtonBox ${newClassName}`}>
+          <TagManageButton
+            ref={buttonRef}
+            onClick={() => setIsWindowOpen(!isWindowOpen)}
+          />
+          {isWindowOpen && (
+            <TagManageWindow
+              ref={windowRef}
+              onClose={() => setIsWindowOpen(false)}
+              buttonRef={buttonRef}
+              songid={songid}
             />
-            {isWindowOpen && (
-                <TagManageWindow
-                    ref={windowRef}
-                    onClose={() => setIsWindowOpen(false)}
-                    buttonRef={buttonRef}
-                    songid={songid}
-                />
-            )}
-        </div>
+          )}
+      </div>
     );
+});
+
+export default TagManageWidget;
+
+
+export function TagManageTagLauncher({ onClick }) {
+    return <TagManageTag onClick={onClick} />;
 }
 
 const TagManageButton = forwardRef(function TagManageButton({ onClick, newClassName }, ref)
@@ -48,6 +64,20 @@ const TagManageButton = forwardRef(function TagManageButton({ onClick, newClassN
             </svg>
         </div>
     )
+});
+
+const TagManageTag = forwardRef(function TagManageTag({ onClick }, ref)
+{
+  return (
+    <button
+      ref={ref}
+      onClick={onClick}
+      className="tag"
+      style={{zIndex: 1000,}}
+    >
+      +
+    </button>
+  )
 });
 
 const TagManageWindow = forwardRef(function TagManageWindow({ onClose, buttonRef, songid }, ref)

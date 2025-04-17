@@ -14,6 +14,7 @@ import {
   Levels,
   Majdata,
   MajdataLogo,
+  TagManageTagLauncher,
   TagManageWidget,
   UserInfo
 } from "../widgets";
@@ -74,6 +75,7 @@ const fetcher = (url) =>
     res.json()
   );
 function SongInfo({ id, tippy }) {
+  const tagButtonRef = useState();
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
     fetcher
@@ -117,7 +119,7 @@ function SongInfo({ id, tippy }) {
           </Tippy>
           <Tippy content={o.artist} singleton={tippy}>
             <div className="songArtist">
-              {o.artist == "" || o.artist == null ? "-" : o.artist}
+              {o.artist === "" || o.artist == null ? "-" : o.artist}
             </div>
           </Tippy>
           <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
@@ -163,7 +165,7 @@ function SongInfo({ id, tippy }) {
               <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
             </svg>
           </div>
-          <TagManageWidget songid={o.id}></TagManageWidget>
+          <TagManageWidget ref={tagButtonRef} songid={o.id}></TagManageWidget>
         </div>
       </div>
 
@@ -204,6 +206,9 @@ function SongInfo({ id, tippy }) {
                 暂无标签
               </span>
             )}
+            <TagManageTagLauncher onClick={() => {
+              tagButtonRef.current?.toggleWindow();
+            }} />
           </div>
         </div>
       </div>
