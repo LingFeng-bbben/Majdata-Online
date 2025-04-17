@@ -55,9 +55,6 @@ export default function Page() {
                 interactive={true}
             />
             <h1>谱面管理</h1>
-            <p>
-                点击x删除谱面哟
-            </p>
             <UploadedChartsList tippy={target} />
             <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
         </>
@@ -107,8 +104,7 @@ function UploadedChartsList({ tippy }) {
                             </div>
                         </Tippy>
                         <Delbutton songid={o.id} />
-                        <div className="songLevelNoShadow" style={{ background: "green" }}>
-                            <TagManageWidget songid={o.id} /></div>
+                        <TagManageWidget newClassName="songLevelMarginTop" songid={o.id} />
                         <br/>
                         <div className="commentBox downloadButtonBox">
                             <svg
@@ -135,7 +131,6 @@ function Delbutton({ songid }) {
     return (
         <div
             className="songLevel"
-            id="lv3"
             onClick={async () => {
                 let ret = confirm("真的要删除吗(不可恢复)\n(没有任何机会)");
                 if (ret) {
@@ -156,7 +151,15 @@ function Delbutton({ songid }) {
                 }
             }}
         >
-            X
+            <svg
+                className="downloadButton shareButton"
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+                viewBox="-30 -30 512 512"
+            >
+                <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+            </svg>
         </div>
     );
 }
