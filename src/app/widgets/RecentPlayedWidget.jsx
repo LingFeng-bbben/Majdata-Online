@@ -54,7 +54,7 @@ export default function RecentPlayed({username}) {
                                 songid={o.chartId}
                                 isPlayer={false}
                             />
-                        <div className="songAcc" style={{color: "yellow"}}>{o.acc}</div>
+                        <div className="songAcc" style={{color: "yellow"}}>{o.acc.toFixed(4)}</div>
                         <br/>
                         <div className="songAcc">{getComboState(o.comboState)}</div>
                     </div>
