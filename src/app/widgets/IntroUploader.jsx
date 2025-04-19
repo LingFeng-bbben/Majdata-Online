@@ -78,9 +78,9 @@ export default function IntroUploader() {
 
   return (
     <>
+      <h2>自我介绍 (支持Markdown)</h2>
       <div className="theList">
         <form className="introbox" onSubmit={onSubmit}>
-          <div className="inputHint">自我介绍 (支持Markdown)</div>
           <textarea
             className="userinput introbox-inner"
             name="content"
@@ -88,13 +88,12 @@ export default function IntroUploader() {
             defaultValue={data.introduction}
             onChange={(e) => setIntro(e.target.value)}
           >
-        </textarea>
+          </textarea>
 
-          <button className="linkContent" id="submitbutton3" type="submit">
+          <button className="pagingButton linkContent" id="submitbutton3" type="submit">
             上传
           </button>
         </form>
-
       </div>
       <h2>预览</h2>
       <article className="markdown-body">
@@ -118,6 +117,7 @@ export default function IntroUploader() {
           {intro}
         </Markdown>
       </article>
+      <div className={"hr-solid"}></div>
     </>
   );
 }
