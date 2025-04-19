@@ -350,7 +350,7 @@ function LikeSender({ songid }) {
 }
 
 function CommentSender({ songid }) {
-  const [comment, SetCommnet] = useState("");
+  const [comment, SetComment] = useState("");
   const onSubmit = async () => {
     const formData = new FormData();
     if (comment === "") {
@@ -380,7 +380,7 @@ function CommentSender({ songid }) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
-        SetCommnet("");
+        SetComment("");
       }
     } else if (response.status === 400) {
       toast.error("评论失败：登录了吗？");
@@ -402,7 +402,7 @@ function CommentSender({ songid }) {
           id="commentcontent"
           className="userinput commentbox"
           type="text"
-          onChange={() => SetCommnet(event.target.value)}
+          onChange={() => SetComment(event.target.value)}
         />
       </div>
       <div className="theList">
