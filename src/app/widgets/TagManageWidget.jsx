@@ -264,7 +264,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
           userSelect: 'none'
         }}
       >
-        {window.location.pathname === "/user/charts" ? "作者Tags管理" : "玩家Tags管理"}
+        {isInPrivatePage ? "作者Tags管理" : "玩家Tags管理"}
       </div>
       <div style={{padding: '16px'}}>
         <div className="uploadMetaRow">
@@ -274,7 +274,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
               tags.map((tag, index) => (
                 <Tippy content="删除标签" key={index}>
                                     <span
-                                      className="tag"
+                                      className={isInPrivatePage ? "tag" : "tagPublic"}
                                       onClick={() => {
                                         const newTags = [...tags];
                                         newTags.splice(index, 1);

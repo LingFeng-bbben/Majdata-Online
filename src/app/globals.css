@@ -370,6 +370,12 @@ img.songImg {
   box-shadow: 2px 2px 5px gray;
 }
 
+.userinput:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
 .formbox {
   display: flex;
   flex-direction: column;

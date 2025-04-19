@@ -130,7 +130,7 @@ function SongInfo({ id, tippy }) {
             </Tippy>
             <Tippy content={o.artist} singleton={tippy}>
               <div className="songArtist">
-                {o.artist == "" || o.artist == null ? "-" : o.artist}
+                {o.artist === "" || o.artist == null ? "-" : o.artist}
               </div>
             </Tippy>
             <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
@@ -257,12 +257,12 @@ function LikeSender({ songid }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) {
+  if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
   const likecount = data.Likes.length;
-  var playcount = data.Plays;
-  if (playcount == undefined) {
+  let playcount = data.Plays;
+  if (playcount === undefined) {
     playcount = 0;
   }
   const onSubmit = async () => {
@@ -278,10 +278,10 @@ function LikeSender({ songid }) {
         credentials: "include",
       }
     );
-    if (response.status == 200) {
-      toast.success("点赞成功");
+    if (response.status === 200) {
+      toast.success(data.IsLiked?"取消点赞成功":"点赞成功");
       mutate();
-    } else if (response.status == 400) {
+    } else if (response.status === 400) {
       toast.error("点赞失败：登录了吗？");
     } else {
       toast.error("点赞失败：登录了吗？");
