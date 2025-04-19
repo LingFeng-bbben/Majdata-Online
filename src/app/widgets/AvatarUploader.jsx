@@ -2,7 +2,7 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import {apiroot3} from "../apiroot";
 import React from "react";
-import {sleep, getUsername} from "../utils";
+import {sleep, getUsername, loc} from "../utils";
 
 export default function AvatarUploader() {
   async function onSubmit(event) {
@@ -11,15 +11,15 @@ export default function AvatarUploader() {
     const file = formData.get("pic");
 
     if (!file || file.size === 0) {
-      toast.error("你还没有选择文件哦！");
+      toast.error(loc("NoSelectedFile"));
       return;
     }
-    const uploading = toast.loading("正在爆速上传...", {
+    const uploading = toast.loading(loc("Uploading"), {
       hideProgressBar: false,
     });
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton2").disabled = true;
-      document.getElementById("submitbutton2").textContent = "上传中啦等一会啦";
+      document.getElementById("submitbutton2").textContent = loc("UploadingPlzWait");
     }
     try {
       const response = await axios.post(apiroot3 + "/account/Icon", formData, {
@@ -40,7 +40,7 @@ export default function AvatarUploader() {
       toast.done(uploading);
       toast.error(e.response.data, {autoClose: false});
       if (typeof window !== "undefined") {
-        document.getElementById("submitbutton2").textContent = "上传";
+        document.getElementById("submitbutton2").textContent = loc("Upload");
         document.getElementById("submitbutton2").disabled = false;
       }
       return;
@@ -58,10 +58,10 @@ export default function AvatarUploader() {
           src={apiroot3 + "/account/Icon?username=" + getUsername()}
           alt=""/>
         <form className="formbox" onSubmit={onSubmit}>
-          <div className="inputHint">头像 (5M之内)</div>
+          <div className="inputHint">{loc("AvatarHint")}</div>
           <input className="userinput" type="file" name="pic"/>
           <button className="pagingButton linkContent" id="submitbutton2" type="submit">
-            上传
+            {loc("Upload")}
           </button>
         </form>
       </div>

@@ -1,16 +1,26 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LazyLoad from "react-lazy-load";
 import useSWR from "swr";
-import {CoverPic, InteractCount, Levels, MajdataLogo} from "../widgets";
+import {setLanguage, loc} from "../utils";
+import {CoverPic, InteractCount, LanguageSelector, Levels, MajdataLogo} from "../widgets";
 
 export default function Page() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div>Loading Localizations...</div>;
   return (
     <>
+      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -27,35 +37,35 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="../">返回</a>
+          <a href="../">{loc("Back")}</a>
         </div>
       </div>
       <div className="theList">
-        <h1>~推荐乐曲排行榜~</h1>
+        <h1>~{loc("RecommendedCharts")}~</h1>
       </div>
       <div className="theList">
-        这里会选出七天内最有人气的谱面哟！
+        {loc("RecommendedChartsHint")}
       </div>
       <div className="theList">
-        <h2>~游玩榜~</h2>
+        <h2>~{loc("Play")}~</h2>
       </div>
       <div className="theList">
         <SongList search="scorep" />
       </div>
       <div className="theList">
-        <h2>~点赞榜~</h2>
+        <h2>~{loc("Like")}~</h2>
       </div>
       <div className="theList">
         <SongList search="likep" />
       </div>
       <div className="theList">
-        <h2>~评论榜~</h2>
+        <h2>~{loc("Comment")}~</h2>
       </div>
       <div className="theList">
         <SongList search="commp" />
       </div>
       <div className="theList">
-        <h2>~下载榜~</h2>
+        <h2>~{loc("Download")}~</h2>
       </div>
       <div className="theList">
         <SongList search="playp" />
@@ -76,7 +86,7 @@ function SongList({ search }) {
       encodeURIComponent(search),
     fetcher
   );
-  if (error) return <div className="notReady">已闭店</div>;
+  if (error) return <div className="notReady">{loc("ServerError")}</div>;
   if (isLoading) {
     return (
       <>

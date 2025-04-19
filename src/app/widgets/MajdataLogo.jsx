@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
 import { toast } from "react-toastify";
+import {loc} from "../utils";
 
 export default function MajdataLogo(){
     return(<h1>
@@ -8,7 +9,7 @@ export default function MajdataLogo(){
           className="xxlb"
           src="../../../salt.webp"
           onClick={() =>
-            toast.error("不要点我 操你妈", {
+            toast.error(loc("FUCKYOU"), {
               position: "top-center",
               autoClose: 500,
             })

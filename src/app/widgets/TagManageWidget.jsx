@@ -4,7 +4,7 @@ import Tippy from "@tippyjs/react";
 import useSWR from "swr";
 import {apiroot3} from "../apiroot";
 import {toast} from "react-toastify";
-import {sleep} from "../utils";
+import {loc, sleep} from "../utils";
 
 const TagManageWidget = forwardRef(function TagManageWidget({songid, newClassName = ''}, ref) {
   const [isWindowOpen, setIsWindowOpen] = useState(false);
@@ -181,10 +181,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
   }, [data]);
 
   const uploadTags = async () => {
-    console.log("向", apiroot3 + "/maichart/" + songid + (
-      isInPrivatePage ? "/tags" : "/publictags"
-    ), "发", JSON.stringify(tags))
-    const uploading = toast.loading("正在爆速上传...", {
+    const uploading = toast.loading(loc("Uploading"), {
       hideProgressBar: true,
     });
     const response = await fetch(apiroot3 + "/maichart/" + songid + (
@@ -287,7 +284,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
               ))
             ) : (
                <span style={{color: "#999", fontStyle: "italic"}}>
-                                暂无标签
+                                {loc("NoTags")}
                             </span>
              )}
           </div>

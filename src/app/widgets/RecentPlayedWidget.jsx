@@ -3,7 +3,7 @@ import {apiroot3} from "../apiroot";
 import LazyLoad from "react-lazy-load";
 import {Level, CoverPic } from "./";
 import React from "react";
-import {getComboState} from "../utils";
+import {getComboState, loc} from "../utils";
 
 export default function RecentPlayed({username}) {
     const fetcher = async (...args) =>
@@ -13,7 +13,7 @@ export default function RecentPlayed({username}) {
         fetcher
     );
     console.log(apiroot3 + "/account/Recent?username=" + username)
-    if (error) return <div className="notReady">已闭店</div>;
+    if (error) return <div className="notReady">{loc("ServerError")}</div>;
     if (isLoading) {
         return (
             <>
@@ -21,7 +21,7 @@ export default function RecentPlayed({username}) {
             </>
         );
     }
-    if (data.length === 0) return <p>暂无最近游玩记录</p>;
+    if (data.length === 0) return <p>{loc("NoRecentRecords")}</p>;
     const list = data.map((o) => (
         <div key={o.chartId} id={o.chartId} className="songCardWrapper">
             <LazyLoad height={165} width={352} offset={300}>

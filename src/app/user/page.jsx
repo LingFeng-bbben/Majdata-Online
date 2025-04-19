@@ -1,20 +1,31 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Logout, MajdataLogo, UserInfo } from "../widgets";
+import {loc, setLanguage} from "../utils";
+import {LanguageSelector, Logout, MajdataLogo, UserInfo} from "../widgets";
 import getUsername from "../utils/getUsername";
 
 export default function Page() {
+  const username = getUsername();
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+  if (!ready) return <div>Loading Localizations...</div>;
+
   return (
     <>
+      <LanguageSelector />
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <UserInfo />
         <Logout />
@@ -33,15 +44,15 @@ export default function Page() {
       />
 
       <a href="./user/charts">
-        <div className="fancyDownloadButton">谱面管理 </div>
+        <div className="fancyDownloadButton">{loc("ChartsManagement")} </div>
       </a>
 
       <a href="./user/profile">
-        <div className="fancyDownloadButton">个人设置 </div>
+        <div className="fancyDownloadButton">{loc("AccountSetting")} </div>
       </a>
 
-      <a href={"/space?id=" + getUsername()}>
-        <div className="fancyDownloadButton">个人主页 </div>
+      <a href={"/space?id=" + username}>
+        <div className="fancyDownloadButton">{loc("PersonalHomePage")} </div>
       </a>
 
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />

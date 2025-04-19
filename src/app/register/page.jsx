@@ -1,16 +1,26 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {MajdataLogo} from "../widgets";
+import {setLanguage, loc} from "../utils";
+import {LanguageSelector, MajdataLogo} from "../widgets";
 
 export default function Page() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div>Loading Localizations...</div>;
   return (
     <>
+      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -27,13 +37,13 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <div className="linkContent">
-          <a href="./login">登录</a>
+          <a href="./login">{loc("Login")}</a>
         </div>
         <div className="linkContent">
-          <a href="./register">注册</a>
+          <a href="./register">{loc("Register")}</a>
         </div>
       </div>
 
@@ -48,7 +58,7 @@ function Register() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    if (formData.get("password") != formData.get("password2")) {
+    if (formData.get("password") !== formData.get("password2")) {
       toast.error("密码不一致");
       return;
     }
@@ -57,8 +67,8 @@ function Register() {
       method: "POST",
       body: formData,
     });
-    if (response.status != 200) {
-      if (response.status == 400) {
+    if (response.status !== 200) {
+      if (response.status === 400) {
         toast.error("缺少必填项目");
         return;
       }
