@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import {apiroot3} from "../apiroot";
 import {ToastContainer} from "react-toastify";
@@ -11,13 +11,32 @@ import {useSearchParams} from "next/navigation";
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
-import {RecentPlayed, CoverPic, MajdataLogo, InteractCount, Levels, UserInfo, Logout} from "../widgets";
+import {loc, setLanguage} from "../utils";
+import {
+  RecentPlayed,
+  CoverPic,
+  MajdataLogo,
+  InteractCount,
+  Levels,
+  UserInfo,
+  Logout,
+  LanguageSelector
+} from "../widgets";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const username = searchParams.get("id");
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div>Loading Localizations...</div>;
   return (
     <>
+      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -34,7 +53,7 @@ export default function Page() {
       <MajdataLogo/>
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <UserInfo/>
         <Logout></Logout>
@@ -42,11 +61,11 @@ export default function Page() {
 
       <Introduction username={username}/>
 
-      <h2>最近游玩的谱面</h2>
+      <h2>{loc("RecentlyPlayedCharts")}</h2>
       <div className="hr-solid"></div>
       <RecentPlayed username={username}/>
 
-      <h2>上传的谱面</h2>
+      <h2>{loc("UploadedCharts")}</h2>
       <div className="hr-solid"></div>
       <SongList search={"uploader:" + username}/>
 
@@ -61,7 +80,7 @@ function Introduction({username}) {
     fetcher
   );
   if (error) {
-    return <div className="notReady">已闭店</div>;
+    return <div className="notReady">{loc("ServerError")}</div>;
   }
   if (isLoading) {
     return (
@@ -79,7 +98,7 @@ function Introduction({username}) {
           alt={username}/>
         <h1>{data.username}</h1>
       </div>
-      <p>注册于{data.joinDate}</p>
+      <p>{loc("JoinAt")} {data.joinDate}</p>
       <article className="markdown-body">
         <Markdown
           remarkPlugins={[remarkGfm]}
@@ -114,7 +133,7 @@ function SongList({search}) {
     fetcher
   );
   if (error) {
-    return <div className="notReady">已闭店</div>;
+    return <div className="notReady">{loc("ServerError")}</div>;
   }
   if (isLoading) {
     return (

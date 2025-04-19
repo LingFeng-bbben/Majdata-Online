@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Suspense } from "react";
 import './globals.css'
 import React from 'react'
+import LanguageInitializer from "./widgets/LanguageInit";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +25,10 @@ export default function RootLayout({children}) {
       <meta name="theme-color" content="#FFFFFF" />
       <link rel="icon" type='image/x-icon' href='favicon.ico'/>
       <Suspense>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <LanguageInitializer></LanguageInitializer>
+      {children}
+      </body>
       </Suspense>
     </html>
   )

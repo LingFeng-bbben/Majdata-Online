@@ -1,6 +1,7 @@
 import {useRouter} from "next/navigation";
 import {apiroot3} from "../apiroot";
 import React from "react";
+import {loc} from "../utils";
 
 export default function Logout() {
     const router = useRouter();
@@ -16,7 +17,7 @@ export default function Logout() {
                 router.push("./login");
             }}
         >
-            登出
+          {loc("Logout")}
         </div>
     );
 }

@@ -1,11 +1,22 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import {setLanguage, loc} from "../utils";
+import {LanguageSelector} from "../widgets";
 
 
 export default function Page() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div>Loading Localizations...</div>;
   return (
     <>
+      <LanguageSelector />
       <div className="seprate"></div>
       <h1>
         <img className="xxlb" src="./salt.webp"></img>
@@ -13,9 +24,8 @@ export default function Page() {
       </h1>
       <div className="eventContent">
         
-        <p>Majdata is a OpenSource Simai Note designer.</p>
-        <p>Majdata是使用Simai格式的开源maimai自制谱编辑器。</p>
-        <p>(Windows Only..)</p>
+        <p>{loc("MajdataPunchline")}</p>
+        <p>(Windows Only...)</p>
         <div className="theList">
           <a href="https://github.com/LingFeng-bbben/MajdataView">
             <img src="https://badgen.net/github/tag/LingFeng-bbben/MajdataView"></img>
@@ -23,7 +33,7 @@ export default function Page() {
           <img src="https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804"></img>
         </div>
         <a href="https://github.com/LingFeng-bbben/MajdataView/releases">
-          <div className="fancyDownloadButton">下载</div>
+          <div className="fancyDownloadButton">{loc("Download")}</div>
         </a>
         <p>一些教程:</p>
         <a href="https://github.com/LingFeng-bbben/MajdataView/wiki/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8">

@@ -1,6 +1,7 @@
 import {toast} from "react-toastify";
 import axios from "axios";
 import {apiroot3} from "../apiroot";
+import {loc} from "../utils";
 import sleep from "../utils/sleep";
 import React from "react";
 
@@ -32,12 +33,12 @@ export default function ChartUploader() {
             return;
         }
 
-        const uploading = toast.loading("正在爆速上传...", {
+        const uploading = toast.loading(loc("Uploading"), {
             hideProgressBar: false,
         });
         if (typeof window !== "undefined") {
             document.getElementById("submitbutton").disabled = true;
-            document.getElementById("submitbutton").textContent = "上传中啦等一会啦";
+            document.getElementById("submitbutton").textContent = loc("UploadingPlzWait");
         }
         try {
             const response = await axios.post(
@@ -61,7 +62,7 @@ export default function ChartUploader() {
             toast.done(uploading);
             toast.error(e.response.data, { autoClose: false });
             if (typeof window !== "undefined") {
-                document.getElementById("submitbutton").textContent = "上传";
+                document.getElementById("submitbutton").textContent = loc("Upload");
                 document.getElementById("submitbutton").disabled = false;
             }
             return;
@@ -82,7 +83,7 @@ export default function ChartUploader() {
                 <div className="inputHint">bg.mp4/pv.mp4(可选,限20M内)</div>
                 <input className="userinput" type="file" name="formfiles" />
                 <button className="linkContent" id="submitbutton" type="submit">
-                    上传
+                    {loc("Upload")}
                 </button>
             </form>
         </div>

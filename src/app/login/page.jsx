@@ -1,15 +1,25 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {MajdataLogo} from "../widgets";
+import {setLanguage, loc} from "../utils";
+import {LanguageSelector, MajdataLogo} from "../widgets";
 
 export default function Page() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div>Loading Localizations...</div>;
   return (
     <>
+      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -26,13 +36,13 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <div className="linkContent">
-          <a href="./login">登录</a>
+          <a href="./login">{loc("Login")}</a>
         </div>
         <div className="linkContent">
-          <a href="./register">注册</a>
+          <a href="./register">{loc("Register")}</a>
         </div>
       </div>
       <Login />
@@ -45,11 +55,11 @@ function Login() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    if(formData.get("username")==""){
+    if(formData.get("username")===""){
       toast.error("请输入用户名");
       return;
     }
-    if(formData.get("password")==""){
+    if(formData.get("password")===""){
       toast.error("请输入密码");
       return;
     }
@@ -59,8 +69,8 @@ function Login() {
       body: formData,
       credentials: "include"
     });
-    if (response.status != 200) {
-      if(response.status ==404){
+    if (response.status !== 200) {
+      if(response.status === 404){
         toast.error("用户名或密码错误");
         return;
       }

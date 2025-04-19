@@ -5,6 +5,7 @@ import {apiroot3} from "../apiroot";
 import {toast} from "react-toastify";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {loc} from "../utils";
 import sleep from "../utils/sleep";
 import getUsername from "../utils/getUsername";
 
@@ -37,15 +38,15 @@ export default function IntroUploader() {
     const formData = new FormData(event.currentTarget);
     const content = formData.get("content");
     if (!content || content.trim() === "") {
-      toast.error("你还没有填写自我介绍哦");
+      toast.error(loc("NoIntroTypedIn"));
       return;
     }
-    const uploading = toast.loading("正在爆速上传...", {
+    const uploading = toast.loading(loc("Uploading"), {
       hideProgressBar: false,
     });
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton3").disabled = true;
-      document.getElementById("submitbutton3").textContent = "上传中啦等一会啦";
+      document.getElementById("submitbutton3").textContent = loc("UploadingPlzWait");
     }
     try {
       const response = await axios.post(apiroot3 + "/account/intro", formData, {
@@ -66,7 +67,7 @@ export default function IntroUploader() {
       toast.done(uploading);
       toast.error(e.response.data, {autoClose: false});
       if (typeof window !== "undefined") {
-        document.getElementById("submitbutton3").textContent = "上传";
+        document.getElementById("submitbutton3").textContent = loc("Upload");
         document.getElementById("submitbutton3").disabled = false;
       }
       return;
@@ -78,7 +79,7 @@ export default function IntroUploader() {
 
   return (
     <>
-      <h2>自我介绍 (支持Markdown)</h2>
+      <h2>{loc("SelfIntro")}{loc("MarkdownSupported")}</h2>
       <div className="theList">
         <form className="introbox" onSubmit={onSubmit}>
           <textarea
@@ -91,11 +92,11 @@ export default function IntroUploader() {
           </textarea>
 
           <button className="pagingButton linkContent" id="submitbutton3" type="submit">
-            上传
+            {loc("Upload")}
           </button>
         </form>
       </div>
-      <h2>预览</h2>
+      <h2>{loc("Preview")}</h2>
       <article className="markdown-body">
         <Markdown
           remarkPlugins={[remarkGfm]}
