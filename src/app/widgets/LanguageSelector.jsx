@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { setLanguage, loc } from "../utils";
+import { setLanguage} from "../utils";
 
 const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
