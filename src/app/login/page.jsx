@@ -1,13 +1,22 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {MajdataLogo} from "../widgets";
+import {setLanguage, loc} from "../utils";
+import {LanguageSelector, MajdataLogo} from "../widgets";
 
 export default function Page() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
       <ToastContainer
@@ -26,16 +35,17 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <div className="linkContent">
-          <a href="./login">登录</a>
+          <a href="./login">{loc("Login")}</a>
         </div>
         <div className="linkContent">
-          <a href="./register">注册</a>
+          <a href="./register">{loc("Register")}</a>
         </div>
       </div>
       <Login />
+      <LanguageSelector />
     </>
   );
 }
@@ -45,12 +55,12 @@ function Login() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    if(formData.get("username")==""){
-      toast.error("请输入用户名");
+    if(formData.get("username")===""){
+      toast.error(loc("NoUsername"));
       return;
     }
-    if(formData.get("password")==""){
-      toast.error("请输入密码");
+    if(formData.get("password")===""){
+      toast.error(loc("NoPasswd"));
       return;
     }
     formData.set("password", md5(formData.get("password")));
@@ -59,9 +69,9 @@ function Login() {
       body: formData,
       credentials: "include"
     });
-    if (response.status != 200) {
-      if(response.status ==404){
-        toast.error("用户名或密码错误");
+    if (response.status !== 200) {
+      if(response.status === 404){
+        toast.error(loc("WrongCredential"));
         return;
       }
       toast.error(await response.text());
@@ -77,12 +87,12 @@ function Login() {
   return (
     <div className="theList">
       <form className="formbox" onSubmit={onSubmit}>
-        <div className="inputHint">用户名</div>
+        <div className="inputHint">{loc("Username")}</div>
         <input className="userinput" type="text" name="username" />
-        <div className="inputHint">密码</div>
+        <div className="inputHint">{loc("Password")}</div>
         <input className="userinput" type="password" name="password" />
         <button className="linkContent" type="submit">
-          确定
+        {loc("Login")}
         </button>
       </form>
     </div>

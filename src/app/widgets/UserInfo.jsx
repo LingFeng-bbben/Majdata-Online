@@ -2,6 +2,7 @@
 import React from "react";
 import useSWR from "swr";
 import { apiroot3 } from "../apiroot";
+import {loc} from "../utils";
 
 const fetcher = (url) =>
   fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
@@ -15,7 +16,7 @@ export default function UserInfo() {
   if (error)
     return (
       <div className="linkContent">
-        <a href="../login">登录</a>
+        <a href="../login">{loc("Login")}</a>
       </div>
     );
   if (isLoading)
@@ -28,7 +29,7 @@ export default function UserInfo() {
   if (data.Username === undefined)
     return (
       <div className="linkContent">
-        <a href="../login">登录</a>
+        <a href="../login">{loc("Login")}</a>
       </div>
     );
   return (

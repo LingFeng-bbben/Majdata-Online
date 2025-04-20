@@ -10,19 +10,32 @@ import "react-toastify/dist/ReactToastify.css";
 import "./eventstyle.css";
 import LazyLoad from "react-lazy-load";
 import { downloadSong } from "./download";
-import {CoverPic, InteractCount, Levels, MajdataLogo, UserInfo} from "./widgets";
+import {setLanguage, loc} from "./utils";
+import {CoverPic, InteractCount, LanguageSelector, Levels, MajdataLogo, UserInfo} from "./widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [ready, setReady] = useState(false);
+  console.log("测试")
+  console.log(loc("uploadNotice.terms"))
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
     }
   }, [isLoaded]);
+
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div className="loading"></div>;
+
   return (
     <>
+      
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
@@ -33,10 +46,10 @@ export default function Page() {
           <a href="./contest">MMFC11</a>
         </div>
         <div className="linkContent" style={{ boxShadow: "0px 0px 3px gold" }}>
-          <a href="./ranking">排行榜</a>
+          <a href="./ranking">{loc("RankingList")}</a>
         </div>
         <div className="linkContent">
-          <a href="./edit">编辑器</a>
+          <a href="./edit">{loc("ChartEditor")}</a>
         </div>
         <UserInfo />
       </div>
@@ -48,7 +61,7 @@ export default function Page() {
           }
         }}
       >
-        顶
+        {loc("GoTop")}
       </div>
       <ToastContainer
         position="bottom-center"
@@ -72,13 +85,14 @@ export default function Page() {
             <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
         </a>
       <MainComp tippy={target} />
+      <LanguageSelector />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
 }
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
-    const sortOptions = ["序", "赞", "评", "播"];
+    const sortOptions = [loc("UploadDate"), loc("LikeCount"), loc("CommentCount"), loc("PlayCount")];
     return (
         <div className="searchDiv">
             <input
@@ -174,7 +188,7 @@ function MainComp({ tippy }) {
               window.scrollTo(0, 200);
             }}
           >
-            上一页
+            {loc("LastPage")}
           </button>
         ) : (
           <div style={{ width: "100px", margin: "auto" }}></div>
@@ -204,7 +218,7 @@ function MainComp({ tippy }) {
               window.scrollTo(0, 200);
             }}
           >
-            下一页
+            {loc("NextPage")}
           </button>
         ) : (
           <div style={{ width: "100px", margin: "auto" }}></div>
@@ -221,7 +235,7 @@ function MainComp({ tippy }) {
             window.scrollTo(0, 200);
           }}
         >
-          回首页
+          {loc("FrontPage")}
         </button>
       </div>
     </>
@@ -239,7 +253,7 @@ function SongList({ tippy, sort, search, page, setMax }) {
       encodeURIComponent(search),
     fetcher
   );
-  if (error) return <div className="notReady">已闭店</div>;
+  if (error) return <div className="notReady">{loc("ServerError")}</div>;
   if (isLoading) {
     return (
       <>

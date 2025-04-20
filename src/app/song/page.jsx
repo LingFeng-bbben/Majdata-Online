@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { downloadSong } from "../download";
-import { getLevelName, getComboState } from "../utils";
+import {getLevelName, getComboState, setLanguage, loc} from "../utils";
 import {
   CoverPic,
   Levels,
@@ -21,8 +21,19 @@ import {
 
 export default function Page() {
   const [source, target] = useSingleton();
+  const [ready, setReady] = useState(false);
+
   const searchParams = useSearchParams();
   const param = searchParams.get("id");
+
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div className="loading"></div>;
+
   return (
     <>
       <div
@@ -33,7 +44,7 @@ export default function Page() {
       <MajdataLogo />
       <div className="links">
         <div className="linkContent">
-          <a href="/">主页</a>
+          <a href="/">{loc("HomePage")}</a>
         </div>
         <ToastContainer
           position="bottom-center"
@@ -86,7 +97,7 @@ function SongInfo({ id, tippy }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data === undefined) {
+  if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
 
@@ -98,7 +109,7 @@ function SongInfo({ id, tippy }) {
     await navigator.clipboard.writeText(
       "https://majdata.net/song?id=" + props.id
     );
-    toast.success("已复制到剪贴板", {
+    toast.success(loc("ClipboardSuccess"), {
       position: "bottom-center",
       autoClose: 3000,
       hideProgressBar: true,
@@ -202,7 +213,7 @@ function SongInfo({ id, tippy }) {
               (o.tags.length > 0 || o.publicTags.length > 0) ? (
                 <>
                   {o.tags.map((tag, index) => (
-                    <Tippy content="搜索标签" key={index}>
+                    <Tippy content={loc("SearchForTag")} key={index}>
                       <span
                         className="tag"
                         onClick={() => {
@@ -215,7 +226,7 @@ function SongInfo({ id, tippy }) {
                     </Tippy>
                   ))}
                   {o.publicTags?.map((tag, index) => (
-                    <Tippy content="搜索标签" key={index}>
+                    <Tippy content={loc("SearchForTag")} key={index}>
                       <span
                         className="tag tagPublic"
                         onClick={() => {
@@ -230,7 +241,7 @@ function SongInfo({ id, tippy }) {
                 </>
               ) : (
                 <span style={{ color: "#999", fontStyle: "italic" }}>
-                  暂无标签
+                  {loc("NoTags")}
                 </span>
               )}
               <TagManageTagLauncher
@@ -338,11 +349,11 @@ function LikeSender({ songid }) {
 }
 
 function CommentSender({ songid }) {
-  const [comment, SetCommnet] = useState("");
+  const [comment, SetComment] = useState("");
   const onSubmit = async () => {
     const formData = new FormData();
     if (comment === "") {
-      toast.error("说点什么吧？");
+      toast.error(loc("EmptyComment"));
       return;
     }
 
@@ -368,7 +379,7 @@ function CommentSender({ songid }) {
       toast.success("评论成功");
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
-        SetCommnet("");
+        SetComment("");
       }
     } else if (response.status === 400) {
       toast.error("评论失败：登录了吗？");
@@ -383,14 +394,14 @@ function CommentSender({ songid }) {
   return (
     <>
       <div className="theList">
-        <p className="inputHint">评论</p>
+        <p className="inputHint">{loc("Comment")}</p>
       </div>
       <div className="theList">
         <textarea
           id="commentcontent"
           className="userinput commentbox"
           type="text"
-          onChange={() => SetCommnet(event.target.value)}
+          onChange={() => SetComment(event.target.value)}
         />
       </div>
       <div className="theList">
@@ -400,7 +411,7 @@ function CommentSender({ songid }) {
           type="button"
           onClick={onSubmit}
         >
-          发表
+          {loc("Post")}
         </button>
       </div>
     </>
@@ -419,7 +430,7 @@ function CommentList({ songid }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) {
+  if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
   const commentList = data.Comments.reverse();
@@ -455,18 +466,18 @@ function ScoreList({ songid }) {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-  if (data == "" || data == undefined) {
+  if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
   const scoreList = data.scores;
   console.log(scoreList);
   const objlist = scoreList.map((p, index) =>
-    p.length != 0 ? ScoreListLevel(p, index) : <></>
+    p.length !== 0 ? ScoreListLevel(p, index) : <></>
   );
   return (
     <>
       <div className="theList">
-        <div className="inputHint">排名</div>
+        <div className="inputHint">{loc("RankingList")}</div>
       </div>
       <div className="theList">{objlist}</div>;
     </>

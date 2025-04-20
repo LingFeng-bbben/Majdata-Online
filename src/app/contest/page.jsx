@@ -1,22 +1,31 @@
 'use client'
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import 'react-photo-view/dist/react-photo-view.css';
 import useSWR from 'swr';
 import { apiroot1 } from '../apiroot';
 import Tippy, { useSingleton } from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import LazyLoad from "react-lazy-load";
+import {setLanguage, loc} from "../utils";
 import {CoverPic, Majdata} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
       <div className='bg'></div>
       <div className='seprate'></div>
-      <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert("不要点我 操你妈")}></img>MMFC 11TH</h1>
+      <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert(loc("FUCKYOU"))} alt={"xxlb"}></img>MMFC 11TH</h1>
       <div className='links'>
-        <div className='linkContent'><a href='../'>返回</a></div>
+        <div className='linkContent'><a href='../'>{loc("Back")}</a></div>
 
         {/* <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div> */}
         <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">打分会场</a></div>
@@ -84,7 +93,7 @@ function TheList({ tippy }) {
   const { data, error, isLoading } = useSWR(apiroot1 + "/maichart/list", fetcher);
   const [filteredList, setFilteredList] = new useState(data);
   const [desInfo, setDesInfo] = new useState("点击难度载入谱面哟");
-  if (error) return <div className='notReady'>已闭店</div>;
+  if (error) return <div className='notReady'>{loc("ServerError")}</div>;
   if (isLoading) {
     return <div className='loading'></div>;
   }
@@ -102,7 +111,7 @@ function TheList({ tippy }) {
     setFilteredList(dataf);
   };
 
-  if (filteredList == undefined) {
+  if (filteredList === undefined) {
     setFilteredList(data);
     return <SearchBar onChange={filterBySearch} />;
   }
@@ -117,10 +126,10 @@ function TheList({ tippy }) {
               <div className='songTitle' id={o.id}>{o.title}</div>
             </Tippy>
             <Tippy content={o.artist} singleton={tippy}>
-              <div className='songArtist'>{o.artist == "" || o.artist == null ? "-" : o.artist}</div>
+              <div className='songArtist'>{o.artist === "" || o.artist == null ? "-" : o.artist}</div>
             </Tippy>
             <Tippy content={o.designer} singleton={tippy}>
-              <div className='songDesigner'>{o.designer == "" || o.designer == null ? "-" : o.designer}</div>
+              <div className='songDesigner'>{o.designer === "" || o.designer == null ? "-" : o.designer}</div>
             </Tippy>
             <Levels levels={o.levels} songid={o.id} onClick={() => setDesInfo(o.description)} />
           </div>
