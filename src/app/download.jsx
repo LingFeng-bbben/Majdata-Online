@@ -38,34 +38,50 @@ function downloadFile(url, fileName) {
 
 export async function downloadSong(props) {
   const zip = new JSZip();
-  zip.file(
+
+  const track = await fetchFile(
+    apiroot3 + "/maichart/" + props.id + "/track",
     "track.mp3",
-    await fetchFile(
-      apiroot3 + "/maichart/" + props.id + "/track",
-      "track.mp3",
-      props.toast
-    )
+    props.toast
   );
-  zip.file(
-    "bg.jpg",
-    await fetchFile(
-      apiroot3 + "/maichart/" + props.id + "/image?fullImage=true",
-      "bg",
-      props.toast
-    )
+
+  if(track == undefined) {
+    props.toast.error(props.title + "下载失败");
+    return;
+  }
+
+  const bg = await fetchFile(
+    apiroot3 + "/maichart/" + props.id + "/image?fullImage=true",
+    "bg",
+    props.toast
   );
-  zip.file(
-    "maidata.txt",
-    await fetchFile(
-      apiroot3 + "/maichart/" + props.id + "/chart",
-      "maidata",
-      props.toast
-    )
+
+  if(bg == undefined) {
+    props.toast.error(props.title + "下载失败");
+    return;
+  }
+
+  const maidata = await fetchFile(
+    apiroot3 + "/maichart/" + props.id + "/chart",
+    "maidata",
+    props.toast
   );
+
+  if(maidata == undefined) {
+    props.toast.error(props.title + "下载失败");
+    return;
+  }
+
   const video = await fetchFile(
     apiroot3 + "/maichart/" + props.id + "/video",
-    "bg.mp4", props.toast
+    "bg.mp4",
+    props.toast
   );
+
+  zip.file("track.mp3", track);
+  zip.file("bg.jpg", bg);
+  zip.file("maidata.txt", maidata);
+  
   if (video != undefined) {
     zip.file("bg.mp4", video);
   }
