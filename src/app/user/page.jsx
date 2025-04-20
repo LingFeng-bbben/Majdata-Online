@@ -5,7 +5,7 @@ import "tippy.js/dist/tippy.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {loc, setLanguage} from "../utils";
-import {LanguageSelector, Logout, MajdataLogo, UserInfo} from "../widgets";
+import {Logout, MajdataLogo, UserInfo} from "../widgets";
 import getUsername from "../utils/getUsername";
 
 export default function Page() {
@@ -16,11 +16,10 @@ export default function Page() {
       setReady(true);
     });
   }, []);
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
 
   return (
     <>
-      <LanguageSelector />
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">

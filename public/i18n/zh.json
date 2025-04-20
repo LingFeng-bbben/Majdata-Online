@@ -51,5 +51,15 @@
   "UploadNoticeText": "在这里上传你的谱面。点击上传即代表你承认以下事项：",
   "UploadedCharts": "上传的谱面",
   "Uploading": "正在爆速上传...",
-  "UploadingPlzWait": "上传中啦等一会啦"
+  "UploadingPlzWait": "上传中啦等一会啦",
+  "Username": "用户名",
+  "Password": "密码",
+  "ConfirmPassword": "确认密码",
+  "E-Mail":"邮箱",
+  "Invite Code":"邀请码",
+  "NoUsername": "用户名为空",
+  "NoPasswd": "密码为空",
+  "WrongCredential": "用户名或密码错误",
+  "PasswdNoMatch": "确认密码不一致",
+  "FormIncomplete": "必填项目为空"
 }

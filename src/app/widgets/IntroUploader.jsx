@@ -1,5 +1,6 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import "github-markdown-css/github-markdown-dark.css";
 import useSWR from "swr";
 import {apiroot3} from "../apiroot";
 import {toast} from "react-toastify";

@@ -5,11 +5,9 @@ import "tippy.js/dist/tippy.css";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {loc, setLanguage} from "../../utils";
-import getUsername from "../../utils/getUsername";
-import {Logout, IntroUploader, MajdataLogo, AvatarUploader, UserInfo, LanguageSelector} from "../../widgets";
+import {Logout, IntroUploader, MajdataLogo, AvatarUploader, UserInfo} from "../../widgets";
 
 export default function Page() {
-  const username = getUsername();
   const [ready, setReady] = useState(false);
   useEffect(() => {
     setLanguage(localStorage.getItem("language") || navigator.language).then(() => {
@@ -17,11 +15,10 @@ export default function Page() {
     });
   }, []);
   if (!ready) {
-    return <div>Loading Localizations...</div>;
+    return <div className="loading"></div>;
   }
   return (
     <>
-      <LanguageSelector/>
       <div className="seprate"></div>
       <MajdataLogo/>
       <div className="links">
@@ -44,9 +41,6 @@ export default function Page() {
         theme="dark"
       />
       <h1>{loc("AccountSetting")}</h1>
-      <div className="theList">
-        <a className="linkContent" href={"/space?id=" + username}>{loc("Goto")} {loc("PersonalHomePage")}</a>
-      </div>
       <AvatarUploader/>
       <IntroUploader/>
 

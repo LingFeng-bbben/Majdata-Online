@@ -17,10 +17,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -48,6 +47,7 @@ export default function Page() {
       </div>
 
       <Register />
+      <LanguageSelector />
     </>
   );
 }
@@ -59,7 +59,7 @@ function Register() {
 
     const formData = new FormData(event.currentTarget);
     if (formData.get("password") !== formData.get("password2")) {
-      toast.error("密码不一致");
+      toast.error(loc("PasswdNoMatch"));
       return;
     }
     formData.set("password", md5(formData.get("password")));
@@ -69,7 +69,7 @@ function Register() {
     });
     if (response.status !== 200) {
       if (response.status === 400) {
-        toast.error("缺少必填项目");
+        toast.error(loc("FormIncomplete"));
         return;
       }
       toast.error("response.text()");
@@ -85,18 +85,18 @@ function Register() {
   return (
     <div className="theList">
       <form className="formbox" onSubmit={onSubmit}>
-        <div className="inputHint">用户名</div>
+        <div className="inputHint">{loc("Username")}</div>
         <input className="userinput" type="text" name="username" />
-        <div className="inputHint">密码</div>
+        <div className="inputHint">{loc("Password")}</div>
         <input className="userinput" type="password" name="password" />
-        <div className="inputHint">确认密码</div>
+        <div className="inputHint">{loc("ConfirmPassword")}</div>
         <input className="userinput" type="password" name="password2" />
-        <div className="inputHint">邮箱</div>
+        <div className="inputHint">{loc("E-Mail")}</div>
         <input className="userinput" type="email" name="email" />
-        <div className="inputHint">邀请码</div>
+        <div className="inputHint">{loc("Invite Code")}</div>
         <input className="userinput" type="text" name="invitecode" />
         <button className="linkContent" type="submit">
-          确定
+          {loc("Register")}
         </button>
       </form>
     </div>

@@ -22,9 +22,9 @@ const LanguageSelector = () => {
   return (
     <div
       style={{
-        position: "fixed",
-        top: "1rem",
-        right: "1rem",
+        width: "fit-content",
+        margin: "auto",
+        marginTop: "2rem",
         zIndex: 9999,
         backgroundColor: "black",
         padding: "6px 10px",

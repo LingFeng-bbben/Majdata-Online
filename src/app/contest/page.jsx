@@ -7,7 +7,7 @@ import Tippy, { useSingleton } from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import LazyLoad from "react-lazy-load";
 import {setLanguage, loc} from "../utils";
-import {CoverPic, LanguageSelector, Majdata} from "../widgets";
+import {CoverPic, Majdata} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -18,10 +18,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <div className='bg'></div>
       <div className='seprate'></div>
       <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert(loc("FUCKYOU"))} alt={"xxlb"}></img>MMFC 11TH</h1>

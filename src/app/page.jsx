@@ -31,11 +31,11 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
 
   return (
     <>
-      <LanguageSelector />
+      
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
@@ -85,6 +85,7 @@ export default function Page() {
             <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
         </a>
       <MainComp tippy={target} />
+      <LanguageSelector />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );

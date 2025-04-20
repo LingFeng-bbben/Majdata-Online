@@ -16,10 +16,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -46,6 +45,7 @@ export default function Page() {
         </div>
       </div>
       <Login />
+      <LanguageSelector />
     </>
   );
 }
@@ -56,11 +56,11 @@ function Login() {
 
     const formData = new FormData(event.currentTarget);
     if(formData.get("username")===""){
-      toast.error("请输入用户名");
+      toast.error(loc("NoUsername"));
       return;
     }
     if(formData.get("password")===""){
-      toast.error("请输入密码");
+      toast.error(loc("NoPasswd"));
       return;
     }
     formData.set("password", md5(formData.get("password")));
@@ -71,7 +71,7 @@ function Login() {
     });
     if (response.status !== 200) {
       if(response.status === 404){
-        toast.error("用户名或密码错误");
+        toast.error(loc("WrongCredential"));
         return;
       }
       toast.error(await response.text());
@@ -87,12 +87,12 @@ function Login() {
   return (
     <div className="theList">
       <form className="formbox" onSubmit={onSubmit}>
-        <div className="inputHint">用户名</div>
+        <div className="inputHint">{loc("Username")}</div>
         <input className="userinput" type="text" name="username" />
-        <div className="inputHint">密码</div>
+        <div className="inputHint">{loc("Password")}</div>
         <input className="userinput" type="password" name="password" />
         <button className="linkContent" type="submit">
-          确定
+        {loc("Login")}
         </button>
       </form>
     </div>

@@ -2,8 +2,6 @@
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {setLanguage, loc} from "../utils";
-import {LanguageSelector} from "../widgets";
-
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -13,10 +11,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <div className="seprate"></div>
       <h1>
         <img className="xxlb" src="./salt.webp"></img>

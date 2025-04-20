@@ -51,5 +51,15 @@
   "UploadNoticeText": "Upload your chart here. By uploading, you agree to the following terms:",
   "UploadedCharts": "Uploaded Charts",
   "Uploading": "Uploading...",
-  "UploadingPlzWait": "Uploading, plz wait!"
+  "UploadingPlzWait": "Uploading, plz wait!",
+  "Username": "Username",
+  "Password": "Password",
+  "ConfirmPassword": "Confirm Password",
+  "E-Mail":"E-Mail",
+  "Invite Code":"Invite Code",
+  "NoUsername": "Username is empty",
+  "NoPasswd": "Password is empty",
+  "WrongCredential": "Username or password is incorrect",
+  "PasswdNoMatch":"Password does not match",
+  "FormIncomplete": "Required info is empty"
 }

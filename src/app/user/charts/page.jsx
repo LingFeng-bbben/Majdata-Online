@@ -16,8 +16,7 @@ import {
   CoverPic,
   MajdataLogo,
   InteractCount,
-  TagManageWidget,
-  LanguageSelector
+  TagManageWidget
 } from "../../widgets"
 
 export default function Page() {
@@ -30,11 +29,10 @@ export default function Page() {
     });
   }, []);
   if (!ready) {
-    return <div>Loading Localizations...</div>;
+    return <div className="loading"></div>;
   }
   return (
     <>
-      <LanguageSelector/>
       <div className="seprate"></div>
       <MajdataLogo/>
       <div className="links">

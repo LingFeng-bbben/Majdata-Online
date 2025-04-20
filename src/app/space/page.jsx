@@ -19,8 +19,7 @@ import {
   InteractCount,
   Levels,
   UserInfo,
-  Logout,
-  LanguageSelector
+  Logout
 } from "../widgets";
 
 export default function Page() {
@@ -33,10 +32,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

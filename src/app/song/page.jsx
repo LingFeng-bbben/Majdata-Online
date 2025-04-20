@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { downloadSong } from "../download";
 import {getLevelName, getComboState, setLanguage, loc} from "../utils";
 import {
-  CoverPic, LanguageSelector,
+  CoverPic,
   Levels,
   Majdata,
   MajdataLogo,
@@ -32,11 +32,10 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
 
   return (
     <>
-      <LanguageSelector />
       <div
         className="bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}

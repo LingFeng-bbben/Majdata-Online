@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LazyLoad from "react-lazy-load";
 import useSWR from "swr";
 import {setLanguage, loc} from "../utils";
-import {CoverPic, InteractCount, LanguageSelector, Levels, MajdataLogo} from "../widgets";
+import {CoverPic, InteractCount, Levels, MajdataLogo} from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -17,10 +17,9 @@ export default function Page() {
     });
   }, []);
 
-  if (!ready) return <div>Loading Localizations...</div>;
+  if (!ready) return <div className="loading"></div>;
   return (
     <>
-      <LanguageSelector />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
