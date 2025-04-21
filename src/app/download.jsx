@@ -82,13 +82,19 @@ export async function downloadSong(props) {
   zip.file("bg.jpg", bg);
   zip.file("maidata.txt", maidata);
   
+  
+
   if (video != undefined) {
-    zip.file("bg.mp4", video);
+    zip.file("pv.mp4", video);
+  }
+  var downloadExtension = localStorage.getItem("DownloadType")
+  if(downloadExtension == undefined) {
+    downloadExtension = "zip"
   }
 
   zip.generateAsync({ type: "blob" }).then((blob) => {
     const url = window.URL.createObjectURL(blob);
     props.toast.success(props.title + "下载成功");
-    downloadFile(url, props.title + ".zip");
+    downloadFile(url, props.title + "." + downloadExtension);
   });
 }

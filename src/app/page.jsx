@@ -81,6 +81,7 @@ export default function Page() {
       </a>
       <MainComp />
       <LanguageSelector />
+      <DownloadTypeSelector/>
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -248,5 +249,55 @@ function MainComp() {
         </button>
       </div>
     </>
+  );
+}
+
+function DownloadTypeSelector(){
+  const [currentType,setCurrentType] = useState("zip")
+
+  useEffect(()=>{
+    //get init type
+    const type = localStorage.getItem("DownloadType")
+    if(type!=undefined)
+      setCurrentType(type);
+  })
+
+  const handleChange = async (e) => {
+      const newtype = e.target.value
+      localStorage.setItem("DownloadType", newtype)
+      setCurrentType(newtype)
+    };
+
+
+  return (
+    <div
+      style={{
+        width: "fit-content",
+        margin: "auto",
+        marginTop: "2rem",
+        zIndex: 9999,
+        backgroundColor: "black",
+        padding: "6px 10px",
+        borderRadius: "8px",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+        fontSize: "14px",
+        border: "1px solid whitesmoke"
+      }}
+    >
+      <select
+        value={currentType}
+        onChange={handleChange}
+        style={{
+          background: "black",
+          border: "none",
+          fontSize: "inherit",
+          cursor: "pointer",
+          outline: "none",
+        }}
+      >
+        <option value="zip">Default *.zip</option>
+        <option value="adx">Astro *.adx</option>
+      </select>
+    </div>
   );
 }
