@@ -31,6 +31,7 @@ function downloadFile(url, fileName) {
   a.style.display = "none";
   a.href = url;
   a.download = fileName;
+  a.filename  = fileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -93,7 +94,8 @@ export async function downloadSong(props) {
   }
 
   zip.generateAsync({ type: "blob" }).then((blob) => {
-    const url = window.URL.createObjectURL(blob);
+    const blb = new Blob([blob], { type: "" });
+    const url = window.URL.createObjectURL(blb);
     props.toast.success(props.title + "下载成功");
     downloadFile(url, props.title + "." + downloadExtension);
   });
