@@ -94,7 +94,7 @@ export async function downloadSong(props) {
   }
 
   zip.generateAsync({ type: "blob" }).then((blob) => {
-    const blb = new Blob([blob], { type: "" });
+    const blb = new Blob([blob], { type: "application/"+downloadExtension });
     const url = window.URL.createObjectURL(blb);
     props.toast.success(props.title + "下载成功");
     downloadFile(url, props.title + "." + downloadExtension);
