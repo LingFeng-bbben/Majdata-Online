@@ -13,3 +13,4 @@ export { default as UserInfo } from "./UserInfo";
 export { default as TagManageWidget } from "./TagManageWidget";
 export { TagManageTagLauncher as TagManageTagLauncher} from "./TagManageWidget";
 export { default as LanguageSelector } from "./LanguageSelector";
+export { default as SongList } from "./SongList";

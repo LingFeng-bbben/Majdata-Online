@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { downloadSong } from "../download";
-import {getLevelName, getComboState, setLanguage, loc} from "../utils";
+import { getLevelName, getComboState, setLanguage, loc } from "../utils";
 import {
   CoverPic,
   Levels,
@@ -27,9 +27,11 @@ export default function Page() {
   const param = searchParams.get("id");
 
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      }
+    );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
@@ -230,7 +232,7 @@ function SongInfo({ id, tippy }) {
                       <span
                         className="tag tagPublic"
                         onClick={() => {
-                          localStorage.setItem("search", tag);
+                          localStorage.setItem("search", "tag:" + tag);
                           window.location.href = "/";
                         }}
                       >
@@ -290,7 +292,7 @@ function LikeSender({ songid }) {
       }
     );
     if (response.status === 200) {
-      toast.success(data.IsLiked?"取消点赞成功":"点赞成功");
+      toast.success(data.IsLiked ? "取消点赞成功" : "点赞成功");
       mutate();
     } else if (response.status === 400) {
       toast.error("点赞失败：登录了吗？");

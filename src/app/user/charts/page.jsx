@@ -1,32 +1,28 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import useSWR from "swr";
-import {apiroot3} from "../../apiroot";
-import Tippy, {useSingleton} from "@tippyjs/react";
+import { apiroot3 } from "../../apiroot";
 import "tippy.js/dist/tippy.css";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LazyLoad from "react-lazy-load";
-import {getUsername, loc, setLanguage} from "../../utils";
+import { getUsername, loc, setLanguage } from "../../utils";
 import {
   UserInfo,
   Logout,
   ChartUploader,
-  CoverPic,
+  SongList,
   MajdataLogo,
-  InteractCount,
-  TagManageWidget
-} from "../../widgets"
+} from "../../widgets";
 
 export default function Page() {
-  const [source, target] = useSingleton();
-
   const [ready, setReady] = useState(false);
+  const username = getUsername();
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      }
+    );
   }, []);
   if (!ready) {
     return <div className="loading"></div>;
@@ -34,13 +30,13 @@ export default function Page() {
   return (
     <>
       <div className="seprate"></div>
-      <MajdataLogo/>
+      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="/user">{loc("Back")}</a>
         </div>
-        <UserInfo/>
-        <Logout/>
+        <UserInfo />
+        <Logout />
       </div>
       <ToastContainer
         position="bottom-center"
@@ -57,135 +53,27 @@ export default function Page() {
       <h1>{loc("UploadChart")}</h1>
       <div className="upload-notice">
         <p>
-          {loc("UploadNoticeText")}<br/>
-          1. {loc("UploadNoticeTerms1")}<br/>
-          2. {loc("UploadNoticeTerms2")}<br/>
-          3. {loc("UploadNoticeTerms3")}<br/>
-          4. {loc("UploadNoticeTerms4")}<br/>
+          {loc("UploadNoticeText")}
+          <br />
+          1. {loc("UploadNoticeTerms1")}
+          <br />
+          2. {loc("UploadNoticeTerms2")}
+          <br />
+          3. {loc("UploadNoticeTerms3")}
+          <br />
+          4. {loc("UploadNoticeTerms4")}
+          <br />
         </p>
       </div>
-      <ChartUploader/>
-      <Tippy
-        singleton={source}
-        animation="fade"
-        placement="top-start"
-        interactive={true}
-      />
+      <ChartUploader />
       <h1>{loc("ChartsManagement")}</h1>
-      <UploadedChartsList tippy={target}/>
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt=""/>
-    </>
-  );
-}
-
-const fetcher = (url) =>
-  fetch(url, {mode: "cors", credentials: "include"}).then((res) =>
-    res.json()
-  );
-
-function UploadedChartsList({tippy}) {
-  const {data, error, isLoading} = useSWR(
-    apiroot3 +
-    "/maichart/list?search=uploader:" +
-    encodeURIComponent(getUsername()),
-    fetcher
-  );
-  let username = getUsername();
-  if (username == undefined) {
-    if (typeof window !== "undefined") {
-      location.href = "/login";
-    }
-  }
-  if (error) {
-    return <div>failed to load</div>;
-  }
-  if (isLoading) {
-    return <div className="loading"></div>;
-  }
-  if (data == "" || data == undefined) {
-    return <div className="notReady">空的哟，先上传一些吧！</div>;
-  }
-
-  const list = data.map((o) => (
-    <div key={o.id}>
-      <LazyLoad height={165} width={352} offset={300}>
-        <div className="songCard">
-          <CoverPic id={o.id}/>
-          <div className="songInfo">
-            <Tippy content={o.title} singleton={tippy}>
-              <div className="songTitle" id={o.id}>
-                <a href={"/song?id=" + o.id}>{o.title}</a>
-              </div>
-            </Tippy>
-            <Tippy content={o.id} singleton={tippy}>
-              <div className="songArtist">{o.id}</div>
-            </Tippy>
-            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-              <div className="songDesigner">
-                {o.uploader + "@" + o.designer}
-              </div>
-            </Tippy>
-            <Delbutton songid={o.id}/>
-            <TagManageWidget newClassName="songLevelMarginTop" songid={o.id}/>
-            <br/>
-            <div className="commentBox downloadButtonBox">
-              <svg
-                className="downloadButton"
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                viewBox="0 -960 960 960"
-                width="24"
-              >
-                <path
-                  d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
-              </svg>
-            </div>
-            <InteractCount songid={o.id}/>
-          </div>
-        </div>
-      </LazyLoad>
-    </div>
-  ));
-  // 渲染数据
-  return <div className="theList">{list}</div>;
-}
-
-function Delbutton({songid}) {
-  return (
-    <div
-      className="songLevel"
-      onClick={async () => {
-        let ret = confirm("真的要删除吗(不可恢复)\n(没有任何机会)");
-        if (ret) {
-          const response = await fetch(
-            apiroot3 + "/maichart/delete?chartId=" + songid,
-            {
-              method: "POST",
-              mode: "cors",
-              credentials: "include",
-            }
-          );
-          if (response.status !== 200) {
-            alert(await response.text());
-            return;
-          }
-          alert("删除成功");
-          if (typeof window !== "undefined") {
-            location.reload();
-          }
+      <SongList
+        url={
+          apiroot3 + "/maichart/list?search=uploader:" + encodeURIComponent(username)
         }
-      }}
-    >
-      <svg
-        className="downloadButton shareButton"
-        xmlns="http://www.w3.org/2000/svg"
-        height="24"
-        width="24"
-        viewBox="-30 -30 512 512"
-      >
-        <path
-          d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
-      </svg>
-    </div>
+        isManage={true}
+      />
+      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
+    </>
   );
 }

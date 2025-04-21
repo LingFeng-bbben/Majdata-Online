@@ -1,24 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { apiroot3 } from "./apiroot";
-import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./eventstyle.css";
-import LazyLoad from "react-lazy-load";
-import { downloadSong } from "./download";
-import {setLanguage, loc} from "./utils";
-import {CoverPic, InteractCount, LanguageSelector, Levels, MajdataLogo, UserInfo} from "./widgets";
+import { setLanguage, loc } from "./utils";
+import { LanguageSelector, MajdataLogo, UserInfo, SongList } from "./widgets";
+import { apiroot3 } from "./apiroot";
 
 export default function Page() {
-  const [source, target] = useSingleton();
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
-  console.log("测试")
-  console.log(loc("uploadNotice.terms"))
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
@@ -26,16 +18,17 @@ export default function Page() {
   }, [isLoaded]);
 
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      }
+    );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
 
   return (
     <>
-      
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
@@ -57,7 +50,7 @@ export default function Page() {
         className="topButton"
         onClick={() => {
           if (typeof window !== "undefined") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }
         }}
       >
@@ -75,16 +68,18 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      <Tippy
-        singleton={source}
-        animation="fade"
-        placement="top-start"
-        interactive={true}
-      />
-        <a href="./space?id=TeamXmmcg" className="theList" style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}>
-            <img src="/xmmcg/title.png" alt="" style={{ width: "100%", height: "auto" }} />
-        </a>
-      <MainComp tippy={target} />
+      <a
+        href="./space?id=TeamXmmcg"
+        className="theList"
+        style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
+      >
+        <img
+          src="/xmmcg/title.png"
+          alt=""
+          style={{ width: "100%", height: "auto" }}
+        />
+      </a>
+      <MainComp />
       <LanguageSelector />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
@@ -92,36 +87,40 @@ export default function Page() {
 }
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
-    const sortOptions = [loc("UploadDate"), loc("LikeCount"), loc("CommentCount"), loc("PlayCount")];
-    return (
-        <div className="searchDiv">
-            <input
-                type="text"
-                className="searchInput"
-                placeholder={initS === "" ? "Search" : initS}
-                onChange={onChange}
-                onClick={onChange}
-            />
-            <select
-                value={sortType}
-                onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    onSortChange(val);
-                }}
-                className="sortSelect"
-            >
-                {sortOptions.map((label, i) => (
-                    <option key={i} value={i}>{label}</option>
-                ))}
-            </select>
-        </div>
-    );
+  const sortOptions = [
+    loc("UploadDate"),
+    loc("LikeCount"),
+    loc("CommentCount"),
+    loc("PlayCount"),
+  ];
+  return (
+    <div className="searchDiv">
+      <input
+        type="text"
+        className="searchInput"
+        placeholder={initS === "" ? "Search" : initS}
+        onChange={onChange}
+        onClick={onChange}
+      />
+      <select
+        value={sortType}
+        onChange={(e) => {
+          const val = parseInt(e.target.value);
+          onSortChange(val);
+        }}
+        className="sortSelect"
+      >
+        {sortOptions.map((label, i) => (
+          <option key={i} value={i}>
+            {label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
 
-const fetcher = async (...args) =>
-  await fetch(...args).then(async (res) => res.json());
-
-function MainComp({ tippy }) {
+function MainComp() {
   const [Search, setSearch] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
@@ -153,29 +152,39 @@ function MainComp({ tippy }) {
     500
   );
 
-    const onSortChange = (val) => {
-        setSortType(val);
-        localStorage.setItem("sort", val);
-        setPage(0);
-        localStorage.setItem("lastclickpage", 0);
-    };
+  const onSortChange = (val) => {
+    setSortType(val);
+    localStorage.setItem("sort", val);
+    setPage(0);
+    localStorage.setItem("lastclickpage", 0);
+  };
 
-    const sortWords = ["", "likep", "commp", "playp"];
+  const sortWords = ["", "likep", "commp", "playp"];
 
   // 渲染数据
   return (
     <>
-      <SearchBar onChange={(e) => debounced(e.target.value)} initS={Search} sortType={sortType} onSortChange={onSortChange} />
-      <div className="theList">
-        <SongList
-          key={page}
-          tippy={tippy}
-          sort={sortWords[sortType]}
-          search={Search}
-          page={page}
-          setMax={setMaxpage}
-        />
-      </div>
+      <SearchBar
+        onChange={(e) => debounced(e.target.value)}
+        initS={Search}
+        sortType={sortType}
+        onSortChange={onSortChange}
+      />
+
+      <SongList
+        url={
+          apiroot3 +
+          "/maichart/list?sort=" +
+          sortWords[sortType] +
+          "&page=" +
+          page +
+          "&search=" +
+          encodeURIComponent(Search)
+        }
+        page={page}
+        setMax={setMaxpage}
+      />
+
       <div className="theList">
         {page - 1 >= 0 ? (
           <button
@@ -240,90 +249,4 @@ function MainComp({ tippy }) {
       </div>
     </>
   );
-}
-
-function SongList({ tippy, sort, search, page, setMax }) {
-  const { data, error, isLoading } = useSWR(
-    apiroot3 +
-      "/maichart/list?sort=" +
-      sort +
-      "&page=" +
-      page +
-      "&search=" +
-      encodeURIComponent(search),
-    fetcher
-  );
-  if (error) return <div className="notReady">{loc("ServerError")}</div>;
-  if (isLoading) {
-    return (
-      <>
-        <div className="loading"></div>
-      </>
-    );
-  }
-  const OnDownloadClick = (params) => async () => {
-    await downloadSong({ id: params.id, title: params.title, toast: toast });
-  };
-  const SavePosition = ({ id, page }) => {
-    localStorage.setItem("lastclickid", id);
-    localStorage.setItem("lastclickpage", page);
-  };
-  if (data.length < 30) setMax(page);
-  const list = data.map((o) => (
-    <div
-      key={o.id}
-      id={o.id}
-      onClick={() => SavePosition({ id: o.id, page: page })}
-    >
-      <LazyLoad height={165} width={352} offset={300}>
-        <div className="songCard">
-          <CoverPic id={o.id} />
-          <div className="songInfo">
-            <Tippy content={o.title} singleton={tippy}>
-              <div className="songTitle" id={o.id}>
-                <a href={"/song?id=" + o.id}>{o.title}</a>
-              </div>
-            </Tippy>
-            <Tippy content={o.artist} singleton={tippy}>
-              <div className="songArtist">
-                <a href={"/song?id=" + o.id}>
-                  {o.artist == "" || o.artist == null ? "-" : o.artist}
-                </a>
-              </div>
-            </Tippy>
-            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-              <div className="songDesigner">
-                <a href={"/space?id=" + o.uploader}>
-                  <img
-                    className="smallIcon"
-                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                  />
-                  {o.uploader + "@" + o.designer}
-                </a>
-              </div>
-            </Tippy>
-
-            <Levels levels={o.levels} songid={o.id} isPlayer={false} />
-            <br />
-            <div
-              className="songLevel downloadButtonBox"
-              onClick={OnDownloadClick({ id: o.id, title: o.title })}
-            >
-              <svg
-                className="downloadButton"
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                viewBox="0 -960 960 960"
-                width="24"
-              >
-                <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
-              </svg>
-            </div>
-            <InteractCount songid={o.id} />
-          </div>
-        </div>
-      </LazyLoad>
-    </div>
-  ));
-  return list;
 }
