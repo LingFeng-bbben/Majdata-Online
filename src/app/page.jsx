@@ -32,12 +32,12 @@ export default function Page() {
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
-        <div
+        {/* <div
           className="linkContent"
           // style={{ boxShadow: "0px 0px 3px gold" }}
         >
           <a href="./contest">MMFC11</a>
-        </div>
+        </div> */}
         <div className="linkContent" style={{ boxShadow: "0px 0px 3px gold" }}>
           <a href="./ranking">{loc("RankingList")}</a>
         </div>
@@ -69,14 +69,14 @@ export default function Page() {
         theme="dark"
       />
       <a
-        href="./space?id=TeamXmmcg"
+        href="./space?id=zjb"
         className="theList"
-        style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
+        style={{ maxWidth: "150px", display: "block", margin: "0 auto" }}
       >
         <img
-          src="/xmmcg/title.png"
+          src="/zjb.gif"
           alt=""
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: "150px", height: "auto" }}
         />
       </a>
       <MainComp />
