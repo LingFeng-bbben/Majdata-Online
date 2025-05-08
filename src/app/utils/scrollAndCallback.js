@@ -2,7 +2,8 @@ import { apiroot3 } from "../apiroot";
 
 export const scrollToTop = () => {
     let sTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (sTop > 0.1) {
+    console.log(sTop);
+    if (sTop > 10) {
         window.requestAnimationFrame(scrollToTop);
         window.scrollTo(0, sTop - sTop / 9);
     }

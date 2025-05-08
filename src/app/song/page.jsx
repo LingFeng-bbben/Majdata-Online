@@ -123,7 +123,7 @@ function SongInfo({ id, tippy }) {
     });
   };
   const o = data;
-  const firstNonEmptyIndex = o.levels.findIndex((level) => level !== "");
+  const firstNonEmptyIndex = o.levels.findLastIndex((level) => level !== "");
 
   return (
     <div>
