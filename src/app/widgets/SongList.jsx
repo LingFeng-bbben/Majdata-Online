@@ -11,7 +11,7 @@ import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
 
 export default function SongList({ url, setMax, page, isRanking, isManage }) {
-  const { data, error, isLoading } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR(url, fetcher,{revalidateOnFocus: false});
   console.log(url);
   if (error) return <div className="notReady">{loc("ServerError")}</div>;
   if (isLoading) {
@@ -111,8 +111,10 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
   return <div className="songCardContainer">{list}</div>;
 }
 
-const fetcher = async (...args) =>
-  await fetch(...args).then(async (res) => res.json());
+const fetcher = (url) =>
+  fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
+    res.json()
+  );
 
 function Delbutton({ songid }) {
   return (

@@ -61,5 +61,6 @@
   "NoPasswd": "Password is empty",
   "WrongCredential": "Username or password is incorrect",
   "PasswdNoMatch":"Password does not match",
-  "FormIncomplete": "Required info is empty"
+  "FormIncomplete": "Required info is empty",
+  "Recommend":"Recommended Charts"
 }

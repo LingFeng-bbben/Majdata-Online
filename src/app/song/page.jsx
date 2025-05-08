@@ -14,6 +14,7 @@ import {
   Levels,
   Majdata,
   MajdataLogo,
+  SongList,
   TagManageTagLauncher,
   TagManageWidget,
   UserInfo,
@@ -77,6 +78,16 @@ export default function Page() {
       <div className="hr-solid"></div>
       <CommentSender songid={param} />
       <CommentList songid={param} />
+      <div className="theList">
+        <div className="inputHint">{loc("Recommend")}</div>
+      </div>
+      <SongList
+              url={
+                apiroot3 +
+                "/Recommend/get?chartId=" +
+                encodeURIComponent(param)
+              }
+            />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );

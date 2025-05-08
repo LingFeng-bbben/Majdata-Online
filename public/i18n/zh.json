@@ -61,5 +61,6 @@
   "NoPasswd": "密码为空",
   "WrongCredential": "用户名或密码错误",
   "PasswdNoMatch": "确认密码不一致",
-  "FormIncomplete": "必填项目为空"
+  "FormIncomplete": "必填项目为空",
+  "Recommend":"推荐"
 }

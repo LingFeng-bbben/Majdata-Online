@@ -61,5 +61,6 @@
     "NoPasswd": "パスワードが空です",
     "WrongCredential": "ユーザー名またはパスワードが正しくありません",
     "PasswdNoMatch": "パスワードが一致しません",
-    "FormIncomplete": "必須項目が空です"
+    "FormIncomplete": "必須項目が空です",
+    "Recommend":"おすすめ"
   }
