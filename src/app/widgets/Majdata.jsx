@@ -36,7 +36,7 @@ export default function Majdata({ songid, apiroot, level }) {
   }
 
   return (
-    <div className={"majViewPort"}>
+    <div className={"majViewPort majSticky"}>
       <Unity
         unityProvider={unityProvider}
         className="majCanvas"
