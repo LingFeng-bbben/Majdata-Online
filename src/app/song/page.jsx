@@ -71,6 +71,7 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
+      <MajdataView id={param} />
       <SongInfo id={param} tippy={target} />
       <LikeSender songid={param} />
       <div className="hr-solid"></div>
@@ -134,17 +135,11 @@ function SongInfo({ id, tippy }) {
     });
   };
   const o = data;
-  const firstNonEmptyIndex = o.levels.findLastIndex((level) => level !== "");
 
   return (
     <div>
-      <Majdata
-        songid={o.id}
-        apiroot={apiroot3}
-        level={"lv" + firstNonEmptyIndex}
-      />
       <div className="theList">
-        <div className="songCard">
+        <div className="songCard songDetail">
           <CoverPic id={o.id} />
           <div className="songInfo">
             <Tippy content={o.title} singleton={tippy}>
@@ -267,6 +262,33 @@ function SongInfo({ id, tippy }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function MajdataView({id}){
+  const { data, error, isLoading } = useSWR(
+    apiroot3 + "/maichart/" + id + "/summary",
+    fetcher
+  );
+  if (error) {
+    return <div>failed to load</div>;
+  }
+  if (isLoading) {
+    return <div className="loading"></div>;
+  }
+  if (data === "" || data === undefined) {
+    return <div>failed to load</div>;
+  }
+
+  const o = data;
+  const firstNonEmptyIndex = o.levels.findLastIndex((level) => level !== "");
+
+  return (
+      <Majdata
+        songid={o.id}
+        apiroot={apiroot3}
+        level={"lv" + firstNonEmptyIndex}
+      />
   );
 }
 

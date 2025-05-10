@@ -72,7 +72,6 @@ const TagManageTag = forwardRef(function TagManageTag({onClick}, ref) {
       onMouseDown={onClick}
       className="tag"
       style={{
-        zIndex: 1000,
         backgroundColor: "green",
       }}
     ><svg
