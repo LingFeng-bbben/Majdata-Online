@@ -139,7 +139,7 @@ function SongInfo({ id, tippy }) {
   return (
     <div>
       <div className="theList">
-        <div className="songCard">
+        <div className="songCard songDetail">
           <CoverPic id={o.id} />
           <div className="songInfo">
             <Tippy content={o.title} singleton={tippy}>
