@@ -83,12 +83,8 @@ export default function Page() {
         <div className="inputHint">{loc("Recommend")}</div>
       </div>
       <SongList
-              url={
-                apiroot3 +
-                "/Recommend/get?chartId=" +
-                encodeURIComponent(param)
-              }
-            />
+        url={apiroot3 + "/Recommend/get?chartId=" + encodeURIComponent(param)}
+      />
       <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
     </>
   );
@@ -265,7 +261,7 @@ function SongInfo({ id, tippy }) {
   );
 }
 
-function MajdataView({id}){
+function MajdataView({ id }) {
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
     fetcher
@@ -284,11 +280,11 @@ function MajdataView({id}){
   const firstNonEmptyIndex = o.levels.findLastIndex((level) => level !== "");
 
   return (
-      <Majdata
-        songid={o.id}
-        apiroot={apiroot3}
-        level={"lv" + firstNonEmptyIndex}
-      />
+    <Majdata
+      songid={o.id}
+      apiroot={apiroot3}
+      level={"lv" + firstNonEmptyIndex}
+    />
   );
 }
 
@@ -307,14 +303,21 @@ function LikeSender({ songid }) {
     return <div>failed to load</div>;
   }
   const likecount = data.Likes.length;
+  const dislikecount = data.DisLikeCount;
   let playcount = data.Plays;
   if (playcount === undefined) {
     playcount = 0;
   }
-  const onSubmit = async () => {
+  const onSubmit = async (type) => {
     const formData = new FormData();
-    formData.set("type", "like");
-    formData.set("content", "like");
+    formData.set("type", type);
+    formData.set("content", type);
+    var name = "";
+    if (type == "like") {
+      name = "点赞";
+    } else {
+      name = "点踩";
+    }
     const response = await fetch(
       apiroot3 + "/maichart/" + songid + "/interact",
       {
@@ -325,12 +328,17 @@ function LikeSender({ songid }) {
       }
     );
     if (response.status === 200) {
-      toast.success(data.IsLiked ? "取消点赞成功" : "点赞成功");
+      if (type == "like") {
+        toast.success(data.IsLiked ? "取消成功" : name + "成功");
+      } else {
+        toast.success(data.IsDisLiked ? "取消成功" : name + "成功");
+      }
+
       mutate();
     } else if (response.status === 400) {
-      toast.error("点赞失败：登录了吗？");
+      toast.error(name + "失败：登录了吗？");
     } else {
-      toast.error("点赞失败：登录了吗？");
+      toast.error(name + "失败：登录了吗？");
     }
   };
   return (
@@ -340,7 +348,7 @@ function LikeSender({ songid }) {
           className="linkContentWithBorder"
           id="submitbuttonlike"
           type="button"
-          onClick={onSubmit}
+          onClick={() => onSubmit("like")}
           style={{ background: data.IsLiked ? "green" : "" }}
         >
           <svg
@@ -355,27 +363,32 @@ function LikeSender({ songid }) {
           </svg>
         </button>
         <p>{likecount}</p>
-        <svg
-          className="commentIco"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 -960 960 960"
-          style={{ width: "24px", height: "24px", margin: "15px" }}
+        <button
+          className="linkContentWithBorder"
+          id="submitbuttondislike"
+          type="button"
+          onClick={() => onSubmit("dislike")}
+          style={{ background: data.IsDisLiked ? "red" : "" }}
         >
-          <path d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-        </svg>
-        <p>{playcount}</p>
+          <svg
+            className="commentIco"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            style={{ width: "24px", height: "24px" }}
+          >
+            <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
+          </svg>
+        </button>
+        <p>{dislikecount}</p>
       </div>
       <div className="theList">
         {data.Likes.map((o) => (
           <a key={o} href={"/space?id=" + o}>
-            <p>
-              <img
-                className="smallIcon"
-                src={apiroot3 + "/account/Icon?username=" + o}
-                alt={o}
-              />
-              {o}
-            </p>
+            <img
+              className="smallIcon"
+              src={apiroot3 + "/account/Icon?username=" + o}
+              alt={o}
+            />
           </a>
         ))}
       </div>
