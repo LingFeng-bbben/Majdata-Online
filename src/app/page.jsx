@@ -82,7 +82,7 @@ export default function Page() {
       <MainComp />
       <LanguageSelector />
       <DownloadTypeSelector/>
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
+      <a href="/minigame"><img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" /></a>
     </>
   );
 }
