@@ -69,14 +69,14 @@ export default function Page() {
         theme="dark"
       />
       <a
-        href="./space?id=zjb"
+        href="https://space.bilibili.com/3546821192321700/dynamic"
         className="theList"
-        style={{ maxWidth: "150px", display: "block", margin: "0 auto" }}
+        style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
       >
         <img
-          src="/zjb.gif"
+          src="/event.jpg"
           alt=""
-          style={{ width: "150px", height: "auto" }}
+          style={{ width: "400px", height: "auto" }}
         />
       </a>
       <MainComp />
