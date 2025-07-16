@@ -13,7 +13,7 @@ export async function setLanguage(lang) {
     if (!response.ok) throw new Error('Language file not found');
     languageCache[lang] = await response.json();
     currentLanguage = lang;
-    console.log("切换到", lang, languageCache[lang]);
+    console.log(`[i18n] Switch to ${lang}`);
   } catch (e) {
     console.error(`[i18n] Failed to load language: ${lang}`, e);
     languageCache[lang] = {}; // fallback to empty
@@ -23,9 +23,8 @@ export async function setLanguage(lang) {
 export function getTranslatedString(key) {
   const translations = languageCache[currentLanguage] || {};
   if (!translations[key]){
-    console.log(`没找到${key}在${currentLanguage}`);
-    console.log(languageCache);
-    console.log(languageCache[currentLanguage] );
+    console.error(`[i18n] Failed to find ${key} in ${currentLanguage}`);
+    // console.log(languageCache[currentLanguage]);
   }
   return translations[key] || key;
 }
