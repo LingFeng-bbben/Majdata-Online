@@ -68,7 +68,7 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      <a
+      {/* <a
         href="https://space.bilibili.com/3546821192321700/dynamic"
         className="theList"
         style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
@@ -78,7 +78,7 @@ export default function Page() {
           alt=""
           style={{ width: "400px", height: "auto" }}
         />
-      </a>
+      </a> */}
       <MainComp />
       <LanguageSelector />
       <DownloadTypeSelector/>
