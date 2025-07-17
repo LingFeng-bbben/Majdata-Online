@@ -200,7 +200,7 @@ function SongInfo({ id, tippy }) {
         <div className="uploadMeta">
           <div className="uploadMetaRow">
             <div className="uploadMetaLabel">Time:</div>
-            <div className="uploadMetaContent">{o.timestamp}</div>
+            <div className="uploadMetaContent">{(new Date(o.timestamp)).toLocaleString()}</div>
           </div>
           <div className="uploadMetaRow">
             <div className="uploadMetaLabel">ID:</div>

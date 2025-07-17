@@ -93,7 +93,7 @@ function Introduction({username}) {
           alt={username}/>
         <h1>{data.username}</h1>
       </div>
-      <p>{loc("JoinAt")} {data.joinDate}</p>
+      <p>{loc("JoinAt")} {(new Date(data.joinDate)).toLocaleString()}</p>
       <article className="markdown-body">
         <Markdown
           remarkPlugins={[remarkGfm]}
