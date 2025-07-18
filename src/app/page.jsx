@@ -74,7 +74,7 @@ export default function Page() {
         style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
       >
         <img
-          src="/event.jpg"
+          src="/event2.jpg"
           alt=""
           style={{ width: "400px", height: "auto" }}
         />
