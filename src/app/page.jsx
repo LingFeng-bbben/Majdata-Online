@@ -32,12 +32,6 @@ export default function Page() {
       <div className="seprate"></div>
       <MajdataLogo />
       <div className="links">
-        {/* <div
-          className="linkContent"
-          // style={{ boxShadow: "0px 0px 3px gold" }}
-        >
-          <a href="./contest">MMFC11</a>
-        </div> */}
         <div className="linkContent" style={{ boxShadow: "0px 0px 3px gold" }}>
           <a href="./ranking">{loc("RankingList")}</a>
         </div>
@@ -71,12 +65,23 @@ export default function Page() {
       <a
         href="/space?id=dilei"
         className="theList"
-        style={{ maxWidth: "400px", display: "block", margin: "0 auto" }}
+        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
       >
         <img
           src="/event2.jpg"
           alt=""
-          style={{ width: "400px", height: "auto" }}
+          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
+        />
+      </a> 
+      <a
+        href="/space?id=海鲜杯"
+        className="theList"
+        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
+      >
+        <img
+          src="/event3.jpg"
+          alt=""
+          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
         />
       </a> 
       <MainComp />
