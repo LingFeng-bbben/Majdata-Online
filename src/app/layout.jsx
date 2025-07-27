@@ -23,6 +23,7 @@ export default function RootLayout({children}) {
   return (
     <html lang="en">
       <meta name="theme-color" content="#FFFFFF" />
+      <meta name="google-adsense-account" content="ca-pub-7973799234411834"></meta>
       <link rel="icon" type='image/x-icon' href='favicon.ico'/>
       <Suspense>
       <body className={inter.className}>
