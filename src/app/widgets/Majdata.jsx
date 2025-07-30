@@ -20,7 +20,11 @@ export default function Majdata({ songid, apiroot, level }) {
   }
 
   async function load() {
-    const maichart = apiroot + "/maichart/" + songid;
+    const httpprefix = 'https://' + location.host;
+    var root = apiroot;
+    if(!root.startsWith("http"))
+      root = httpprefix + root;
+    const maichart = root + "/maichart/" + songid;
     const maidata = maichart + "/chart";
     const track = maichart + "/track";
     const bg = maichart + "/image?fullImage=true";

@@ -1,8 +1,8 @@
 'use client'
 
-export const apiroot1 = 'https://' + location.host + '/api1/api'
-export const apiroot2 = 'https://' + location.host + '/api2/api'
-export const apiroot3 = 'https://' + location.host + '/api3/api'
+export const apiroot1 = '/api1/api'
+export const apiroot2 = '/api2/api'
+export const apiroot3 = '/api3/api'
 
 // export const apiroot1 = 'https://majdata.net/api1/api'
 // export const apiroot2 = 'https://majdata.net/api2/api'
