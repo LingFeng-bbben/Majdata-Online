@@ -15,3 +15,4 @@ export { TagManageTagLauncher as TagManageTagLauncher} from "./TagManageWidget";
 export { default as LanguageSelector } from "./LanguageSelector";
 export { default as SongList } from "./SongList";
 export { default as MiniGame } from "./MiniGame";
+export { default as AdComponent } from "./AdComponent";

@@ -5,7 +5,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLanguage, loc } from "./utils";
-import { LanguageSelector, MajdataLogo, UserInfo, SongList } from "./widgets";
+import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent } from "./widgets";
 import { apiroot3 } from "./apiroot";
 
 export default function Page() {
@@ -87,6 +87,8 @@ export default function Page() {
       <MainComp />
       <LanguageSelector />
       <DownloadTypeSelector/>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
+      <AdComponent/>
       <a href="/minigame"><img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" /></a>
     </>
   );

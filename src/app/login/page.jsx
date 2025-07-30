@@ -6,7 +6,7 @@ import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {setLanguage, loc} from "../utils";
-import {LanguageSelector, MajdataLogo} from "../widgets";
+import {LanguageSelector, MajdataLogo, AdComponent} from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -46,6 +46,7 @@ export default function Page() {
       </div>
       <Login />
       <LanguageSelector />
+      <AdComponent/>
     </>
   );
 }
