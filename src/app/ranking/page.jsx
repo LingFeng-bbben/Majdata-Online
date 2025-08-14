@@ -5,7 +5,7 @@ import { apiroot3 } from "../apiroot";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLanguage, loc } from "../utils";
-import { SongList, MajdataLogo } from "../widgets";
+import { SongList, PageLayout } from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -18,77 +18,65 @@ export default function Page() {
   }, []);
 
   if (!ready) return <div className="loading"></div>;
-  return (
-    <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent">
-          <a href="../">{loc("Back")}</a>
-        </div>
-      </div>
-      <div className="theList">
-        <h1>~{loc("RecommendedCharts")}~</h1>
-      </div>
-      <div className="theList">{loc("RecommendedChartsHint")}</div>
-      <div className="theList">
-        <h2>~{loc("Play")}~</h2>
-      </div>
-      <SongList
-        url={
-          apiroot3 +
-          "/maichart/list?&isRanking=true&sort=" +
-          encodeURIComponent("scorep")
-        }
-        isRanking={true}
-      />
-      <div className="theList">
-        <h2>~{loc("Like")}~</h2>
-      </div>
-      <SongList
-        url={
-          apiroot3 +
-          "/maichart/list?&isRanking=true&sort=" +
-          encodeURIComponent("likep")
-        }
-        isRanking={true}
-      />
-      <div className="theList">
-        <h2>~{loc("Comment")}~</h2>
-      </div>
-      <SongList
-        url={
-          apiroot3 +
-          "/maichart/list?&isRanking=true&sort=" +
-          encodeURIComponent("commp")
-        }
-        isRanking={true}
-      />
-      <div className="theList">
-        <h2>~{loc("Download")}~</h2>
-      </div>
-      <SongList
-        url={
-          apiroot3 +
-          "/maichart/list?&isRanking=true&sort=" +
-          encodeURIComponent("playp")
-        }
-        isRanking={true}
-      />
+  
+  const navigationItems = [
+    { href: "/", label: loc("Back") }
+  ];
 
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
-    </>
+  return (
+    <PageLayout 
+      title={loc("RecommendedCharts")}
+      navigationItems={navigationItems}
+      className="ranking-page"
+    >
+      <div className="ranking-intro">
+        <p className="ranking-description">{loc("RecommendedChartsHint")}</p>
+      </div>
+      
+      <div className="ranking-sections">
+        <RankingSection 
+          title={loc("Play")}
+          sortType="scorep"
+          icon="🎯"
+        />
+        
+        <RankingSection 
+          title={loc("Like")}
+          sortType="likep"
+          icon="💖"
+        />
+        
+        <RankingSection 
+          title={loc("Comment")}
+          sortType="commp"
+          icon="🗨️"
+        />
+        
+        <RankingSection 
+          title={loc("Download")}
+          sortType="playp"
+          icon="⬇️"
+        />
+      </div>
+    </PageLayout>
+  );
+}
+
+function RankingSection({ title, sortType, icon }) {
+  return (
+    <div className="ranking-section">
+      <div className="ranking-section-header">
+        <div className="ranking-section-icon">{icon}</div>
+        <h2 className="ranking-section-title">{title}</h2>
+      </div>
+      <SongList
+        url={
+          apiroot3 +
+          "/maichart/list?&isRanking=true&sort=" +
+          encodeURIComponent(sortType)
+        }
+        isRanking={true}
+      />
+    </div>
   );
 }

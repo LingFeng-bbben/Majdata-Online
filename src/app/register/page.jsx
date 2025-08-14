@@ -7,7 +7,7 @@ import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {setLanguage, loc} from "../utils";
-import {LanguageSelector, MajdataLogo} from "../widgets";
+import {PageLayout} from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -18,37 +18,21 @@ export default function Page() {
   }, []);
 
   if (!ready) return <div className="loading"></div>;
-  return (
-    <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent">
-          <a href="/">{loc("HomePage")}</a>
-        </div>
-        <div className="linkContent">
-          <a href="./login">{loc("Login")}</a>
-        </div>
-        <div className="linkContent">
-          <a href="./register">{loc("Register")}</a>
-        </div>
-      </div>
+  
+  const navigationItems = [
+    { href: "/", label: loc("HomePage") },
+    { href: "./login", label: loc("Login") },
+    { href: "./register", label: loc("Register"), featured: true }
+  ];
 
+  return (
+    <PageLayout 
+      title={loc("Register")}
+      navigationItems={navigationItems}
+      className="auth-page"
+    >
       <Register />
-      <LanguageSelector />
-    </>
+    </PageLayout>
   );
 }
 
@@ -83,22 +67,71 @@ function Register() {
     // ...
   }
   return (
-    <div className="theList">
-      <form className="formbox" onSubmit={onSubmit}>
-        <div className="inputHint">{loc("Username")}</div>
-        <input className="userinput" type="text" name="username" />
-        <div className="inputHint">{loc("Password")}</div>
-        <input className="userinput" type="password" name="password" />
-        <div className="inputHint">{loc("ConfirmPassword")}</div>
-        <input className="userinput" type="password" name="password2" />
-        <div className="inputHint">{loc("E-Mail")}</div>
-        <input className="userinput" type="email" name="email" />
-        <div className="inputHint">{loc("Invite Code")}</div>
-        <input className="userinput" type="text" name="invitecode" />
-        <button className="linkContent" type="submit">
-          {loc("Register")}
-        </button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2 className="auth-title">创建账户</h2>
+          <p className="auth-subtitle">加入 Majdata 社区，开始您的音乐之旅</p>
+        </div>
+        <form className="auth-form" onSubmit={onSubmit}>
+          <div className="form-group">
+            <label className="form-label">{loc("Username")}</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              name="username" 
+              placeholder="请输入用户名"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{loc("Password")}</label>
+            <input 
+              className="form-input" 
+              type="password" 
+              name="password" 
+              placeholder="请输入密码"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{loc("ConfirmPassword")}</label>
+            <input 
+              className="form-input" 
+              type="password" 
+              name="password2" 
+              placeholder="请再次输入密码"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{loc("E-Mail")}</label>
+            <input 
+              className="form-input" 
+              type="email" 
+              name="email" 
+              placeholder="请输入邮箱地址"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{loc("Invite Code")}</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              name="invitecode" 
+              placeholder="请输入邀请码"
+              required
+            />
+          </div>
+          <button className="auth-button" type="submit">
+            <span className="auth-button-text">{loc("Register")}</span>
+          </button>
+        </form>
+        <div className="auth-footer">
+          <p>已有账户？ <a href="./login" className="auth-link">立即登录</a></p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { apiroot3 } from "../apiroot";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {setLanguage, loc} from "../utils";
-import {LanguageSelector, MajdataLogo, AdComponent} from "../widgets";
+import {PageLayout} from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -17,37 +17,21 @@ export default function Page() {
   }, []);
 
   if (!ready) return <div className="loading"></div>;
+  
+  const navigationItems = [
+    { href: "/", label: loc("HomePage") },
+    { href: "./login", label: loc("Login"), featured: true },
+    { href: "./register", label: loc("Register") }
+  ];
+
   return (
-    <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent">
-          <a href="/">{loc("HomePage")}</a>
-        </div>
-        <div className="linkContent">
-          <a href="./login">{loc("Login")}</a>
-        </div>
-        <div className="linkContent">
-          <a href="./register">{loc("Register")}</a>
-        </div>
-      </div>
+    <PageLayout 
+      title={loc("Login")}
+      navigationItems={navigationItems}
+      className="auth-page"
+    >
       <Login />
-      <LanguageSelector />
-      <AdComponent/>
-    </>
+    </PageLayout>
   );
 }
 
@@ -86,16 +70,41 @@ function Login() {
     }
   }
   return (
-    <div className="theList">
-      <form className="formbox" onSubmit={onSubmit}>
-        <div className="inputHint">{loc("Username")}</div>
-        <input className="userinput" type="text" name="username" />
-        <div className="inputHint">{loc("Password")}</div>
-        <input className="userinput" type="password" name="password" />
-        <button className="linkContent" type="submit">
-        {loc("Login")}
-        </button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2 className="auth-title">欢迎回来</h2>
+          <p className="auth-subtitle">登录您的账户以继续</p>
+        </div>
+        <form className="auth-form" onSubmit={onSubmit}>
+          <div className="form-group">
+            <label className="form-label">{loc("Username")}</label>
+            <input 
+              className="form-input" 
+              type="text" 
+              name="username" 
+              placeholder="请输入用户名"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{loc("Password")}</label>
+            <input 
+              className="form-input" 
+              type="password" 
+              name="password" 
+              placeholder="请输入密码"
+              required
+            />
+          </div>
+          <button className="auth-button" type="submit">
+            <span className="auth-button-text">{loc("Login")}</span>
+          </button>
+        </form>
+        <div className="auth-footer">
+          <p>还没有账户？ <a href="./register" className="auth-link">立即注册</a></p>
+        </div>
+      </div>
     </div>
   );
 }

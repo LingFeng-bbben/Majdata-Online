@@ -5,12 +5,13 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLanguage, loc } from "./utils";
-import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent } from "./widgets";
+import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent, UnifiedHeader } from "./widgets";
 import { apiroot3 } from "./apiroot";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
+  const [showLanguagePopup, setShowLanguagePopup] = useState(false);
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
@@ -29,26 +30,58 @@ export default function Page() {
 
   return (
     <>
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent" style={{ boxShadow: "0px 0px 3px gold" }}>
-          <a href="./ranking">{loc("RankingList")}</a>
+      {/* Background */}
+      <div className="bg"></div>
+      
+      {/* Unified Header */}
+      <UnifiedHeader />
+
+      {/* Events Carousel */}
+      <EventsCarousel />
+      {/* Floating Buttons */}
+      <div className="floating-buttons">
+        {/* Go to Top Button */}
+        <div
+          className="topButton"
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
+          {loc("GoTop")}
         </div>
-        <div className="linkContent">
-          <a href="./edit">{loc("ChartEditor")}</a>
+
+        {/* Language Settings Button */}
+        <div className="floating-language-button">
+          <button 
+            className="language-float-button"
+            onClick={() => setShowLanguagePopup(!showLanguagePopup)}
+            aria-label="语言设置"
+          >
+            🌐
+          </button>
+          
+          {/* Language Popup */}
+          {showLanguagePopup && (
+            <>
+              <div 
+                className="language-popup-overlay"
+                onClick={() => setShowLanguagePopup(false)}
+              ></div>
+              <div className="language-popup">
+                <h4 className="language-popup-title">选择语言 / Language</h4>
+                <button 
+                  className="language-popup-close"
+                  onClick={() => setShowLanguagePopup(false)}
+                >
+                  ×
+                </button>
+                <LanguageSelector />
+              </div>
+            </>
+          )}
         </div>
-        <UserInfo />
-      </div>
-      <div
-        className="topButton"
-        onClick={() => {
-          if (typeof window !== "undefined") {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
-        }}
-      >
-        {loc("GoTop")}
       </div>
       <ToastContainer
         position="bottom-center"
@@ -62,35 +95,87 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      <a
-        href="/space?id=dilei"
-        className="theList"
-        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
-      >
-        <img
-          src="/event2.jpg"
-          alt=""
-          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
-        />
-      </a> 
-      <a
-        href="/space?id=海鲜杯"
-        className="theList"
-        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
-      >
-        <img
-          src="/event3.jpg"
-          alt=""
-          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
-        />
-      </a> 
-      <MainComp />
-      <LanguageSelector />
-      <DownloadTypeSelector/>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
-      <AdComponent/>
-      <a href="/minigame"><img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" /></a>
+      {/* Main Content */}
+      <main className="main-content">
+        <MainComp />
+      </main>
+      {/* Settings Section */}
+      <section className="settings-section">
+        <div className="settings-container">
+          <h3 className="settings-title">⚙️ 偏好设置 / Preferences</h3>
+          <div className="settings-group">
+            <DownloadTypeSelector/>
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="site-footer">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
+        <AdComponent/>
+        <a href="/minigame" className="footer-game-link">
+          <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="小游戏" />
+        </a>
+      </footer>
     </>
+  );
+}
+
+function EventsCarousel(){
+  // 智能获取首页推荐活动数据（带时间计算）
+  const { getFeaturedEventsWithTime, getNonFeaturedEventsCount } = require('./utils/eventsData.js');
+  const events = getFeaturedEventsWithTime(2); // 获取2个推荐活动（带智能时间）
+  const remainingEventsCount = getNonFeaturedEventsCount(); // 获取剩余活动数量
+
+  return (
+    <section className="events-showcase">
+      <div className="events-showcase-container">
+        <div className="events-grid">
+          {/* 智能显示推荐活动卡片 */}
+          {events.map((event, i) => (
+            <div key={i} className="event-card">
+              <a href={event.href} className="event-link">
+                <div className="event-image-container">
+                  <img 
+                    className="event-image" 
+                    src={event.src} 
+                    alt={event.alt} 
+                    loading="lazy" 
+                  />
+                  <div className="event-hover-info">
+                    <div className="event-details">
+                      <h3 className="event-title">{event.title}</h3>
+                      <div className="event-meta">
+                        <span className="event-category">{event.category}</span>
+                        <span className="event-time" title={`活动创建于 ${event.createDateFormatted}`}>
+                          • {event.timeAgo}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+          
+          {/* 第三个卡片：more 按钮 */}
+          <div className="event-card more-card">
+            <a href="/events" className="event-link">
+              <div className="more-content">
+                <div className="more-icon">→</div>
+                <div className="more-text">more</div>
+              </div>
+              <div className="more-overlay">
+                <div className="more-hover-text">
+                  <span>查看所有活动</span>
+                  <span className="more-count">+{remainingEventsCount} 个活动</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -102,28 +187,35 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
     loc("PlayCount"),
   ];
   return (
-    <div className="searchDiv">
-      <input
-        type="text"
-        className="searchInput"
-        placeholder={initS === "" ? "Search" : initS}
-        onChange={onChange}
-        onClick={onChange}
-      />
-      <select
-        value={sortType}
-        onChange={(e) => {
-          const val = parseInt(e.target.value);
-          onSortChange(val);
-        }}
-        className="sortSelect"
-      >
-        {sortOptions.map((label, i) => (
-          <option key={i} value={i}>
-            {label}
-          </option>
-        ))}
-      </select>
+    <div className="search-section">
+      <div className="search-container">
+        <div className="search-bar">
+          <input
+            type="text"
+            className="searchInput modern-search"
+            placeholder={initS === "" ? "搜索曲目/作曲家/谱师..." : initS}
+            onChange={onChange}
+            onClick={onChange}
+          />
+        </div>
+        <div className="sort-selector">
+          <label className="sort-label">排序：</label>
+          <select
+            value={sortType}
+            onChange={(e) => {
+              const val = parseInt(e.target.value);
+              onSortChange(val);
+            }}
+            className="sortSelect modern-select"
+          >
+            {sortOptions.map((label, i) => (
+              <option key={i} value={i}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
@@ -193,60 +285,50 @@ function MainComp() {
         setMax={setMaxpage}
       />
 
-      <div className="theList">
-        {page - 1 >= 0 ? (
+      <div className="pagination-section">
+        <div className="pagination-container">
           <button
-            className="pagingButton linkContent"
-            id="submitbutton"
-            type="button"
-            style={{ width: "100px", margin: "auto" }}
+            className={`pagination-btn ${page - 1 < 0 ? 'disabled' : ''}`}
+            disabled={page - 1 < 0}
             onClick={() => {
               setPage(page - 1);
               window.scrollTo(0, 200);
             }}
           >
-            {loc("LastPage")}
+            ← {loc("LastPage")}
           </button>
-        ) : (
-          <div style={{ width: "100px", margin: "auto" }}></div>
-        )}
 
-        <input
-          type="number"
-          value={page}
-          className="searchInput"
-          style={{ width: "100px" }}
-          onChange={(event) => {
-            if (event.target.value !== "")
-              setPage(parseInt(event.target.value));
-            else setPage(0);
-          }}
-          min="0"
-          step="1"
-        />
-        {page < maxpage ? (
+          <div className="page-input-container">
+            <span className="page-label">第</span>
+            <input
+              type="number"
+              value={page}
+              className="page-input"
+              onChange={(event) => {
+                if (event.target.value !== "")
+                  setPage(parseInt(event.target.value));
+                else setPage(0);
+              }}
+              min="0"
+              step="1"
+            />
+            <span className="page-label">页</span>
+          </div>
+
           <button
-            className="pagingButton linkContent"
-            id="submitbutton"
-            type="button"
-            style={{ width: "100px", margin: "auto" }}
+            className={`pagination-btn ${page >= maxpage ? 'disabled' : ''}`}
+            disabled={page >= maxpage}
             onClick={() => {
               setPage(page + 1);
               window.scrollTo(0, 200);
             }}
           >
-            {loc("NextPage")}
+            {loc("NextPage")} →
           </button>
-        ) : (
-          <div style={{ width: "100px", margin: "auto" }}></div>
-        )}
-      </div>
-      <div className="theList">
+        </div>
+        
         <button
-          className="linkContent"
-          id="submitbutton"
-          type="button"
-          style={{ width: "100px", margin: "auto" }}
+          className="first-page-btn"
           onClick={() => {
             setPage(0);
             window.scrollTo(0, 200);
@@ -261,6 +343,7 @@ function MainComp() {
 
 function DownloadTypeSelector(){
   const [currentType,setCurrentType] = useState("zip")
+  const [justChanged, setJustChanged] = useState(false)
 
   useEffect(()=>{
     //get init type
@@ -273,38 +356,29 @@ function DownloadTypeSelector(){
       const newtype = e.target.value
       localStorage.setItem("DownloadType", newtype)
       setCurrentType(newtype)
+      
+      // 显示保存成功状态
+      setJustChanged(true)
+      setTimeout(() => setJustChanged(false), 2000)
     };
 
-
   return (
-    <div
-      style={{
-        width: "fit-content",
-        margin: "auto",
-        marginTop: "2rem",
-        zIndex: 9999,
-        backgroundColor: "black",
-        padding: "6px 10px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-        fontSize: "14px",
-        border: "1px solid whitesmoke"
-      }}
-    >
-      <select
-        value={currentType}
-        onChange={handleChange}
-        style={{
-          background: "black",
-          border: "none",
-          fontSize: "inherit",
-          cursor: "pointer",
-          outline: "none",
-        }}
-      >
-        <option value="zip">Default *.zip</option>
-        <option value="adx">Astro *.adx</option>
-      </select>
+    <div className={`setting-item ${justChanged ? 'setting-success' : ''}`}>
+      <div className="setting-icon">{justChanged ? '✅' : '📁'}</div>
+      <div className="setting-content">
+        <label className="setting-label">
+          下载格式 / Download Format
+          {justChanged && <span className="setting-status">已保存</span>}
+        </label>
+        <select
+          value={currentType}
+          onChange={handleChange}
+          className="setting-select"
+        >
+          <option value="zip">ZIP 压缩包</option>
+          <option value="adx">Astro ADX 格式</option>
+        </select>
+      </div>
     </div>
   );
 }

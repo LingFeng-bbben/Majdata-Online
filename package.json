@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconscout/unicons": "^4.2.0",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",

@@ -3,6 +3,7 @@ import { setLanguage} from "../utils";
 
 const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
     const savedLang = localStorage.getItem("language");
@@ -14,41 +15,40 @@ const LanguageSelector = () => {
 
   const handleChange = async (e) => {
     const newLang = e.target.value;
+    setIsChanging(true);
     setCurrentLang(newLang);
-    await setLanguage(newLang);
-    window.location.reload(); // 如果你用 Context 管理语言，也可以不刷新
+    
+    try {
+      await setLanguage(newLang);
+      // 添加短暂延迟以显示加载状态
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    } catch (error) {
+      console.error('Language change failed:', error);
+      setIsChanging(false);
+    }
   };
 
   return (
-    <div
-      style={{
-        width: "fit-content",
-        margin: "auto",
-        marginTop: "2rem",
-        zIndex: 9999,
-        backgroundColor: "black",
-        padding: "6px 10px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-        fontSize: "14px",
-        border: "1px solid whitesmoke"
-      }}
-    >
-      <select
-        value={currentLang}
-        onChange={handleChange}
-        style={{
-          background: "black",
-          border: "none",
-          fontSize: "inherit",
-          cursor: "pointer",
-          outline: "none",
-        }}
-      >
-        <option value="en">🌐 English</option>
-        <option value="zh">🇨🇳 中文</option>
-        <option value="ja">🇯🇵 日本語</option>
-      </select>
+    <div className={`setting-item ${isChanging ? 'setting-loading' : ''}`}>
+      <div className="setting-icon">{isChanging ? '🔄' : '🌐'}</div>
+      <div className="setting-content">
+        <label className="setting-label">
+          语言 / Language
+          {isChanging && <span className="setting-status">正在切换...</span>}
+        </label>
+        <select
+          value={currentLang}
+          onChange={handleChange}
+          className="setting-select"
+          disabled={isChanging}
+        >
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
     </div>
   );
 };

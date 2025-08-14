@@ -13,11 +13,13 @@ import {
   CoverPic,
   Levels,
   Majdata,
-  MajdataLogo,
   SongList,
   TagManageTagLauncher,
   TagManageWidget,
   UserInfo,
+  PageLayout,
+  UnifiedHeader,
+  MajdataLogo,
 } from "../widgets";
 
 export default function Page() {
@@ -43,27 +45,22 @@ export default function Page() {
         className="bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent">
-          <a href="/">{loc("HomePage")}</a>
-        </div>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        {/* <div className='linkContent'><a href='./contest'>MMFC 6th</a></div> */}
-        <UserInfo />
-      </div>
+      
+      {/* Unified Header */}
+      <UnifiedHeader />
+      
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
       <Tippy
         singleton={source}

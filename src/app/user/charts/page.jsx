@@ -11,7 +11,7 @@ import {
   Logout,
   ChartUploader,
   SongList,
-  MajdataLogo,
+  PageLayout,
 } from "../../widgets";
 
 export default function Page() {
@@ -27,53 +27,52 @@ export default function Page() {
   if (!ready) {
     return <div className="loading"></div>;
   }
+  const navigationItems = [
+    { href: "/user", label: loc("Back") }
+  ];
+
   return (
-    <>
-      <div className="seprate"></div>
-      <MajdataLogo />
-      <div className="links">
-        <div className="linkContent">
-          <a href="/user">{loc("Back")}</a>
+    <PageLayout 
+      title={loc("ChartsManagement")}
+      navigationItems={navigationItems}
+      className="user-charts-page"
+      showNavigation={false}
+    >
+
+      {/* Upload Section */}
+      <section className="upload-section">
+        <div className="upload-container">
+          <div className="upload-header">
+            <h2 className="upload-title">{loc("UploadChart")}</h2>
+            <div className="upload-notice">
+              <div className="notice-content">
+                <h3 className="notice-title">上传须知</h3>
+                <ul className="notice-list">
+                  <li>{loc("UploadNoticeTerms1")}</li>
+                  <li>{loc("UploadNoticeTerms2")}</li>
+                  <li>{loc("UploadNoticeTerms3")}</li>
+                  <li>{loc("UploadNoticeTerms4")}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <ChartUploader />
         </div>
-        <UserInfo />
-        <Logout />
-      </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <h1>{loc("UploadChart")}</h1>
-      <div className="upload-notice">
-        <p>
-          {loc("UploadNoticeText")}
-          <br />
-          1. {loc("UploadNoticeTerms1")}
-          <br />
-          2. {loc("UploadNoticeTerms2")}
-          <br />
-          3. {loc("UploadNoticeTerms3")}
-          <br />
-          4. {loc("UploadNoticeTerms4")}
-          <br />
-        </p>
-      </div>
-      <ChartUploader />
-      <h1>{loc("ChartsManagement")}</h1>
-      <SongList
-        url={
-          apiroot3 + "/maichart/list?search=uploader:" + encodeURIComponent(username)
-        }
-        isManage={true}
-      />
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
-    </>
+      </section>
+
+      {/* Charts Management Section */}
+      <section className="charts-management-section">
+        <div className="management-header">
+          <h2 className="management-title">我的谱面</h2>
+          <p className="management-subtitle">管理您上传的所有谱面</p>
+        </div>
+        <SongList
+          url={
+            apiroot3 + "/maichart/list?search=uploader:" + encodeURIComponent(username)
+          }
+          isManage={true}
+        />
+      </section>
+    </PageLayout>
   );
 }
