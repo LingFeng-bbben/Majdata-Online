@@ -52,26 +52,26 @@ export default function Page() {
 
         {/* 教程部分 */}
         <section className="edit-tutorials-section">
-          <h2 className="section-title">学习教程</h2>
+          <h2 className="section-title">{loc("Tutorials")}</h2>
           <div className="tutorial-grid">
             <a href="https://github.com/LingFeng-bbben/MajdataView/wiki/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8" className="tutorial-card">
               <div className="tutorial-content">
-                <h3 className="tutorial-title">快速入门</h3>
-                <p className="tutorial-description">了解基本功能和界面操作</p>
+                <h3 className="tutorial-title">{loc("QuickStart")}</h3>
+                <p className="tutorial-description">{loc("QuickStartDesc")}</p>
               </div>
             </a>
             
             <a href="https://github.com/LingFeng-bbben/MajdataView/wiki/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8" className="tutorial-card">
               <div className="tutorial-content">
-                <h3 className="tutorial-title">怎样写谱</h3>
-                <p className="tutorial-description">学习谱面制作技巧和规范</p>
+                <h3 className="tutorial-title">{loc("HowToChart")}</h3>
+                <p className="tutorial-description">{loc("HowToChartDesc")}</p>
               </div>
             </a>
 
             <a href="https://w.atwiki.jp/simai/pages/1002.html" className="tutorial-card">
               <div className="tutorial-content">
-                <h3 className="tutorial-title">日本語版</h3>
-                <p className="tutorial-description">日语版教程和文档</p>
+                <h3 className="tutorial-title">{loc("JapaneseVersion")}</h3>
+                <p className="tutorial-description">{loc("JapaneseVersionDesc")}</p>
               </div>
             </a>
 
@@ -86,7 +86,7 @@ export default function Page() {
 
         {/* 视频教程部分 */}
         <section className="edit-videos-section">
-          <h2 className="section-title">视频教程</h2>
+          <h2 className="section-title">{loc("VideoTutorials")}</h2>
           <div className="video-grid">
             <div className="video-card">
               <iframe
@@ -95,7 +95,7 @@ export default function Page() {
                 allowFullScreen
               ></iframe>
               <div className="video-info">
-                <h3 className="video-title">基础教程</h3>
+                <h3 className="video-title">{loc("BasicTutorial")}</h3>
               </div>
             </div>
             
@@ -106,7 +106,7 @@ export default function Page() {
                 allowFullScreen
               ></iframe>
               <div className="video-info">
-                <h3 className="video-title">进阶技巧</h3>
+                <h3 className="video-title">{loc("AdvancedTutorial")}</h3>
               </div>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function Page() {
           <div className="video-series">
             <p className="series-info">
               <a href="https://space.bilibili.com/397702/channel/collectiondetail?sid=391415&ctype=0" className="series-link">
-                小小蓝白的谱面创作教室 - 完整系列课程
+{loc("CompleteSeries")}
               </a>
             </p>
           </div>
@@ -122,19 +122,19 @@ export default function Page() {
 
         {/* 帮助与支持部分 */}
         <section className="edit-support-section">
-          <h2 className="section-title">帮助与支持</h2>
+          <h2 className="section-title">{loc("HelpAndSupport")}</h2>
           <div className="support-grid">
             <a href="https://github.com/LingFeng-bbben/MajdataView/wiki/Q&A" className="support-card">
               <div className="support-content">
-                <h3 className="support-title">常见问题</h3>
-                <p className="support-description">查看常见问题的解决方案</p>
+                <h3 className="support-title">{loc("FAQ")}</h3>
+                <p className="support-description">{loc("FAQDesc")}</p>
               </div>
             </a>
 
             <a href="https://discord.gg/AcWgZN7j6K" className="support-card discord-card">
               <div className="support-content">
-                <h3 className="support-title">加入 Discord</h3>
-                <p className="support-description">与社区成员实时交流</p>
+                <h3 className="support-title">{loc("CommunitySupport")}</h3>
+                <p className="support-description">{loc("CommunitySupportDesc")}</p>
                 <img src="https://badgen.net/discord/online-members/AcWgZN7j6K" alt="Discord Members" className="discord-badge" />
               </div>
             </a>

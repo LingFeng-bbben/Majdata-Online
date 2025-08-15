@@ -7,7 +7,7 @@ import Tippy, { useSingleton } from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import LazyLoad from "react-lazy-load";
 import {setLanguage, loc} from "../utils";
-import {CoverPic, Majdata} from "../widgets";
+import {CoverPic, Majdata, PageLayout} from "../widgets";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -19,23 +19,29 @@ export default function Page() {
   }, []);
 
   if (!ready) return <div className="loading"></div>;
+  
+  const navigationItems = [
+    { href: "../", label: loc("Back") }
+  ];
+
   return (
-    <>
-      <div className='bg'></div>
+    <PageLayout 
+      title=""
+      navigationItems={navigationItems}
+      className="contest-page"
+      showBackToHome={false}
+    >
       <div className='seprate'></div>
       <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert(loc("FUCKYOU"))} alt={"xxlb"}></img>MMFC 11TH</h1>
       <div className='links'>
-        <div className='linkContent'><a href='../'>{loc("Back")}</a></div>
-
         {/* <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div> */}
-        <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">打分会场</a></div>
+        <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">{loc("Contest")}</a></div>
       </div>
-      <div className="topButton" onClick={() => { if (typeof window !== "undefined") { window.scrollTo(0, 0) } }}>顶</div>
       <Majdata />
       <Tippy singleton={source} animation='fade' placement='top-start' interactive={true} />
       <TheList tippy={target} />
       <img className="footerImage" style={{ width: "150px" }} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
-    </>
+    </PageLayout>
   )
 }
 

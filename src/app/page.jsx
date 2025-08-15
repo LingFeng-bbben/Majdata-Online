@@ -57,7 +57,7 @@ export default function Page() {
           <button 
             className="language-float-button"
             onClick={() => setShowLanguagePopup(!showLanguagePopup)}
-            aria-label="语言设置"
+            aria-label={loc("LanguageSettings")}
           >
             🌐
           </button>
@@ -70,7 +70,7 @@ export default function Page() {
                 onClick={() => setShowLanguagePopup(false)}
               ></div>
               <div className="language-popup">
-                <h4 className="language-popup-title">选择语言 / Language</h4>
+                <h4 className="language-popup-title">{loc("SelectLanguage")} / Language</h4>
                 <button 
                   className="language-popup-close"
                   onClick={() => setShowLanguagePopup(false)}
@@ -99,22 +99,14 @@ export default function Page() {
       <main className="main-content">
         <MainComp />
       </main>
-      {/* Settings Section */}
-      <section className="settings-section">
-        <div className="settings-container">
-          <h3 className="settings-title">⚙️ 偏好设置 / Preferences</h3>
-          <div className="settings-group">
-            <DownloadTypeSelector/>
-          </div>
-        </div>
-      </section>
+
       
       {/* Footer */}
       <footer className="site-footer">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
         <AdComponent/>
         <a href="/minigame" className="footer-game-link">
-          <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="小游戏" />
+          <img className="footerImage" loading="lazy" src={"/bee.webp"} alt={loc("MiniGame")} />
         </a>
       </footer>
     </>
@@ -167,8 +159,8 @@ function EventsCarousel(){
               </div>
               <div className="more-overlay">
                 <div className="more-hover-text">
-                  <span>查看所有活动</span>
-                  <span className="more-count">+{remainingEventsCount} 个活动</span>
+                  <span>{loc("ViewAllEvents")}</span>
+                  <span className="more-count">+{remainingEventsCount} {loc("EventsCount")}</span>
                 </div>
               </div>
             </a>
@@ -189,31 +181,36 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
   return (
     <div className="search-section">
       <div className="search-container">
-        <div className="search-bar">
-          <input
-            type="text"
-            className="searchInput modern-search"
-            placeholder={initS === "" ? "搜索曲目/作曲家/谱师..." : initS}
-            onChange={onChange}
-            onClick={onChange}
-          />
-        </div>
-        <div className="sort-selector">
-          <label className="sort-label">排序：</label>
-          <select
-            value={sortType}
-            onChange={(e) => {
-              const val = parseInt(e.target.value);
-              onSortChange(val);
-            }}
-            className="sortSelect modern-select"
-          >
-            {sortOptions.map((label, i) => (
-              <option key={i} value={i}>
-                {label}
-              </option>
-            ))}
-          </select>
+        <div className="search-row">
+          <div className="search-bar">
+            <input
+              type="text"
+              className="searchInput modern-search"
+              placeholder={initS === "" ? loc("SearchPlaceholder") : initS}
+              onChange={onChange}
+              onClick={onChange}
+            />
+          </div>
+          <div className="search-controls">
+            <div className="sort-selector">
+              <label className="sort-label">{loc("SortBy")}</label>
+              <select
+                value={sortType}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  onSortChange(val);
+                }}
+                className="sortSelect modern-select"
+              >
+                {sortOptions.map((label, i) => (
+                  <option key={i} value={i}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <IntegratedDownloadTypeSelector />
+          </div>
         </div>
       </div>
     </div>
@@ -299,7 +296,7 @@ function MainComp() {
           </button>
 
           <div className="page-input-container">
-            <span className="page-label">第</span>
+            <span className="page-label">{loc("PageOf")}</span>
             <input
               type="number"
               value={page}
@@ -312,7 +309,7 @@ function MainComp() {
               min="0"
               step="1"
             />
-            <span className="page-label">页</span>
+            <span className="page-label">{loc("Page")}</span>
           </div>
 
           <button
@@ -341,6 +338,47 @@ function MainComp() {
   );
 }
 
+// 集成到搜索栏的简化版本
+function IntegratedDownloadTypeSelector(){
+  const [currentType,setCurrentType] = useState("zip")
+  const [justChanged, setJustChanged] = useState(false)
+
+  useEffect(()=>{
+    //get init type
+    const type = localStorage.getItem("DownloadType")
+    if(type!=undefined)
+      setCurrentType(type);
+  })
+
+  const handleChange = async (e) => {
+      const newtype = e.target.value
+      localStorage.setItem("DownloadType", newtype)
+      setCurrentType(newtype)
+      
+      // 显示保存成功状态
+      setJustChanged(true)
+      setTimeout(() => setJustChanged(false), 2000)
+    };
+
+  return (
+    <div className="download-format-selector">
+      <label className={`sort-label ${justChanged ? 'label-success' : ''}`}>
+        {loc("DownloadFormat")}
+        {justChanged && <span className="success-indicator">✓</span>}
+      </label>
+      <select
+        value={currentType}
+        onChange={handleChange}
+        className="sortSelect modern-select"
+      >
+        <option value="zip">ZIP</option>
+        <option value="adx">ADX</option>
+      </select>
+    </div>
+  );
+}
+
+// 保留原版本的DownloadTypeSelector以防其他地方需要使用
 function DownloadTypeSelector(){
   const [currentType,setCurrentType] = useState("zip")
   const [justChanged, setJustChanged] = useState(false)
@@ -367,16 +405,16 @@ function DownloadTypeSelector(){
       <div className="setting-icon">{justChanged ? '✅' : '📁'}</div>
       <div className="setting-content">
         <label className="setting-label">
-          下载格式 / Download Format
-          {justChanged && <span className="setting-status">已保存</span>}
+          {loc("DownloadFormatFull")} / Download Format
+          {justChanged && <span className="setting-status">{loc("Saved")}</span>}
         </label>
         <select
           value={currentType}
           onChange={handleChange}
           className="setting-select"
         >
-          <option value="zip">ZIP 压缩包</option>
-          <option value="adx">Astro ADX 格式</option>
+          <option value="zip">{loc("ZipFormat")}</option>
+          <option value="adx">{loc("AdxFormat")}</option>
         </select>
       </div>
     </div>

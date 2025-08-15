@@ -268,7 +268,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
           <div className="uploadMetaContent tagList">
             {tags && tags.length > 0 ? (
               tags.map((tag, index) => (
-                <Tippy content="删除标签" key={index}>
+                <Tippy content={loc("DeleteTag")} key={index}>
                                     <span
                                       className={isInPrivatePage ? "tag" : "tagPublic"}
                                       onClick={() => {
@@ -291,7 +291,7 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
         <div style={{marginTop: '12px', display: 'flex', gap: '8px'}}>
           <input
             type="text"
-            placeholder="自定标签"
+            placeholder={loc("CustomTag")}
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             style={{marginLeft: '4px', flex: 1, padding: '6px 8px', borderRadius: '4px', border: '1px solid #ccc'}}
@@ -306,10 +306,10 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
             }}
             style={{padding: '6px 12px'}}
           >
-            添加
+{loc("AddTag")}
           </button>
         </div>
-        <p>常用Tags</p>
+        <p>{loc("CommonTags")}</p>
         {/* tab bar */}
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px'}}>
           {Object.keys(categories).map((cat) => (

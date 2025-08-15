@@ -35,7 +35,7 @@ export default function Page() {
           <div className="setting-card">
             <div className="setting-card-header">
               <div className="setting-card-icon">👤</div>
-              <div className="setting-card-title">头像设置</div>
+              <div className="setting-card-title">头像设置 ({loc("AvatarHint")})</div>
             </div>
             <div className="setting-card-content">
               <AvatarUploader />

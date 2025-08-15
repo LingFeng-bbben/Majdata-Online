@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { setLanguage} from "../utils";
+import { setLanguage, loc } from "../utils";
 
 const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
@@ -35,8 +35,8 @@ const LanguageSelector = () => {
       <div className="setting-icon">{isChanging ? '🔄' : '🌐'}</div>
       <div className="setting-content">
         <label className="setting-label">
-          语言 / Language
-          {isChanging && <span className="setting-status">正在切换...</span>}
+          {loc("Language")} / Language
+          {isChanging && <span className="setting-status">{loc("Switching")}</span>}
         </label>
         <select
           value={currentLang}

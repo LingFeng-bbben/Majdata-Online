@@ -80,7 +80,7 @@ export default function ChartUploader() {
                 <input className="userinput" type="file" name="formfiles" />
                 <div className="inputHint">track</div>
                 <input className="userinput" type="file" name="formfiles" />
-                <div className="inputHint">bg.mp4/pv.mp4(可选,限20M内)</div>
+                <div className="inputHint">{loc("BGVideoHint")}</div>
                 <input className="userinput" type="file" name="formfiles" />
                 <button className="linkContent" id="submitbutton" type="submit">
                     {loc("Upload")}

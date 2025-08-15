@@ -62,7 +62,7 @@ export default function UnifiedHeader() {
       // 跳转到首页
       window.location.href = "/";
     } catch (error) {
-      console.error("登出失败:", error);
+      console.error(loc("LogoutFailed"), error);
       // 即使API调用失败，也清除本地状态并跳转
       document.cookie =
         "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -133,7 +133,7 @@ export default function UnifiedHeader() {
             <div className="auth-links">
               <div className="auth-link loading-placeholder">
                 <span className="auth-icon">⏳</span>
-                <span className="auth-label desktop-only">加载中...</span>
+                <span className="auth-label desktop-only">{loc("Loading")}</span>
               </div>
             </div>
           ) : isLoggedIn ? (
