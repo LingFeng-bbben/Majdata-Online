@@ -13,7 +13,6 @@ import {
   CoverPic,
   Levels,
   Majdata,
-  MajdataLogo,
   SongList,
   TagManageTagLauncher,
   TagManageWidget,
