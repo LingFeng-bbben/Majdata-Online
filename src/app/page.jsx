@@ -8,6 +8,17 @@ import { setLanguage, loc } from "./utils";
 import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent } from "./widgets";
 import { apiroot3 } from "./apiroot";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+
+// import required modules
+import { Autoplay, Scrollbar , Navigation } from 'swiper/modules';
+
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
@@ -62,33 +73,63 @@ export default function Page() {
         pauseOnHover
         theme="dark"
       />
-      <a
-        href="/space?id=dilei"
-        className="theList"
-        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
+      <Swiper
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        scrollbar={{
+          hide: true,
+          
+        }}
+        modules={[Autoplay, Scrollbar , Navigation]}
+        style={{ maxWidth: "400px", display: "block", margin: "0 auto", borderRadius: "10px" }}
       >
-        <img
-          src="/event2.jpg"
-          alt=""
-          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
-        />
-      </a> 
-      <a
-        href="/space?id=海鲜杯"
-        className="theList"
-        style={{ maxWidth: "300px", display: "block", margin: "0 auto" }}
-      >
-        <img
-          src="/event3.jpg"
-          alt=""
-          style={{ width: "300px", height: "auto", borderRadius: "5px" }}
-        />
-      </a> 
+        <SwiperSlide><a
+          href="/space?id=哈基窝谱面市场"
+          className="theList"
+        >
+          <img
+            src="/event4.png"
+            alt=""
+          />
+        </a> </SwiperSlide>
+        <SwiperSlide><a
+          href="/space?id=dilei"
+          className="theList"
+        >
+          <img
+            src="/event2.jpg"
+            alt=""
+          />
+        </a> </SwiperSlide>
+        <SwiperSlide><a
+          href="/space?id=海鲜杯"
+          className="theList"
+        >
+          <img
+            src="/event3.jpg"
+            alt=""
+          />
+        </a> </SwiperSlide>
+        <SwiperSlide><a
+          href="/space?id=TeamXmmcg"
+          className="theList"
+        >
+          <img
+            src="/event1.png"
+            alt=""
+          />
+        </a> </SwiperSlide>
+      </Swiper>
+
+
       <MainComp />
       <LanguageSelector />
-      <DownloadTypeSelector/>
+      <DownloadTypeSelector />
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
-      <AdComponent/>
+      <AdComponent />
       <a href="/minigame"><img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" /></a>
     </>
   );
@@ -259,21 +300,21 @@ function MainComp() {
   );
 }
 
-function DownloadTypeSelector(){
-  const [currentType,setCurrentType] = useState("zip")
+function DownloadTypeSelector() {
+  const [currentType, setCurrentType] = useState("zip")
 
-  useEffect(()=>{
+  useEffect(() => {
     //get init type
     const type = localStorage.getItem("DownloadType")
-    if(type!=undefined)
+    if (type != undefined)
       setCurrentType(type);
   })
 
   const handleChange = async (e) => {
-      const newtype = e.target.value
-      localStorage.setItem("DownloadType", newtype)
-      setCurrentType(newtype)
-    };
+    const newtype = e.target.value
+    localStorage.setItem("DownloadType", newtype)
+    setCurrentType(newtype)
+  };
 
 
   return (

@@ -43,8 +43,6 @@ export default function Page() {
         className="bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
-      <div className="seprate"></div>
-      <MajdataLogo />
       <div className="links">
         <div className="linkContent">
           <a href="/">{loc("HomePage")}</a>
