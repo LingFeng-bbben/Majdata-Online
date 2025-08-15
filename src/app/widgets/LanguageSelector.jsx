@@ -31,24 +31,23 @@ const LanguageSelector = () => {
   };
 
   return (
-    <div className={`setting-item ${isChanging ? 'setting-loading' : ''}`}>
-      <div className="setting-icon">{isChanging ? '🔄' : '🌐'}</div>
-      <div className="setting-content">
-        <label className="setting-label">
-          {loc("Language")} / Language
-          {isChanging && <span className="setting-status">{loc("Switching")}</span>}
-        </label>
-        <select
-          value={currentLang}
-          onChange={handleChange}
-          className="setting-select"
-          disabled={isChanging}
-        >
-          <option value="en">English</option>
-          <option value="zh">中文</option>
-          <option value="ja">日本語</option>
-        </select>
-      </div>
+    <div className={`language-selector-simple ${isChanging ? 'setting-loading' : ''}`}>
+      <select
+        value={currentLang}
+        onChange={handleChange}
+        className="language-select-simple"
+        disabled={isChanging}
+      >
+        <option value="en">🇺🇸 English</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ja">🇯🇵 日本語</option>
+      </select>
+      {isChanging && (
+        <div className="language-changing-indicator">
+          <span className="loading-spinner">🔄</span>
+          <span>{loc("Switching")}</span>
+        </div>
+      )}
     </div>
   );
 };

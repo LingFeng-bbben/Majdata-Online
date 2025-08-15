@@ -76,15 +76,24 @@ export default function UnifiedHeader() {
   return (
     <header className="unified-header">
       <div className="header-container">
-        {/* Logo Section */}
-        <div className="header-logo">
-          <a href="/">
-            <MajdataLogo />
-          </a>
-        </div>
+        {/* 左侧区域：Logo + 导航 */}
+        <div className="header-left-section">
+          {/* Mobile Home Button - 移动端返回主页按钮 */}
+          <div className="mobile-home-button">
+            <a href="/" className="home-button-link">
+              <span className="home-icon">←</span>
+            </a>
+          </div>
 
-        {/* Main Navigation */}
-        <nav className="header-nav" ref={mainNavRef}>
+          {/* Logo Section */}
+          <div className="header-logo">
+            <a href="/">
+              <MajdataLogo />
+            </a>
+          </div>
+
+          {/* Main Navigation */}
+          <nav className="header-nav" ref={mainNavRef}>
           {/* 桌面端：完整导航 */}
           <div className="nav-links desktop-nav">
             <a href="/ranking" className="nav-item featured">
@@ -126,6 +135,7 @@ export default function UnifiedHeader() {
             )}
           </div>
         </nav>
+        </div>
 
         {/* User Section */}
         <div className="header-user" ref={userMenuRef}>

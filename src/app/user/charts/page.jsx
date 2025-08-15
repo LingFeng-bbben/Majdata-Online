@@ -36,7 +36,7 @@ export default function Page() {
       title={loc("ChartsManagement")}
       navigationItems={navigationItems}
       className="user-charts-page"
-      showNavigation={false}
+      showNavigation={true}
     >
 
       {/* Upload Section */}
@@ -46,7 +46,7 @@ export default function Page() {
             <h2 className="upload-title">{loc("UploadChart")}</h2>
             <div className="upload-notice">
               <div className="notice-content">
-                <h3 className="notice-title">上传须知</h3>
+                <h3 className="notice-title">{loc("UploadNotice")}</h3>
                 <ul className="notice-list">
                   <li>{loc("UploadNoticeTerms1")}</li>
                   <li>{loc("UploadNoticeTerms2")}</li>
@@ -63,8 +63,8 @@ export default function Page() {
       {/* Charts Management Section */}
       <section className="charts-management-section">
         <div className="management-header">
-          <h2 className="management-title">我的谱面</h2>
-          <p className="management-subtitle">管理您上传的所有谱面</p>
+          <h2 className="management-title">{loc("MyCharts")}</h2>
+          <p className="management-subtitle">{loc("ManageAllYourCharts")}</p>
         </div>
         <SongList
           url={

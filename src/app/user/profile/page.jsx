@@ -1,41 +1,47 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {loc, setLanguage} from "../../utils";
-import {Logout, IntroUploader, AvatarUploader, UserInfo, PageLayout} from "../../widgets";
+import { loc, setLanguage } from "../../utils";
+import {
+  Logout,
+  IntroUploader,
+  AvatarUploader,
+  UserInfo,
+  PageLayout,
+} from "../../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    setLanguage(localStorage.getItem("language") || navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      }
+    );
   }, []);
   if (!ready) {
     return <div className="loading"></div>;
   }
-  const navigationItems = [
-    { href: "/user", label: loc("Back") }
-  ];
+  const navigationItems = [{ href: "/user", label: loc("Back") }];
 
   return (
-    <PageLayout 
+    <PageLayout
       title={loc("AccountSetting")}
       navigationItems={navigationItems}
       className="user-profile-page"
       showNavigation={false}
     >
-
       {/* Profile Settings */}
       <div className="profile-settings">
         <div className="settings-grid">
           <div className="setting-card">
             <div className="setting-card-header">
-              <div className="setting-card-icon">👤</div>
-              <div className="setting-card-title">头像设置 ({loc("AvatarHint")})</div>
+              <div className="setting-card-title">
+                {loc("AvatarSettings")} ({loc("AvatarHint")})
+              </div>
             </div>
             <div className="setting-card-content">
               <AvatarUploader />
@@ -44,8 +50,7 @@ export default function Page() {
 
           <div className="setting-card">
             <div className="setting-card-header">
-              <div className="setting-card-icon">📝</div>
-              <div className="setting-card-title">个人简介</div>
+              <div className="setting-card-title">{loc("PersonalIntro")}</div>
             </div>
             <div className="setting-card-content">
               <IntroUploader />

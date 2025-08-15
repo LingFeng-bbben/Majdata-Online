@@ -49,7 +49,7 @@ export default function Page() {
             }
           }}
         >
-          {loc("GoTop")}
+          ↑
         </div>
 
         {/* Language Settings Button */}

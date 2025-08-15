@@ -126,16 +126,18 @@ export default function PageLayout({
                   className="language-popup-overlay"
                   onClick={() => setShowLanguagePopup(false)}
                 ></div>
-                <div className="language-popup">
-                  <h4 className="language-popup-title">
-                    {loc("SelectLanguage")} / Language
-                  </h4>
-                  <button
-                    className="language-popup-close"
-                    onClick={() => setShowLanguagePopup(false)}
-                  >
-                    ×
-                  </button>
+                <div className="language-popup-simple">
+                  <div className="language-popup-header">
+                    <span className="language-popup-title">
+                      {loc("SelectLanguage")} / Language
+                    </span>
+                    <button
+                      className="language-popup-close"
+                      onClick={() => setShowLanguagePopup(false)}
+                    >
+                      ×
+                    </button>
+                  </div>
                   <LanguageSelector />
                 </div>
               </>

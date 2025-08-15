@@ -26,7 +26,7 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title="用户中心"
+      title={loc("UserCenter")}
       showNavigation={false}
       className="user-page"
     >
@@ -36,7 +36,7 @@ export default function Page() {
             <div className="dashboard-icon">📊</div>
             <div className="dashboard-content">
               <h3 className="dashboard-title">{loc("ChartsManagement")}</h3>
-              <p className="dashboard-description">管理您上传的谱面</p>
+              <p className="dashboard-description">{loc("ManageYourCharts")}</p>
             </div>
             <div className="dashboard-arrow">→</div>
           </a>
@@ -45,7 +45,7 @@ export default function Page() {
             <div className="dashboard-icon">⚙️</div>
             <div className="dashboard-content">
               <h3 className="dashboard-title">{loc("AccountSetting")}</h3>
-              <p className="dashboard-description">修改个人信息和设置</p>
+              <p className="dashboard-description">{loc("ModifyPersonalInfo")}</p>
             </div>
             <div className="dashboard-arrow">→</div>
           </a>
@@ -54,7 +54,7 @@ export default function Page() {
             <div className="dashboard-icon">🏠</div>
             <div className="dashboard-content">
               <h3 className="dashboard-title">{loc("PersonalHomePage")}</h3>
-              <p className="dashboard-description">查看您的个人主页</p>
+              <p className="dashboard-description">{loc("ViewYourHomePage")}</p>
             </div>
             <div className="dashboard-arrow">→</div>
           </a>

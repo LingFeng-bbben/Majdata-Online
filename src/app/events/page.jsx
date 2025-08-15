@@ -16,22 +16,15 @@ export default function EventsPage() {
   // 获取完整的活动列表（带智能时间计算）
   const allEvents = getEventsWithTimeAgo();
 
-  if (!ready) return <div className="loading">加载中...</div>;
+  if (!ready) return <div className="loading"></div>;
 
   return (
     <PageLayout 
       title="活动列表"
       className="events-page"
-      showBackToHome={false}
     >
       <div className="events-page-container">
         <header className="events-page-header">
-          <div className="breadcrumb">
-            <a href="/" className="breadcrumb-link">首页</a>
-            <span className="breadcrumb-separator">›</span>
-            <span className="breadcrumb-current">活动列表</span>
-          </div>
-       
           <p className="events-page-subtitle">
             在此处浏览各种谱面竞赛例如MMFC、线下活动等...
           </p>

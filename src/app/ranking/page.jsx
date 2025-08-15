@@ -36,38 +36,38 @@ export default function Page() {
       <div className="ranking-sections">
         <RankingSection 
           title={loc("Play")}
+          subtitle={loc("PlayCountHint")}
           sortType="scorep"
-          icon="🎯"
         />
         
         <RankingSection 
           title={loc("Like")}
+          subtitle={loc("LikeCountHint")}
           sortType="likep"
-          icon="💖"
         />
         
         <RankingSection 
           title={loc("Comment")}
+          subtitle={loc("CommentCountHint")}
           sortType="commp"
-          icon="🗨️"
         />
         
         <RankingSection 
           title={loc("Download")}
+          subtitle={loc("DownloadCountHint")}
           sortType="playp"
-          icon="⬇️"
         />
       </div>
     </PageLayout>
   );
 }
 
-function RankingSection({ title, sortType, icon }) {
+function RankingSection({ title, subtitle, sortType }) {
   return (
     <div className="ranking-section">
       <div className="ranking-section-header">
-        <div className="ranking-section-icon">{icon}</div>
         <h2 className="ranking-section-title">{title}</h2>
+        <p className="ranking-section-subtitle">{subtitle}</p>
       </div>
       <SongList
         url={

@@ -37,7 +37,7 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title={`${username} 的个人空间`}
+      title={`${username} ${loc("PersonalSpace")}`}
       navigationItems={navigationItems}
       className="user-space-page"
       showNavigation={false}
@@ -50,19 +50,15 @@ export default function Page() {
 
       {/* Recent Activity */}
       <section className="activity-section">
-        <div className="section-header">
-          <h2 className="section-title">{loc("RecentlyPlayedCharts")}</h2>
-          <div className="section-divider"></div>
-        </div>
+        <h2 className="section-title">{loc("RecentlyPlayedCharts")}</h2>
+        <div className="hr-solid"></div>
         <RecentPlayed username={username} />
       </section>
 
       {/* Uploaded Charts */}
       <section className="charts-section">
-        <div className="section-header">
-          <h2 className="section-title">{loc("UploadedCharts")}</h2>
-          <div className="section-divider"></div>
-        </div>
+        <h2 className="section-title">{loc("UploadedCharts")}</h2>
+        <div className="hr-solid"></div>
         <SongList url={apiroot3 + "/maichart/list?search=" + encodeURIComponent("uploader:" + username)} />
       </section>
     </PageLayout>
@@ -104,7 +100,7 @@ function Introduction({username}) {
       
       {data.introduction && (
         <div className="profile-introduction">
-          <h3 className="intro-title">个人介绍</h3>
+          <h3 className="intro-title">{loc("SelfIntro")}</h3>
           <article className="markdown-body intro-content">
             <Markdown
               remarkPlugins={[remarkGfm]}

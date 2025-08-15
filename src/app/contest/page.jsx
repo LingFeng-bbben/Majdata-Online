@@ -26,21 +26,31 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title=""
+      title="MMFC"
       navigationItems={navigationItems}
       className="contest-page"
-      showBackToHome={false}
+      showBackToHome={true}
     >
-      <div className='seprate'></div>
-      <h1><img className="xxlb" src="./xxlb.jpg" onClick={() => alert(loc("FUCKYOU"))} alt={"xxlb"}></img>MMFC 11TH</h1>
-      <div className='links'>
-        {/* <div className='linkContent'><a href='https://www.maimaimfc.ink/8thstart' target="_blank" rel="noreferrer">8th报名窗口</a></div> */}
-        <div className='linkContent'><a href='https://www.maimaimfc.ink/precontest' target="_blank" rel="noreferrer">{loc("Contest")}</a></div>
+      {/* MMFC官网按钮 */}
+      <div className="mmfc-official-section">
+        <div className="mmfc-official-container">
+          <a 
+            href="https://www.maimaimfc.ink/precontest" 
+            target="_blank" 
+            rel="noreferrer"
+            className="mmfc-official-button"
+          >
+            <span className="mmfc-button-text">{loc("MMFCOfficialButton")}</span>
+          </a>
+        </div>
       </div>
+      
       <Majdata />
       <Tippy singleton={source} animation='fade' placement='top-start' interactive={true} />
       <TheList tippy={target} />
-      <img className="footerImage" style={{ width: "150px" }} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <img className="footerImage" style={{ width: "150px" }} loading="lazy" src={"/xxlbfooter.webp"} alt="" />
+      </div>
     </PageLayout>
   )
 }

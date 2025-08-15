@@ -114,6 +114,14 @@ p {
   height: var(--header-height);
 }
 
+/* 左侧区域：包含logo和导航 */
+.header-left-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+}
+
 .header-logo {
   display: flex;
   align-items: center;
@@ -128,6 +136,42 @@ p {
 
 .header-logo {
   position: relative;
+}
+
+/* Mobile Home Button */
+.mobile-home-button {
+  display: none; /* 默认隐藏，只在移动端显示 */
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.home-button-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  color: #e5e5e5;
+  min-height: 2.5rem;
+  
+}
+
+.home-button-link:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.home-icon {
+  font-size: 1.2rem;
 }
 
 .scroll-indicator {
@@ -164,9 +208,8 @@ p {
 .header-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 1;
-  margin: 0 2rem;
+  justify-content: flex-start;
+  margin: 0;
 }
 
 .header-nav .nav-links {
@@ -243,12 +286,13 @@ p {
   padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #e5e5e5;
   font-size: 0.9rem;
   font-weight: 500;
+  min-height: 40px;
 }
 
 .user-trigger:hover,
@@ -400,11 +444,12 @@ p {
   padding: 0.75rem 1rem;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.2s ease;
   font-weight: 500;
   font-size: 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 40px;
 }
 
 .auth-link:hover {
@@ -455,16 +500,19 @@ p {
 .mobile-nav-trigger {
   display: flex;
   align-items: center;
+
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.6rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #e5e5e5;
   font-size: 0.9rem;
   font-weight: 500;
+  height: 40px;
+  backdrop-filter: blur(10px);
 }
 
 .mobile-nav-trigger:hover,
@@ -509,7 +557,7 @@ p {
 .mobile-nav-menu {
   position: absolute;
   top: calc(100% + 0.75rem);
-  right: 0;
+  left: 0;
   min-width: 200px;
   background: linear-gradient(145deg, rgba(15, 15, 20, 0.95), rgba(10, 12, 18, 0.98));
   backdrop-filter: blur(24px) saturate(180%);
@@ -608,17 +656,9 @@ p {
   }
 }
 
-@media (max-width: 768px) {
-  body {
-    padding-top: var(--content-top-spacing-large);
-  }
-  
-  .header-container {
-    height: var(--header-height);
-    padding: 0 0.75rem;
-  }
-  
-  /* 移动端：隐藏桌面导航，显示移动导航 */
+/* iPad Pro 和平板设备的导航响应式 */
+@media (max-width: 1200px) {
+  /* iPad及以下设备：隐藏桌面导航，显示移动导航 */
   .desktop-nav {
     display: none !important;
   }
@@ -631,15 +671,54 @@ p {
   .header-nav .nav-links {
     display: none;
   }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: var(--content-top-spacing-large);
+  }
+  
+  .header-container {
+    height: var(--header-height);
+    padding: 0 0.75rem;
+  }
   
   /* 移动端：隐藏部分文字标签 */
   .desktop-only {
     display: none;
   }
   
+  /* 移动端：隐藏header中的logo */
+  .header-logo {
+    display: none;
+  }
+  
+  /* 移动端：显示返回主页按钮 */
+  .mobile-home-button {
+    display: flex;
+  }
+  
+  /* 移动端：调整左侧区域布局 */
+  .header-left-section {
+    gap: 1rem;
+  }
+  
+  .home-button-link {
+    padding: 0.5rem 0.5rem;
+    min-height: 36px;
+    min-width: 36px;
+  }
+  
   .user-trigger {
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
+    min-height: 36px;
+  }
+  
+  .mobile-nav-trigger {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+    min-height: 36px;
   }
   
   .user-avatar {
@@ -650,7 +729,7 @@ p {
   .user-menu {
     width: 100%;
     min-width: 200px;
-    right: -10px;
+    right: -8px;
   }
   
   /* 移动端：简化认证链接 */
@@ -659,9 +738,10 @@ p {
   }
   
   .auth-link {
-    padding: 0.5rem;
+    padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
     min-width: auto;
+    min-height: 36px;
   }
   
   .auth-icon {
@@ -675,10 +755,52 @@ p {
   }
   
   .header-container {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     height: auto;
-    padding: 0.75rem;
-    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  /* 确保在极小屏幕下logo依然隐藏 */
+  .header-logo {
+    display: none;
+  }
+  
+  /* 确保在极小屏幕下返回主页按钮显示 */
+  .mobile-home-button {
+    display: flex;
+  }
+  
+  /* 小屏幕下优化按钮大小 */
+  .home-button-link {
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    min-height: 32px;
+    min-width: 32px;
+  }
+  
+  .home-icon {
+    font-size: 1.1rem;
+  }
+  
+  /* 480px以下的按钮尺寸统一 */
+  .user-trigger {
+    padding: 0.4rem 0.6rem;
+    gap: 0.4rem;
+    min-height: 32px;
+  }
+  
+  .mobile-nav-trigger {
+    padding: 0.4rem 0.6rem;
+    gap: 0.4rem;
+    min-height: 32px;
+  }
+  
+  .auth-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    min-height: 32px;
   }
   
   .scroll-indicator {
@@ -720,16 +842,17 @@ p {
   
   /* 480px下移动导航菜单位置调整 */
   .mobile-nav-menu {
-    right: 0;
-    left: auto;
+    left: 0;
+    right: auto;
     transform: none;
   }
   
   .user-menu {
-    left: 50%;
-    transform: translateX(-50%);
-    right: auto;
-    min-width: 200px;
+    right: -5px;
+    left: auto;
+    transform: none;
+    min-width: 180px;
+    max-width: 90vw;
   }
 }
 
@@ -1337,7 +1460,7 @@ h1 {
 }
 
 h2 {
-  background-color: rgb(var(--background-start));
+  
   color: whitesmoke;
   text-align: center;
   font-size: 2.5rem;
@@ -1397,6 +1520,12 @@ h2 {
     justify-content: center;
   }
   
+  .modern-select {
+    min-width: 200px;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
   .pagination-container {
     flex-direction: column;
     gap: 0.8rem;
@@ -1446,6 +1575,12 @@ h2 {
   .modern-search {
     padding: 0.8rem 1rem;
     font-size: 1rem;
+  }
+  
+  .modern-select {
+    min-width: 180px;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.8rem;
   }
   
   .links {
@@ -1917,14 +2052,14 @@ h2 {
   margin: 0;
 }
 
-/* 移除了 .ranking-section-content 的样式，让 SongList 直接浮在背景上 */
+
 
 /* User Page */
 .user-page {
   padding-bottom: 2rem;
 }
 
-/* 移除了 .user-navigation 样式，现在使用统一的 UnifiedHeader */
+
 
 .user-dashboard {
   margin-top: var(--content-top-spacing);
@@ -2714,21 +2849,25 @@ h2 {
 .upload-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  justify-content: center;
+  padding: 1rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  justify-content: center;
   width: 100%;
+  letter-spacing: 0.02em;
 }
 
 .upload-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  background: #6b7280 !important;
+  color: #9ca3af !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .upload-button.select-file {
@@ -2761,9 +2900,7 @@ h2 {
   box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
 }
 
-.button-icon {
-  font-size: 1rem;
-}
+
 
 .file-info {
   display: flex;
@@ -3330,7 +3467,8 @@ img.songImg {
 }
 
 .modern-select {
-  padding: 0.5rem 1rem;
+  width: auto;
+  padding: 0.3rem 0.8rem;
   background: rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
@@ -3339,7 +3477,7 @@ img.songImg {
   cursor: pointer;
   transition: all 0.3s ease;
   outline: none;
-  min-width: 120px;
+  min-width: 240px;
   height: 3rem;
   line-height: 1.2;
   white-space: nowrap;
@@ -3393,15 +3531,39 @@ img.songImg {
 
 .sortSelect {
   caret-color: white;
-  background-color: black;
+  background-color: #1a1a1a;
   border: 1px solid whitesmoke;
   text-align: center;
   height: 2rem;
-  width: 2rem;
+  /* 宽度根据内容自适应 */
+  width: auto;
+  min-width: 80px;
+  max-width: 100%;
   margin: 10px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px gray;
-  min-width: 60px;
+  color: white;
+  padding: 0 1.2em; /* 两侧留白，防止内容贴边 */
+  font-size: 1rem;
+  /* 防止内容溢出 */
+  white-space: nowrap;
+}
+
+.sortSelect option {
+  background: #1a1a1a;
+  color: white;
+  padding: 0.5rem 1.2em;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  min-height: 1.8rem;
+  white-space: nowrap;
+}
+
+.sortSelect option:checked {
+  background: #3B82F6;
+  color: white;
+  font-weight: 600;
 }
 
 .majViewPort {
@@ -3450,9 +3612,9 @@ img.songImg {
 @media screen and (min-width: 700px) {
   .majViewPort {
     margin-top: 15px;
-    width: 70%;
+    width: 100%;
     height: 40rem;
-    transform: translate(21.5%, 0);
+    transform: none;
     border: 1px solid whitesmoke;
     box-shadow: 2px 2px 5px gray;
     border-radius: 10px;
@@ -3800,7 +3962,7 @@ img.songImg {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #e5e5e5;
@@ -3848,6 +4010,86 @@ img.songImg {
   padding: 1.5rem;
   animation: popupFadeIn 0.2s ease-out;
   position: relative;
+}
+
+.language-popup-simple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(25, 25, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 4px 20px rgba(59, 130, 246, 0.1);
+  z-index: 999;
+  min-width: 320px;
+  max-width: 440px;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  animation: popupFadeIn 0.2s ease-out;
+}
+
+.language-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.language-selector-simple {
+  width: 100%;
+}
+
+.language-select-simple {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-select-simple:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.language-select-simple:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.language-select-simple option {
+  background: #1a1a1f;
+  color: #e0e0e0;
+  padding: 0.5rem;
+}
+
+.language-changing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes popupFadeIn {
@@ -3943,7 +4185,7 @@ img.songImg {
 }
 
 .footer-game-link::before {
-  content: "🎮 小游戏";
+  content: "Mini Game";
   position: absolute;
   top: -30px;
   left: 50%;
@@ -3967,7 +4209,6 @@ img.songImg {
   width: 80px;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
 
@@ -4097,7 +4338,7 @@ img.songImg {
 }
 @media screen and (min-width: 700px) {
   .songDescription{
-    width: 70%;
+    width: 100%;
   }
 }
 
@@ -4144,7 +4385,7 @@ img.songImg {
   border: 0;
   border-top: 3px solid #d0d0d553;
   width: 70%;
-  margin: auto;
+  margin: 1rem auto;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -4273,4 +4514,1063 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #333;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+/* MMFC官网按钮样式 */
+.mmfc-official-section {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-bottom: 2rem;
+  padding: var(--container-padding);
+}
+
+.mmfc-official-container {
+  text-align: center;
+}
+
+.mmfc-official-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  color: #e5e5e5;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.mmfc-official-button:hover {
+  background: rgba(35, 35, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mmfc-button-icon {
+  font-size: 1.2rem;
+}
+
+.mmfc-button-text {
+  font-weight: 600;
+}
+
+.mmfc-button-arrow {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.mmfc-official-button:hover .mmfc-button-arrow {
+  transform: translateX(4px);
+}
+
+/* Song页面布局样式 */
+.song-page .song-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(20px) brightness(0.3);
+  z-index: -1;
+}
+
+/* Song页面Majdata容器样式 */
+.majdata-container {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  padding: var(--container-padding);
+}
+
+/* Song页面排行榜标题样式 */
+.ranking-main-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
+/* Song页面排行榜成绩卡片样式 */
+.score-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem 2rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1), 
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.score-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* FC/FC+ 更强荧光蓝边框（更亮但不加粗） */
+.score-card.score-card-fc {
+  border: 1.5px solid rgba(59, 130, 246, 0.45) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    0 0 10px 2px rgba(59, 130, 246, 0.32),
+    0 0 6px 1px rgba(59, 130, 246, 0.22),
+    inset 0 0 8px 1px rgba(59, 130, 246, 0.18) !important;
+}
+
+.score-card.score-card-fc:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.65) !important;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    0 0 16px 3px rgba(59, 130, 246, 0.45),
+    0 0 10px 2px rgba(59, 130, 246, 0.32),
+    inset 0 0 12px 2px rgba(59, 130, 246, 0.22) !important;
+}
+
+/* AP/AP+ 更强荧光金边框（更亮但不加粗） */
+.score-card.score-card-ap {
+  border: 1.5px solid rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    0 0 10px 2px rgba(251, 191, 36, 0.32),
+    0 0 6px 1px rgba(251, 191, 36, 0.22),
+    inset 0 0 8px 1px rgba(251, 191, 36, 0.18) !important;
+}
+
+.score-card.score-card-ap:hover {
+  transform: translateY(-2px);
+  border-color: rgba(251, 191, 36, 0.65) !important;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(251, 191, 36, 0.25),
+    inset 0 0 20px rgba(251, 191, 36, 0.12) !important;
+}
+
+.score-rank-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.rank-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.rank-number.top-three {
+  font-size: 1.6rem;
+  color: #fbbf24;
+  text-shadow: 
+    0 0 8px rgba(251, 191, 36, 0.6),
+    0 0 16px rgba(251, 191, 36, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 8px rgba(251, 191, 36, 0.6),
+      0 0 16px rgba(251, 191, 36, 0.4),
+      0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    text-shadow: 
+      0 0 12px rgba(251, 191, 36, 0.8),
+      0 0 24px rgba(251, 191, 36, 0.6),
+      0 0 32px rgba(251, 191, 36, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.score-player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.player-link:hover {
+  transform: translateX(4px);
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.player-link:hover .player-avatar {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.player-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.player-username {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.score-results {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.score-accuracy {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.score-combo {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* Song页面评论卡片样式 */
+.comment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.75rem;
+  margin: 1rem 1rem;
+  max-width: 33.33vw; /* 限制最大宽度为屏幕的1/3 */
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.08), 
+    rgba(255, 255, 255, 0.04)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+}
+
+.commenter-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.commenter-link:hover {
+  transform: translateX(2px);
+}
+
+.commenter-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.commenter-link:hover .commenter-avatar {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+.commenter-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.commenter-username {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.comment-timestamp {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.comment-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 0;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Song页面现代化样式 */
+.song-info-container {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-top: var(--content-top-spacing);
+  padding: var(--container-padding);
+}
+
+.song-detail-modern {
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+}
+
+.song-detail-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.4),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.song-interaction-container {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-top: 2rem;
+  padding: var(--container-padding);
+  background: var(--glassmorphism-bg-primary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+}
+
+.modern-interaction-btn {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.3));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  color: #e5e5e5;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.modern-interaction-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.4));
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 评论发送器 - 与hr-solid保持一致的宽度 */
+.song-comment-sender {
+  width: 70%; /* 与hr-solid保持一致 */
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1), 
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 高级评论输入框样式 */
+.modern-textarea {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.08), 
+    rgba(255, 255, 255, 0.04)
+  );
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #ffffff;
+  padding: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+  width: 100%;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-family: inherit;
+}
+
+.modern-textarea:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.12), 
+    rgba(255, 255, 255, 0.06)
+  );
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 2px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.modern-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+/* 评论发表按钮 - 更大更突出 */
+.comment-submit-button {
+  padding: 1rem 2.5rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  min-height: 50px !important;
+  width: auto !important;
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 
+    0 4px 15px rgba(16, 185, 129, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+  margin-top: 1rem !important;
+}
+
+.comment-submit-button:hover {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 6px 20px rgba(16, 185, 129, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.comment-submit-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 
+    0 2px 8px rgba(16, 185, 129, 0.4),
+    0 1px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.comment-submit-button:disabled {
+  background: linear-gradient(135deg, #6b7280, #4b5563) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  opacity: 0.7 !important;
+}
+
+/* 评论发送器布局样式 */
+.comment-sender-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.comment-sender-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.comment-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.song-comment-list {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-top: 2rem;
+  padding: var(--container-padding);
+}
+
+/* Space页面section标题样式 */
+.user-space-page .section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modern-comment-card {
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+}
+
+.modern-comment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.song-score-list {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-top: 2rem;
+  padding: var(--container-padding);
+}
+
+.modern-score-card {
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+}
+
+.modern-score-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 点赞互动布局样式 */
+.interaction-layout {
+  display: flex;
+  align-items: stretch; /* 让所有子元素等高 */
+  gap: 2rem;
+  padding: 1.5rem;
+  min-height: 140px; /* 确保有最小高度 */
+}
+
+.interaction-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;
+  justify-content: center; /* 垂直居中对齐按钮 */
+  align-items: center; /* 水平居中对齐按钮 */
+}
+
+.large-interaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  min-width: 120px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.large-interaction-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 12px 30px rgba(59, 130, 246, 0.3),
+    0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.interaction-divider {
+  width: 2px;
+  height: 100%; /* 填满整个容器高度 */
+  align-self: stretch; /* 确保拉伸到容器全高 */
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 20%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    rgba(255, 255, 255, 0.2) 80%, 
+    transparent 100%
+  );
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.liked-users-section {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 垂直居中对齐内容 */
+}
+
+.liked-users-title {
+  color: #e5e5e5;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+}
+
+.liked-users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.liked-user-avatar {
+  display: inline-block;
+  position: relative;
+  animation: fadeInUp 0.6s ease-out both;
+  transition: all 0.3s ease;
+}
+
+.liked-user-avatar:hover {
+  transform: translateY(-4px) scale(1.1);
+  z-index: 10;
+}
+
+.user-avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  object-fit: cover;
+  background: var(--glassmorphism-bg-secondary);
+}
+
+.liked-user-avatar:hover .user-avatar-img {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.3),
+    0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.no-likes-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.no-likes-placeholder:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.placeholder-text {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin: 0;
+  font-style: italic;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+/* Song页面响应式设计 */
+@media (max-width: 768px) {
+  .song-info-container,
+  .song-interaction-container,
+  .song-comment-sender,
+  .song-comment-list,
+  .song-score-list {
+    margin-top: 1rem;
+    padding: 0 0.75rem;
+  }
+  
+  .interaction-layout {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    min-height: auto; /* 移动端不需要固定最小高度 */
+    align-items: center; /* 移动端居中对齐 */
+  }
+  
+  .interaction-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .large-interaction-btn {
+    min-width: 100px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .interaction-divider {
+    width: 100%;
+    height: 2px;
+    min-height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.2) 20%, 
+      rgba(255, 255, 255, 0.4) 50%, 
+      rgba(255, 255, 255, 0.2) 80%, 
+      transparent 100%
+    );
+  }
+  
+  .user-avatar-img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .song-detail-modern {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+  
+  .modern-interaction-btn {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .modern-textarea {
+    padding: 0.75rem;
+    font-size: 1rem;
+    min-height: 100px;
+  }
+  
+  .song-comment-sender {
+    width: 85%; /* 768px断点下放宽一些 */
+    padding: 1.5rem;
+  }
+  
+  .comment-sender-title {
+    font-size: 1.3rem;
+  }
+  
+  .comment-submit-button {
+    padding: 0.8rem 2rem !important;
+    font-size: 1rem !important;
+    min-height: 45px !important;
+  }
+  
+  .modern-comment-card,
+  .modern-score-card {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .song-info-container,
+  .song-interaction-container,
+  .song-comment-sender,
+  .song-comment-list,
+  .song-score-list {
+    padding: 0 0.5rem;
+  }
+  
+  .song-detail-modern {
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+  
+  .modern-interaction-btn {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+  
+  .modern-comment-card,
+  .modern-score-card {
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+  
+  .song-comment-sender {
+    width: 95%; /* 480px断点下进一步放宽 */
+    padding: 1rem;
+  }
+  
+  .comment-sender-title {
+    font-size: 1.2rem;
+  }
+  
+  .comment-submit-button {
+    padding: 0.7rem 1.5rem !important;
+    font-size: 0.95rem !important;
+    min-height: 42px !important;
+  }
+  
+  .modern-textarea {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    min-height: 90px;
+  }
+  
+  .interaction-layout {
+    padding: 0.75rem;
+    gap: 1rem;
+    min-height: auto; /* 小屏幕不需要固定最小高度 */
+    align-items: center; /* 小屏幕居中对齐 */
+  }
+  
+  .large-interaction-btn {
+    min-width: 80px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+  
+  .liked-users-title {
+    font-size: 1rem;
+  }
+  
+  .user-avatar-img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .no-likes-placeholder {
+    padding: 1.5rem;
+  }
+  
+  .placeholder-icon {
+    font-size: 2.5rem;
+  }
+  
+  .placeholder-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Song页面排行榜和评论响应式样式 - 768px */
+@media (max-width: 768px) {
+  .ranking-main-title {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .score-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  
+  .score-rank-display {
+    min-width: 70px;
+  }
+  
+  .rank-number {
+    font-size: 1.2rem;
+  }
+  
+  .rank-number.top-three {
+    font-size: 1.4rem;
+  }
+  
+  .player-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .player-username {
+    font-size: 1rem;
+  }
+  
+  .score-accuracy {
+    font-size: 1.1rem;
+  }
+  
+  .comment-card {
+    padding: 1rem 1.5rem;
+    max-width: 50vw; /* 768px断点下放宽到屏幕的1/2 */
+  }
+  
+  .commenter-avatar {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .commenter-username {
+    font-size: 0.95rem;
+  }
+  
+  .comment-content {
+    font-size: 0.95rem;
+  }
+}
+
+/* Song页面排行榜和评论响应式样式 - 480px */
+@media (max-width: 480px) {
+  .ranking-main-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .score-card {
+    padding: 0.75rem;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .score-rank-display {
+    min-width: 60px;
+    align-self: flex-start;
+  }
+  
+  .rank-number {
+    font-size: 1rem;
+  }
+  
+  .rank-number.top-three {
+    font-size: 1.2rem;
+  }
+  
+  .score-player-info {
+    width: 100%;
+  }
+  
+  .player-avatar {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .player-username {
+    font-size: 0.9rem;
+  }
+  
+  .score-results {
+    align-items: flex-start;
+    align-self: flex-start;
+  }
+  
+  .score-accuracy {
+    font-size: 1rem;
+  }
+  
+  .comment-card {
+    padding: 0.75rem;
+    max-width: 90vw; /* 480px断点下放宽到90% */
+  }
+  
+  .commenter-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .commenter-username {
+    font-size: 0.9rem;
+  }
+  
+  .comment-content {
+    font-size: 0.9rem;
+  }
 }

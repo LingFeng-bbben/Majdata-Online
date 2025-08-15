@@ -28,7 +28,7 @@ export default function ChartUploader() {
 
         if (missedFiles.length > 0) {
             for (const file of missedFiles) {
-                toast.error("没有选中" + file)
+                toast.error(loc("NoFileSelected") + file)
             }
             return;
         }

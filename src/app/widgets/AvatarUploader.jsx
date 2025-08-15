@@ -137,7 +137,7 @@ export default function AvatarUploader() {
 
   // 如果username还在加载中，返回加载状态
   if (!username) {
-    return <div className="loading">加载中...</div>;
+    return <div className="loading"></div>;
   }
 
   console.log("当前用户名:", username);
@@ -184,35 +184,26 @@ export default function AvatarUploader() {
             className="upload-button select-file"
             disabled={isUploading}
           >
-            <span className="button-icon">📁</span>
             {selectedFile ? loc("ChangeFile") : loc("SelectFile")}
           </button>
           
-          {selectedFile && (
-            <>
-              <button
-                type="button"
-                onClick={handleUpload}
-                className="upload-button upload-file"
-                disabled={isUploading}
-              >
-                <span className="button-icon">
-                  {isUploading ? "⏳" : "⬆️"}
-                </span>
-                {isUploading ? loc("UploadingPlzWait") : loc("Upload")}
-              </button>
-              
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="upload-button cancel-file"
-                disabled={isUploading}
-              >
-                <span className="button-icon">❌</span>
-                {loc("Cancel")}
-              </button>
-            </>
-          )}
+          <button
+            type="button"
+            onClick={handleUpload}
+            className="upload-button upload-file"
+            disabled={!selectedFile || isUploading}
+          >
+            {isUploading ? loc("UploadingPlzWait") : loc("Upload")}
+          </button>
+          
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="upload-button cancel-file"
+            disabled={!selectedFile || isUploading}
+          >
+            {loc("Cancel")}
+          </button>
         </div>
         
         {selectedFile && (

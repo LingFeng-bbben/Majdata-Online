@@ -5,8 +5,7 @@ import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSearchParams } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { downloadSong } from "../download";
 import { getLevelName, getComboState, setLanguage, loc } from "../utils";
 import {
@@ -16,10 +15,7 @@ import {
   SongList,
   TagManageTagLauncher,
   TagManageWidget,
-  UserInfo,
   PageLayout,
-  UnifiedHeader,
-  MajdataLogo,
 } from "../widgets";
 
 export default function Page() {
@@ -40,27 +36,16 @@ export default function Page() {
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <>
+    <PageLayout 
+      className="song-page"
+      showBackToHome={true}
+      showNavigation={false}
+    >
+      {/* 自定义背景 - 覆盖PageLayout的默认背景 */}
       <div
-        className="bg"
+        className="bg song-bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
       ></div>
-      
-      {/* Unified Header */}
-      <UnifiedHeader />
-      
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
 
       <Tippy
         singleton={source}
@@ -76,14 +61,14 @@ export default function Page() {
       <div className="hr-solid"></div>
       <CommentSender songid={param} />
       <CommentList songid={param} />
+      <div className="hr-solid"></div>
       <div className="theList">
         <div className="inputHint">{loc("Recommend")}</div>
       </div>
       <SongList
         url={apiroot3 + "/Recommend/get?chartId=" + encodeURIComponent(param)}
       />
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
-    </>
+    </PageLayout>
   );
 }
 
@@ -116,23 +101,14 @@ function SongInfo({ id, tippy }) {
     await navigator.clipboard.writeText(
       "https://majdata.net/song?id=" + props.id
     );
-    toast.success(loc("ClipboardSuccess"), {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    toast.success(loc("ClipboardSuccess"));
   };
   const o = data;
 
   return (
-    <div>
+    <div className="song-info-container">
       <div className="theList">
-        <div className="songCard songDetail">
+        <div className="songCard songDetail song-detail-modern">
           <CoverPic id={o.id} />
           <div className="songInfo">
             <Tippy content={o.title} singleton={tippy}>
@@ -277,11 +253,13 @@ function MajdataView({ id }) {
   const firstNonEmptyIndex = o.levels.findLastIndex((level) => level !== "");
 
   return (
-    <Majdata
-      songid={o.id}
-      apiroot={apiroot3}
-      level={"lv" + firstNonEmptyIndex}
-    />
+    <div className="majdata-container">
+      <Majdata
+        songid={o.id}
+        apiroot={apiroot3}
+        level={"lv" + firstNonEmptyIndex}
+      />
+    </div>
   );
 }
 
@@ -311,9 +289,9 @@ function LikeSender({ songid }) {
     formData.set("content", type);
     var name = "";
     if (type == "like") {
-      name = "点赞";
+      name = loc("LikeAction");
     } else {
-      name = "点踩";
+      name = loc("DislikeAction");
     }
     const response = await fetch(
       apiroot3 + "/maichart/" + songid + "/interact",
@@ -326,70 +304,95 @@ function LikeSender({ songid }) {
     );
     if (response.status === 200) {
       if (type == "like") {
-        toast.success(data.IsLiked ? "取消成功" : name + "成功");
+        toast.success(data.IsLiked ? loc("CancelSuccess") : name + loc("Success"));
       } else {
-        toast.success(data.IsDisLiked ? "取消成功" : name + "成功");
+        toast.success(data.IsDisLiked ? loc("CancelSuccess") : name + loc("Success"));
       }
 
       mutate();
     } else if (response.status === 400) {
-      toast.error(name + "失败：登录了吗？");
+      toast.error(name + loc("FailedLoginPrompt"));
     } else {
-      toast.error(name + "失败：登录了吗？");
+      toast.error(name + loc("FailedLoginPrompt"));
     }
   };
   return (
-    <>
-      <div className="theList">
-        <button
-          className="linkContentWithBorder"
-          id="submitbuttonlike"
-          type="button"
-          onClick={() => onSubmit("like")}
-          style={{ background: data.IsLiked ? "green" : "" }}
-        >
-          <svg
-            className="commentIco"
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-            style={{ width: "24px", height: "24px" }}
+    <div className="song-interaction-container">
+      <div className="interaction-layout">
+        {/* 左侧：点赞点踩按钮 */}
+        <div className="interaction-buttons">
+          <button
+            className="linkContentWithBorder modern-interaction-btn large-interaction-btn"
+            id="submitbuttonlike"
+            type="button"
+            onClick={() => onSubmit("like")}
+            style={{ background: data.IsLiked ? "linear-gradient(135deg, #10b981, #059669)" : "" }}
           >
-            <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
-          </svg>
-        </button>
-        <p>{likecount}</p>
-        <button
-          className="linkContentWithBorder"
-          id="submitbuttondislike"
-          type="button"
-          onClick={() => onSubmit("dislike")}
-          style={{ background: data.IsDisLiked ? "red" : "" }}
-        >
-          <svg
-            className="commentIco"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 -960 960 960"
-            style={{ width: "24px", height: "24px" }}
+            <svg
+              className="commentIco"
+              xmlns="http://www.w3.org/2000/svg"
+              height="28"
+              viewBox="0 -960 960 960"
+              width="28"
+              style={{ width: "28px", height: "28px" }}
+            >
+              <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
+            </svg>
+            <span className="btn-count">{likecount}</span>
+          </button>
+          
+          <button
+            className="linkContentWithBorder modern-interaction-btn large-interaction-btn"
+            id="submitbuttondislike"
+            type="button"
+            onClick={() => onSubmit("dislike")}
+            style={{ background: data.IsDisLiked ? "linear-gradient(135deg, #ef4444, #dc2626)" : "" }}
           >
-            <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
-          </svg>
-        </button>
-        <p>{dislikecount}</p>
+            <svg
+              className="commentIco"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              style={{ width: "28px", height: "28px" }}
+            >
+              <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
+            </svg>
+            <span className="btn-count">{dislikecount}</span>
+          </button>
+        </div>
+
+        {/* 中间：分割线 */}
+        <div className="interaction-divider"></div>
+
+        {/* 右侧：点赞用户头像区域 */}
+        <div className="liked-users-section">
+          <h4 className="liked-users-title">{loc("LikedBy")}</h4>
+          <div className="liked-users-grid">
+            {data.Likes && data.Likes.length > 0 ? (
+              data.Likes.map((username, index) => (
+                <a 
+                  key={username} 
+                  href={"/space?id=" + username}
+                  className="liked-user-avatar"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <img
+                    className="user-avatar-img"
+                    src={apiroot3 + "/account/Icon?username=" + username}
+                    alt={username}
+                    title={username}
+                  />
+                </a>
+              ))
+            ) : (
+              <div className="no-likes-placeholder">
+                <div className="placeholder-icon">👍</div>
+                <p className="placeholder-text">{loc("BeFirstToLike")}</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-      <div className="theList">
-        {data.Likes.map((o) => (
-          <a key={o} href={"/space?id=" + o}>
-            <img
-              className="smallIcon"
-              src={apiroot3 + "/account/Icon?username=" + o}
-              alt={o}
-            />
-          </a>
-        ))}
-      </div>
-    </>
+    </div>
   );
 }
 
@@ -407,9 +410,9 @@ function CommentSender({ songid }) {
 
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton").disabled = true;
-      document.getElementById("submitbutton").textContent = "请稍后";
+      document.getElementById("submitbutton").textContent = loc("PleaseWait");
     }
-    const sending = toast.loading("正在邮件轰炸...");
+    const sending = toast.loading(loc("Sending"));
     const response = await fetch(
       apiroot3 + "/maichart/" + songid + "/interact",
       {
@@ -421,45 +424,47 @@ function CommentSender({ songid }) {
     );
     toast.done(sending);
     if (response.status === 200) {
-      toast.success("评论成功");
+      toast.success(loc("CommentSuccess"));
       if (typeof window !== "undefined") {
         document.getElementById("commentcontent").value = "";
         SetComment("");
       }
     } else if (response.status === 400) {
-      toast.error("评论失败：登录了吗？");
+      toast.error(loc("CommentFailedLoginPrompt"));
     } else {
-      toast.error("评论失败：登录了吗？");
+      toast.error(loc("CommentFailedLoginPrompt"));
     }
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton").disabled = false;
-      document.getElementById("submitbutton").textContent = "发表";
+      document.getElementById("submitbutton").textContent = loc("Post");
     }
   };
   return (
-    <>
-      <div className="theList">
-        <p className="inputHint">{loc("Comment")}</p>
+    <div className="song-comment-sender">
+      <div className="comment-sender-header">
+        <h3 className="comment-sender-title">{loc("Comment")}</h3>
       </div>
-      <div className="theList">
+      <div className="comment-input-section">
         <textarea
           id="commentcontent"
-          className="userinput commentbox"
-          type="text"
+          className="userinput commentbox modern-textarea"
+          placeholder={loc("CommentPlaceholder")}
           onChange={() => SetComment(event.target.value)}
+          value={comment}
         />
+        <div className="comment-actions">
+          <button
+            className="linkContentWithBorder modern-interaction-btn comment-submit-button"
+            id="submitbutton"
+            type="button"
+            onClick={onSubmit}
+            disabled={!comment.trim()}
+          >
+            {loc("Post")}
+          </button>
+        </div>
       </div>
-      <div className="theList">
-        <button
-          className="linkContentWithBorder"
-          id="submitbutton"
-          type="button"
-          onClick={onSubmit}
-        >
-          {loc("Post")}
-        </button>
-      </div>
-    </>
+    </div>
   );
 }
 
@@ -482,21 +487,25 @@ function CommentList({ songid }) {
   console.log(commentList);
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
-      <div className="CommentCard">
-        <a href={"/space?id=" + o.Sender.Username}>
-          <p className="CommentUser">
+      <div className="comment-card modern-comment-card">
+        <div className="comment-header">
+          <a href={"/space?id=" + o.Sender.Username} className="commenter-link">
             <img
-              className="smallIcon"
+              className="commenter-avatar"
               src={apiroot3 + "/account/Icon?username=" + o.Sender.Username}
+              alt={o.Sender.Username}
             />
-            {o.Sender.Username + "@" + o.Timestamp}
-          </p>
-        </a>
-        <p className="CommentContent">{o.Content}</p>
+            <div className="commenter-info">
+              <span className="commenter-username">{o.Sender.Username}</span>
+              <span className="comment-timestamp">{new Date(o.Timestamp).toLocaleDateString()}</span>
+            </div>
+          </a>
+        </div>
+        <div className="comment-content">{o.Content}</div>
       </div>
     </div>
   ));
-  return <div className="theList">{objlist}</div>;
+  return <div className="theList song-comment-list">{objlist}</div>;
 }
 
 function ScoreList({ songid }) {
@@ -520,12 +529,12 @@ function ScoreList({ songid }) {
     p.length !== 0 ? ScoreListLevel(p, index) : <></>
   );
   return (
-    <>
+    <div className="song-score-list">
       <div className="theList">
-        <div className="inputHint">{loc("RankingList")}</div>
+        <h2 className="ranking-main-title">{loc("RankingList")}</h2>
       </div>
-      <div className="theList">{objlist}</div>;
-    </>
+      <div className="theList">{objlist}</div>
+    </div>
   );
 }
 
@@ -539,22 +548,45 @@ function ScoreListLevel(scores, level) {
 }
 
 function scoreCard(score, index) {
+  // 判断成绩等级，添加对应的荧光效果类
+  const comboState = getComboState(score.comboState);
+  let cardClass = "score-card modern-score-card";
+  
+  // 调试信息
+  // console.log(`Score ${index + 1}: comboState=${comboState}, raw=${score.comboState}`);
+  
+  if (comboState === "AP+" || comboState === "AP") {
+    cardClass += " score-card-ap";
+    // console.log(`Applied AP glow for ${score.player.username}`);
+  } else if (comboState === "FC+" || comboState === "FC") {
+    cardClass += " score-card-fc";
+    // console.log(`Applied FC glow for ${score.player.username}`);
+  }
+  
+  // console.log(`Final cardClass for ${score.player.username}: ${cardClass}`);
+  
   return (
     <div key={score}>
-      <div className="CommentCard">
-        <p className="CommentUser">
-          第{index + 1}名{" "}
-          <a href={"/space?id=" + score.player.username}>
+      <div className={cardClass}>
+        <div className="score-rank-display">
+          <span className={`rank-number ${index < 3 ? 'top-three' : ''}`}>#{index + 1}</span>
+        </div>
+        <div className="score-player-info">
+          <a href={"/space?id=" + score.player.username} className="player-link">
             <img
-              className="smallIcon"
+              className="player-avatar"
               src={apiroot3 + "/account/Icon?username=" + score.player.username}
+              alt={score.player.username}
             />
-            {score.player.username}
+            <div className="player-details">
+              <span className="player-username">{score.player.username}</span>
+            </div>
           </a>
-        </p>
-        <p className="CommentContent">
-          {score.acc.toFixed(4)}% {getComboState(score.comboState)}
-        </p>
+        </div>
+        <div className="score-results">
+          <div className="score-accuracy">{score.acc.toFixed(4)}%</div>
+          <div className="score-combo">{getComboState(score.comboState)}</div>
+        </div>
       </div>
     </div>
   );
