@@ -101,9 +101,12 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
 
   useEffect(() => {
     const handleClickOutside = (e) => {
+      // 如果正在拖拽，不处理点击关闭
       if (dragging) {
         return;
       }
+      
+      // 检查点击是否在弹窗外部且不在触发按钮上
       if (
         ref.current &&
         !ref.current.contains(e.target) &&
@@ -114,8 +117,9 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    // 使用捕获阶段来确保在事件冒泡之前处理
+    document.addEventListener('mousedown', handleClickOutside, true);
+    return () => document.removeEventListener('mousedown', handleClickOutside, true);
   }, [onClose, ref, buttonRef, dragging]);
 
   const handleMouseDown = (e) => {
@@ -237,6 +241,8 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
   return (
     <div
       ref={ref}
+      onMouseDown={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
       style={{
         position: 'fixed',
         left: position.x + 'px',
@@ -254,7 +260,10 @@ const TagManageWindow = forwardRef(function TagManageWindow({onClose, buttonRef,
       }}
     >
       <div
-        onMouseDown={handleMouseDown}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          handleMouseDown(e);
+        }}
         style={{
           padding: '16px',
           borderBottom: '1px solid #eee',
