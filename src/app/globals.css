@@ -5735,12 +5735,58 @@ input[type="number"]::-webkit-inner-spin-button {
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
+.clickable-title {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.1rem 0.3rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.clickable-title:hover {
+  background: linear-gradient(135deg, #ffffff, #f0f0f0) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  text-shadow: none !important;
+  position: relative;
+}
+
+.clickable-title:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  z-index: -1;
+}
+
 .song-artist-modern {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);
   font-style: italic;
   font-weight: 400;
   text-align: center;
+}
+
+.clickable-artist {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.1rem 0.3rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.clickable-artist:hover {
+  color: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .song-designer-modern {
@@ -5789,6 +5835,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* 难度等级区域 */
 .song-levels-section {
   margin: 0.5rem 0;
+  text-align: center;
 }
 
 /* SongLevels组件样式 - 专用于song页面 */
@@ -5798,6 +5845,7 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-wrap: wrap;
   align-items: center;
   margin: 0.5rem 0;
+  justify-content: center;
 }
 
 .song-level-chip {
@@ -5976,6 +6024,7 @@ input[type="number"]::-webkit-inner-spin-button {
   align-items: center;
   flex-wrap: wrap;
   margin-top: auto;
+  justify-content: center;
 }
 
 .action-button {
@@ -6032,6 +6081,37 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .action-text {
   font-weight: 500;
+}
+
+/* TagManageWidget in action-button style */
+.tag-manage-button {
+  position: relative;
+}
+
+.tag-manage-button .songLevel.downloadButtonBox {
+  all: unset;
+  display: contents;
+  pointer-events: none;
+}
+
+.tag-manage-button .shareButton {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.tag-manage-button .downloadButton {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.tag-manage-button:hover .downloadButton {
+  transform: scale(1.1);
 }
 
 /* 详细信息卡片 */

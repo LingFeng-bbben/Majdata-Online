@@ -125,13 +125,30 @@ function SongInfo({ id, tippy }) {
         <div className="song-content-section">
           {/* 基本信息 */}
           <div className="song-basic-info">
-            <Tippy content={o.title} singleton={tippy}>
-              <h1 className="song-title-modern" id={o.id}>
+            <Tippy content={loc("SearchForTitle") || "点击搜索该歌曲"} singleton={tippy}>
+              <h1 
+                className="song-title-modern clickable-title" 
+                id={o.id}
+                onClick={() => {
+                  if (o.title && o.title !== "" && o.title !== null) {
+                    localStorage.setItem("search", o.title);
+                    window.location.href = "/";
+                  }
+                }}
+              >
                 {o.title}
               </h1>
             </Tippy>
-            <Tippy content={o.artist} singleton={tippy}>
-              <div className="song-artist-modern">
+            <Tippy content={loc("SearchForArtist") || "点击搜索该艺术家"} singleton={tippy}>
+              <div 
+                className="song-artist-modern clickable-artist"
+                onClick={() => {
+                  if (o.artist && o.artist !== "" && o.artist !== null) {
+                    localStorage.setItem("search", o.artist);
+                    window.location.href = "/";
+                  }
+                }}
+              >
                 {o.artist === "" || o.artist == null ? "-" : o.artist}
               </div>
             </Tippy>
@@ -190,7 +207,13 @@ function SongInfo({ id, tippy }) {
               <span className="action-text">{loc("Download") || "下载"}</span>
             </button>
             
-            <TagManageWidget ref={tagButtonRef} songid={o.id}></TagManageWidget>
+            <div 
+              className="action-button tag-manage-button"
+              onClick={() => tagButtonRef.current?.toggleWindow()}
+            >
+              <TagManageWidget ref={tagButtonRef} songid={o.id}></TagManageWidget>
+              <span className="action-text">{loc("Tags") || "标签"}</span>
+            </div>
           </div>
         </div>
       </div>
