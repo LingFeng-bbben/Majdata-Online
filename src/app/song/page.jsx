@@ -10,13 +10,13 @@ import { downloadSong } from "../download";
 import { getLevelName, getComboState, setLanguage, loc } from "../utils";
 import {
   CoverPic,
-  Levels,
   Majdata,
   SongList,
   TagManageTagLauncher,
   TagManageWidget,
   PageLayout,
 } from "../widgets";
+import SongDifficultyLevels from "./SongDifficultyLevels";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -151,7 +151,7 @@ function SongInfo({ id, tippy }) {
 
           {/* 难度等级 */}
           <div className="song-levels-section">
-            <Levels levels={o.levels} songid={o.id} isPlayer={true} />
+            <SongDifficultyLevels levels={o.levels} songid={o.id} isPlayer={true} />
           </div>
 
           {/* 操作按钮 */}

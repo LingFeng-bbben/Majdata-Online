@@ -3237,8 +3237,8 @@ img.songImg {
   text-shadow: 1px 1px gray;
   border-radius: 5px;
   margin: 0.1rem;
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.2rem;
+  height: 1.2rem;
   font-size: 0.6rem;
   line-height: 1.2rem;
   border: 1px solid gray;
@@ -5689,6 +5689,11 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中（如有需要） */
 }
 
 .song-cover-section:hover {
@@ -5735,10 +5740,13 @@ input[type="number"]::-webkit-inner-spin-button {
   color: rgba(255, 255, 255, 0.8);
   font-style: italic;
   font-weight: 400;
+  text-align: center;
 }
 
 .song-designer-modern {
   margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .designer-link {
@@ -5781,6 +5789,184 @@ input[type="number"]::-webkit-inner-spin-button {
 /* 难度等级区域 */
 .song-levels-section {
   margin: 0.5rem 0;
+}
+
+/* SongLevels组件样式 - 专用于song页面 */
+.song-levels-container {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.song-level-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.song-level-chip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.song-level-chip.clickable {
+  cursor: pointer;
+}
+
+.song-level-chip.clickable:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.song-level-chip.clickable:hover::before {
+  opacity: 0.8;
+}
+
+.song-level-chip.clickable:active {
+  transform: translateY(-1px) scale(1.02);
+  transition: all 0.1s ease;
+}
+
+.level-name {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.1rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.level-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  line-height: 1;
+}
+
+/* 各难度等级的配色方案 - 对应原始maimai颜色 */
+/* lv0 - Easy: rgb(111, 171, 250) 蓝色 */
+.level-easy {
+  background: linear-gradient(135deg, rgb(111, 171, 250), rgb(91, 151, 230));
+  border-color: rgba(111, 171, 250, 0.3);
+}
+
+.level-easy.clickable:hover {
+  background: linear-gradient(135deg, rgb(131, 191, 255), rgb(111, 171, 250));
+  box-shadow: 
+    0 8px 25px rgba(111, 171, 250, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(111, 171, 250, 0.3);
+}
+
+/* lv1 - Basic: rgb(93, 212, 93) 绿色 */
+.level-basic {
+  background: linear-gradient(135deg, rgb(93, 212, 93), rgb(73, 192, 73));
+  border-color: rgba(93, 212, 93, 0.3);
+}
+
+.level-basic.clickable:hover {
+  background: linear-gradient(135deg, rgb(113, 232, 113), rgb(93, 212, 93));
+  box-shadow: 
+    0 8px 25px rgba(93, 212, 93, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(93, 212, 93, 0.3);
+}
+
+/* lv2 - Advanced: rgb(202, 202, 84) 黄色 */
+.level-advanced {
+  background: linear-gradient(135deg, rgb(202, 202, 84), rgb(182, 182, 64));
+  border-color: rgba(202, 202, 84, 0.3);
+}
+
+.level-advanced.clickable:hover {
+  background: linear-gradient(135deg, rgb(222, 222, 104), rgb(202, 202, 84));
+  box-shadow: 
+    0 8px 25px rgba(202, 202, 84, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(202, 202, 84, 0.3);
+}
+
+/* lv3 - Expert: rgb(255, 91, 91) 红色 */
+.level-expert {
+  background: linear-gradient(135deg, rgb(255, 91, 91), rgb(235, 71, 71));
+  border-color: rgba(255, 91, 91, 0.3);
+}
+
+.level-expert.clickable:hover {
+  background: linear-gradient(135deg, rgb(255, 111, 111), rgb(255, 91, 91));
+  box-shadow: 
+    0 8px 25px rgba(255, 91, 91, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 91, 91, 0.3);
+}
+
+/* lv4 - Master: rgb(134, 23, 134) 深紫色 */
+.level-master {
+  background: linear-gradient(135deg, rgb(134, 23, 134), rgb(114, 3, 114));
+  border-color: rgba(134, 23, 134, 0.3);
+}
+
+.level-master.clickable:hover {
+  background: linear-gradient(135deg, rgb(154, 43, 154), rgb(134, 23, 134));
+  box-shadow: 
+    0 8px 25px rgba(134, 23, 134, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(134, 23, 134, 0.3);
+}
+
+/* lv5 - Re:Master: rgb(189, 63, 189) 亮紫色 */
+.level-remaster {
+  background: linear-gradient(135deg, rgb(189, 63, 189), rgb(169, 43, 169));
+  border-color: rgba(189, 63, 189, 0.3);
+}
+
+.level-remaster.clickable:hover {
+  background: linear-gradient(135deg, rgb(209, 83, 209), rgb(189, 63, 189));
+  box-shadow: 
+    0 8px 25px rgba(189, 63, 189, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(189, 63, 189, 0.3);
+}
+
+/* lv6 - UTAGE: rgb(255, 145, 0) 橙色 */
+.level-utage {
+  background: linear-gradient(135deg, rgb(255, 145, 0), rgb(235, 125, 0));
+  border-color: rgba(255, 145, 0, 0.3);
+}
+
+.level-utage.clickable:hover {
+  background: linear-gradient(135deg, rgb(255, 165, 20), rgb(255, 145, 0));
+  box-shadow: 
+    0 8px 25px rgba(255, 145, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 145, 0, 0.3);
 }
 
 /* 操作按钮区域 */
@@ -6083,6 +6269,9 @@ input[type="number"]::-webkit-inner-spin-button {
   
   .song-cover-section {
     align-self: center;
+    margin: 0 auto; /* 水平居中 */
+    width: 12rem; /* 移动端稍微缩小封面尺寸 */
+    height: 12rem;
   }
   
   .song-title-modern {
@@ -6105,6 +6294,27 @@ input[type="number"]::-webkit-inner-spin-button {
   
   .song-levels-section {
     text-align: center;
+  }
+
+  /* SongLevels组件移动端适配 */
+  .song-levels-container {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .song-level-chip {
+    min-width: 3.5rem;
+    height: 2.8rem;
+    border-radius: 8px;
+  }
+
+  .level-name {
+    font-size: 0.55rem;
+    margin-bottom: 0.05rem;
+  }
+
+  .level-value {
+    font-size: 0.9rem;
   }
   
   .song-actions-section {
@@ -6156,6 +6366,11 @@ input[type="number"]::-webkit-inner-spin-button {
   .song-main-card {
     padding: 1rem;
     border-radius: 10px;
+  }
+  
+  .song-cover-section {
+    width: 10rem; /* 极小屏幕进一步缩小封面尺寸 */
+    height: 10rem;
   }
   
   .song-title-modern {
