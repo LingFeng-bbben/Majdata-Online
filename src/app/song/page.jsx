@@ -54,8 +54,7 @@ export default function Page() {
         interactive={true}
       />
       <MajdataView id={param} />
-      <SongInfo id={param} tippy={target} />
-      <LikeSender songid={param} />
+      <SongDetailsContainer id={param} tippy={target} />
       <div className="hr-solid"></div>
       <ScoreList songid={param} />
       <div className="hr-solid"></div>
@@ -76,6 +75,16 @@ const fetcher = (url) =>
   fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
     res.json()
   );
+
+function SongDetailsContainer({ id, tippy }) {
+  return (
+    <div className="song-details-main-container">
+      <SongInfo id={id} tippy={tippy} />
+      <div className="song-details-divider"></div>
+      <LikeSender songid={id} />
+    </div>
+  );
+}
 
 function SongInfo({ id, tippy }) {
   const tagButtonRef = useState();
@@ -106,127 +115,143 @@ function SongInfo({ id, tippy }) {
   const o = data;
 
   return (
-    <div className="song-info-container">
-      <div className="theList">
-        <div className="songCard songDetail song-detail-modern">
+    <div className="song-info-section">
+      {/* 主歌曲信息卡片 */}
+      <div className="song-main-card">
+        <div className="song-cover-section">
           <CoverPic id={o.id} />
-          <div className="songInfo">
+        </div>
+        
+        <div className="song-content-section">
+          {/* 基本信息 */}
+          <div className="song-basic-info">
             <Tippy content={o.title} singleton={tippy}>
-              <div className="songTitle" id={o.id}>
+              <h1 className="song-title-modern" id={o.id}>
                 {o.title}
-              </div>
+              </h1>
             </Tippy>
             <Tippy content={o.artist} singleton={tippy}>
-              <div className="songArtist">
+              <div className="song-artist-modern">
                 {o.artist === "" || o.artist == null ? "-" : o.artist}
               </div>
             </Tippy>
             <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-              <div className="songDesigner">
-                <a href={"/space?id=" + o.uploader}>
+              <div className="song-designer-modern">
+                <a href={"/space?id=" + o.uploader} className="designer-link">
                   <img
-                    className="smallIcon"
+                    className="designer-avatar"
                     src={apiroot3 + "/account/Icon?username=" + o.uploader}
                     alt={o.uploader}
                   />
-                  {o.uploader + "@" + o.designer}
+                  <span className="designer-text">{o.uploader + "@" + o.designer}</span>
                 </a>
               </div>
             </Tippy>
+          </div>
 
+          {/* 难度等级 */}
+          <div className="song-levels-section">
             <Levels levels={o.levels} songid={o.id} isPlayer={true} />
-            <br />
-            <div
-              className="songLevel downloadButtonBox"
+          </div>
+
+          {/* 操作按钮 */}
+          <div className="song-actions-section">
+            <button
+              className="action-button share-button"
               onClick={shareSong({ id: o.id })}
+              title={loc("Share")}
             >
               <svg
-                className="shareButton"
+                className="action-icon"
                 xmlns="http://www.w3.org/2000/svg"
-                height="24"
+                height="20"
                 viewBox="0 -960 960 960"
-                width="24"
+                width="20"
               >
                 <path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-640q17 0 28.5-11.5T760-760q0-17-11.5-28.5T720-800q-17 0-28.5 11.5T680-760q0 17 11.5 28.5T720-720ZM240-440q17 0 28.5-11.5T280-480q0-17-11.5-28.5T240-520q-17 0-28.5 11.5T200-480q0 17 11.5 28.5T240-440Zm480 280q17 0 28.5-11.5T760-200q0-17-11.5-28.5T720-240q-17 0-28.5 11.5T680-200q0 17 11.5 28.5T720-160Zm0-600ZM240-480Zm480 280Z" />
               </svg>
-            </div>
-            <div
-              className="songLevel downloadButtonBox"
+              <span className="action-text">{loc("Share") || "分享"}</span>
+            </button>
+            
+            <button
+              className="action-button download-button"
               onClick={OnDownloadClick({ id: o.id, title: o.title })}
+              title={loc("Download")}
             >
               <svg
-                className="downloadButton"
+                className="action-icon"
                 xmlns="http://www.w3.org/2000/svg"
-                height="24"
+                height="20"
                 viewBox="0 -960 960 960"
-                width="24"
+                width="20"
               >
                 <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
               </svg>
-            </div>
+              <span className="action-text">{loc("Download") || "下载"}</span>
+            </button>
+            
             <TagManageWidget ref={tagButtonRef} songid={o.id}></TagManageWidget>
           </div>
         </div>
+      </div>
 
-        <div className="uploadDate"></div>
-
-        <div className="uploadMeta">
-          <div className="uploadMetaRow">
-            <div className="uploadMetaLabel">Time:</div>
-            <div className="uploadMetaContent">{(new Date(o.timestamp)).toLocaleString()}</div>
-          </div>
-          <div className="uploadMetaRow">
-            <div className="uploadMetaLabel">ID:</div>
-            <div className="uploadMetaContent">{o.id}</div>
-          </div>
-          <div className="uploadMetaRow">
-            <div className="uploadMetaLabel">HASH:</div>
-            <div className="uploadMetaContent">{o.hash}</div>
-          </div>
-          <div className="uploadMetaRow">
-            <div className="uploadMetaLabel">Tags:</div>
-            <div className="uploadMetaContent tagList">
-              {(o.tags || o.publicTags) &&
-              (o.tags.length > 0 || o.publicTags.length > 0) ? (
-                <>
-                  {o.tags.map((tag, index) => (
-                    <Tippy content={loc("SearchForTag")} key={index}>
-                      <span
-                        className="tag"
-                        onClick={() => {
-                          localStorage.setItem("search", tag);
-                          window.location.href = "/";
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    </Tippy>
-                  ))}
-                  {o.publicTags?.map((tag, index) => (
-                    <Tippy content={loc("SearchForTag")} key={index}>
-                      <span
-                        className="tag tagPublic"
-                        onClick={() => {
-                          localStorage.setItem("search", "tag:" + tag);
-                          window.location.href = "/";
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    </Tippy>
-                  ))}
-                </>
-              ) : (
-                <span style={{ color: "#999", fontStyle: "italic" }}>
-                  {loc("NoTags")}
-                </span>
-              )}
-              <TagManageTagLauncher
-                onClick={() => {
-                  tagButtonRef.current?.toggleWindow();
-                }}
-              />
-            </div>
+      {/* 详细信息卡片 */}
+      <div className="song-meta-card">
+        <div className="meta-row">
+          <span className="meta-label">{loc("UploadTime") || "上传时间"}:</span>
+          <span className="meta-value">{(new Date(o.timestamp)).toLocaleString()}</span>
+        </div>
+        <div className="meta-row">
+          <span className="meta-label">ID:</span>
+          <span className="meta-value meta-id">{o.id}</span>
+        </div>
+        <div className="meta-row">
+          <span className="meta-label">HASH:</span>
+          <span className="meta-value meta-hash">{o.hash}</span>
+        </div>
+        <div className="meta-row meta-tags-row">
+          <span className="meta-label">{loc("Tags") || "标签"}:</span>
+          <div className="meta-tags-container">
+            {(o.tags || o.publicTags) &&
+            (o.tags.length > 0 || o.publicTags.length > 0) ? (
+              <>
+                {o.tags.map((tag, index) => (
+                  <Tippy content={loc("SearchForTag")} key={index}>
+                    <span
+                      className="tag-chip tag-private"
+                      onClick={() => {
+                        localStorage.setItem("search", tag);
+                        window.location.href = "/";
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  </Tippy>
+                ))}
+                {o.publicTags?.map((tag, index) => (
+                  <Tippy content={loc("SearchForTag")} key={index}>
+                    <span
+                      className="tag-chip tag-public"
+                      onClick={() => {
+                        localStorage.setItem("search", "tag:" + tag);
+                        window.location.href = "/";
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  </Tippy>
+                ))}
+              </>
+            ) : (
+              <span className="no-tags-text">
+                {loc("NoTags") || "暂无标签"}
+              </span>
+            )}
+            <TagManageTagLauncher
+              onClick={() => {
+                tagButtonRef.current?.toggleWindow();
+              }}
+            />
           </div>
         </div>
       </div>
@@ -317,7 +342,7 @@ function LikeSender({ songid }) {
     }
   };
   return (
-    <div className="song-interaction-container">
+    <div className="song-interaction-section">
       <div className="interaction-layout">
         {/* 左侧：点赞点踩按钮 */}
         <div className="interaction-buttons">
@@ -565,6 +590,17 @@ function scoreCard(score, index) {
   
   // console.log(`Final cardClass for ${score.player.username}: ${cardClass}`);
   
+  // 获取显示文本，如果没有特殊标识则显示"Clear"
+  // 如果分数小于80%则显示"Failed"
+  let displayText;
+  if (score.acc < 80) {
+    displayText = "Failed";
+  } else if (comboState && comboState !== "") {
+    displayText = comboState;
+  } else {
+    displayText = "Clear";
+  }
+  
   return (
     <div key={score}>
       <div className={cardClass}>
@@ -584,8 +620,10 @@ function scoreCard(score, index) {
           </a>
         </div>
         <div className="score-results">
-          <div className="score-accuracy">{score.acc.toFixed(4)}%</div>
-          <div className="score-combo">{getComboState(score.comboState)}</div>
+          <div className={`score-accuracy ${comboState === "AP+" || comboState === "AP" ? 'score-accuracy-ap' : comboState === "FC+" || comboState === "FC" ? 'score-accuracy-fc' : ''}`}>
+            {score.acc.toFixed(4)}%
+          </div>
+          <div className="score-combo">{displayText}</div>
         </div>
       </div>
     </div>

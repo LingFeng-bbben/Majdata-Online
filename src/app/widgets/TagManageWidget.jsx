@@ -1,5 +1,6 @@
 import {useState, useRef, useEffect, forwardRef, useImperativeHandle} from 'react';
 import React from "react";
+import { createPortal } from 'react-dom';
 import Tippy from "@tippyjs/react";
 import useSWR from "swr";
 import {apiroot3} from "../apiroot";
@@ -25,13 +26,14 @@ const TagManageWidget = forwardRef(function TagManageWidget({songid, newClassNam
         ref={buttonRef}
         onClick={() => setIsWindowOpen(!isWindowOpen)}
       />
-      {isWindowOpen && (
+      {isWindowOpen && typeof window !== 'undefined' && createPortal(
         <TagManageWindow
           ref={windowRef}
           onClose={() => setIsWindowOpen(false)}
           buttonRef={buttonRef}
           songid={songid}
-        />
+        />,
+        document.body
       )}
     </div>
   );
