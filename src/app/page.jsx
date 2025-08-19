@@ -87,6 +87,15 @@ export default function Page() {
         style={{ maxWidth: "400px", display: "block", margin: "0 auto", borderRadius: "10px" }}
       >
         <SwiperSlide><a
+          href="/space?id=MUFC"
+          className="theList"
+        >
+          <img
+            src="/event5.png"
+            alt=""
+          />
+        </a> </SwiperSlide>
+        <SwiperSlide><a
           href="/space?id=哈基窝谱面市场"
           className="theList"
         >
