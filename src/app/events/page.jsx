@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { setLanguage, loc } from "../utils";
 import { PageLayout } from "../widgets";
-import { getEventsWithTimeAgo } from "../utils/eventsData";
+import { getEventsWithTimeAgo, getEventStatusText, getEventStatusClass } from "../utils/eventsData";
 
 export default function EventsPage() {
   const [ready, setReady] = useState(false);
@@ -13,8 +13,9 @@ export default function EventsPage() {
     });
   }, []);
 
-  // 获取完整的活动列表（带智能时间计算）
-  const allEvents = getEventsWithTimeAgo();
+  // 获取完整的活动列表（带智能时间计算），按创建日期排序
+  const allEvents = getEventsWithTimeAgo()
+    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
 
   if (!ready) return <div className="loading"></div>;
 
@@ -47,6 +48,9 @@ export default function EventsPage() {
                       <p className="event-description">{event.description}</p>
                       <div className="event-meta-large">
                         <span className="event-category-large">{event.category}</span>
+                        <span className={`event-status-large ${getEventStatusClass(event)}`}>
+                          • {getEventStatusText(event)}
+                        </span>
                         <span 
                           className="event-time-large" 
                           title={`活动创建于 ${event.createDateFormatted}`}

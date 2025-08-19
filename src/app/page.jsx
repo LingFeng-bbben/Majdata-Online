@@ -114,18 +114,54 @@ export default function Page() {
 }
 
 function EventsCarousel(){
-  // 智能获取首页推荐活动数据（带时间计算）
-  const { getFeaturedEventsWithTime, getNonFeaturedEventsCount } = require('./utils/eventsData.js');
-  const events = getFeaturedEventsWithTime(2); // 获取2个推荐活动（带智能时间）
-  const remainingEventsCount = getNonFeaturedEventsCount(); // 获取剩余活动数量
+  const { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass } = require('./utils/eventsData.js');
+  const [currentEvents, setCurrentEvents] = useState([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [shouldRotate, setShouldRotate] = useState(false);
+  const remainingEventsCount = getNonFeaturedEventsCount();
+
+  // 初始化活动数据
+  useEffect(() => {
+    const result = getCarouselEvents();
+    setCurrentEvents(result.events);
+    setShouldRotate(result.shouldRotate);
+  }, []);
+
+  // 智能轮播逻辑：只有在需要轮播时才启动定时器
+  useEffect(() => {
+    if (!shouldRotate) {
+      return; // 不需要轮播，直接返回
+    }
+
+    const interval = setInterval(() => {
+      // 第一阶段：开始淡出
+      setIsTransitioning(true);
+      
+      // 第二阶段：在淡出进行到一半时更换内容
+      setTimeout(() => {
+        const result = getNextCarouselEvents();
+        setCurrentEvents(result.events);
+      }, 300); // 在过渡进行到一半时更换内容
+      
+      // 第三阶段：继续完成淡入效果
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 650); // 稍微延长总过渡时间
+    }, 7000); // 延长轮播间隔到7秒，让用户有更多时间观看
+
+    return () => clearInterval(interval);
+  }, [shouldRotate]);
 
   return (
     <section className="events-showcase">
       <div className="events-showcase-container">
         <div className="events-grid">
-          {/* 智能显示推荐活动卡片 */}
-          {events.map((event, i) => (
-            <div key={i} className="event-card">
+          {/* 智能轮播活动卡片 */}
+          {currentEvents.map((event, i) => (
+            <div 
+              key={`${event.id}-${i}`} 
+              className={`event-card ${isTransitioning ? 'transitioning' : ''} ${!shouldRotate ? 'static' : ''}`}
+            >
               <a href={event.href} className="event-link">
                 <div className="event-image-container">
                   <img 
@@ -139,6 +175,9 @@ function EventsCarousel(){
                       <h3 className="event-title">{event.title}</h3>
                       <div className="event-meta">
                         <span className="event-category">{event.category}</span>
+                        <span className={`event-status ${getEventStatusClass(event)}`}>
+                          • {getEventStatusText(event)}
+                        </span>
                         <span className="event-time" title={`活动创建于 ${event.createDateFormatted}`}>
                           • {event.timeAgo}
                         </span>
@@ -150,7 +189,7 @@ function EventsCarousel(){
             </div>
           ))}
           
-          {/* 第三个卡片：more 按钮 */}
+          {/* 第三个卡片：more 按钮（不参与轮播） */}
           <div className="event-card more-card">
             <a href="/events" className="event-link">
               <div className="more-content">

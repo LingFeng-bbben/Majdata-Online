@@ -916,7 +916,7 @@ p {
 .events-grid {
   display: flex;
   gap: 1rem;
-  align-items: flex-start; /* 允许不同高度的卡片 */
+  align-items: stretch; /* 确保所有卡片高度一致 */
 }
 
 /* 活动卡片基础样式 */
@@ -934,18 +934,75 @@ p {
   flex-direction: column;
 }
 
-/* 前两个卡片：完整显示 */
+/* 轮播渐变效果 - 优化为更平滑的过渡 */
+.event-card.transitioning {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.event-card.transitioning .event-image {
+  filter: blur(4px) brightness(0.7);
+  transition: filter 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.event-card.transitioning .event-hover-info {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* 非过渡状态的平滑回归 */
+.event-card:not(.transitioning) {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-card:not(.transitioning) .event-image {
+  filter: blur(0px) brightness(1);
+  transition: filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-card:not(.transitioning) .event-hover-info {
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 移除了状态指示器相关样式 */
+
+/* 前两个卡片：固定宽高比显示 */
 .event-card:nth-child(1),
 .event-card:nth-child(2) {
   flex: 1 1 0;
   min-width: 0;
+  aspect-ratio: 1279 / 372; /* 固定宽高比例 */
+  height: auto;
+}
+
+/* 旧浏览器回退方案 */
+@supports not (aspect-ratio: 1279 / 372) {
+  .event-card:nth-child(1),
+  .event-card:nth-child(2) {
+    height: calc(100vw * 372 / 1279 / 3); /* 基于视口宽度计算高度 */
+  }
+  
+  .event-card.more-card {
+    height: calc(100vw * 372 / 1279 / 3); /* 保持相同高度 */
+  }
+  
+  .event-card-large {
+    height: calc(100vw * 372 / 1279); /* events页面的卡片高度 */
+  }
 }
 
 /* 第三个卡片：more 按钮，宽度为前两个卡片一半，高度与前两个卡片保持一致 */
 .event-card.more-card {
   flex: 0.5 1 0;
   min-width: 0;
-  /* 关键：高度由flex布局自动继承，与前两个卡片一致 */
+  aspect-ratio: 1279 / 372; /* 与活动卡片相同的宽高比 */
+  height: auto;
   background: linear-gradient(135deg, 
     rgba(100, 100, 120, 0.4) 0%, 
     rgba(80, 80, 100, 0.6) 100%
@@ -970,12 +1027,14 @@ p {
 .event-image-container {
   position: relative;
   width: 100%;
+  height: 100%; /* 填满卡片 */
   overflow: hidden;
 }
 
 .event-image {
   width: 100%;
-  height: auto; /* 让高度自适应，保持图片原始比例 */
+  height: 100%; /* 填满容器 */
+  object-fit: cover; /* 裁剪适配，保持宽高比 */
   display: block;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -1021,7 +1080,26 @@ p {
   transform: translateY(0);
 }
 
-/* 移除状态徽章相关样式 */
+/* 活动状态样式 */
+.event-status {
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.event-status.status-ongoing {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.event-status.status-ended {
+  color: #9ca3af;
+  background: rgba(156, 163, 175, 0.15);
+  border: 1px solid rgba(156, 163, 175, 0.3);
+}
 
 /* 活动详情 */
 .event-details {
@@ -1170,12 +1248,14 @@ p {
   .event-card:nth-child(1),
   .event-card:nth-child(2) {
     flex: none;
-    /* 移除固定高度，让图片决定高度 */
+    aspect-ratio: 1279 / 372; /* 移动端也保持固定宽高比 */
+    height: auto;
   }
   
   .event-card.more-card {
     flex: none;
-    height: 120px; /* More卡片保持固定高度 */
+    aspect-ratio: 1279 / 372; /* 移动端More卡片也保持相同比例 */
+    height: auto;
   }
   
   .event-hover-info {
@@ -1272,7 +1352,8 @@ p {
     0 12px 40px rgba(0, 0, 0, 0.3),
     0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  /* 移除固定比例，让图片决定卡片高度 */
+  aspect-ratio: 1279 / 372; /* 固定宽高比例，与主页一致 */
+  height: auto;
 }
 
 .event-card-large:hover {
@@ -1294,12 +1375,14 @@ p {
 .event-image-container-large {
   position: relative;
   width: 100%;
+  height: 100%; /* 填满卡片 */
   overflow: hidden;
 }
 
 .event-image-large {
   width: 100%;
-  height: auto; /* 让高度自适应，保持图片原始比例 */
+  height: 100%; /* 填满容器 */
+  object-fit: cover; /* 裁剪适配，保持宽高比 */
   display: block;
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -1336,7 +1419,28 @@ p {
   transform: translateY(0);
 }
 
-/* 移除详情页状态徽章相关样式 */
+/* 详情页状态样式 */
+.event-status-large {
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.event-status-large.status-ongoing {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+.event-status-large.status-ended {
+  color: #9ca3af;
+  background: rgba(156, 163, 175, 0.2);
+  border: 1px solid rgba(156, 163, 175, 0.4);
+}
 
 /* Large Card Info */
 .event-info-large {

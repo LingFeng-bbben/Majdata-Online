@@ -1,77 +1,21 @@
-// 完整的活动数据定义 - 作为唯一数据源
-const eventsData = [
-  { 
-    id: "soty2024",
-    href: "/space?id=dilei", 
-    src: "/event2.jpg", 
-    alt: "地雷杯",
-    title: "地雷杯",
-    category: "私立赛事",
-    createDate: "2025-08-14", // 活动创建的精确日期
-    description: "这是香菜举办的MMFC赛制式雷亚歌曲主题的maimai写谱比赛。",
-    featured: true, // 标记为首页推荐
-    priority: 1 // 首页显示优先级
-  },
-  { 
-    id: "unchained",
-    href: "/space?id=海鲜杯", 
-    src: "/event3.jpg", 
-    alt: "海鲜杯",
-    title: "海鲜杯", 
-    category: "私立赛事",
-    createDate: "2025-08-01", // 活动创建的精确日期
-    description: "vocaloid主体个人比赛 by 甘党水母",
-    featured: true, // 标记为首页推荐
-    priority: 2 // 首页显示优先级
-  },
-  { 
-    id: "mmfc11",
-    href: "https://www.bilibili.com/video/BV1e2RzYjECa/", 
-    src: "/mmfc_event.jpg", 
-    alt: "MMFC11结算",
-    title: "MMFC11结算", 
-    category: "大型赛事",
-    createDate: "2025-04-06", // 结算日期
-    description: "第11届舞萌自制月赛（MMFC11）结算，详情请见B站视频。",
-    featured: false
-  },
-
-
-  { 
-    id: "mmfc10",
-    href: "https://www.bilibili.com/video/BV1EKScYaEpi/", 
-    src: "/mmfc_event.jpg", 
-    alt: "MMFC10结算",
-    title: "MMFC10结算", 
-    category: "大型赛事",
-    createDate: "2024-11-20", // 结算日期
-    description: "第10届舞萌自制月赛（MMFC10）结算，详情请见B站视频。",
-    featured: false
-  },
-
-  { 
-    id: "mmfc9",
-    href: "https://www.bilibili.com/video/BV1jH4y1c7xP/", 
-    src: "/mmfc_event.jpg", 
-    alt: "MMFC9结算",
-    title: "MMFC9结算", 
-    category: "大型赛事",
-    createDate: "2024-07-27", // 结算日期
-    description: "第9届舞萌自制月赛（MMFC9）结算，详情请见B站视频。",
-    featured: false
-  }
-];
+// 从JSON文件加载活动数据
+import eventsData from './events.json';
 
 // 获取所有活动数据
 export function getAllEvents() {
   return eventsData;
 }
 
-// 获取首页推荐活动（按优先级排序）
+// 获取首页推荐活动（已废弃，请使用 getCarouselEvents）
 export function getFeaturedEvents(limit = 2) {
+  // 回退到获取进行中的活动
+  const ongoingEvents = getOngoingEvents();
+  if (ongoingEvents.length > 0) {
+    return ongoingEvents.slice(0, limit);
+  }
+  // 如果没有进行中的活动，返回最新的活动
   return eventsData
-    .filter(event => event.featured)
-    .sort((a, b) => (a.priority || 999) - (b.priority || 999))
+    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
     .slice(0, limit);
 }
 
@@ -80,9 +24,11 @@ export function getEventsCount() {
   return eventsData.length;
 }
 
-// 获取未在首页显示的活动数量
+// 获取其他活动数量（除了主页轮播显示的）
 export function getNonFeaturedEventsCount() {
-  return eventsData.filter(event => !event.featured).length;
+  const ongoingEvents = getOngoingEvents();
+  const displayedCount = Math.min(ongoingEvents.length, 2);
+  return Math.max(0, eventsData.length - displayedCount);
 }
 
 // 根据ID获取单个活动
@@ -125,11 +71,166 @@ export function getEventsWithTimeAgo() {
   }));
 }
 
-// 获取首页推荐活动（带智能时间）
+// 获取首页推荐活动（带智能时间）- 已废弃，请使用 getCarouselEvents
 export function getFeaturedEventsWithTime(limit = 2) {
   const eventsWithTime = getEventsWithTimeAgo();
+  const ongoingEvents = eventsWithTime.filter(event => isEventOngoing(event));
+  
+  if (ongoingEvents.length > 0) {
+    return ongoingEvents.slice(0, limit);
+  }
+  
+  // 如果没有进行中的活动，返回最新的活动
   return eventsWithTime
-    .filter(event => event.featured)
-    .sort((a, b) => (a.priority || 999) - (b.priority || 999))
+    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
     .slice(0, limit);
+}
+
+// 检查活动是否正在进行中（基于当前日期和结束日期）
+export function isEventOngoing(event) {
+  const currentDate = new Date();
+  const endDate = new Date(event.endDate);
+  return currentDate <= endDate;
+}
+
+// 获取所有进行中的活动
+export function getOngoingEvents() {
+  return eventsData.filter(event => isEventOngoing(event));
+}
+
+// 获取所有已结束的活动
+export function getEndedEvents() {
+  return eventsData.filter(event => !isEventOngoing(event));
+}
+
+// 智能轮播管理器 - 用于主页活动展示
+class EventCarouselManager {
+  constructor() {
+    this.currentIndex = 0;
+    this.eventPool = [];
+    this.displayedEvents = [];
+    this.isInitialized = false;
+  }
+
+  // 初始化事件池
+  initialize() {
+    const ongoingEvents = getOngoingEvents();
+    
+    if (ongoingEvents.length === 0) {
+      // 没有进行中的活动，使用最新的活动
+      const recentEvents = getEventsWithTimeAgo()
+        .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
+        .slice(0, 2);
+      this.eventPool = recentEvents;
+      this.displayedEvents = [...this.eventPool];
+      this.isInitialized = true;
+      return { events: this.displayedEvents, shouldRotate: false };
+    }
+    
+    // 为每个活动添加时间信息
+    this.eventPool = ongoingEvents.map(event => ({
+      ...event,
+      timeAgo: getTimeAgo(event.createDate),
+      createDateFormatted: new Date(event.createDate).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }));
+    
+    // 初始显示前两个
+    this.displayedEvents = this.eventPool.slice(0, 2);
+    this.isInitialized = true;
+    
+    return { 
+      events: this.displayedEvents, 
+      shouldRotate: this.eventPool.length > 2 
+    };
+  }
+
+  // 获取下一组活动（智能轮播）
+  getNextEvents() {
+    if (!this.isInitialized) {
+      return this.initialize();
+    }
+
+    // 如果活动数量 <= 2，不进行轮播
+    if (this.eventPool.length <= 2) {
+      return { 
+        events: this.displayedEvents, 
+        shouldRotate: false 
+      };
+    }
+
+    // 滚动式轮播：每次只换一个活动
+    this.currentIndex = (this.currentIndex + 1) % this.eventPool.length;
+    
+    // 计算新的两个活动位置
+    const firstIndex = this.currentIndex;
+    const secondIndex = (this.currentIndex + 1) % this.eventPool.length;
+    
+    this.displayedEvents = [
+      this.eventPool[firstIndex],
+      this.eventPool[secondIndex]
+    ];
+
+    return { 
+      events: this.displayedEvents, 
+      shouldRotate: true 
+    };
+  }
+
+  // 重置管理器（当活动数据更新时调用）
+  reset() {
+    this.currentIndex = 0;
+    this.eventPool = [];
+    this.displayedEvents = [];
+    this.isInitialized = false;
+  }
+}
+
+// 创建全局轮播管理器实例
+const carouselManager = new EventCarouselManager();
+
+// 获取轮播活动数据（供组件使用）
+export function getCarouselEvents() {
+  return carouselManager.initialize();
+}
+
+// 获取下一组轮播活动
+export function getNextCarouselEvents() {
+  return carouselManager.getNextEvents();
+}
+
+// 重置轮播状态（当活动数据变化时使用）
+export function resetCarousel() {
+  carouselManager.reset();
+}
+
+// 检查是否应该进行轮播
+export function shouldEnableCarousel() {
+  const ongoingEvents = getOngoingEvents();
+  return ongoingEvents.length > 2;
+}
+
+// 保留原有函数作为兼容（已废弃，建议使用新的轮播管理器）
+export function getRandomOngoingEvents(count = 2) {
+  const result = carouselManager.initialize();
+  return result.events;
+}
+
+// 获取活动状态的中文显示
+export function getEventStatusText(event) {
+  if (isEventOngoing(event)) {
+    return '进行中';
+  }
+  return '已结束';
+}
+
+// 获取活动状态的样式类名
+export function getEventStatusClass(event) {
+  if (isEventOngoing(event)) {
+    return 'status-ongoing';
+  }
+  return 'status-ended';
 }
