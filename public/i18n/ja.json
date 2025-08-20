@@ -156,5 +156,8 @@
   "CommentSuccess": "コメント投稿成功",
   "CommentFailedLoginPrompt": "コメント失敗：ログインしていますか？",
   "CommentPlaceholder": "この譜面についての感想を共有してください...",
-  "PersonalSpace": "のプロフィール"
+  "PersonalSpace": "のプロフィール",
+  "FooterCopyright": "© Majdata Net - オープンソース譜面共有プラットフォーム",
+  "FooterOpenSource": "GitHub",
+  "FooterCommunity": "譜面作成者の皆様に感謝"
 }

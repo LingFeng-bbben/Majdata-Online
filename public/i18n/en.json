@@ -156,5 +156,8 @@
   "CommentSuccess": "Comment posted successfully",
   "CommentFailedLoginPrompt": "Comment failed: Are you logged in?",
   "CommentPlaceholder": "Share your thoughts about this chart...",
-  "PersonalSpace": "'s Profile"
+  "PersonalSpace": "'s Profile",
+  "FooterCopyright": "© Majdata Net - Open Source Chart Sharing Platform",
+  "FooterOpenSource": "GitHub",
+  "FooterCommunity": "Thanks to chart creators for their support"
 }

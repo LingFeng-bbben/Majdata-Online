@@ -69,6 +69,32 @@ export default function PageLayout({
             </>
           )}
 
+          {/* Footer Content */}
+          <div className="footer-content">
+            {/* Copyright */}
+            <div className="footer-copyright">
+              {loc("FooterCopyright")}
+            </div>
+            
+            {/* Open Source Info */}
+            <div className="footer-opensource">
+              <a 
+                href="https://github.com/LingFeng-bbben/Majdata-Online" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-github-link"
+              >
+                {loc("FooterOpenSource")}
+              </a>
+            </div>
+            
+            {/* Community */}
+            <div className="footer-community">
+              {loc("FooterCommunity")}
+            </div>
+          </div>
+
+          {/* Mini Game Link */}
           <a href="/minigame" className="footer-game-link">
             <img
               className="footerImage"

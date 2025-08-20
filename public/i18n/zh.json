@@ -156,5 +156,8 @@
   "CommentSuccess": "评论成功",
   "CommentFailedLoginPrompt": "评论失败：登录了吗？",
   "CommentPlaceholder": "分享你对这个谱面的想法...",
-  "PersonalSpace": "的个人空间"
+  "PersonalSpace": "的个人空间",
+  "FooterCopyright": "© Majdata Net - 开源自制谱分享平台",
+  "FooterOpenSource": "GitHub",
+  "FooterCommunity": "感谢谱面创作者们的支持"
 }

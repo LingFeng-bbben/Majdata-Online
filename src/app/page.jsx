@@ -105,6 +105,33 @@ export default function Page() {
       <footer className="site-footer">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
         <AdComponent/>
+        
+        {/* Footer Content */}
+        <div className="footer-content">
+          {/* Copyright */}
+          <div className="footer-copyright">
+            {loc("FooterCopyright")}
+          </div>
+          
+          {/* Open Source Info */}
+          <div className="footer-opensource">
+            <a 
+              href="https://github.com/LingFeng-bbben/Majdata-Online" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="footer-github-link"
+            >
+              {loc("FooterOpenSource")}
+            </a>
+          </div>
+          
+          {/* Community */}
+          <div className="footer-community">
+            {loc("FooterCommunity")}
+          </div>
+        </div>
+
+        {/* Mini Game Link */}
         <a href="/minigame" className="footer-game-link">
           <img className="footerImage" loading="lazy" src={"/bee.webp"} alt={loc("MiniGame")} />
         </a>
