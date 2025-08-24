@@ -29,8 +29,8 @@
   --header-height: var(--header-height-desktop);
   
   /* 智能间距计算 */
-  --content-top-spacing: calc(var(--header-height) + 1rem);
-  --content-top-spacing-large: calc(var(--header-height) + 2rem);
+  --content-top-spacing: calc(var(--header-height) + 0.5rem);
+  --content-top-spacing-large: calc(var(--header-height) + 1rem);
   
   /* 其他样式变量 */
   --glassmorphism-bg: rgba(15, 15, 20, 0.95);
@@ -3545,6 +3545,109 @@ img.songImg {
   padding: var(--container-padding);
 }
 
+/* 移动端搜索栏优化 */
+@media (max-width: 768px) {
+  .search-section {
+    margin-bottom: 0.5rem; /* 大幅减少底部间距 */
+    margin-top: 0.5rem; /* 减少与事件卡片的间距 */
+    padding: 0 1rem; /* 减少左右padding */
+  }
+  
+  .main-content {
+    margin-top: 0.75rem; /* 减少main content与header的间距 */
+  }
+  
+  .search-container {
+    padding: 1.5rem 1rem; /* 减少内部padding */
+    border-radius: 16px; /* 稍微减少圆角 */
+  }
+  
+  .search-row {
+    gap: 1rem; /* 减少元素间距 */
+  }
+  
+  .search-controls {
+    flex-direction: row; /* 移动端下拉框并列排列 */
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* 确保不换行 */
+    align-items: center; /* 垂直居中对齐 */
+  }
+  
+  .sort-selector,
+  .download-format-selector {
+    flex: 1; /* 两个下拉框等宽分布 */
+    min-width: 0; /* 允许flex项目收缩 */
+    overflow: hidden; /* 防止内容溢出 */
+  }
+  
+  .sort-label {
+    font-size: 0.85rem; /* 减小标签字体 */
+    margin-bottom: 0.25rem;
+    white-space: nowrap; /* 防止标签换行 */
+    overflow: hidden; /* 防止内容溢出 */
+    text-overflow: ellipsis; /* 超长文本显示省略号 */
+  }
+  
+  .modern-select {
+    padding: 0.75rem 0.8rem; /* 减少下拉框的padding */
+    font-size: 0.9rem;
+    white-space: nowrap; /* 防止选项文本换行 */
+    overflow: hidden; /* 防止内容溢出 */
+    text-overflow: ellipsis; /* 超长文本显示省略号 */
+  }
+}
+
+/* 小屏幕下进一步优化 */
+@media (max-width: 480px) {
+  .search-section {
+    margin-bottom: 0.5rem; /* 进一步减少间距 */
+    margin-top: 0.25rem; /* 小屏幕下更紧贴事件卡片 */
+    padding: 0 0.2rem;
+  }
+  
+  .main-content {
+    margin-top: 0.75rem; /* 小屏幕下进一步减少间距 */
+  }
+  
+  .search-container {
+    padding: 1rem 0.75rem; /* 更紧凑的padding */
+    border-radius: 12px;
+  }
+  
+  .search-row {
+    gap: 0.75rem;
+  }
+  
+  .search-controls {
+    gap: 0.75rem;
+    flex-wrap: nowrap; /* 确保不换行 */
+    align-items: center; /* 垂直居中对齐 */
+  }
+  
+  .sort-label {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+    white-space: nowrap; /* 防止标签换行 */
+    overflow: hidden; /* 防止内容溢出 */
+    text-overflow: ellipsis; /* 超长文本显示省略号 */
+  }
+  
+  .modern-select {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.85rem;
+    white-space: nowrap; /* 防止选项文本换行 */
+    overflow: hidden; /* 防止内容溢出 */
+    text-overflow: ellipsis; /* 超长文本显示省略号 */
+  }
+  
+  .modern-search {
+    padding: 0.75rem 1rem; /* 减少搜索框的padding */
+    font-size: 0.9rem;
+  }
+}
+
 .search-container {
   background: var(--glassmorphism-bg-primary);
   backdrop-filter: var(--glassmorphism-backdrop);
@@ -6801,5 +6904,345 @@ input[type="number"]::-webkit-inner-spin-button {
   .hr-solid {
     width: 90%;
     margin: 1.25rem auto;
+  }
+}
+
+/* ===== 移动端 Swiper 活动组件样式 ===== */
+
+/* 移动端活动展示容器 */
+.mobile-events-showcase {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-top: calc(var(--content-top-spacing) - 2rem); /* 大幅减少与 header 的间距 */
+  margin-bottom: 0ch; /* 减少与 search 的间距 */
+  padding: 0 1rem;
+}
+
+.mobile-events-container {
+  width: 100%;
+  position: relative;
+}
+
+/* Swiper 包装器 */
+.mobile-swiper-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Swiper 容器样式 */
+.mobile-events-swiper {
+  padding-bottom: 3rem; /* 为分页器留出空间 */
+  overflow: visible;
+}
+
+/* Swiper 滑块 */
+.mobile-event-slide {
+  height: auto;
+  display: flex;
+}
+
+/* 移动端活动卡片 */
+.mobile-event-card {
+  width: 100%;
+  aspect-ratio: 1279 / 372; /* 与桌面端保持相同的宽高比 */
+  border-radius: var(--glassmorphism-border-radius);
+  overflow: hidden;
+  background: var(--glassmorphism-bg-primary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mobile-event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 移动端活动图片容器 */
+.mobile-event-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobile-event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.mobile-event-card:hover .mobile-event-image {
+  transform: scale(1.05);
+}
+
+/* 移动端活动信息覆盖层 */
+.mobile-event-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 1.5rem 1rem 1rem 1rem;
+  color: white;
+}
+
+.mobile-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-event-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  color: white;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.mobile-event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.mobile-event-category {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.mobile-event-status {
+  font-weight: 500;
+}
+
+.mobile-event-status.status-ongoing {
+  color: #10b981;
+}
+
+.mobile-event-status.status-ended {
+  color: #ef4444;
+}
+
+/* 移动端链接样式 */
+.mobile-event-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* More 卡片 - 作为 Swiper 的一页 */
+.mobile-more-slide {
+  height: auto;
+  display: flex;
+}
+
+.mobile-more-card {
+  width: 100%;
+  aspect-ratio: 1279 / 372; /* 与桌面端和活动卡片保持相同的宽高比 */
+  border-radius: var(--glassmorphism-border-radius);
+  overflow: hidden;
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.2) 0%, 
+    rgba(139, 92, 246, 0.2) 50%, 
+    rgba(239, 68, 68, 0.2) 100%
+  );
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-more-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.3) 0%, 
+    rgba(139, 92, 246, 0.3) 50%, 
+    rgba(239, 68, 68, 0.3) 100%
+  );
+}
+
+.mobile-more-card-content {
+  text-align: center;
+  color: white;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.mobile-more-icon-large {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  transition: all 0.3s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-more-card:hover .mobile-more-icon-large {
+  color: #60a5fa;
+}
+
+.mobile-more-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  line-height: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 移动端链接样式更新 */
+.mobile-more-slide .mobile-event-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 无活动状态 */
+.mobile-no-events {
+  width: 100%;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.mobile-no-events-content {
+  background: var(--glassmorphism-bg-primary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  padding: 2rem 1.5rem;
+  box-shadow: var(--glassmorphism-shadow);
+}
+
+.mobile-no-events-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.mobile-view-all-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.mobile-view-all-link:hover {
+  color: #60a5fa;
+}
+
+/* Swiper 分页器自定义样式 */
+.mobile-events-swiper .swiper-pagination {
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  width: auto;
+}
+
+.mobile-events-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+}
+
+.mobile-events-swiper .swiper-pagination-bullet-active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  width: 20px;
+  border-radius: 10px;
+}
+
+/* 中等屏幕优化 */
+@media (max-width: 768px) {
+  .mobile-events-showcase {
+    margin-top: 1rem; /* 移动端大幅减少与 header 的间距 */
+    margin-bottom: 0rem; /* 减少与 search 的间距 */
+  }
+}
+
+/* 小屏幕优化 */
+@media (max-width: 480px) {
+  .mobile-events-showcase {
+    padding: 0 0.75rem;
+    margin-top: 1rem; /* 小屏幕下进一步减少与 header 的间距 */
+    margin-bottom: 0rem; /* 小屏幕下进一步减少与 search 的间距 */
+  }
+  
+  /* 保持宽高比，不设置固定高度 */
+  .mobile-event-card,
+  .mobile-more-card {
+    aspect-ratio: 1279 / 372; /* 继续使用相同的宽高比 */
+  }
+  
+  .mobile-event-title {
+    font-size: 0.9rem;
+  }
+  
+  .mobile-more-title {
+    font-size: 1rem;
+  }
+  
+  .mobile-more-icon-large {
+    font-size: 2.5rem;
+  }
+  
+  .mobile-more-card-content {
+    padding: 1rem 0.75rem;
+    gap: 0.75rem;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* 为不支持 aspect-ratio 的旧浏览器提供回退方案 */
+@supports not (aspect-ratio: 1279 / 372) {
+  .mobile-event-card,
+  .mobile-more-card {
+    height: calc(100vw * 372 / 1279); /* 基于视口宽度计算高度 */
+  }
+  
+  @media (max-width: 480px) {
+    .mobile-event-card,
+    .mobile-more-card {
+      height: calc((100vw - 1.5rem) * 372 / 1279); /* 减去padding */
+    }
   }
 }

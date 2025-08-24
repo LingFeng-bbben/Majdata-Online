@@ -4,10 +4,15 @@ import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { setLanguage, loc } from "./utils";
 import { SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
 import { apiroot3 } from "./apiroot";
-import { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass } from "./utils/eventsData";
+import { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass, getOngoingEvents } from "./utils/eventsData";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -101,7 +106,19 @@ function EventsCarousel(){
   const [currentEvents, setCurrentEvents] = useState([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldRotate, setShouldRotate] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const remainingEventsCount = getNonFeaturedEventsCount();
+
+  // 检测是否为移动端
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // 初始化活动数据
   useEffect(() => {
@@ -110,10 +127,10 @@ function EventsCarousel(){
     setShouldRotate(result.shouldRotate);
   }, []);
 
-  // 智能轮播逻辑：只有在需要轮播时才启动定时器
+  // 智能轮播逻辑：只有在需要轮播时才启动定时器（仅限桌面端）
   useEffect(() => {
-    if (!shouldRotate) {
-      return; // 不需要轮播，直接返回
+    if (!shouldRotate || isMobile) {
+      return; // 不需要轮播或移动端，直接返回
     }
 
     const interval = setInterval(() => {
@@ -133,8 +150,14 @@ function EventsCarousel(){
     }, 7000); // 延长轮播间隔到7秒，让用户有更多时间观看
 
     return () => clearInterval(interval);
-  }, [shouldRotate]);
+  }, [shouldRotate, isMobile]);
 
+  // 移动端渲染
+  if (isMobile) {
+    return <MobileEventsSwiper />;
+  }
+
+  // 桌面端渲染（原有逻辑）
   return (
     <section className="events-showcase">
       <div className="events-showcase-container">
@@ -193,6 +216,110 @@ function EventsCarousel(){
   );
 }
 
+// 移动端专用的 Swiper 组件
+function MobileEventsSwiper() {
+  const [ongoingEvents, setOngoingEvents] = useState([]);
+  const remainingEventsCount = getNonFeaturedEventsCount();
+
+  useEffect(() => {
+    // 获取所有进行中的活动
+    const events = getOngoingEvents().map(event => ({
+      ...event,
+      timeAgo: new Date(event.createDate) < new Date() 
+        ? Math.floor((new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24)) + '天前'
+        : '今天',
+      createDateFormatted: new Date(event.createDate).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }));
+    setOngoingEvents(events);
+  }, []);
+
+  return (
+    <section className="mobile-events-showcase">
+      <div className="mobile-events-container">
+        <div className="mobile-swiper-wrapper">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={1}
+            centeredSlides={false}
+            autoplay={ongoingEvents.length > 0 ? {
+              delay: 5000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            } : false}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true
+            }}
+            navigation={false}
+            loop={false}
+            breakpoints={{
+              480: {
+                slidesPerView: 1.2,
+                spaceBetween: 20
+              },
+              600: {
+                slidesPerView: 1.5,
+                spaceBetween: 24
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 24
+              }
+            }}
+            className="mobile-events-swiper"
+          >
+            {/* 进行中的活动 */}
+            {ongoingEvents.map((event, i) => (
+              <SwiperSlide key={event.id} className="mobile-event-slide">
+                <a href={event.href} className="mobile-event-link">
+                  <div className="mobile-event-card">
+                    <div className="mobile-event-image-container">
+                      <img 
+                        className="mobile-event-image" 
+                        src={event.src} 
+                        alt={event.alt} 
+                        loading="lazy" 
+                      />
+                      <div className="mobile-event-overlay">
+                        <div className="mobile-event-info">
+                          <h3 className="mobile-event-title">{event.title}</h3>
+                          <div className="mobile-event-meta">
+                            <span className="mobile-event-category">{event.category}</span>
+                            <span className={`mobile-event-status ${getEventStatusClass(event)}`}>
+                              • {getEventStatusText(event)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </SwiperSlide>
+            ))}
+            
+            {/* More 页面作为 Swiper 的最后一页 */}
+            <SwiperSlide className="mobile-event-slide mobile-more-slide">
+              <a href="/events" className="mobile-event-link">
+                <div className="mobile-more-card">
+                  <div className="mobile-more-card-content">
+                    <div className="mobile-more-icon-large">→</div>
+                    <h3 className="mobile-more-title">MORE</h3>
+                  </div>
+                </div>
+              </a>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
   const sortOptions = [
     loc("UploadDate"),
@@ -213,6 +340,8 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
               onClick={onChange}
             />
           </div>
+
+          
           <div className="search-controls">
             <div className="sort-selector">
               <label className="sort-label">{loc("SortBy")}</label>
