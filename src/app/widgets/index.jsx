@@ -18,3 +18,4 @@ export { default as MiniGame } from "./MiniGame";
 export { default as AdComponent } from "./AdComponent";
 export { default as PageLayout } from "./PageLayout";
 export { default as UnifiedHeader } from "./UnifiedHeader";
+export { default as FloatingButtons } from "./FloatingButtons";

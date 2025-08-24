@@ -5,13 +5,12 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLanguage, loc } from "./utils";
-import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent, UnifiedHeader } from "./widgets";
+import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
 import { apiroot3 } from "./apiroot";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
-  const [showLanguagePopup, setShowLanguagePopup] = useState(false);
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
@@ -39,51 +38,7 @@ export default function Page() {
       {/* Events Carousel */}
       <EventsCarousel />
       {/* Floating Buttons */}
-      <div className="floating-buttons">
-        {/* Go to Top Button */}
-        <button
-          className="topButton"
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }
-          }}
-          aria-label="回到顶部"
-        >
-          ↑
-        </button>
-
-        {/* Language Settings Button */}
-        <div className="floating-language-button">
-          <button 
-            className="language-float-button"
-            onClick={() => setShowLanguagePopup(!showLanguagePopup)}
-            aria-label={loc("LanguageSettings")}
-          >
-            🌐
-          </button>
-          
-          {/* Language Popup */}
-          {showLanguagePopup && (
-            <>
-              <div 
-                className="language-popup-overlay"
-                onClick={() => setShowLanguagePopup(false)}
-              ></div>
-              <div className="language-popup">
-                <h4 className="language-popup-title">{loc("SelectLanguage")} / Language</h4>
-                <button 
-                  className="language-popup-close"
-                  onClick={() => setShowLanguagePopup(false)}
-                >
-                  ×
-                </button>
-                <LanguageSelector />
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+      <FloatingButtons />
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

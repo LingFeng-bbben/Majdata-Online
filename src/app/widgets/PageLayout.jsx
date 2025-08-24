@@ -10,6 +10,7 @@ import {
   LanguageSelector,
   AdComponent,
   UnifiedHeader,
+  FloatingButtons,
 } from "./index";
 
 export default function PageLayout({
@@ -105,6 +106,9 @@ export default function PageLayout({
           </a>
         </footer>
       )}
+
+      {/* Floating Buttons */}
+      <FloatingButtons />
 
       {/* Toast Container */}
       <ToastContainer
