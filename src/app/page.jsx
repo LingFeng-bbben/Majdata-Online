@@ -41,16 +41,17 @@ export default function Page() {
       {/* Floating Buttons */}
       <div className="floating-buttons">
         {/* Go to Top Button */}
-        <div
+        <button
           className="topButton"
           onClick={() => {
             if (typeof window !== "undefined") {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
+          aria-label="回到顶部"
         >
           ↑
-        </div>
+        </button>
 
         {/* Language Settings Button */}
         <div className="floating-language-button">

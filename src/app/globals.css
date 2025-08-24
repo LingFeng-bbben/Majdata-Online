@@ -1681,7 +1681,7 @@ p {
 }
 
 h1 {
-  background-color: rgb(var(--background-start));
+ 
   color: whitesmoke;
   text-align: center;
   font-size: 3rem;
@@ -4174,6 +4174,7 @@ img.songImg {
   right: 2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   z-index: 100;
 }
@@ -4181,6 +4182,13 @@ img.songImg {
 /* Floating Language Button */
 .floating-language-button {
   position: relative;
+  /* 确保容器不影响内部按钮的尺寸 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 桌面端容器尺寸与按钮一致 */
+  width: 56px;
+  height: 56px;
 }
 
 .language-float-button {
@@ -4200,6 +4208,18 @@ img.songImg {
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.3),
     0 2px 10px rgba(0, 0, 0, 0.2);
+  /* 重置button默认样式 */
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  /* 强制文本完全居中 */
+  line-height: 1;
+  text-align: center;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
 }
 
 .language-float-button:hover {
@@ -4380,6 +4400,12 @@ img.songImg {
     font-size: 1.3rem;
   }
   
+  /* 确保容器与按钮尺寸同步 */
+  .floating-language-button {
+    width: 50px;
+    height: 50px;
+  }
+  
   .language-popup {
     min-width: 280px;
     max-width: 90vw;
@@ -4400,6 +4426,12 @@ img.songImg {
     width: 44px;
     height: 44px;
     font-size: 1.1rem;
+  }
+  
+  /* 确保容器与按钮尺寸同步 */
+  .floating-language-button {
+    width: 44px;
+    height: 44px;
   }
 }
 
@@ -4601,6 +4633,16 @@ img.songImg {
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.3),
     0 2px 10px rgba(0, 0, 0, 0.2);
+  /* 确保盒模型一致 */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* 强制文本完全居中 */
+  line-height: 1;
+  text-align: center;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
 }
 
 .topButton:hover {
