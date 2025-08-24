@@ -219,7 +219,6 @@ function EventsCarousel(){
 // 移动端专用的 Swiper 组件
 function MobileEventsSwiper() {
   const [ongoingEvents, setOngoingEvents] = useState([]);
-  const remainingEventsCount = getNonFeaturedEventsCount();
 
   useEffect(() => {
     // 获取所有进行中的活动
@@ -274,7 +273,7 @@ function MobileEventsSwiper() {
             className="mobile-events-swiper"
           >
             {/* 进行中的活动 */}
-            {ongoingEvents.map((event, i) => (
+            {ongoingEvents.map((event) => (
               <SwiperSlide key={event.id} className="mobile-event-slide">
                 <a href={event.href} className="mobile-event-link">
                   <div className="mobile-event-card">
