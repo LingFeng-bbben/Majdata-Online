@@ -2,10 +2,9 @@
 import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {loc, setLanguage} from "../utils";
-import {Logout, UserInfo, PageLayout} from "../widgets";
+import {PageLayout} from "../widgets";
 import getUsername from "../utils/getUsername";
 
 export default function Page() {
@@ -18,11 +17,7 @@ export default function Page() {
   }, []);
   if (!ready) return <div className="loading"></div>;
 
-  const navigationItems = [
-    { href: "/", label: loc("HomePage") },
-    { href: "#", label: "UserInfo", component: <UserInfo /> },
-    { href: "#", label: "Logout", component: <Logout /> }
-  ];
+
 
   return (
     <PageLayout 

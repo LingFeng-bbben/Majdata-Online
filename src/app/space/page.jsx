@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import {apiroot3} from "../apiroot";
-import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useSWR from "swr";
 import {useSearchParams} from "next/navigation";
@@ -13,8 +12,6 @@ import remarkGfm from 'remark-gfm'
 import {loc, setLanguage} from "../utils";
 import {
   RecentPlayed,
-  UserInfo,
-  Logout,
   SongList,
   PageLayout
 } from "../widgets";

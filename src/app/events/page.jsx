@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { setLanguage, loc } from "../utils";
+import { setLanguage } from "../utils";
 import { PageLayout } from "../widgets";
 import { getEventsWithTimeAgo, getEventStatusText, getEventStatusClass } from "../utils/eventsData";
 

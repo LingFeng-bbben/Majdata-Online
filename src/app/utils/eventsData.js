@@ -214,7 +214,7 @@ export function shouldEnableCarousel() {
 }
 
 // 保留原有函数作为兼容（已废弃，建议使用新的轮播管理器）
-export function getRandomOngoingEvents(count = 2) {
+export function getRandomOngoingEvents() {
   const result = carouselManager.initialize();
   return result.events;
 }

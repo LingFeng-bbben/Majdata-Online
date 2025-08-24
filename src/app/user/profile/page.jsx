@@ -2,14 +2,11 @@
 import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc, setLanguage } from "../../utils";
 import {
-  Logout,
   IntroUploader,
   AvatarUploader,
-  UserInfo,
   PageLayout,
 } from "../../widgets";
 

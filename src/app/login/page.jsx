@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {setLanguage, loc} from "../utils";
 import {PageLayout} from "../widgets";

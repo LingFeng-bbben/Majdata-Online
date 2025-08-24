@@ -3,12 +3,9 @@ import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import { apiroot3 } from "../../apiroot";
 import "tippy.js/dist/tippy.css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUsername, loc, setLanguage } from "../../utils";
 import {
-  UserInfo,
-  Logout,
   ChartUploader,
   SongList,
   PageLayout,

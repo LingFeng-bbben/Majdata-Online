@@ -5,8 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc } from "../utils";
 import {
-  MajdataLogo,
-  UserInfo,
   LanguageSelector,
   AdComponent,
   UnifiedHeader,
@@ -15,8 +13,6 @@ import {
 
 export default function PageLayout({
   children,
-  showNavigation = true,
-  navigationItems = [],
   showSettings = true,
   showAds = true,
   showFooter = true,

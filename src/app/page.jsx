@@ -5,8 +5,9 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLanguage, loc } from "./utils";
-import { LanguageSelector, MajdataLogo, UserInfo, SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
+import { SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
 import { apiroot3 } from "./apiroot";
+import { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass } from "./utils/eventsData";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -97,7 +98,6 @@ export default function Page() {
 }
 
 function EventsCarousel(){
-  const { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass } = require('./utils/eventsData.js');
   const [currentEvents, setCurrentEvents] = useState([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldRotate, setShouldRotate] = useState(false);
@@ -400,45 +400,3 @@ function IntegratedDownloadTypeSelector(){
   );
 }
 
-// 保留原版本的DownloadTypeSelector以防其他地方需要使用
-function DownloadTypeSelector(){
-  const [currentType,setCurrentType] = useState("zip")
-  const [justChanged, setJustChanged] = useState(false)
-
-  useEffect(()=>{
-    //get init type
-    const type = localStorage.getItem("DownloadType")
-    if(type!=undefined)
-      setCurrentType(type);
-  })
-
-  const handleChange = async (e) => {
-      const newtype = e.target.value
-      localStorage.setItem("DownloadType", newtype)
-      setCurrentType(newtype)
-      
-      // 显示保存成功状态
-      setJustChanged(true)
-      setTimeout(() => setJustChanged(false), 2000)
-    };
-
-  return (
-    <div className={`setting-item ${justChanged ? 'setting-success' : ''}`}>
-      <div className="setting-icon">{justChanged ? '✅' : '📁'}</div>
-      <div className="setting-content">
-        <label className="setting-label">
-          {loc("DownloadFormatFull")} / Download Format
-          {justChanged && <span className="setting-status">{loc("Saved")}</span>}
-        </label>
-        <select
-          value={currentType}
-          onChange={handleChange}
-          className="setting-select"
-        >
-          <option value="zip">{loc("ZipFormat")}</option>
-          <option value="adx">{loc("AdxFormat")}</option>
-        </select>
-      </div>
-    </div>
-  );
-}
