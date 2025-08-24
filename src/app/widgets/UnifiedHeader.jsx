@@ -8,8 +8,10 @@ import { apiroot3 } from "../apiroot";
 export default function UnifiedHeader() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMainNavOpen, setIsMainNavOpen] = useState(false);
+  const [isMobileAuthMenuOpen, setIsMobileAuthMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const mainNavRef = useRef(null);
+  const mobileAuthMenuRef = useRef(null);
 
   const fetcher = (url) =>
     fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
@@ -31,6 +33,9 @@ export default function UnifiedHeader() {
       }
       if (mainNavRef.current && !mainNavRef.current.contains(event.target)) {
         setIsMainNavOpen(false);
+      }
+      if (mobileAuthMenuRef.current && !mobileAuthMenuRef.current.contains(event.target)) {
+        setIsMobileAuthMenuOpen(false);
       }
     }
 
@@ -191,15 +196,40 @@ export default function UnifiedHeader() {
               )}
             </div>
           ) : (
-            <div className="auth-links">
-              <a href="/login" className="auth-link">
-                <span className="auth-label desktop-only">{loc("Login")}</span>
-              </a>
-              <a href="/register" className="auth-link register">
-                <span className="auth-label desktop-only">
-                  {loc("Register")}
-                </span>
-              </a>
+            <div className="auth-section" ref={mobileAuthMenuRef}>
+              {/* 桌面端：传统链接形式 */}
+              <div className="auth-links desktop-auth">
+                <a href="/login" className="auth-link">
+                  <span className="auth-label">{loc("Login")}</span>
+                </a>
+                <a href="/register" className="auth-link register">
+                  <span className="auth-label">{loc("Register")}</span>
+                </a>
+              </div>
+              
+              {/* 移动端：下拉菜单形式 */}
+              <div className="mobile-auth-dropdown">
+                <button
+                  className={`mobile-auth-trigger ${isMobileAuthMenuOpen ? "active" : ""}`}
+                  onClick={() => setIsMobileAuthMenuOpen(!isMobileAuthMenuOpen)}
+                >
+                  <span className="auth-icon">Account</span>
+                  <span className={`dropdown-arrow ${isMobileAuthMenuOpen ? "open" : ""}`}>
+                    ▼
+                  </span>
+                </button>
+
+                {isMobileAuthMenuOpen && (
+                  <div className="mobile-auth-menu">
+                    <a href="/login" className="mobile-auth-item">
+                      <span className="menu-label">{loc("Login")}</span>
+                    </a>
+                    <a href="/register" className="mobile-auth-item register">
+                      <span className="menu-label">{loc("Register")}</span>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

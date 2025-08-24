@@ -483,6 +483,109 @@ p {
   50% { opacity: 1; }
 }
 
+/* Auth Section Container */
+.auth-section {
+  position: relative;
+}
+
+/* Mobile Auth Dropdown */
+.mobile-auth-dropdown {
+  display: none; /* 默认隐藏，在移动端显示 */
+  position: relative;
+}
+
+.mobile-auth-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  min-height: 40px;
+}
+
+.mobile-auth-trigger:hover,
+.mobile-auth-trigger.active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.mobile-auth-trigger .auth-icon {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.mobile-auth-trigger .dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-auth-trigger .dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.mobile-auth-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  min-width: 160px;
+  background: var(--glassmorphism-bg-primary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  padding: 0.75rem 0;
+  z-index: 1001;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+.mobile-auth-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-auth-item:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+  color: #fff;
+}
+
+.mobile-auth-item.register {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.15));
+  color: #10B981;
+  font-weight: 600;
+}
+
+.mobile-auth-item.register:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.25));
+  color: #34D399;
+}
+
+.mobile-auth-item .menu-label {
+  flex: 1;
+}
+
 .auth-icon {
   font-size: 1rem;
 }
@@ -621,6 +724,15 @@ p {
   display: inline;
 }
 
+/* 桌面端：显示传统链接，隐藏移动端下拉菜单 */
+.desktop-auth {
+  display: flex;
+}
+
+.mobile-auth-dropdown {
+  display: none;
+}
+
 
 
 /* 智能响应式 Header 高度系统 */
@@ -732,7 +844,15 @@ p {
     right: -8px;
   }
   
-  /* 移动端：简化认证链接 */
+  /* 移动端：切换到下拉菜单样式 */
+  .desktop-auth {
+    display: none; /* 隐藏桌面端传统链接 */
+  }
+  
+  .mobile-auth-dropdown {
+    display: block; /* 显示移动端下拉菜单 */
+  }
+  
   .auth-links {
     gap: 0.25rem;
   }
@@ -744,8 +864,9 @@ p {
     min-height: 36px;
   }
   
-  .auth-icon {
-    font-size: 1.2rem;
+  /* 移动端：Account文字样式 */
+  .mobile-auth-trigger .auth-icon {
+    font-size: 0.9rem;
   }
 }
 
@@ -801,6 +922,11 @@ p {
     padding: 0.4rem 0.6rem;
     font-size: 0.75rem;
     min-height: 32px;
+  }
+  
+  /* 极小屏幕下优化Account文字显示 */
+  .mobile-auth-trigger .auth-icon {
+    font-size: 0.8rem;
   }
   
   .scroll-indicator {
