@@ -821,6 +821,8 @@ p {
   /* 移动端：显示返回主页按钮 */
   .mobile-home-button {
     display: flex;
+    width: 40px;
+    height: 40px;
   }
   
   /* 移动端：调整左侧区域布局 */
@@ -4371,15 +4373,14 @@ img.songImg {
     0 20px 60px rgba(0, 0, 0, 0.5),
     0 4px 20px rgba(59, 130, 246, 0.1);
   z-index: 999;
-  min-width: 300px;
+  min-width: 350px;
   max-width: 400px;
   padding: 1.5rem;
   animation: popupFadeIn 0.2s ease-out;
-  position: relative;
 }
 
 .language-popup-simple {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

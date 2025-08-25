@@ -86,7 +86,7 @@ export default function UnifiedHeader() {
           {/* Mobile Home Button - 移动端返回主页按钮 */}
           <div className="mobile-home-button">
             <a href="/" className="home-button-link">
-              <span className="home-icon">←</span>
+              <span className="home-icon">🏠</span>
             </a>
           </div>
 
