@@ -120,58 +120,6 @@ export default function PageLayout({
         theme="dark"
       />
 
-      {/* Floating Buttons */}
-      <div className="floating-buttons">
-        {/* Go to Top Button */}
-        <button
-          className="topButton"
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }
-          }}
-          aria-label="回到顶部"
-        >
-          ↑
-        </button>
-
-        {/* Language Settings Button */}
-        {showSettings && (
-          <div className="floating-language-button">
-            <button
-              className="language-float-button"
-              onClick={() => setShowLanguagePopup(!showLanguagePopup)}
-              aria-label={loc("LanguageSettings")}
-            >
-              🌐
-            </button>
-
-            {/* Language Popup */}
-            {showLanguagePopup && (
-              <>
-                <div
-                  className="language-popup-overlay"
-                  onClick={() => setShowLanguagePopup(false)}
-                ></div>
-                <div className="language-popup-simple">
-                  <div className="language-popup-header">
-                    <span className="language-popup-title">
-                      {loc("SelectLanguage")} / Language
-                    </span>
-                    <button
-                      className="language-popup-close"
-                      onClick={() => setShowLanguagePopup(false)}
-                    >
-                      ×
-                    </button>
-                  </div>
-                  <LanguageSelector />
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
     </>
   );
 }
