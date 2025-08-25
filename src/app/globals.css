@@ -3556,8 +3556,8 @@ img.songImg {
   border: 1px solid whitesmoke;
   text-align: center;
   width: 15rem;
-  height: 2rem;
-  margin: 10px;
+  height: 1rem;
+  margin: auto;
   border-radius: 10px;
   box-shadow: 2px 2px 5px gray;
 }
@@ -3566,34 +3566,34 @@ img.songImg {
 .search-section {
   max-width: var(--container-max-width);
   margin: var(--container-margin);
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   padding: var(--container-padding);
 }
 
 /* 移动端搜索栏优化 */
 @media (max-width: 768px) {
   .search-section {
-    margin-bottom: 0.5rem; /* 大幅减少底部间距 */
-    margin-top: 0.5rem; /* 减少与事件卡片的间距 */
-    padding: 0 1rem; /* 减少左右padding */
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
+    padding: 0 0.75rem;
   }
   
   .main-content {
-    margin-top: 0.75rem; /* 减少main content与header的间距 */
+    margin-top: 0.5rem;
   }
   
   .search-container {
-    padding: 1.5rem 1rem; /* 减少内部padding */
-    border-radius: 16px; /* 稍微减少圆角 */
+    padding: 1rem 0.75rem;
+    border-radius: 12px;
   }
   
   .search-row {
-    gap: 1rem; /* 减少元素间距 */
+    gap: 0.75rem;
   }
   
   .search-controls {
     flex-direction: row; /* 移动端下拉框并列排列 */
-    gap: 1rem;
+    gap: 0.75rem;
     width: 100%;
     justify-content: space-between;
     flex-wrap: nowrap; /* 确保不换行 */
@@ -3605,7 +3605,6 @@ img.songImg {
     flex: 1; /* 两个下拉框等宽分布 */
     min-width: 0; /* 允许flex项目收缩 */
     overflow: hidden; /* 防止内容溢出 */
-    /* 移动端隐藏label */
     flex-direction: column;
   }
   
@@ -3616,7 +3615,7 @@ img.songImg {
   }
   
   .sort-label {
-    font-size: 0.85rem; /* 减小标签字体 */
+    font-size: 0.85rem;
     margin-bottom: 0.25rem;
     white-space: nowrap; /* 防止标签换行 */
     overflow: hidden; /* 防止内容溢出 */
@@ -3624,13 +3623,14 @@ img.songImg {
   }
   
   .modern-select {
-    padding: 0.75rem 0.8rem; /* 减少下拉框的padding */
-    font-size: 0.9rem;
+    padding: 0.6rem 0.6rem;
+    font-size: 0.85rem;
     white-space: nowrap; /* 防止选项文本换行 */
     overflow: hidden; /* 防止内容溢出 */
     text-overflow: ellipsis; /* 超长文本显示省略号 */
     width: 100%; /* 确保在移动端占满容器宽度 */
     min-width: 0; /* 允许收缩 */
+    height: 2.5rem;
   }
   
   /* 移动端下拉框的placeholder样式优化 */
@@ -3639,31 +3639,38 @@ img.songImg {
     font-weight: 500;
     font-style: italic;
   }
+  
+  /* 移动端搜索框优化 */
+  .modern-search {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    height: 2.5rem;
+  }
 }
 
-/* 小屏幕下进一步优化 */
+/* 小屏幕优化 */
 @media (max-width: 480px) {
   .search-section {
-    margin-bottom: 0.5rem; /* 进一步减少间距 */
-    margin-top: 0.25rem; /* 小屏幕下更紧贴事件卡片 */
-    padding: 0 0.2rem;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+    padding: 0 0.5rem;
   }
   
   .main-content {
-    margin-top: 0.75rem; /* 小屏幕下进一步减少间距 */
+    margin-top: 0.4rem;
   }
   
   .search-container {
-    padding: 1rem 0.75rem; /* 更紧凑的padding */
-    border-radius: 12px;
+    padding: 0.75rem 0.5rem;
+    border-radius: 10px;
   }
   
   .search-row {
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
   
   .search-controls {
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: nowrap; /* 确保不换行 */
     align-items: center; /* 垂直居中对齐 */
   }
@@ -3683,13 +3690,14 @@ img.songImg {
   }
   
   .modern-select {
-    padding: 0.6rem 0.7rem;
-    font-size: 0.85rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
     white-space: nowrap; /* 防止选项文本换行 */
     overflow: hidden; /* 防止内容溢出 */
     text-overflow: ellipsis; /* 超长文本显示省略号 */
     width: 100%; /* 确保占满容器宽度 */
     min-width: 0; /* 允许收缩 */
+    height: 2.2rem;
   }
   
   /* 小屏幕下拉框的placeholder样式 */
@@ -3697,12 +3705,13 @@ img.songImg {
     color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   
   .modern-search {
-    padding: 0.75rem 1rem; /* 减少搜索框的padding */
-    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    height: 2.2rem;
   }
 }
 
@@ -3784,8 +3793,8 @@ img.songImg {
 
 .modern-search {
   width: 100%;
-  padding: 1.2rem 1.8rem;
-  font-size: 1.1rem;
+  padding: 1rem 1.8rem;
+  font-size: 1rem;
   background: rgba(20, 20, 25, 0.8);
   backdrop-filter: blur(15px) saturate(150%);
   border: 2px solid rgba(255, 255, 255, 0.15);
