@@ -3544,7 +3544,7 @@ img.songImg {
 
 /* Search Section */
 .search-section {
-  max-width: var(--container-max-width);
+  max-width: 70%;
   margin: var(--container-margin);
   margin-bottom: 1rem;
   padding: var(--container-padding);
@@ -3565,8 +3565,9 @@ img.songImg {
 @media (max-width: 768px) {
   .search-section {
     margin-bottom: 0.25rem;
-    margin-top: 0.25rem;
+    margin-top: 1rem;
     padding: 0 0.75rem;
+    max-width: 90%;
   }
   
   .main-content {
@@ -3832,6 +3833,7 @@ img.songImg {
 @media (max-width: 480px) {
   .search-section {
     margin-top: 0.75rem;
+    max-width: 90%;
   }
 
   .search-container{
@@ -3843,7 +3845,7 @@ img.songImg {
   }
 
   .search-controls {
-    gap: 0.5rem;
+    gap: 1rem;
     flex-wrap: nowrap; /* 确保不换行 */
     align-items: center; /* 垂直居中对齐 */
   }
@@ -3890,7 +3892,7 @@ img.songImg {
   }
 
   .search-row {
-    gap: 0.1rem;
+    gap: 0.5rem;
   }
 
  
