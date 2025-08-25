@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { setLanguage, loc } from "../utils";
-import { MiniGame, MajdataLogo } from "../widgets";
+import { MiniGame, MajdataLogo, PageLayout } from "../widgets";
 
 
 export default function Page() {
@@ -18,30 +17,17 @@ export default function Page() {
   }, []);
 
   if (!ready) return <div className="loading"></div>;
+  
   return (
-    <>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div className="seprate"></div>
-      <MajdataLogo />
-            <div className="links">
-        <div className="linkContent">
-          <a href="../">{loc("Back")}</a>
-        </div>
+    <PageLayout 
+      title={loc("MiniGame")}
+      className="minigame-page"
+      showFooter={true}
+    >
+      <div className="minigame-content">
+        <MiniGame/>
+      
       </div>
-      <MiniGame/>
-
-      <img className="footerImage" loading="lazy" src={"/bee.webp"} alt="" />
-    </>
+    </PageLayout>
   );
 }

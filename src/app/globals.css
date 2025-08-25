@@ -1350,7 +1350,13 @@ p {
 /* Events Showcase 智能间距 */
 .events-showcase {
   margin-top: var(--content-top-spacing);
+  margin-bottom: 2rem;
   padding: 0 1rem;
+}
+
+/* 主页特殊样式调整 */
+.home-page .events-showcase {
+  margin-top: 2rem; /* 主页中events应该紧贴header */
 }
 
 /* 移动端适配 */
@@ -1379,6 +1385,7 @@ p {
 @media (max-width: 480px) {
   .events-showcase {
     padding: 0 0.75rem;
+    margin: 1rem;
   }
   
   .events-grid {
@@ -1631,6 +1638,7 @@ p {
 @media (max-width: 768px) {
   .events-page {
     padding: 2rem 0;
+    margin: 2rem;
   }
   
   .events-page-title {
@@ -1743,6 +1751,7 @@ h2 {
   
   .search-container {
     padding: 1.5rem;
+    margin-top: 1rem;
   }
   
   .search-row {
@@ -1811,6 +1820,7 @@ h2 {
   .search-container {
     padding: 1rem;
     border-radius: 12px;
+    margin-top: 1rem;
   }
   
   .search-controls {
@@ -3927,6 +3937,7 @@ img.songImg {
   height: auto;
   aspect-ratio: 4/3;
   margin: auto;
+  border-radius: 10px;
 }
 
 .majCanvas {

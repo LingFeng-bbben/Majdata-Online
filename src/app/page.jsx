@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 
 import 'swiper/css/pagination';
 import { setLanguage, loc } from "./utils";
-import { SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
+import { SongList, PageLayout } from "./widgets";
 import { apiroot3 } from "./apiroot";
-import { getCarouselEvents, getNextCarouselEvents, getNonFeaturedEventsCount, getEventStatusText, getEventStatusClass, getOngoingEvents } from "./utils/eventsData";
+import { getEventStatusText, getEventStatusClass, getOngoingEvents, getNonFeaturedEventsCount } from "./utils/eventsData";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -34,77 +33,21 @@ export default function Page() {
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <>
-      {/* Background */}
-      <div className="bg"></div>
-      
-      {/* Unified Header */}
-      <UnifiedHeader />
-
+    <PageLayout 
+      showBackToHome={false}
+      className="home-page"
+    >
       {/* Events Carousel */}
       <EventsCarousel />
-      {/* Floating Buttons */}
-      <FloatingButtons />
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      {/* Main Content */}
-      <main className="main-content">
-        <MainComp />
-      </main>
-
       
-      {/* Footer */}
-      <footer className="site-footer">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7973799234411834" crossOrigin="anonymous"></script>
-        <AdComponent/>
-        
-        {/* Footer Content */}
-        <div className="footer-content">
-          {/* Copyright */}
-          <div className="footer-copyright">
-            {loc("FooterCopyright")}
-          </div>
-          
-          {/* Open Source Info */}
-          <div className="footer-opensource">
-            <a 
-              href="https://github.com/LingFeng-bbben/Majdata-Online" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="footer-github-link"
-            >
-              {loc("FooterOpenSource")}
-            </a>
-          </div>
-          
-          {/* Community */}
-          <div className="footer-community">
-            {loc("FooterCommunity")}
-          </div>
-        </div>
-
-        {/* Mini Game Link */}
-        <a href="/minigame" className="footer-game-link">
-          <img className="footerImage" loading="lazy" src={"/bee.webp"} alt={loc("MiniGame")} />
-        </a>
-      </footer>
-    </>
+      {/* Main Content */}
+      <MainComp />
+    </PageLayout>
   );
 }
 
 function EventsCarousel(){
   const [isMobile, setIsMobile] = useState(false);
-  const remainingEventsCount = getNonFeaturedEventsCount();
 
   // 检测是否为移动端
   useEffect(() => {
@@ -259,7 +202,7 @@ function MobileEventsSwiper() {
       <div className="mobile-events-container">
         <div className="mobile-swiper-wrapper">
           <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
+            modules={[Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
             centeredSlides={false}

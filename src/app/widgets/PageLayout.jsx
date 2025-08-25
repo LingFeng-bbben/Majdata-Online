@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc } from "../utils";
 import {
-  LanguageSelector,
   AdComponent,
   UnifiedHeader,
   FloatingButtons,
@@ -13,14 +12,12 @@ import {
 
 export default function PageLayout({
   children,
-  showSettings = true,
   showAds = true,
   showFooter = true,
   showBackToHome = true,
   title = null,
   className = "",
 }) {
-  const [showLanguagePopup, setShowLanguagePopup] = useState(false);
   return (
     <>
       {/* Background */}
