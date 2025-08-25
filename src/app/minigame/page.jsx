@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 
 import { setLanguage, loc } from "../utils";
-import { MiniGame, MajdataLogo, PageLayout } from "../widgets";
+import { MiniGame, PageLayout } from "../widgets";
 
 
 export default function Page() {

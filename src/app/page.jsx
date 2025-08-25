@@ -281,12 +281,26 @@ function MobileEventsSwiper() {
 }
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
+  const [isMobile, setIsMobile] = useState(false);
+  
   const sortOptions = [
     loc("UploadDate"),
     loc("LikeCount"),
     loc("CommentCount"),
     loc("PlayCount"),
   ];
+
+  // 检测是否为移动端
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="search-section">
       <div className="search-container">
@@ -304,15 +318,22 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
           
           <div className="search-controls">
             <div className="sort-selector">
-              <label className="sort-label">{loc("SortBy")}</label>
+              {!isMobile && <label className="sort-label">{loc("SortBy")}</label>}
               <select
-                value={sortType}
+                value={isMobile ? (sortType === undefined ? "placeholder" : sortType) : sortType}
                 onChange={(e) => {
+                  if (e.target.value === "placeholder") return;
                   const val = parseInt(e.target.value);
                   onSortChange(val);
                 }}
                 className="sortSelect modern-select"
+                data-mobile-label={loc("SortBy")}
               >
+                {isMobile && (
+                  <option value="placeholder" disabled>
+                    {loc("SortBy")}
+                  </option>
+                )}
                 {sortOptions.map((label, i) => (
                   <option key={i} value={i}>
                     {label}
@@ -320,7 +341,7 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 ))}
               </select>
             </div>
-            <IntegratedDownloadTypeSelector />
+            <IntegratedDownloadTypeSelector isMobile={isMobile} />
           </div>
         </div>
       </div>
@@ -450,7 +471,7 @@ function MainComp() {
 }
 
 // 集成到搜索栏的简化版本
-function IntegratedDownloadTypeSelector(){
+function IntegratedDownloadTypeSelector({ isMobile }){
   const [currentType,setCurrentType] = useState("zip")
   const [justChanged, setJustChanged] = useState(false)
 
@@ -463,6 +484,7 @@ function IntegratedDownloadTypeSelector(){
 
   const handleChange = async (e) => {
       const newtype = e.target.value
+      if (newtype === "placeholder") return; // 忽略placeholder选择
       localStorage.setItem("DownloadType", newtype)
       setCurrentType(newtype)
       
@@ -473,15 +495,24 @@ function IntegratedDownloadTypeSelector(){
 
   return (
     <div className="download-format-selector">
-      <label className={`sort-label ${justChanged ? 'label-success' : ''}`}>
-        {loc("DownloadFormat")}
-        {justChanged && <span className="success-indicator">✓</span>}
-      </label>
+      {!isMobile && (
+        <label className={`sort-label ${justChanged ? 'label-success' : ''}`}>
+          {loc("DownloadFormat")}
+          {justChanged && <span className="success-indicator">✓</span>}
+        </label>
+      )}
       <select
-        value={currentType}
+        value={isMobile ? (currentType || "placeholder") : currentType}
         onChange={handleChange}
         className="sortSelect modern-select"
+        data-mobile-label={loc("DownloadFormat")}
       >
+        {isMobile && (
+          <option value="placeholder" disabled>
+            {loc("DownloadFormat")}
+            {justChanged && " ✓"}
+          </option>
+        )}
         <option value="zip">ZIP</option>
         <option value="adx">ADX</option>
       </select>

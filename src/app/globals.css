@@ -3605,6 +3605,14 @@ img.songImg {
     flex: 1; /* 两个下拉框等宽分布 */
     min-width: 0; /* 允许flex项目收缩 */
     overflow: hidden; /* 防止内容溢出 */
+    /* 移动端隐藏label */
+    flex-direction: column;
+  }
+  
+  /* 移动端隐藏label */
+  .sort-selector .sort-label,
+  .download-format-selector .sort-label {
+    display: none;
   }
   
   .sort-label {
@@ -3621,6 +3629,15 @@ img.songImg {
     white-space: nowrap; /* 防止选项文本换行 */
     overflow: hidden; /* 防止内容溢出 */
     text-overflow: ellipsis; /* 超长文本显示省略号 */
+    width: 100%; /* 确保在移动端占满容器宽度 */
+    min-width: 0; /* 允许收缩 */
+  }
+  
+  /* 移动端下拉框的placeholder样式优化 */
+  .modern-select option[disabled] {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-style: italic;
   }
 }
 
@@ -3651,6 +3668,12 @@ img.songImg {
     align-items: center; /* 垂直居中对齐 */
   }
   
+  /* 小屏幕下确保label隐藏 */
+  .sort-selector .sort-label,
+  .download-format-selector .sort-label {
+    display: none;
+  }
+  
   .sort-label {
     font-size: 0.8rem;
     margin-bottom: 0.2rem;
@@ -3665,6 +3688,16 @@ img.songImg {
     white-space: nowrap; /* 防止选项文本换行 */
     overflow: hidden; /* 防止内容溢出 */
     text-overflow: ellipsis; /* 超长文本显示省略号 */
+    width: 100%; /* 确保占满容器宽度 */
+    min-width: 0; /* 允许收缩 */
+  }
+  
+  /* 小屏幕下拉框的placeholder样式 */
+  .modern-select option[disabled] {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 0.8rem;
   }
   
   .modern-search {
