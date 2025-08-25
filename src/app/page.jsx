@@ -308,7 +308,7 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
           <div className="search-bar">
             <input
               type="text"
-              className="searchInput modern-search"
+              className="modern-search"
               placeholder={initS === "" ? loc("SearchPlaceholder") : initS}
               onChange={onChange}
               onClick={onChange}
