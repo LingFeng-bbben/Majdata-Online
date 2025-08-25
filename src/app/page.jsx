@@ -5,9 +5,9 @@ import { useDebouncedCallback } from "use-debounce";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
+
 import 'swiper/css/pagination';
 import { setLanguage, loc } from "./utils";
 import { SongList, AdComponent, UnifiedHeader, FloatingButtons } from "./widgets";
@@ -103,9 +103,6 @@ export default function Page() {
 }
 
 function EventsCarousel(){
-  const [currentEvents, setCurrentEvents] = useState([]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [shouldRotate, setShouldRotate] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const remainingEventsCount = getNonFeaturedEventsCount();
 
@@ -120,96 +117,117 @@ function EventsCarousel(){
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // 初始化活动数据
+  // 移动端和PC端都使用Swiper
+  return isMobile ? <MobileEventsSwiper /> : <DesktopEventsSwiper />;
+}
+
+// PC端专用的 Swiper 组件
+function DesktopEventsSwiper() {
+  const [ongoingEvents, setOngoingEvents] = useState([]);
+  const remainingEventsCount = getNonFeaturedEventsCount();
+
   useEffect(() => {
-    const result = getCarouselEvents();
-    setCurrentEvents(result.events);
-    setShouldRotate(result.shouldRotate);
+    // 获取所有进行中的活动
+    const events = getOngoingEvents().map(event => ({
+      ...event,
+      timeAgo: new Date(event.createDate) < new Date() 
+        ? Math.floor((new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24)) + '天前'
+        : '今天',
+      createDateFormatted: new Date(event.createDate).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }));
+    setOngoingEvents(events);
   }, []);
 
-  // 智能轮播逻辑：只有在需要轮播时才启动定时器（仅限桌面端）
-  useEffect(() => {
-    if (!shouldRotate || isMobile) {
-      return; // 不需要轮播或移动端，直接返回
-    }
-
-    const interval = setInterval(() => {
-      // 第一阶段：开始淡出
-      setIsTransitioning(true);
-      
-      // 第二阶段：在淡出进行到一半时更换内容
-      setTimeout(() => {
-        const result = getNextCarouselEvents();
-        setCurrentEvents(result.events);
-      }, 300); // 在过渡进行到一半时更换内容
-      
-      // 第三阶段：继续完成淡入效果
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 650); // 稍微延长总过渡时间
-    }, 7000); // 延长轮播间隔到7秒，让用户有更多时间观看
-
-    return () => clearInterval(interval);
-  }, [shouldRotate, isMobile]);
-
-  // 移动端渲染
-  if (isMobile) {
-    return <MobileEventsSwiper />;
-  }
-
-  // 桌面端渲染（原有逻辑）
   return (
     <section className="events-showcase">
       <div className="events-showcase-container">
-        <div className="events-grid">
-          {/* 智能轮播活动卡片 */}
-          {currentEvents.map((event, i) => (
-            <div 
-              key={`${event.id}-${i}`} 
-              className={`event-card ${isTransitioning ? 'transitioning' : ''} ${!shouldRotate ? 'static' : ''}`}
-            >
-              <a href={event.href} className="event-link">
-                <div className="event-image-container">
-                  <img 
-                    className="event-image" 
-                    src={event.src} 
-                    alt={event.alt} 
-                    loading="lazy" 
-                  />
-                  <div className="event-hover-info">
-                    <div className="event-details">
-                      <h3 className="event-title">{event.title}</h3>
-                      <div className="event-meta">
-                        <span className="event-category">{event.category}</span>
-                        <span className={`event-status ${getEventStatusClass(event)}`}>
-                          • {getEventStatusText(event)}
-                        </span>
-                        <span className="event-time" title={`活动创建于 ${event.createDateFormatted}`}>
-                          • {event.timeAgo}
-                        </span>
+        <div className="desktop-swiper-wrapper">
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={2}
+            centeredSlides={false}
+            autoplay={ongoingEvents.length > 1 ? {
+              delay: 7000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            } : false}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true
+            }}
+            navigation={false}
+            loop={ongoingEvents.length > 2}
+            breakpoints={{
+              1024: {
+                slidesPerView: 2,
+                spaceBetween: 16
+              },
+              1280: {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              1440: {
+                slidesPerView: 2,
+                spaceBetween: 24
+              }
+            }}
+            className="desktop-events-swiper"
+          >
+            {/* 进行中的活动 */}
+            {ongoingEvents.map((event) => (
+              <SwiperSlide key={event.id} className="desktop-event-slide">
+                <div className="event-card">
+                  <a href={event.href} className="event-link">
+                    <div className="event-image-container">
+                      <img 
+                        className="event-image" 
+                        src={event.src} 
+                        alt={event.alt} 
+                        loading="lazy" 
+                      />
+                      <div className="event-hover-info">
+                        <div className="event-details">
+                          <h3 className="event-title">{event.title}</h3>
+                          <div className="event-meta">
+                            <span className="event-category">{event.category}</span>
+                            <span className={`event-status ${getEventStatusClass(event)}`}>
+                              • {getEventStatusText(event)}
+                            </span>
+                            <span className="event-time" title={`活动创建于 ${event.createDateFormatted}`}>
+                              • {event.timeAgo}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                  </a>
+                </div>
+              </SwiperSlide>
+            ))}
+            
+            {/* More 页面作为 Swiper 的最后一页 */}
+            <SwiperSlide className="desktop-event-slide desktop-more-slide">
+              <div className="event-card more-card">
+                <a href="/events" className="event-link">
+                  <div className="more-content">
+                    <div className="more-icon">→</div>
+                    <div className="more-text">more</div>
                   </div>
-                </div>
-              </a>
-            </div>
-          ))}
-          
-          {/* 第三个卡片：more 按钮（不参与轮播） */}
-          <div className="event-card more-card">
-            <a href="/events" className="event-link">
-              <div className="more-content">
-                <div className="more-icon">→</div>
-                <div className="more-text">more</div>
+                  <div className="more-overlay">
+                    <div className="more-hover-text">
+                      <span>{loc("ViewAllEvents")}</span>
+                      <span className="more-count">+{remainingEventsCount} {loc("EventsCount")}</span>
+                    </div>
+                  </div>
+                </a>
               </div>
-              <div className="more-overlay">
-                <div className="more-hover-text">
-                  <span>{loc("ViewAllEvents")}</span>
-                  <span className="more-count">+{remainingEventsCount} {loc("EventsCount")}</span>
-                </div>
-              </div>
-            </a>
-          </div>
+            </SwiperSlide>
+          </Swiper>
         </div>
       </div>
     </section>

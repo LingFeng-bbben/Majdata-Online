@@ -7260,3 +7260,117 @@ input[type="number"]::-webkit-inner-spin-button {
     }
   }
 }
+
+/* =============================================
+   PC端 Events Swiper 样式
+   ============================================= */
+
+.desktop-swiper-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.desktop-events-swiper {
+  width: 100%;
+  padding-bottom: 2rem; /* 为分页器留出空间 */
+}
+
+.desktop-event-slide {
+  width: auto;
+  height: auto;
+}
+
+.desktop-event-slide .event-card {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1279 / 372; /* 保持原有的宽高比 */
+  margin: 0; /* 移除可能的外边距 */
+}
+
+.desktop-more-slide .event-card.more-card {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1279 / 372; /* 与活动卡片相同的宽高比 */
+}
+
+
+
+/* PC端 Swiper 分页器样式 */
+.desktop-events-swiper .swiper-pagination {
+  bottom: 0;
+  position: relative;
+  margin-top: 1.5rem;
+}
+
+.desktop-events-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.desktop-events-swiper .swiper-pagination-bullet:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.2);
+}
+
+.desktop-events-swiper .swiper-pagination-bullet-active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  width: 24px;
+  border-radius: 6px;
+  transform: scale(1);
+}
+
+.desktop-events-swiper .swiper-pagination-bullet-active:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  transform: scale(1);
+}
+
+/* 确保PC端事件卡片的hover效果正常工作 */
+.desktop-event-slide .event-card:hover {
+  transform:  scale(1.01);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 10; /* 确保悬浮时卡片在最上层 */
+}
+
+.desktop-event-slide .event-card:hover .event-image {
+  transform: scale(1.05);
+}
+
+.desktop-event-slide .event-card:hover .event-hover-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.desktop-event-slide .more-card:hover {
+  background: linear-gradient(135deg, 
+    rgba(120, 120, 140, 0.6) 0%, 
+    rgba(100, 100, 120, 0.8) 100%
+  );
+  z-index: 10;
+}
+
+.desktop-event-slide .more-card:hover .more-content {
+  transform: scale(0.9);
+  opacity: 0.3;
+}
+
+.desktop-event-slide .more-card:hover .more-overlay {
+  opacity: 1;
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1440px) {
+  .desktop-events-swiper {
+    padding-bottom: 2.5rem;
+  }
+}
