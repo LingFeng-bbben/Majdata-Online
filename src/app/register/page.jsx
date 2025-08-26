@@ -69,10 +69,11 @@ function Register() {
     });
     if (response.status !== 200) {
       if (response.status === 400) {
-        toast.error(loc("FormIncomplete"));
+        const data = await response.json()
+        toast.error(data.message);
         return;
       }
-      toast.error("response.text()");
+      toast.error(await response.text());
       return;
     } else {
       router.push("/login");
