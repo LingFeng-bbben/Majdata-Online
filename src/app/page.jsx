@@ -17,7 +17,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 
 // import required modules
-import { Autoplay, Scrollbar , Navigation } from 'swiper/modules';
+import { Autoplay, Scrollbar, Navigation } from 'swiper/modules';
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -81,26 +81,26 @@ export default function Page() {
         }}
         scrollbar={{
           hide: true,
-          
+
         }}
-        modules={[Autoplay, Scrollbar , Navigation]}
+        modules={[Autoplay, Scrollbar, Navigation]}
         style={{ maxWidth: "400px", display: "block", margin: "0 auto", borderRadius: "10px" }}
       >
+        <SwiperSlide><a
+          href="/space?id=哈基杯"
+          className="theList"
+        >
+          <img
+            src="/event6.jpg"
+            alt=""
+          />
+        </a> </SwiperSlide>
         <SwiperSlide><a
           href="/space?id=MUFC"
           className="theList"
         >
           <img
             src="/event5.png"
-            alt=""
-          />
-        </a> </SwiperSlide>
-        <SwiperSlide><a
-          href="/space?id=哈基窝谱面市场"
-          className="theList"
-        >
-          <img
-            src="/event4.png"
             alt=""
           />
         </a> </SwiperSlide>
