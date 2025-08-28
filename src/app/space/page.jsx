@@ -34,7 +34,6 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title={`${username} ${loc("PersonalSpace")}`}
       navigationItems={navigationItems}
       className="user-space-page"
       showNavigation={false}

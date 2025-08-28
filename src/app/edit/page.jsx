@@ -20,7 +20,6 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title="MajdataEdit"
       navigationItems={navigationItems}
       className="edit-page"
     >

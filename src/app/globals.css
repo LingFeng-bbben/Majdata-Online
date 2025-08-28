@@ -2258,8 +2258,8 @@ h2 {
 }
 
 .ranking-description {
-  color: #a0a0a0;
-  font-size: 1.1rem;
+  color: #f7f7f7;
+  font-size: 1.5rem;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -3258,7 +3258,7 @@ h2 {
 }
 
 .user-intro-section {
-  margin-top: 1rem;
+  margin-top: var(--content-top-spacing);
   margin-bottom: 3rem;
   animation: slideInUp 0.6s ease-out 0.3s both;
 }

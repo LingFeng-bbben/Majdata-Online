@@ -26,7 +26,6 @@ export default function Page() {
 
   return (
     <PageLayout 
-      title={loc("Login")}
       navigationItems={navigationItems}
       className="auth-page"
     >
