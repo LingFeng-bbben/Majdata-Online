@@ -326,7 +326,7 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                   const val = parseInt(e.target.value);
                   onSortChange(val);
                 }}
-                className="sortSelect modern-select"
+                className="modern-select"
                 data-mobile-label={loc("SortBy")}
               >
                 {isMobile && (
@@ -470,13 +470,13 @@ function MainComp() {
   );
 }
 
-// 集成到搜索栏的简化版本
+// Simplified version of integrated search bar
 function IntegratedDownloadTypeSelector({ isMobile }){
   const [currentType,setCurrentType] = useState("zip")
   const [justChanged, setJustChanged] = useState(false)
 
   useEffect(()=>{
-    //get init type
+    // Get init type
     const type = localStorage.getItem("DownloadType")
     if(type!=undefined)
       setCurrentType(type);
@@ -484,11 +484,11 @@ function IntegratedDownloadTypeSelector({ isMobile }){
 
   const handleChange = async (e) => {
       const newtype = e.target.value
-      if (newtype === "placeholder") return; // 忽略placeholder选择
+      if (newtype === "placeholder") return;
       localStorage.setItem("DownloadType", newtype)
       setCurrentType(newtype)
       
-      // 显示保存成功状态
+      // Display succession of saving
       setJustChanged(true)
       setTimeout(() => setJustChanged(false), 2000)
     };
@@ -504,7 +504,7 @@ function IntegratedDownloadTypeSelector({ isMobile }){
       <select
         value={isMobile ? (currentType || "placeholder") : currentType}
         onChange={handleChange}
-        className="sortSelect modern-select"
+        className="modern-select"
         data-mobile-label={loc("DownloadFormat")}
       >
         {isMobile && (

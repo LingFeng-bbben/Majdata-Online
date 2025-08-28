@@ -5,6 +5,7 @@
 :root {
   --foreground-rgb: 255, 255, 255, 100;
   --background-start: 20, 20, 20;
+  --shadow: #181818;
   
   /* 统一容器样式 */
   --container-max-width: 1200px;
@@ -41,7 +42,7 @@
   scrollbar-width: thin;
 }
 
-div{
+div {
   color: rgb(var(--foreground-rgb));
 }
 
@@ -3412,15 +3413,19 @@ img.songImg {
 }
 
 .songCard {
-  background-color: rgb(var(--background-start));
-  border: 1px solid whitesmoke;
+  background-color: rgba(var(--background-start), 0.5);
   border-radius: 10px;
   padding: 0.8rem;
   margin: auto;
-  box-shadow: 2px 2px 5px gray;
+  box-shadow: 2px 2px 5px var(--shadow);
   height: 10rem;
   width: 20rem;
   overflow: hidden;
+  transition: transform 0.25s ease-in-out;
+}
+
+.songCard:hover {
+  transform: translate(0, -5px);
 }
 
 .songCardContainer {
@@ -3486,17 +3491,18 @@ img.songImg {
 .songLevel {
   float: left;
   text-align: center;
-  text-shadow: 1px 1px gray;
   border-radius: 5px;
+  font-weight: bold;
   margin: 0.1rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  font-size: 0.6rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  font-size: 0.65rem;
   line-height: 1.2rem;
   border: 1px solid gray;
   overflow: hidden;
   cursor: pointer;
   user-select: none;
+  transition: transform 0.125s ease-in-out;
 }
 
 .songAcc {
@@ -3512,7 +3518,8 @@ img.songImg {
 }
 
 .songLevel:hover {
-  border: 2px solid white;
+  transform: scale(1.1);
+  filter: brightness(1.2);
 }
 
 #lv0.songLevel {

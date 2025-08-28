@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import {MakeLevelClickCallback} from "../utils";
+import { renderLevel } from "../utils";
 
 export default function Levels({ levels, songid, isPlayer }) {
     for (let i = 0; i < levels.length; i++) {
@@ -18,7 +19,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[0] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[0]}
+            {renderLevel(levels[0])}
           </div>
           <div
             className="songLevel"
@@ -26,7 +27,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[1] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[1]}
+            {renderLevel(levels[1])}
           </div>
           <div
             className="songLevel"
@@ -34,7 +35,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[2] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[2]}
+            {renderLevel(levels[2])}
           </div>
           <div
             className="songLevel"
@@ -42,7 +43,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[3] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[3]}
+            {renderLevel(levels[3])}
           </div>
           <div
             className="songLevel"
@@ -50,7 +51,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[4] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[4]}
+            {renderLevel(levels[4])}
           </div>
           <div
             className="songLevel"
@@ -58,7 +59,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[5] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[5]}
+            {renderLevel(levels[5])}
           </div>
           <div
             className="songLevel"
@@ -66,7 +67,7 @@ export default function Levels({ levels, songid, isPlayer }) {
             style={{ display: levels[6] == "-" ? "none" : "unset" }}
             onClick={levelClickCallback}
           >
-            {levels[6]}
+            {renderLevel(levels[6])}
           </div>
         </div>
       );

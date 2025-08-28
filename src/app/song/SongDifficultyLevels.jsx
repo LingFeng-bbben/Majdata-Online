@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { MakeLevelClickCallback } from "../utils";
+import { renderLevel } from "../utils";
 
 export default function SongDifficultyLevels({ levels, songid, isPlayer }) {
   // 处理空值
@@ -41,7 +42,7 @@ export default function SongDifficultyLevels({ levels, songid, isPlayer }) {
             title={`${levelNames[index]} ${level}`}
           >
             <div className="level-name">{levelNames[index]}</div>
-            <div className="level-value">{level}</div>
+            <div className="level-value">{renderLevel(level)}</div>
           </div>
         );
       })}

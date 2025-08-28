@@ -5,3 +5,4 @@ export {default as sleep} from "./sleep";
 export {default as MakeLevelClickCallback} from "./scrollAndCallback";
 export {setLanguage, getTranslatedString as loc} from "./getTranslatedString";
 export {handleLogout} from "./logout";
+export {renderLevel} from "./renderLevel"
