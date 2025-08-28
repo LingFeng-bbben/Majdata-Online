@@ -890,6 +890,12 @@ p {
     width: 100%;
   }
 
+  .mobile-header-logo > a:has(> img.xxlb) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   /* 移动端：显示返回主页按钮 */
   .mobile-home-button {
     display: flex;
@@ -1858,12 +1864,19 @@ h2 {
   }
 }
 
+.xxlb {
+  height: 4rem;
+  border-radius: 5px;
+  margin-right: 20px;
+  display: inline;
+}
+
 @media screen and (max-width: 500px) {
   .xxlb {
-    width: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 5px;
     margin-right: 20px;
-    margin-bottom: 20px;
     display: inline;
   }
 
@@ -1925,13 +1938,6 @@ h2 {
     font-size: 0.85rem;
     padding: 0.5rem 0.6rem;
   }
-}
-
-.xxlb {
-  height: 4rem;
-  border-radius: 5px;
-  margin-right: 20px;
-  display: inline;
 }
 
 .linkContent {
