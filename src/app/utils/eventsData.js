@@ -6,19 +6,6 @@ export function getAllEvents() {
   return eventsData;
 }
 
-// 获取首页推荐活动（已废弃，请使用 getCarouselEvents）
-export function getFeaturedEvents(limit = 2) {
-  // 回退到获取进行中的活动
-  const ongoingEvents = getOngoingEvents();
-  if (ongoingEvents.length > 0) {
-    return ongoingEvents.slice(0, limit);
-  }
-  // 如果没有进行中的活动，返回最新的活动
-  return eventsData
-    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
-    .slice(0, limit);
-}
-
 // 获取活动总数
 export function getEventsCount() {
   return eventsData.length;
@@ -71,20 +58,6 @@ export function getEventsWithTimeAgo() {
   }));
 }
 
-// 获取首页推荐活动（带智能时间）- 已废弃，请使用 getCarouselEvents
-export function getFeaturedEventsWithTime(limit = 2) {
-  const eventsWithTime = getEventsWithTimeAgo();
-  const ongoingEvents = eventsWithTime.filter(event => isEventOngoing(event));
-  
-  if (ongoingEvents.length > 0) {
-    return ongoingEvents.slice(0, limit);
-  }
-  
-  // 如果没有进行中的活动，返回最新的活动
-  return eventsWithTime
-    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
-    .slice(0, limit);
-}
 
 // 检查活动是否正在进行中（基于当前日期和结束日期）
 export function isEventOngoing(event) {

@@ -101,7 +101,7 @@ export default function UnifiedHeader() {
             <a href="/edit" className="nav-item">
               <span className="nav-label">{loc("ChartEditor")}</span>
             </a>
-            <a href="/contest" className="nav-item">
+            <a href="/events" className="nav-item">
               <span className="nav-label">{loc("Contest")}</span>
             </a>
           </div>
@@ -127,7 +127,7 @@ export default function UnifiedHeader() {
                 <a href="/edit" className="mobile-nav-item">
                   <span className="nav-label">{loc("ChartEditor")}</span>
                 </a>
-                <a href="/contest" className="mobile-nav-item">
+                <a href="/events" className="mobile-nav-item">
                   <span className="nav-label">{loc("Contest")}</span>
                 </a>
               </div>
