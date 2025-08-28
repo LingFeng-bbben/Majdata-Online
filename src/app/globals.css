@@ -837,13 +837,11 @@ p {
   }
   
   .user-trigger {
-    padding: 0.5rem 0.75rem;
     gap: 0.5rem;
     min-height: 36px;
   }
   
   .mobile-nav-trigger {
-    padding: 0.5rem 0.75rem;
     gap: 0.5rem;
     min-height: 36px;
   }
@@ -1707,7 +1705,7 @@ h1 {
  
   color: whitesmoke;
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   user-select: none;
 }
@@ -1873,7 +1871,7 @@ h2 {
 }
 
 .xxlb {
-  width: 5rem;
+  height: 4rem;
   border-radius: 5px;
   margin-right: 20px;
   display: inline;
@@ -2017,7 +2015,7 @@ h2 {
   max-width: var(--container-max-width);
   margin: var(--container-margin);
   margin-top: var(--content-top-spacing);
-  margin-bottom: 2rem;
+  margin-bottom: 0rem;
   padding: var(--container-padding);
 }
 
@@ -2054,7 +2052,7 @@ h2 {
 .main-content {
   max-width: var(--container-max-width);
   margin: var(--container-margin);
-  margin-top: var(--content-top-spacing);
+  margin-top: 1rem;
   padding: var(--container-padding);
 }
 
@@ -2889,7 +2887,7 @@ h2 {
 
 .notice-title {
   color: #3B82F6;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 1rem 0;
 }
@@ -2898,6 +2896,7 @@ h2 {
   color: #e5e5e5;
   margin: 0;
   padding-left: 1.5rem;
+  list-style-type: decimal;
 }
 
 .notice-list li {
@@ -3247,7 +3246,7 @@ h2 {
 }
 
 .user-intro-section {
-  margin-top: var(--content-top-spacing);
+  margin-top: 1rem;
   margin-bottom: 3rem;
   animation: slideInUp 0.6s ease-out 0.3s both;
 }
@@ -3391,10 +3390,6 @@ h2 {
   padding: var(--container-padding);
 }
 
-/* Song 页面第一个内容区域的智能间距 */
-.theList:first-of-type {
-  margin-top: var(--content-top-spacing);
-}
 
 img.songImg {
   float: left;
@@ -3571,7 +3566,7 @@ img.songImg {
   }
   
   .main-content {
-    margin-top: 2rem;
+    margin-top: 0rem;
   }
   
   .search-container {
@@ -4040,13 +4035,7 @@ img.songImg {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
-}
-
-@media screen and (max-width: 500px) {
-  .formbox {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .inputHint {
@@ -4862,7 +4851,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 80%;
+  width: 100%;
 }
 
 .introbox-inner {

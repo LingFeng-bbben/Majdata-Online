@@ -83,12 +83,6 @@ export default function UnifiedHeader() {
       <div className="header-container">
         {/* 左侧区域：Logo + 导航 */}
         <div className="header-left-section">
-          {/* Mobile Home Button - 移动端返回主页按钮 */}
-          <div className="mobile-home-button">
-            <a href="/" className="home-button-link">
-              <span className="home-icon">🏠</span>
-            </a>
-          </div>
 
           {/* Logo Section */}
           <div className="header-logo">
