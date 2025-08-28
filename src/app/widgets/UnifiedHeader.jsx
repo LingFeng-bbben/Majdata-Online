@@ -135,6 +135,15 @@ export default function UnifiedHeader() {
           </div>
         </nav>
         </div>
+        
+        <div className="mobile-header-logo">
+            <a href="/">
+              <img
+                        className="xxlb"
+                        src="../../../salt.webp"
+                        alt="xxlb"></img>
+            </a>
+          </div>
 
         {/* User Section */}
         <div className="header-user" ref={userMenuRef}>

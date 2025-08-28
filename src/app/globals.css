@@ -128,6 +128,10 @@ p {
   flex-shrink: 0;
 }
 
+.mobile-header-logo {
+    display: none;
+  }
+
 .header-logo a {
   text-decoration: none;
   display: flex;
@@ -817,6 +821,14 @@ p {
   .header-logo {
     display: none;
   }
+
+  .mobile-header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
   
   /* 移动端：显示返回主页按钮 */
   .mobile-home-button {
