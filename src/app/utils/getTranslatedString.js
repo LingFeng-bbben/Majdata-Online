@@ -2,7 +2,7 @@ let languageCache = {};
 let currentLanguage = "en";
 
 export async function setLanguage(lang) {
-  lang = lang.slice(0,2);
+  lang = lang.slice(0, 2);
   if (languageCache[lang]) {
     currentLanguage = lang;
     return;
@@ -10,7 +10,7 @@ export async function setLanguage(lang) {
   localStorage.setItem("language", lang);
   try {
     const response = await fetch(`/i18n/${lang}.json`);
-    if (!response.ok) throw new Error('Language file not found');
+    if (!response.ok) throw new Error("Language file not found");
     languageCache[lang] = await response.json();
     currentLanguage = lang;
     console.log(`[i18n] Switch to ${lang}`);
@@ -22,7 +22,7 @@ export async function setLanguage(lang) {
 
 export function getTranslatedString(key) {
   const translations = languageCache[currentLanguage] || {};
-  if (!translations[key]){
+  if (!translations[key]) {
     console.error(`[i18n] Failed to find ${key} in ${currentLanguage}`);
     // console.log(languageCache[currentLanguage]);
   }

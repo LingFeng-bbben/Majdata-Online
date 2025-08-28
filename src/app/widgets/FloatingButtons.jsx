@@ -24,7 +24,7 @@ const FloatingButtons = () => {
         </button>
 
         {/* Language Settings Button */}
-        <button 
+        <button
           className="language-float-button floating-button"
           onClick={() => setShowLanguagePopup(!showLanguagePopup)}
           aria-label={loc("LanguageSettings")}
@@ -36,13 +36,16 @@ const FloatingButtons = () => {
       {/* Language Popup */}
       {showLanguagePopup && (
         <>
-          <div 
+          <div
             className="language-popup-overlay"
             onClick={() => setShowLanguagePopup(false)}
-          ></div>
+          >
+          </div>
           <div className="language-popup">
-            <h4 className="language-popup-title">{loc("SelectLanguage")} / Language</h4>
-            <button 
+            <h4 className="language-popup-title">
+              {loc("SelectLanguage")} / Language
+            </h4>
+            <button
               className="language-popup-close"
               onClick={() => setShowLanguagePopup(false)}
             >

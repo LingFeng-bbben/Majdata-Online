@@ -1,26 +1,26 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
 import "react-toastify/dist/ReactToastify.css";
-import {loc, setLanguage} from "../utils";
-import {PageLayout} from "../widgets";
+import { loc, setLanguage } from "../utils";
+import { PageLayout } from "../widgets";
 import getUsername from "../utils/getUsername";
 
 export default function Page() {
   const username = getUsername();
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      },
+    );
   }, []);
   if (!ready) return <div className="loading"></div>;
 
-
-
   return (
-    <PageLayout 
+    <PageLayout
       title={loc("UserCenter")}
       showNavigation={false}
       className="user-page"
@@ -40,7 +40,9 @@ export default function Page() {
             <div className="dashboard-icon">⚙️</div>
             <div className="dashboard-content">
               <h3 className="dashboard-title">{loc("AccountSetting")}</h3>
-              <p className="dashboard-description">{loc("ModifyPersonalInfo")}</p>
+              <p className="dashboard-description">
+                {loc("ModifyPersonalInfo")}
+              </p>
             </div>
             <div className="dashboard-arrow">→</div>
           </a>

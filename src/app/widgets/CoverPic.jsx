@@ -8,10 +8,10 @@ export default function CoverPic({ id, display }) {
   let url = apiroot3 + `/maichart/${id}/image`;
   let urlfull = apiroot3 + `/maichart/${id}/image?fullImage=true`;
   let idDisplay = null;
-  if(display) {
-    idDisplay = (<div className='songId'>{display}</div> )
+  if (display) {
+    idDisplay = <div className="songId">{display}</div>;
   }
-  
+
   return (
     <>
       <PhotoProvider

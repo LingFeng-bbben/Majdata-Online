@@ -5,11 +5,7 @@ import { apiroot3 } from "../../apiroot";
 import "tippy.js/dist/tippy.css";
 import "react-toastify/dist/ReactToastify.css";
 import { getUsername, loc, setLanguage } from "../../utils";
-import {
-  ChartUploader,
-  SongList,
-  PageLayout,
-} from "../../widgets";
+import { ChartUploader, PageLayout, SongList } from "../../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -18,24 +14,23 @@ export default function Page() {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
-      }
+      },
     );
   }, []);
   if (!ready) {
     return <div className="loading"></div>;
   }
   const navigationItems = [
-    { href: "/user", label: loc("Back") }
+    { href: "/user", label: loc("Back") },
   ];
 
   return (
-    <PageLayout 
+    <PageLayout
       title={loc("ChartsManagement")}
       navigationItems={navigationItems}
       className="user-charts-page"
       showNavigation={true}
     >
-
       {/* Upload Section */}
       <section className="upload-section">
         <div className="upload-container">
@@ -64,9 +59,8 @@ export default function Page() {
           <p className="management-subtitle">{loc("ManageAllYourCharts")}</p>
         </div>
         <SongList
-          url={
-            apiroot3 + "/maichart/list?search=uploader:" + encodeURIComponent(username)
-          }
+          url={apiroot3 + "/maichart/list?search=uploader:" +
+            encodeURIComponent(username)}
           isManage={true}
         />
       </section>

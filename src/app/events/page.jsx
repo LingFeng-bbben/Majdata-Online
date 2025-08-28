@@ -1,16 +1,22 @@
-'use client'
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import { setLanguage } from "../utils";
 import { PageLayout } from "../widgets";
-import { getEventsWithTimeAgo, getEventStatusText, getEventStatusClass } from "../utils/eventsData";
+import {
+  getEventStatusClass,
+  getEventStatusText,
+  getEventsWithTimeAgo,
+} from "../utils/eventsData";
 
 export default function EventsPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setLanguage(localStorage.getItem("language") || navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      },
+    );
   }, []);
 
   // 获取完整的活动列表（带智能时间计算），按创建日期排序
@@ -20,7 +26,7 @@ export default function EventsPage() {
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <PageLayout 
+    <PageLayout
       title="活动列表"
       className="events-page"
     >
@@ -36,23 +42,29 @@ export default function EventsPage() {
             <div key={i} className="event-card-large">
               <a href={event.href} className="event-link-large">
                 <div className="event-image-container-large">
-                  <img 
-                    className="event-image-large" 
-                    src={event.src} 
-                    alt={event.alt} 
-                    loading="lazy" 
+                  <img
+                    className="event-image-large"
+                    src={event.src}
+                    alt={event.alt}
+                    loading="lazy"
                   />
                   <div className="event-overlay-large">
                     <div className="event-info-large">
                       <h3 className="event-title-large">{event.title}</h3>
                       <p className="event-description">{event.description}</p>
                       <div className="event-meta-large">
-                        <span className="event-category-large">{event.category}</span>
-                        <span className={`event-status-large ${getEventStatusClass(event)}`}>
+                        <span className="event-category-large">
+                          {event.category}
+                        </span>
+                        <span
+                          className={`event-status-large ${
+                            getEventStatusClass(event)
+                          }`}
+                        >
                           • {getEventStatusText(event)}
                         </span>
-                        <span 
-                          className="event-time-large" 
+                        <span
+                          className="event-time-large"
                           title={`活动创建于 ${event.createDateFormatted}`}
                         >
                           • {event.timeAgo}

@@ -7,12 +7,11 @@ export function renderLevel(level) {
   if (level.endsWith("+")) {
     return (
       <>
-        {level.substring(0, level.length-1)}
+        {level.substring(0, level.length - 1)}
         <sup>+</sup>
       </>
-    )
+    );
   } else {
-    return (<>{level}</>)
+    return <>{level}</>;
   }
 }
-

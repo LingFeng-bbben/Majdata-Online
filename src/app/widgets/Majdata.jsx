@@ -16,26 +16,27 @@ export default function Majdata({ songid, apiroot, level }) {
 
   if (isLoaded) {
     window.unitySendMessage = sendMessage;
-    load()
+    load();
   }
 
   async function load() {
-    const httpprefix = 'https://' + location.host;
+    const httpprefix = "https://" + location.host;
     var root = apiroot;
-    if(!root.startsWith("http"))
+    if (!root.startsWith("http")) {
       root = httpprefix + root;
+    }
     const maichart = root + "/maichart/" + songid;
     const maidata = maichart + "/chart";
     const track = maichart + "/track";
     const bg = maichart + "/image?fullImage=true";
     const mv = maichart + "/video";
-    await sleep(500)
+    await sleep(500);
     if (songid !== undefined && apiroot !== undefined && level !== undefined) {
       sendMessage(
         "HandleJSMessages",
         "ReceiveMessage",
-        `${maidata}\n${track}\n${bg}\n${mv}\n${level}`
-      )
+        `${maidata}\n${track}\n${bg}\n${mv}\n${level}`,
+      );
     }
   }
 

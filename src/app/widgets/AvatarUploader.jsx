@@ -1,39 +1,39 @@
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
-import {apiroot3} from "../apiroot";
-import React, { useState, useRef, useCallback } from "react";
-import {sleep, getUsername, loc} from "../utils";
+import { apiroot3 } from "../apiroot";
+import React, { useCallback, useRef, useState } from "react";
+import { getUsername, loc, sleep } from "../utils";
 
 export default function AvatarUploader() {
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
-  
+
   // 直接调用getUsername作为hook
   const username = getUsername();
 
   const handleFileSelect = useCallback((event) => {
     const file = event.target.files[0];
-    
+
     if (!file) {
       setSelectedFile(null);
       setPreviewUrl(null);
       return;
     }
-    
+
     // 验证文件类型
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith("image/")) {
       toast.error(loc("InvalidFileType"));
       setSelectedFile(null);
       setPreviewUrl(null);
       // 清空文件输入
       if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+        fileInputRef.current.value = "";
       }
       return;
     }
-    
+
     // 验证文件大小 (5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast.error(loc("FileTooLarge"));
@@ -41,14 +41,14 @@ export default function AvatarUploader() {
       setPreviewUrl(null);
       // 清空文件输入
       if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+        fileInputRef.current.value = "";
       }
       return;
     }
-    
+
     // 设置选中的文件
     setSelectedFile(file);
-    
+
     // 创建预览
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -66,7 +66,7 @@ export default function AvatarUploader() {
     console.log("开始上传头像", {
       fileName: selectedFile.name,
       fileSize: selectedFile.size,
-      fileType: selectedFile.type
+      fileType: selectedFile.type,
     });
 
     setIsUploading(true);
@@ -84,41 +84,40 @@ export default function AvatarUploader() {
           if (progressEvent.lengthComputable) {
             const progress = progressEvent.loaded / progressEvent.total;
             console.log("上传进度:", Math.round(progress * 100) + "%");
-            toast.update(uploading, {progress});
+            toast.update(uploading, { progress });
           }
         },
         withCredentials: true,
       });
-      
+
       console.log("上传成功", response);
       toast.done(uploading);
       toast.success(response.data);
       await sleep(2000);
       window.location.reload();
-    }
-    catch (e) {
+    } catch (e) {
       console.error("上传失败", e);
       console.error("错误详情:", {
         status: e.response?.status,
         statusText: e.response?.statusText,
         data: e.response?.data,
-        message: e.message
+        message: e.message,
       });
-      
+
       toast.done(uploading);
-      
+
       let errorMessage = "上传失败";
       if (e.response?.data) {
         errorMessage = e.response.data;
       } else if (e.response?.status) {
-        errorMessage = `上传失败 (${e.response.status}: ${e.response.statusText})`;
+        errorMessage =
+          `上传失败 (${e.response.status}: ${e.response.statusText})`;
       } else if (e.message) {
         errorMessage = `上传失败: ${e.message}`;
       }
-      
-      toast.error(errorMessage, {autoClose: false});
-    }
-    finally {
+
+      toast.error(errorMessage, { autoClose: false });
+    } finally {
       setIsUploading(false);
     }
   }, [selectedFile]);
@@ -127,7 +126,7 @@ export default function AvatarUploader() {
     setSelectedFile(null);
     setPreviewUrl(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   }, []);
 
@@ -156,7 +155,7 @@ export default function AvatarUploader() {
           />
           <div className="avatar-label">{loc("CurrentAvatar")}</div>
         </div>
-        
+
         <div className="preview-section">
           <div className="preview-avatar">
             <img
@@ -169,56 +168,56 @@ export default function AvatarUploader() {
         </div>
 
         <div className="upload-controls">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileSelect}
-          className="file-input-hidden"
-        />
-        
-        <div className="button-group">
-          <button
-            type="button"
-            onClick={triggerFileSelect}
-            className="upload-button select-file"
-            disabled={isUploading}
-          >
-            {selectedFile ? loc("ChangeFile") : loc("SelectFile")}
-          </button>
-          
-          <button
-            type="button"
-            onClick={handleUpload}
-            className="upload-button upload-file"
-            disabled={!selectedFile || isUploading}
-          >
-            {isUploading ? loc("UploadingPlzWait") : loc("Upload")}
-          </button>
-          
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="upload-button cancel-file"
-            disabled={!selectedFile || isUploading}
-          >
-            {loc("Cancel")}
-          </button>
-        </div>
-        
-        {selectedFile && (
-          <div className="file-info">
-            <span className="file-name">
-              {selectedFile.name}
-            </span>
-            <div className="file-size-row">
-              <span className="file-size-label">{loc("FileSize")}</span>
-              <span className="file-size">
-                {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-              </span>
-            </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="file-input-hidden"
+          />
+
+          <div className="button-group">
+            <button
+              type="button"
+              onClick={triggerFileSelect}
+              className="upload-button select-file"
+              disabled={isUploading}
+            >
+              {selectedFile ? loc("ChangeFile") : loc("SelectFile")}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleUpload}
+              className="upload-button upload-file"
+              disabled={!selectedFile || isUploading}
+            >
+              {isUploading ? loc("UploadingPlzWait") : loc("Upload")}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="upload-button cancel-file"
+              disabled={!selectedFile || isUploading}
+            >
+              {loc("Cancel")}
+            </button>
           </div>
-        )}
+
+          {selectedFile && (
+            <div className="file-info">
+              <span className="file-name">
+                {selectedFile.name}
+              </span>
+              <div className="file-size-row">
+                <span className="file-size-label">{loc("FileSize")}</span>
+                <span className="file-size">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
