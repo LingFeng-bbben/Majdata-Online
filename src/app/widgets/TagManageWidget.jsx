@@ -301,6 +301,8 @@ const TagManageWindow = forwardRef(
         onMouseDown={(e) => e.stopPropagation()}
         onClick={(e) => e.stopPropagation()}
         style={{
+          backgroundColor: "rgba(var(--background-start), 0.8)",
+          backdropFilter: "blur(10px)",
           position: "fixed",
           left: position.x + "px",
           top: position.y + "px",
@@ -309,7 +311,6 @@ const TagManageWindow = forwardRef(
           textShadow: "0 0",
           borderRadius: "8px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          backgroundColor: "black",
           zIndex: 1001,
           cursor: dragging ? "grabbing" : "default",
           border: "1px solid whitesmoke",

@@ -5,7 +5,7 @@ import { loc } from "../utils";
 
 export default function MajdataLogo() {
   return (
-    <h1>
+    <h1 style={{fontFamily :'fantasy'}}>
       <img
         className="xxlb-big"
         src="../../../salt.webp"

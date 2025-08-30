@@ -22,9 +22,9 @@
 
   /* 智能 Header 高度系统 */
   --header-height-desktop: 70px;
-  --header-height-tablet: 65px;
-  --header-height-mobile: 60px;
-  --header-height-mobile-small: 55px;
+  --header-height-tablet: 50px;
+  --header-height-mobile: 50px;
+  --header-height-mobile-small: 50px;
 
   /* 当前生效的 Header 高度（默认桌面端） */
   --header-height: var(--header-height-desktop);
@@ -295,9 +295,6 @@ p {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #e5e5e5;
@@ -1853,26 +1850,26 @@ h2 {
   }
 
   .pagination-container {
-    flex-direction: column;
     gap: 0.8rem;
     padding: 1rem;
   }
 
   .pagination-btn {
-    min-width: 100px;
+    min-width: 40px;
+    width: 40px;
     font-size: 0.9rem;
   }
 }
 
 .xxlb {
-  height: 4rem;
+  height: 40px;
   border-radius: 5px;
   margin: auto;
   display: inline;
 }
 
 .xxlb-big {
-  height: 4rem;
+  height: 50px;
   border-radius: 5px;
   margin: 10px;
   display: inline;
@@ -2014,7 +2011,7 @@ h2 {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 120px;
+  min-width: 80px;
 }
 
 .pagination-btn:hover:not(.disabled) {
@@ -3455,14 +3452,26 @@ img.songImg {
   border-radius: 10px;
   height: 100%;
   cursor: pointer;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loadedImg{
+  opacity: 1;
+}
+
+.loadingImg{
+  opacity: 0;
 }
 
 .songCard {
-  background-color: rgba(var(--background-start), 0.5);
+  background-color: rgba(var(--background-start), 0.8);
   border-radius: 10px;
   padding: 0.8rem;
   margin: auto;
-  box-shadow: 2px 2px 5px var(--shadow);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 0 rgba(255, 255, 255, 0.08) inset;
   height: 10rem;
   width: 20rem;
   overflow: hidden;
@@ -3932,12 +3941,8 @@ img.songImg {
 
   .modern-select {
     padding: 0.2rem 0.2rem;
-    font-size: 0.4rem;
     white-space: nowrap; /* 防止选项文本换行 */
     overflow: hidden; /* 防止内容溢出 */
-
-    min-width: 0; /* 允许收缩 */
-    height: 1rem;
   }
 
   /* 小屏幕下拉框的placeholder样式 */
@@ -4389,8 +4394,8 @@ img.songImg {
 .floating-button {
   width: 56px;
   height: 56px;
-  background: rgba(35, 35, 40, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rba(var(--glassmorphism-bg-primary),0.8);
+  backdrop-filter: var(--glassmorphism-backdrop);
   border-radius: 50%;
   color: white;
   cursor: pointer;
@@ -4398,8 +4403,9 @@ img.songImg {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 0 rgba(255, 255, 255, 0.08) inset;
   display: flex;
   align-items: center;
   justify-content: center;

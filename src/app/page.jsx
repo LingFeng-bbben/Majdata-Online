@@ -104,13 +104,10 @@ function DesktopEventsSwiper() {
             spaceBetween={16}
             slidesPerView={2}
             centeredSlides={false}
-            autoplay={ongoingEvents.length > 1
-              ? {
-                delay: 7000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }
-              : false}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false
+              }}
             pagination={{
               clickable: true,
               dynamicBullets: true,
@@ -233,14 +230,11 @@ function MobileEventsSwiper() {
             modules={[Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
-            centeredSlides={false}
-            autoplay={ongoingEvents.length > 0
-              ? {
-                delay: 5000,
+            centeredSlides={true}
+            autoplay={{
+                delay: 2500,
                 disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }
-              : false}
+              }}
             pagination={{
               clickable: true,
               dynamicBullets: true,
@@ -275,23 +269,6 @@ function MobileEventsSwiper() {
                         alt={event.alt}
                         loading="lazy"
                       />
-                      <div className="mobile-event-overlay">
-                        <div className="mobile-event-info">
-                          <h3 className="mobile-event-title">{event.title}</h3>
-                          <div className="mobile-event-meta">
-                            <span className="mobile-event-category">
-                              {event.category}
-                            </span>
-                            <span
-                              className={`mobile-event-status ${
-                                getEventStatusClass(event)
-                              }`}
-                            >
-                              • {getEventStatusText(event)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </a>
@@ -380,7 +357,6 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 ))}
               </select>
             </div>
-            <IntegratedDownloadTypeSelector isMobile={isMobile} />
           </div>
         </div>
       </div>
@@ -461,7 +437,7 @@ function MainComp() {
               window.scrollTo(0, 200);
             }}
           >
-            ← {loc("LastPage")}
+            ←
           </button>
 
           <div className="page-input-container">
@@ -489,7 +465,7 @@ function MainComp() {
               window.scrollTo(0, 200);
             }}
           >
-            {loc("NextPage")} →
+            →
           </button>
         </div>
 
@@ -502,6 +478,7 @@ function MainComp() {
         >
           {loc("FrontPage")}
         </button>
+        <IntegratedDownloadTypeSelector isMobile={true} />
       </div>
     </>
   );
