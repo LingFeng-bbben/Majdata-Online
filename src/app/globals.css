@@ -1727,6 +1727,11 @@ p {
   .event-overlay-large {
     padding: 1rem;
   }
+
+  .event-description {
+    display: none;
+  }
+
 }
 
 .seprate {
