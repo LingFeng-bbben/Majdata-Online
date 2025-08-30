@@ -6,7 +6,8 @@ import { setLanguage } from "../utils";
 
 export default function LanguageInitializer() {
   useEffect(() => {
-    const lang = localStorage.getItem("language") || navigator.language.slice(0, 2);
+    const lang = localStorage.getItem("language") ||
+      navigator.language.slice(0, 2);
     setLanguage(lang);
   }, []);
 

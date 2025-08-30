@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconscout/unicons": "^4.2.0",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
@@ -43,6 +44,8 @@
     "eslint-config-next": "14.0.2",
     "eslint-plugin-react": "^7.33.2",
     "postcss": "^8",
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }

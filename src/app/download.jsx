@@ -31,7 +31,7 @@ function downloadFile(url, fileName) {
   a.style.display = "none";
   a.href = url;
   a.download = fileName;
-  a.filename  = fileName;
+  a.filename = fileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -43,10 +43,10 @@ export async function downloadSong(props) {
   const track = await fetchFile(
     apiroot3 + "/maichart/" + props.id + "/track",
     "track.mp3",
-    props.toast
+    props.toast,
   );
 
-  if(track == undefined) {
+  if (track == undefined) {
     props.toast.error(props.title + "下载失败");
     return;
   }
@@ -54,10 +54,10 @@ export async function downloadSong(props) {
   const bg = await fetchFile(
     apiroot3 + "/maichart/" + props.id + "/image?fullImage=true",
     "bg",
-    props.toast
+    props.toast,
   );
 
-  if(bg == undefined) {
+  if (bg == undefined) {
     props.toast.error(props.title + "下载失败");
     return;
   }
@@ -65,10 +65,10 @@ export async function downloadSong(props) {
   const maidata = await fetchFile(
     apiroot3 + "/maichart/" + props.id + "/chart",
     "maidata",
-    props.toast
+    props.toast,
   );
 
-  if(maidata == undefined) {
+  if (maidata == undefined) {
     props.toast.error(props.title + "下载失败");
     return;
   }
@@ -76,25 +76,23 @@ export async function downloadSong(props) {
   const video = await fetchFile(
     apiroot3 + "/maichart/" + props.id + "/video",
     "bg.mp4",
-    props.toast
+    props.toast,
   );
 
   zip.file("track.mp3", track);
   zip.file("bg.jpg", bg);
   zip.file("maidata.txt", maidata);
-  
-  
 
   if (video != undefined) {
     zip.file("pv.mp4", video);
   }
-  var downloadExtension = localStorage.getItem("DownloadType")
-  if(downloadExtension == undefined) {
-    downloadExtension = "zip"
+  var downloadExtension = localStorage.getItem("DownloadType");
+  if (downloadExtension == undefined) {
+    downloadExtension = "zip";
   }
 
   zip.generateAsync({ type: "blob" }).then((blob) => {
-    const blb = new Blob([blob], { type: "application/"+downloadExtension });
+    const blb = new Blob([blob], { type: "application/" + downloadExtension });
     const url = window.URL.createObjectURL(blb);
     props.toast.success(props.title + "下载成功");
     downloadFile(url, props.title + "." + downloadExtension);

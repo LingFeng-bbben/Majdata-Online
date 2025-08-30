@@ -2,23 +2,23 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "github-markdown-css/github-markdown-dark.css";
 import useSWR from "swr";
-import {apiroot3} from "../apiroot";
-import {toast} from "react-toastify";
+import { apiroot3 } from "../apiroot";
+import { toast } from "react-toastify";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {loc} from "../utils";
+import React, { useEffect, useState } from "react";
+import { loc } from "../utils";
 import sleep from "../utils/sleep";
 import getUsername from "../utils/getUsername";
 
 export default function IntroUploader() {
   const [intro, setIntro] = useState("");
   const fetcher = (url) =>
-    fetch(url, {mode: "cors", credentials: "include"}).then((res) =>
+    fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
       res.json()
     );
-  const {data, error, isLoading} = useSWR(
+  const { data, error, isLoading } = useSWR(
     apiroot3 + "/account/intro?username=" + encodeURIComponent(getUsername()),
-    fetcher
+    fetcher,
   );
   useEffect(() => {
     if (data && data.introduction) {
@@ -31,7 +31,6 @@ export default function IntroUploader() {
   if (isLoading) {
     return <div className="loading"></div>;
   }
-
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -47,14 +46,16 @@ export default function IntroUploader() {
     });
     if (typeof window !== "undefined") {
       document.getElementById("submitbutton3").disabled = true;
-      document.getElementById("submitbutton3").textContent = loc("UploadingPlzWait");
+      document.getElementById("submitbutton3").textContent = loc(
+        "UploadingPlzWait",
+      );
     }
     try {
       const response = await axios.post(apiroot3 + "/account/intro", formData, {
         onUploadProgress: function (progressEvent) {
           if (progressEvent.lengthComputable) {
             const progress = progressEvent.loaded / progressEvent.total;
-            toast.update(uploading, {progress});
+            toast.update(uploading, { progress });
           }
         },
         withCredentials: true,
@@ -63,17 +64,15 @@ export default function IntroUploader() {
       toast.success(response.data);
       await sleep(2000);
       window.location.reload();
-    }
-    catch (e) {
+    } catch (e) {
       toast.done(uploading);
-      toast.error(e.response.data, {autoClose: false});
+      toast.error(e.response.data, { autoClose: false });
       if (typeof window !== "undefined") {
         document.getElementById("submitbutton3").textContent = loc("Upload");
         document.getElementById("submitbutton3").disabled = false;
       }
       return;
-    }
-    finally {
+    } finally {
       toast.done(uploading);
     }
   }
@@ -92,7 +91,11 @@ export default function IntroUploader() {
           >
           </textarea>
 
-          <button className="pagingButton linkContent" id="submitbutton3" type="submit">
+          <button
+            className="pagingButton linkContent"
+            id="submitbutton3"
+            type="submit"
+          >
             {loc("Upload")}
           </button>
         </form>
@@ -103,16 +106,16 @@ export default function IntroUploader() {
           remarkPlugins={[remarkGfm]}
           components={{
             ol(props) {
-              const {...rest} = props;
+              const { ...rest } = props;
               return <ol type="1" {...rest} />;
             },
             ul(props) {
-              const {...rest} = props;
-              return <ol style={{listStyleType: "disc"}} {...rest} />;
+              const { ...rest } = props;
+              return <ol style={{ listStyleType: "disc" }} {...rest} />;
             },
             img(props) {
-              const {...rest} = props;
-              return <img style={{margin: "auto"}} {...rest} />;
+              const { ...rest } = props;
+              return <img style={{ margin: "auto" }} {...rest} />;
             },
           }}
         >
