@@ -4050,8 +4050,6 @@ img.songImg {
     width: 100%;
     height: 40rem;
     transform: none;
-    border: 1px solid whitesmoke;
-    box-shadow: 2px 2px 5px gray;
     border-radius: 10px;
   }
   .majCanvas {
