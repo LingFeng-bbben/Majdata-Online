@@ -1,3 +1,6 @@
+"use client";
+import React from "react";
+
 /**
  * Renders a level number.
  * @param {string} level The level string, which usually contains a number and an optional plus sign after that.
