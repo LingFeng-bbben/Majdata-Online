@@ -1,31 +1,33 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {setLanguage, loc} from "../utils";
-import {PageLayout} from "../widgets";
+import { loc, setLanguage } from "../utils";
+import { PageLayout } from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      },
+    );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
-  
+
   const navigationItems = [
     { href: "/", label: loc("HomePage") },
     { href: "./login", label: loc("Login"), featured: true },
-    { href: "./register", label: loc("Register") }
+    { href: "./register", label: loc("Register") },
   ];
 
   return (
-    <PageLayout 
+    <PageLayout
       navigationItems={navigationItems}
       className="auth-page"
     >
@@ -39,11 +41,11 @@ function Login() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    if(formData.get("username")===""){
+    if (formData.get("username") === "") {
       toast.error(loc("NoUsername"));
       return;
     }
-    if(formData.get("password")===""){
+    if (formData.get("password") === "") {
       toast.error(loc("NoPasswd"));
       return;
     }
@@ -51,10 +53,10 @@ function Login() {
     const response = await fetch(apiroot3 + "/account/Login", {
       method: "POST",
       body: formData,
-      credentials: "include"
+      credentials: "include",
     });
     if (response.status !== 200) {
-      if(response.status === 404){
+      if (response.status === 404) {
         toast.error(loc("WrongCredential"));
         return;
       }
@@ -78,20 +80,20 @@ function Login() {
         <form className="auth-form" onSubmit={onSubmit}>
           <div className="form-group">
             <label className="form-label">{loc("Username")}</label>
-            <input 
-              className="form-input" 
-              type="text" 
-              name="username" 
+            <input
+              className="form-input"
+              type="text"
+              name="username"
               placeholder="请输入用户名"
               required
             />
           </div>
           <div className="form-group">
             <label className="form-label">{loc("Password")}</label>
-            <input 
-              className="form-input" 
-              type="password" 
-              name="password" 
+            <input
+              className="form-input"
+              type="password"
+              name="password"
               placeholder="请输入密码"
               required
             />
@@ -101,7 +103,9 @@ function Login() {
           </button>
         </form>
         <div className="auth-footer">
-          <p>还没有账户？ <a href="./register" className="auth-link">立即注册</a></p>
+          <p>
+            还没有账户？ <a href="./register" className="auth-link">立即注册</a>
+          </p>
         </div>
       </div>
     </div>

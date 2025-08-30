@@ -5,16 +5,12 @@ import React from "react";
 export default function MiniGame() {
   var buildUrl = "/MiniGame"; //replace with your CDN
 
-  const { unityProvider, isLoaded, loadingProgression } =
-    useUnityContext({
-      loaderUrl: buildUrl + "/H5.loader.js",
-      dataUrl: buildUrl + "/H5.data",
-      frameworkUrl: buildUrl + "/H5.framework.js",
-      codeUrl: buildUrl + "/H5.wasm",
-    });
-
-
-
+  const { unityProvider, isLoaded, loadingProgression } = useUnityContext({
+    loaderUrl: buildUrl + "/H5.loader.js",
+    dataUrl: buildUrl + "/H5.data",
+    frameworkUrl: buildUrl + "/H5.framework.js",
+    codeUrl: buildUrl + "/H5.wasm",
+  });
 
   return (
     <div className={"miniGameViewPort"}>

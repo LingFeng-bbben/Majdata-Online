@@ -5,13 +5,14 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
 export default function CoverPic({ id, display }) {
+  const [isLoaded,setIsLoaded] = React.useState(false);
   let url = apiroot3 + `/maichart/${id}/image`;
   let urlfull = apiroot3 + `/maichart/${id}/image?fullImage=true`;
   let idDisplay = null;
-  if(display) {
-    idDisplay = (<div className='songId'>{display}</div> )
+  if (display) {
+    idDisplay = <div className="songId">{display}</div>;
   }
-  
+
   return (
     <>
       <PhotoProvider
@@ -19,7 +20,8 @@ export default function CoverPic({ id, display }) {
         loadingElement={<div className="loading"></div>}
       >
         <PhotoView src={urlfull}>
-          <img className="songImg" loading="lazy" src={url} alt="" />
+          <img className= {"songImg " + (isLoaded ? " loadedImg" :" loadingImg")} loading="lazy" src={url} alt="" 
+          onLoad={() =>setIsLoaded(true)} />
         </PhotoView>
       </PhotoProvider>
       {idDisplay}

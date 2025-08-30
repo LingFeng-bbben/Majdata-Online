@@ -1,64 +1,8 @@
-
 [
-  { 
-    "id": "soty2024",
-    "href": "/space?id=dilei", 
-    "src": "/events/event2.jpg", 
-    "alt": "地雷杯",
-    "title": "地雷杯",
-    "category": "私立赛事",
-    "createDate": "2025-07-15",
-    "endDate": "2025-09-30",
-    "description": "这是香菜举办的MMFC赛制式雷亚歌曲主题的maimai写谱比赛。"
-  },
-  { 
-    "id": "unchained",
-    "href": "/space?id=海鲜杯", 
-    "src": "/events/event3.jpg", 
-    "alt": "海鲜杯",
-    "title": "海鲜杯", 
-    "category": "私立赛事",
-    "createDate": "2025-07-27",
-    "endDate": "2025-09-15",
-    "description": "vocaloid主体个人比赛 by 甘党水母"
-  },
-  { 
-    "id": "mmfc11",
-    "href": "https://www.bilibili.com/video/BV1e2RzYjECa/", 
-    "src": "/events/mmfc_event.jpg", 
-    "alt": "MMFC11结算",
-    "title": "MMFC11结算", 
-    "category": "大型赛事",
-    "createDate": "2024-04-03",
-    "endDate": "2024-04-06",
-    "description": "第11届舞萌自制月赛（MMFC11）结算，详情请见B站视频。"
-  },
-  { 
-    "id": "mmfc10",
-    "href": "https://www.bilibili.com/video/BV1EKScYaEpi/", 
-    "src": "/events/mmfc_event.jpg", 
-    "alt": "MMFC10结算",
-    "title": "MMFC10结算", 
-    "category": "大型赛事",
-    "createDate": "2024-11-20",
-    "endDate": "2024-11-20",
-    "description": "第10届舞萌自制月赛（MMFC10）结算，详情请见B站视频。"
-  },
-  { 
-    "id": "mmfc9",
-    "href": "https://www.bilibili.com/video/BV1jH4y1c7xP/", 
-    "src": "/events/mmfc_event.jpg", 
-    "alt": "MMFC9结算",
-    "title": "MMFC9结算", 
-    "category": "大型赛事",
-    "createDate": "2024-07-27",
-    "endDate": "2024-07-27",
-    "description": "第9届舞萌自制月赛（MMFC9）结算，详情请见B站视频。"
-  },
-  { 
+    {
     "id": "hajicup",
-    "href": "/space?id=哈基窝谱面市场", 
-    "src": "/events/event4.png", 
+    "href": "/space?id=哈基窝谱面市场",
+    "src": "/events/event4.png",
     "alt": "哈基杯",
     "title": "哈基杯",
     "category": "私立赛事",
@@ -66,15 +10,70 @@
     "endDate": "2025-09-17",
     "description": ""
   },
-  { 
+    {
     "id": "mufc",
-    "href": "/space?id=MUFC", 
-    "src": "/events/event5.png", 
+    "href": "/space?id=MUFC",
+    "src": "/events/event5.png",
     "alt": "MUFC",
     "title": "MUFC",
     "category": "高校赛事",
     "createDate": "2025-08-18",
-    "endDate": "2025-09-19",
+    "endDate": "2025-08-31",
     "description": "高校自制谱竞赛"
+  },
+  {
+    "id": "soty2024",
+    "href": "/space?id=dilei",
+    "src": "/events/event2.jpg",
+    "alt": "地雷杯",
+    "title": "地雷杯",
+    "category": "私立赛事",
+    "createDate": "2025-07-15",
+    "endDate": "2025-09-30",
+    "description": "这是香菜举办的MMFC赛制式雷亚歌曲主题的maimai写谱比赛。"
+  },
+  {
+    "id": "unchained",
+    "href": "/space?id=海鲜杯",
+    "src": "/events/event3.jpg",
+    "alt": "海鲜杯",
+    "title": "海鲜杯",
+    "category": "私立赛事",
+    "createDate": "2025-07-27",
+    "endDate": "2025-08-24",
+    "description": "vocaloid主体个人比赛 by 甘党水母"
+  },
+  {
+    "id": "mmfc11",
+    "href": "https://www.bilibili.com/video/BV1e2RzYjECa/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC11结算",
+    "title": "MMFC11结算",
+    "category": "大型赛事",
+    "createDate": "2024-04-03",
+    "endDate": "2024-04-06",
+    "description": "第11届舞萌自制月赛（MMFC11）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc10",
+    "href": "https://www.bilibili.com/video/BV1EKScYaEpi/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC10结算",
+    "title": "MMFC10结算",
+    "category": "大型赛事",
+    "createDate": "2024-11-20",
+    "endDate": "2024-11-20",
+    "description": "第10届舞萌自制月赛（MMFC10）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc9",
+    "href": "https://www.bilibili.com/video/BV1jH4y1c7xP/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC9结算",
+    "title": "MMFC9结算",
+    "category": "大型赛事",
+    "createDate": "2024-07-27",
+    "endDate": "2024-07-27",
+    "description": "第9届舞萌自制月赛（MMFC9）结算，详情请见B站视频。"
   }
 ]

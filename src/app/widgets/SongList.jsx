@@ -11,7 +11,9 @@ import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
 
 export default function SongList({ url, setMax, page, isRanking, isManage }) {
-  const { data, error, isLoading } = useSWR(url, fetcher,{revalidateOnFocus: false});
+  const { data, error, isLoading } = useSWR(url, fetcher, {
+    revalidateOnFocus: false,
+  });
   console.log(url);
   if (error) return <div className="notReady">{loc("ServerError")}</div>;
   if (isLoading) {
@@ -44,11 +46,9 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
     >
       <LazyLoad height={165} width={352} offset={300}>
         <div className="songCard">
-          {isRanking ? (
-            <CoverPic id={o.id} display={"No." + (index + 1)} />
-          ) : (
-            <CoverPic id={o.id} />
-          )}
+          {isRanking
+            ? <CoverPic id={o.id} display={"No." + (index + 1)} />
+            : <CoverPic id={o.id} />}
 
           <div className="songInfo">
             <Tippy content={o.title}>
@@ -74,18 +74,18 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
                 </a>
               </div>
             </Tippy>
-            {isManage ? (
-              <>
-                {" "}
-                <Delbutton songid={o.id} />
-                <TagManageWidget
-                  newClassName="songLevelMarginTop"
-                  songid={o.id}
-                />
-              </>
-            ) : (
-              <Levels levels={o.levels} songid={o.id} isPlayer={false} />
-            )}
+            {isManage
+              ? (
+                <>
+                  {" "}
+                  <Delbutton songid={o.id} />
+                  <TagManageWidget
+                    newClassName="songLevelMarginTop"
+                    songid={o.id}
+                  />
+                </>
+              )
+              : <Levels levels={o.levels} songid={o.id} isPlayer={false} />}
 
             <br />
             <div
@@ -129,7 +129,7 @@ function Delbutton({ songid }) {
               method: "POST",
               mode: "cors",
               credentials: "include",
-            }
+            },
           );
           if (response.status !== 200) {
             alert(await response.text());

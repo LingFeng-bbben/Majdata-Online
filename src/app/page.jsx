@@ -3,15 +3,20 @@ import React, { useEffect, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
 
-import 'swiper/css/pagination';
-import { setLanguage, loc } from "./utils";
-import { SongList, PageLayout } from "./widgets";
+import "swiper/css/pagination";
+import { loc, setLanguage } from "./utils";
+import { PageLayout, SongList } from "./widgets";
 import { apiroot3 } from "./apiroot";
-import { getEventStatusText, getEventStatusClass, getOngoingEvents, getNonFeaturedEventsCount } from "./utils/eventsData";
+import {
+  getEventStatusClass,
+  getEventStatusText,
+  getNonFeaturedEventsCount,
+  getOngoingEvents,
+} from "./utils/eventsData";
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,27 +31,27 @@ export default function Page() {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
-      }
+      },
     );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <PageLayout 
+    <PageLayout
       showBackToHome={false}
       className="home-page"
     >
       {/* Events Carousel */}
       <EventsCarousel />
-      
+
       {/* Main Content */}
       <MainComp />
     </PageLayout>
   );
 }
 
-function EventsCarousel(){
+function EventsCarousel() {
   const [isMobile, setIsMobile] = useState(false);
 
   // 检测是否为移动端
@@ -54,10 +59,10 @@ function EventsCarousel(){
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // 移动端和PC端都使用Swiper
@@ -71,16 +76,21 @@ function DesktopEventsSwiper() {
 
   useEffect(() => {
     // 获取所有进行中的活动
-    const events = getOngoingEvents().map(event => ({
+    const events = getOngoingEvents().map((event) => ({
       ...event,
-      timeAgo: new Date(event.createDate) < new Date() 
-        ? Math.floor((new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24)) + '天前'
-        : '今天',
-      createDateFormatted: new Date(event.createDate).toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
+      timeAgo: new Date(event.createDate) < new Date()
+        ? Math.floor(
+          (new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24),
+        ) + "天前"
+        : "今天",
+      createDateFormatted: new Date(event.createDate).toLocaleDateString(
+        "zh-CN",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      ),
     }));
     setOngoingEvents(events);
   }, []);
@@ -94,30 +104,29 @@ function DesktopEventsSwiper() {
             spaceBetween={16}
             slidesPerView={2}
             centeredSlides={false}
-            autoplay={ongoingEvents.length > 1 ? {
-              delay: 7000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true
-            } : false}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false
+              }}
             pagination={{
               clickable: true,
-              dynamicBullets: true
+              dynamicBullets: true,
             }}
             navigation={false}
             loop={ongoingEvents.length > 2}
             breakpoints={{
               1024: {
                 slidesPerView: 2,
-                spaceBetween: 16
+                spaceBetween: 16,
               },
               1280: {
                 slidesPerView: 2,
-                spaceBetween: 20
+                spaceBetween: 20,
               },
               1440: {
                 slidesPerView: 2,
-                spaceBetween: 24
-              }
+                spaceBetween: 24,
+              },
             }}
             className="desktop-events-swiper"
           >
@@ -127,21 +136,30 @@ function DesktopEventsSwiper() {
                 <div className="event-card">
                   <a href={event.href} className="event-link">
                     <div className="event-image-container">
-                      <img 
-                        className="event-image" 
-                        src={event.src} 
-                        alt={event.alt} 
-                        loading="lazy" 
+                      <img
+                        className="event-image"
+                        src={event.src}
+                        alt={event.alt}
+                        loading="lazy"
                       />
                       <div className="event-hover-info">
                         <div className="event-details">
                           <h3 className="event-title">{event.title}</h3>
                           <div className="event-meta">
-                            <span className="event-category">{event.category}</span>
-                            <span className={`event-status ${getEventStatusClass(event)}`}>
+                            <span className="event-category">
+                              {event.category}
+                            </span>
+                            <span
+                              className={`event-status ${
+                                getEventStatusClass(event)
+                              }`}
+                            >
                               • {getEventStatusText(event)}
                             </span>
-                            <span className="event-time" title={`活动创建于 ${event.createDateFormatted}`}>
+                            <span
+                              className="event-time"
+                              title={`活动创建于 ${event.createDateFormatted}`}
+                            >
                               • {event.timeAgo}
                             </span>
                           </div>
@@ -152,7 +170,7 @@ function DesktopEventsSwiper() {
                 </div>
               </SwiperSlide>
             ))}
-            
+
             {/* More 页面作为 Swiper 的最后一页 */}
             <SwiperSlide className="desktop-event-slide desktop-more-slide">
               <div className="event-card more-card">
@@ -164,7 +182,9 @@ function DesktopEventsSwiper() {
                   <div className="more-overlay">
                     <div className="more-hover-text">
                       <span>{loc("ViewAllEvents")}</span>
-                      <span className="more-count">+{remainingEventsCount} {loc("EventsCount")}</span>
+                      <span className="more-count">
+                        +{remainingEventsCount} {loc("EventsCount")}
+                      </span>
                     </div>
                   </div>
                 </a>
@@ -183,16 +203,21 @@ function MobileEventsSwiper() {
 
   useEffect(() => {
     // 获取所有进行中的活动
-    const events = getOngoingEvents().map(event => ({
+    const events = getOngoingEvents().map((event) => ({
       ...event,
-      timeAgo: new Date(event.createDate) < new Date() 
-        ? Math.floor((new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24)) + '天前'
-        : '今天',
-      createDateFormatted: new Date(event.createDate).toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
+      timeAgo: new Date(event.createDate) < new Date()
+        ? Math.floor(
+          (new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24),
+        ) + "天前"
+        : "今天",
+      createDateFormatted: new Date(event.createDate).toLocaleDateString(
+        "zh-CN",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      ),
     }));
     setOngoingEvents(events);
   }, []);
@@ -205,31 +230,30 @@ function MobileEventsSwiper() {
             modules={[Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
-            centeredSlides={false}
-            autoplay={ongoingEvents.length > 0 ? {
-              delay: 5000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true
-            } : false}
+            centeredSlides={true}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
             pagination={{
               clickable: true,
-              dynamicBullets: true
+              dynamicBullets: true,
             }}
             navigation={false}
             loop={false}
             breakpoints={{
               480: {
                 slidesPerView: 1.2,
-                spaceBetween: 20
+                spaceBetween: 20,
               },
               600: {
                 slidesPerView: 1.5,
-                spaceBetween: 24
+                spaceBetween: 24,
               },
               768: {
                 slidesPerView: 2,
-                spaceBetween: 24
-              }
+                spaceBetween: 24,
+              },
             }}
             className="mobile-events-swiper"
           >
@@ -239,29 +263,18 @@ function MobileEventsSwiper() {
                 <a href={event.href} className="mobile-event-link">
                   <div className="mobile-event-card">
                     <div className="mobile-event-image-container">
-                      <img 
-                        className="mobile-event-image" 
-                        src={event.src} 
-                        alt={event.alt} 
-                        loading="lazy" 
+                      <img
+                        className="mobile-event-image"
+                        src={event.src}
+                        alt={event.alt}
+                        loading="lazy"
                       />
-                      <div className="mobile-event-overlay">
-                        <div className="mobile-event-info">
-                          <h3 className="mobile-event-title">{event.title}</h3>
-                          <div className="mobile-event-meta">
-                            <span className="mobile-event-category">{event.category}</span>
-                            <span className={`mobile-event-status ${getEventStatusClass(event)}`}>
-                              • {getEventStatusText(event)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </a>
               </SwiperSlide>
             ))}
-            
+
             {/* More 页面作为 Swiper 的最后一页 */}
             <SwiperSlide className="mobile-event-slide mobile-more-slide">
               <a href="/events" className="mobile-event-link">
@@ -282,7 +295,7 @@ function MobileEventsSwiper() {
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
   const [isMobile, setIsMobile] = useState(false);
-  
+
   const sortOptions = [
     loc("UploadDate"),
     loc("LikeCount"),
@@ -295,10 +308,10 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
@@ -315,18 +328,18 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
             />
           </div>
 
-          
           <div className="search-controls">
             <div className="sort-selector">
-              {!isMobile && <label className="sort-label">{loc("SortBy")}</label>}
               <select
-                value={isMobile ? (sortType === undefined ? "placeholder" : sortType) : sortType}
+                value={isMobile
+                  ? (sortType === undefined ? "placeholder" : sortType)
+                  : sortType}
                 onChange={(e) => {
                   if (e.target.value === "placeholder") return;
                   const val = parseInt(e.target.value);
                   onSortChange(val);
                 }}
-                className="sortSelect modern-select"
+                className="modern-select"
                 data-mobile-label={loc("SortBy")}
               >
                 {isMobile && (
@@ -341,7 +354,6 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                 ))}
               </select>
             </div>
-            <IntegratedDownloadTypeSelector isMobile={isMobile} />
           </div>
         </div>
       </div>
@@ -378,7 +390,7 @@ function MainComp() {
       localStorage.setItem("lastclickpage", 0);
     },
     // delay in ms
-    500
+    500,
   );
 
   const onSortChange = (val) => {
@@ -401,15 +413,13 @@ function MainComp() {
       />
 
       <SongList
-        url={
-          apiroot3 +
+        url={apiroot3 +
           "/maichart/list?sort=" +
           sortWords[sortType] +
           "&page=" +
           page +
           "&search=" +
-          encodeURIComponent(Search)
-        }
+          encodeURIComponent(Search)}
         page={page}
         setMax={setMaxpage}
       />
@@ -417,14 +427,14 @@ function MainComp() {
       <div className="pagination-section">
         <div className="pagination-container">
           <button
-            className={`pagination-btn ${page - 1 < 0 ? 'disabled' : ''}`}
+            className={`pagination-btn ${page - 1 < 0 ? "disabled" : ""}`}
             disabled={page - 1 < 0}
             onClick={() => {
               setPage(page - 1);
               window.scrollTo(0, 200);
             }}
           >
-            ← {loc("LastPage")}
+            ←
           </button>
 
           <div className="page-input-container">
@@ -434,9 +444,9 @@ function MainComp() {
               value={page}
               className="page-input"
               onChange={(event) => {
-                if (event.target.value !== "")
+                if (event.target.value !== "") {
                   setPage(parseInt(event.target.value));
-                else setPage(0);
+                } else setPage(0);
               }}
               min="0"
               step="1"
@@ -445,17 +455,17 @@ function MainComp() {
           </div>
 
           <button
-            className={`pagination-btn ${page >= maxpage ? 'disabled' : ''}`}
+            className={`pagination-btn ${page >= maxpage ? "disabled" : ""}`}
             disabled={page >= maxpage}
             onClick={() => {
               setPage(page + 1);
               window.scrollTo(0, 200);
             }}
           >
-            {loc("NextPage")} →
+            →
           </button>
         </div>
-        
+
         <button
           className="first-page-btn"
           onClick={() => {
@@ -465,38 +475,40 @@ function MainComp() {
         >
           {loc("FrontPage")}
         </button>
+        <IntegratedDownloadTypeSelector isMobile={true} />
       </div>
     </>
   );
 }
 
-// 集成到搜索栏的简化版本
-function IntegratedDownloadTypeSelector({ isMobile }){
-  const [currentType,setCurrentType] = useState("zip")
-  const [justChanged, setJustChanged] = useState(false)
+// Simplified version of integrated search bar
+function IntegratedDownloadTypeSelector({ isMobile }) {
+  const [currentType, setCurrentType] = useState("zip");
+  const [justChanged, setJustChanged] = useState(false);
 
-  useEffect(()=>{
-    //get init type
-    const type = localStorage.getItem("DownloadType")
-    if(type!=undefined)
+  useEffect(() => {
+    // Get init type
+    const type = localStorage.getItem("DownloadType");
+    if (type != undefined) {
       setCurrentType(type);
-  })
+    }
+  });
 
   const handleChange = async (e) => {
-      const newtype = e.target.value
-      if (newtype === "placeholder") return; // 忽略placeholder选择
-      localStorage.setItem("DownloadType", newtype)
-      setCurrentType(newtype)
-      
-      // 显示保存成功状态
-      setJustChanged(true)
-      setTimeout(() => setJustChanged(false), 2000)
-    };
+    const newtype = e.target.value;
+    if (newtype === "placeholder") return;
+    localStorage.setItem("DownloadType", newtype);
+    setCurrentType(newtype);
+
+    // Display succession of saving
+    setJustChanged(true);
+    setTimeout(() => setJustChanged(false), 2000);
+  };
 
   return (
     <div className="download-format-selector">
       {!isMobile && (
-        <label className={`sort-label ${justChanged ? 'label-success' : ''}`}>
+        <label className={`sort-label ${justChanged ? "label-success" : ""}`}>
           {loc("DownloadFormat")}
           {justChanged && <span className="success-indicator">✓</span>}
         </label>
@@ -504,7 +516,7 @@ function IntegratedDownloadTypeSelector({ isMobile }){
       <select
         value={isMobile ? (currentType || "placeholder") : currentType}
         onChange={handleChange}
-        className="sortSelect modern-select"
+        className="modern-select"
         data-mobile-label={loc("DownloadFormat")}
       >
         {isMobile && (
@@ -519,4 +531,3 @@ function IntegratedDownloadTypeSelector({ isMobile }){
     </div>
   );
 }
-

@@ -1,44 +1,41 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
-import {apiroot3} from "../apiroot";
+import { apiroot3 } from "../apiroot";
 import "react-toastify/dist/ReactToastify.css";
 import useSWR from "swr";
-import {useSearchParams} from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
-import remarkGfm from 'remark-gfm'
-import {loc, setLanguage} from "../utils";
-import {
-  RecentPlayed,
-  SongList,
-  PageLayout
-} from "../widgets";
+import remarkGfm from "remark-gfm";
+import { loc, setLanguage } from "../utils";
+import { PageLayout, RecentPlayed, SongList } from "../widgets";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const username = searchParams.get("id");
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      },
+    );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
-  
+
   const navigationItems = [
-    { href: "/", label: loc("HomePage") }
+    { href: "/", label: loc("HomePage") },
   ];
 
   return (
-    <PageLayout 
+    <PageLayout
       navigationItems={navigationItems}
       className="user-space-page"
       showNavigation={false}
     >
-
       {/* User Introduction */}
       <section className="user-intro-section">
         <Introduction username={username} />
@@ -55,16 +52,19 @@ export default function Page() {
       <section className="charts-section">
         <h2 className="section-title">{loc("UploadedCharts")}</h2>
         <div className="hr-solid"></div>
-        <SongList url={apiroot3 + "/maichart/list?search=" + encodeURIComponent("uploader:" + username)} />
+        <SongList
+          url={apiroot3 + "/maichart/list?search=" +
+            encodeURIComponent("uploader:" + username)}
+        />
       </section>
     </PageLayout>
   );
 }
 
-function Introduction({username}) {
-  const {data, error, isLoading} = useSWR(
+function Introduction({ username }) {
+  const { data, error, isLoading } = useSWR(
     apiroot3 + "/account/intro?username=" + encodeURIComponent(username),
-    fetcher
+    fetcher,
   );
   if (error) {
     return <div className="notReady">{loc("ServerError")}</div>;
@@ -93,7 +93,7 @@ function Introduction({username}) {
           </p>
         </div>
       </div>
-      
+
       {data.introduction && (
         <div className="profile-introduction">
           <h3 className="intro-title">{loc("SelfIntro")}</h3>
@@ -102,16 +102,16 @@ function Introduction({username}) {
               remarkPlugins={[remarkGfm]}
               components={{
                 ol(props) {
-                  const {...rest} = props;
+                  const { ...rest } = props;
                   return <ol type="1" {...rest} />;
                 },
                 ul(props) {
-                  const {...rest} = props;
-                  return <ol style={{listStyleType: "disc"}} {...rest} />;
+                  const { ...rest } = props;
+                  return <ol style={{ listStyleType: "disc" }} {...rest} />;
                 },
                 img(props) {
-                  const {...rest} = props;
-                  return <img style={{margin: "auto"}} {...rest} />;
+                  const { ...rest } = props;
+                  return <img style={{ margin: "auto" }} {...rest} />;
                 },
               }}
             >

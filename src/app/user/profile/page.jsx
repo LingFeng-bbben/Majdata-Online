@@ -4,11 +4,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import "tippy.js/dist/tippy.css";
 import "react-toastify/dist/ReactToastify.css";
 import { loc, setLanguage } from "../../utils";
-import {
-  IntroUploader,
-  AvatarUploader,
-  PageLayout,
-} from "../../widgets";
+import { AvatarUploader, IntroUploader, PageLayout } from "../../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -16,7 +12,7 @@ export default function Page() {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
-      }
+      },
     );
   }, []);
   if (!ready) {

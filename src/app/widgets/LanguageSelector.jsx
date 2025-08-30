@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { setLanguage, loc } from "../utils";
+import { loc, setLanguage } from "../utils";
 
 const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
@@ -17,7 +17,7 @@ const LanguageSelector = () => {
     const newLang = e.target.value;
     setIsChanging(true);
     setCurrentLang(newLang);
-    
+
     try {
       await setLanguage(newLang);
       // 添加短暂延迟以显示加载状态
@@ -25,13 +25,17 @@ const LanguageSelector = () => {
         window.location.reload();
       }, 300);
     } catch (error) {
-      console.error('Language change failed:', error);
+      console.error("Language change failed:", error);
       setIsChanging(false);
     }
   };
 
   return (
-    <div className={`language-selector-simple ${isChanging ? 'setting-loading' : ''}`}>
+    <div
+      className={`language-selector-simple ${
+        isChanging ? "setting-loading" : ""
+      }`}
+    >
       <select
         value={currentLang}
         onChange={handleChange}

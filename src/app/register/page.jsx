@@ -1,32 +1,34 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
 import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {setLanguage, loc} from "../utils";
-import {PageLayout} from "../widgets";
+import { loc, setLanguage } from "../utils";
+import { PageLayout } from "../widgets";
 
 export default function Page() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    setLanguage(localStorage.getItem("language")||navigator.language).then(() => {
-      setReady(true);
-    });
+    setLanguage(localStorage.getItem("language") || navigator.language).then(
+      () => {
+        setReady(true);
+      },
+    );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
-  
+
   const navigationItems = [
     { href: "/", label: loc("HomePage") },
     { href: "./login", label: loc("Login") },
-    { href: "./register", label: loc("Register"), featured: true }
+    { href: "./register", label: loc("Register"), featured: true },
   ];
 
   return (
-    <PageLayout 
+    <PageLayout
       navigationItems={navigationItems}
       className="auth-page"
     >
@@ -75,50 +77,50 @@ function Register() {
         <form className="auth-form" onSubmit={onSubmit}>
           <div className="form-group">
             <label className="form-label">{loc("Username")}</label>
-            <input 
-              className="form-input" 
-              type="text" 
-              name="username" 
+            <input
+              className="form-input"
+              type="text"
+              name="username"
               placeholder="请输入用户名"
               required
             />
           </div>
           <div className="form-group">
             <label className="form-label">{loc("Password")}</label>
-            <input 
-              className="form-input" 
-              type="password" 
-              name="password" 
+            <input
+              className="form-input"
+              type="password"
+              name="password"
               placeholder="请输入密码"
               required
             />
           </div>
           <div className="form-group">
             <label className="form-label">{loc("ConfirmPassword")}</label>
-            <input 
-              className="form-input" 
-              type="password" 
-              name="password2" 
+            <input
+              className="form-input"
+              type="password"
+              name="password2"
               placeholder="请再次输入密码"
               required
             />
           </div>
           <div className="form-group">
             <label className="form-label">{loc("E-Mail")}</label>
-            <input 
-              className="form-input" 
-              type="email" 
-              name="email" 
+            <input
+              className="form-input"
+              type="email"
+              name="email"
               placeholder="请输入邮箱地址"
               required
             />
           </div>
           <div className="form-group">
             <label className="form-label">{loc("Invite Code")}</label>
-            <input 
-              className="form-input" 
-              type="text" 
-              name="invitecode" 
+            <input
+              className="form-input"
+              type="text"
+              name="invitecode"
               placeholder="请输入邀请码"
               required
             />
@@ -128,7 +130,9 @@ function Register() {
           </button>
         </form>
         <div className="auth-footer">
-          <p>已有账户？ <a href="./login" className="auth-link">立即登录</a></p>
+          <p>
+            已有账户？ <a href="./login" className="auth-link">立即登录</a>
+          </p>
         </div>
       </div>
     </div>
