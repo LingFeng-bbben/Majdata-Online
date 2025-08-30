@@ -7,7 +7,7 @@ export default function MajdataLogo() {
   return (
     <h1>
       <img
-        className="xxlb"
+        className="xxlb-big"
         src="../../../salt.webp"
         onClick={() =>
           toast.error(loc("FUCKYOU"), {
