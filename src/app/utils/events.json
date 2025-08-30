@@ -1,4 +1,26 @@
 [
+    {
+    "id": "hajicup",
+    "href": "/space?id=哈基窝谱面市场",
+    "src": "/events/event4.png",
+    "alt": "哈基杯",
+    "title": "哈基杯",
+    "category": "私立赛事",
+    "createDate": "2025-08-17",
+    "endDate": "2025-09-17",
+    "description": ""
+  },
+    {
+    "id": "mufc",
+    "href": "/space?id=MUFC",
+    "src": "/events/event5.png",
+    "alt": "MUFC",
+    "title": "MUFC",
+    "category": "高校赛事",
+    "createDate": "2025-08-18",
+    "endDate": "2025-08-31",
+    "description": "高校自制谱竞赛"
+  },
   {
     "id": "soty2024",
     "href": "/space?id=dilei",
@@ -18,7 +40,7 @@
     "title": "海鲜杯",
     "category": "私立赛事",
     "createDate": "2025-07-27",
-    "endDate": "2025-09-15",
+    "endDate": "2025-08-24",
     "description": "vocaloid主体个人比赛 by 甘党水母"
   },
   {
@@ -53,27 +75,5 @@
     "createDate": "2024-07-27",
     "endDate": "2024-07-27",
     "description": "第9届舞萌自制月赛（MMFC9）结算，详情请见B站视频。"
-  },
-  {
-    "id": "hajicup",
-    "href": "/space?id=哈基窝谱面市场",
-    "src": "/events/event4.png",
-    "alt": "哈基杯",
-    "title": "哈基杯",
-    "category": "私立赛事",
-    "createDate": "2025-08-17",
-    "endDate": "2025-09-17",
-    "description": ""
-  },
-  {
-    "id": "mufc",
-    "href": "/space?id=MUFC",
-    "src": "/events/event5.png",
-    "alt": "MUFC",
-    "title": "MUFC",
-    "category": "高校赛事",
-    "createDate": "2025-08-18",
-    "endDate": "2025-09-19",
-    "description": "高校自制谱竞赛"
   }
 ]
