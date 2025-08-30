@@ -330,9 +330,6 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
 
           <div className="search-controls">
             <div className="sort-selector">
-              {!isMobile && (
-                <label className="sort-label">{loc("SortBy")}</label>
-              )}
               <select
                 value={isMobile
                   ? (sortType === undefined ? "placeholder" : sortType)
