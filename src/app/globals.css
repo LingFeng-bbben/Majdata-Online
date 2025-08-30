@@ -283,6 +283,7 @@ p {
   align-items: center;
   flex-shrink: 0;
   position: relative;
+  border-radius: 10px;
 }
 
 /* User Dropdown */
@@ -531,7 +532,7 @@ p {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   font-size: 0.9rem;
-  min-height: 40px;
+  height: 40px;
 }
 
 .mobile-auth-trigger:hover,
