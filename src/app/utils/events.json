@@ -7,7 +7,7 @@
     "title": "哈基杯",
     "category": "私立赛事",
     "createDate": "2025-08-17",
-    "endDate": "2025-09-17",
+    "endDate": "2025-09-30",
     "description": ""
   },
     {
@@ -18,7 +18,7 @@
     "title": "MUFC",
     "category": "高校赛事",
     "createDate": "2025-08-18",
-    "endDate": "2025-08-31",
+    "endDate": "2025-09-30",
     "description": "高校自制谱竞赛"
   },
   {
@@ -179,6 +179,19 @@
   "createDate": "2022-12-15",
   "endDate": "2023-01-14",
   "description": "2022新番主题——第1届舞萌自制月赛（MMFC1）结算，详情请见B站视频。"
+},
+
+{
+  "id": "tsuki",
+  "href": "https://www.bilibili.com/video/BV1Nv4y117M9/",
+  "src": "/events/tsuki.jpg",
+  "alt": "異色の月",
+  "title": "異色の月",
+  "category": "私立企划",
+  "createDate": "2025-08-23",
+  "endDate": "2025-10-07",
+  "description": "Project「異色の月」"
 }
+
 
 ]
