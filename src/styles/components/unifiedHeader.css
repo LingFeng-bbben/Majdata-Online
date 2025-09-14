@@ -1,0 +1,1008 @@
+
+:root {
+
+    --foreground-rgb: 255, 255, 255, 100;
+  --background-start: 20, 20, 20;
+  --shadow: #181818;
+
+  /* 统一容器样式 */
+  --container-max-width: 1200px;
+  --container-padding: 0 1rem;
+  --container-margin: 0 auto;
+
+  /* 统一毛玻璃效果 */
+  --glassmorphism-bg-primary: rgb(15 15 20 / 85%);
+  --glassmorphism-bg-secondary: rgb(30 30 30 / 90%);
+  --glassmorphism-backdrop: blur(20px) saturate(180%);
+  --glassmorphism-border: 1px solid rgb(255 255 255 / 12%);
+  --glassmorphism-border-radius: 16px;
+  --glassmorphism-shadow: 0 8px 25px rgb(0 0 0 / 30%);
+
+
+  /* 智能间距计算 */
+  --content-top-spacing: calc(var(--header-height) + 0.5rem);
+  --content-top-spacing-large: calc(var(--header-height) + 1rem);
+
+  /* 其他样式变量 */
+  --glassmorphism-bg: rgb(15 15 20 / 95%);
+  --glassmorphism-bg-scrolled: rgb(10 12 18 / 85%);
+  --glassmorphism-border: rgb(255 255 255 / 10%);
+  --glassmorphism-border-scrolled: rgb(255 255 255 / 15%);
+
+}
+
+
+
+/* Unified Header - 始终固定在顶部 */
+.unified-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgb(8 10 15 / 88%);
+    backdrop-filter: blur(28px) saturate(180%) brightness(110%);
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+    box-shadow: 0 8px 40px rgb(0 0 0 / 25%), 0 2px 0 rgb(255 255 255 / 8%) inset,
+      0 4px 16px rgb(59 130 246 / 8%);
+    transform: translateZ(0);
+    will-change: backdrop-filter, box-shadow;
+  }
+  
+  .unified-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(59 130 246 / 30%) 20%,
+      rgb(59 130 246 / 60%) 50%,
+      rgb(59 130 246 / 30%) 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 1rem auto;
+    padding: 0 2.5rem;
+    height: var(--header-height);
+  }
+  
+  /* 左侧区域：包含logo和导航 */
+  .header-left-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
+  }
+  
+  .header-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .mobile-header-logo {
+    display: none;
+  }
+  
+  .header-logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-logo {
+    position: relative;
+  }
+  
+  /* Mobile Home Button */
+  .mobile-home-button {
+    display: none; /* 默认隐藏，只在移动端显示 */
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .home-button-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    color: #e5e5e5;
+    min-height: 2.5rem;
+  }
+  
+  .home-button-link:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 15%),
+      rgb(255 255 255 / 10%)
+    );
+    border-color: rgb(255 255 255 / 30%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .home-icon {
+    font-size: 1.2rem;
+  }
+  
+  .scroll-indicator {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: indicatorFadeIn 0.3s ease-out;
+  }
+  
+  .indicator-dot {
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgb(59 130 246 / 60%);
+  }
+  
+  @keyframes indicatorFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+  }
+  
+  .header-nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgb(255 255 255 / 5%);
+    border-radius: 12px;
+    padding: 0.5rem;
+    border: 1px solid rgb(255 255 255 / 8%);
+  }
+  
+  .header-nav .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: rgb(255 255 255 / 85%);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .header-nav .nav-item.featured {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgb(59 130 246 / 40%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+    transform: translateY(0);
+  }
+  
+  .header-nav .nav-item:not(.featured):hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .header-nav .nav-icon {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  .header-nav .nav-label {
+    font-size: 0.9rem;
+  }
+  
+  .header-user {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    border-radius: 10px;
+  }
+  
+  /* User Dropdown */
+  .user-dropdown {
+    position: relative;
+  }
+  
+  .user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #e5e5e5;
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-height: 40px;
+  }
+  
+  .user-trigger:hover,
+  .user-trigger.active {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 15%),
+      rgb(255 255 255 / 10%)
+    );
+    border-color: rgb(255 255 255 / 30%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgb(255 255 255 / 30%);
+    transition: border-color 0.3s ease;
+    object-fit: cover;
+  }
+  
+  .user-trigger:hover .user-avatar,
+  .user-trigger.active .user-avatar {
+    border-color: rgb(255 255 255 / 60%);
+  }
+  
+  .username {
+    font-weight: 500;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .dropdown-arrow {
+    transition: transform 0.3s ease;
+    color: #a0a0a0;
+    font-size: 0.7rem;
+  }
+  
+  .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .user-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    width: 100%;
+    background: linear-gradient(145deg, rgb(15 15 20 / 95%), rgb(10 12 18 / 98%));
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+    overflow: hidden;
+    z-index: 1001;
+    animation: dropdownFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes dropdownFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-15px) scale(0.95);
+      filter: blur(4px);
+    }
+  
+    60% {
+      opacity: 0.8;
+      transform: translateY(-5px) scale(0.98);
+      filter: blur(1px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: #e5e5e5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .menu-item:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .menu-item.logout:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(239 68 68 / 25%),
+      rgb(220 38 38 / 20%)
+    );
+    color: #fca5a5;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgb(239 68 68 / 20%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .menu-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 30%));
+  }
+  
+  .menu-label {
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .menu-divider {
+    height: 1px;
+    background: rgb(255 255 255 / 10%);
+    margin: 0.5rem 0;
+  }
+  
+  /* Auth Links */
+  .auth-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .auth-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: rgb(255 255 255 / 85%);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgb(255 255 255 / 10%);
+    min-height: 40px;
+  }
+  
+  .auth-link:hover {
+    background: rgb(255 255 255 / 10%);
+    color: #fff;
+    border-color: rgb(255 255 255 / 30%);
+  }
+  
+  .auth-link.register {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: transparent;
+    color: #fff;
+  }
+  
+  .auth-link.register:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+  }
+  
+  .auth-link.loading-placeholder {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+  }
+  
+  .auth-link.loading-placeholder .auth-icon {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.7;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  /* Auth Section Container */
+  .auth-section {
+    position: relative;
+  }
+  
+  /* Mobile Auth Dropdown */
+  .mobile-auth-dropdown {
+    display: none; /* 默认隐藏，在移动端显示 */
+    position: relative;
+  }
+  
+  .mobile-auth-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 10px;
+    color: rgb(255 255 255 / 85%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    height: 40px;
+  }
+  
+  .mobile-auth-trigger:hover,
+  .mobile-auth-trigger.active {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 15%),
+      rgb(255 255 255 / 10%)
+    );
+    border-color: rgb(255 255 255 / 30%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .mobile-auth-trigger .auth-icon {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgb(255 255 255 / 85%);
+  }
+  
+  .mobile-auth-trigger .dropdown-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    color: rgb(255 255 255 / 60%);
+  }
+  
+  .mobile-auth-trigger .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .mobile-auth-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    min-width: 200px;
+    background: linear-gradient(145deg, rgb(15 15 20 / 95%), rgb(10 12 18 / 98%));
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+    padding: 1rem 0;
+    z-index: 1001;
+    animation: dropdownFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-auth-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: rgb(255 255 255 / 85%);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .mobile-auth-item:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .mobile-auth-item.register {
+    background: linear-gradient(
+      135deg,
+      rgb(16 185 129 / 20%),
+      rgb(5 150 105 / 15%)
+    );
+    color: #10b981;
+    font-weight: 600;
+  }
+  
+  .mobile-auth-item.register:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(16 185 129 / 30%),
+      rgb(5 150 105 / 25%)
+    );
+    color: #34d399;
+  }
+  
+  .mobile-auth-item .menu-label {
+    flex: 1;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .auth-icon {
+    font-size: 1rem;
+  }
+  
+  .auth-label {
+    font-size: 0.9rem;
+  }
+  
+  /* Mobile Navigation */
+  .mobile-nav {
+    display: none;
+    position: relative;
+  }
+  
+  .mobile-nav-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #e5e5e5;
+    font-size: 0.9rem;
+    font-weight: 500;
+    height: 40px;
+    width: 40px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .mobile-nav-trigger:hover,
+  .mobile-nav-trigger.active {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 15%),
+      rgb(255 255 255 / 10%)
+    );
+    border-color: rgb(255 255 255 / 30%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    height: 10px;
+  }
+  
+  .hamburger-icon span {
+    display: block;
+    height: 2px;
+    width: 20px;
+    background: #e5e5e5;
+    border-radius: 1px;
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-nav-trigger.active .hamburger-icon span:nth-child(1) {
+    transform: rotate(35deg) translate(2px, 4px);
+  }
+  
+  .mobile-nav-trigger.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-nav-trigger.active .hamburger-icon span:nth-child(3) {
+    transform: rotate(-35deg) translate(2px, -4px);
+  }
+  
+  .mobile-nav-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    min-width: 200px;
+    background: linear-gradient(145deg, rgb(15 15 20 / 95%), rgb(10 12 18 / 98%));
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+    overflow: hidden;
+    z-index: 1001;
+    animation: dropdownFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: #e5e5e5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .mobile-nav-item:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
+  .mobile-nav-item.featured {
+    background: linear-gradient(
+      135deg,
+      rgb(59 130 246 / 20%),
+      rgb(29 78 216 / 15%)
+    );
+    color: #60a5fa;
+    font-weight: 600;
+  }
+  
+  .mobile-nav-item.featured:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(59 130 246 / 30%),
+      rgb(29 78 216 / 25%)
+    );
+    color: #93c5fd;
+  }
+  
+  /* 移动端导航标签文字居中 */
+  .mobile-nav-item .nav-label {
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* Desktop/Mobile Toggle Classes */
+  .desktop-nav {
+    display: flex;
+  }
+  
+  .desktop-only {
+    display: inline;
+  }
+  
+  /* 桌面端：显示传统链接，隐藏移动端下拉菜单 */
+  .desktop-auth {
+    display: flex;
+  }
+  
+  .mobile-auth-dropdown {
+    display: none;
+  }
+  
+  /* 智能响应式 Header 高度系统 */
+  @media (width <= 1200px) {
+    :root {
+      --header-height: var(--header-height-tablet);
+    }
+  }
+  
+  @media (width <= 768px) {
+    :root {
+      --header-height: var(--header-height-mobile);
+    }
+  }
+  
+  @media (width <= 480px) {
+    :root {
+      --header-height: var(--header-height-mobile-small);
+  
+      /* 在小屏幕设备上增加更多间距 */
+      --content-top-spacing: calc(var(--header-height) + 1.5rem);
+      --content-top-spacing-large: calc(var(--header-height) + 2.5rem);
+    }
+  }
+  
+  /* Header Responsive Design */
+  @media (width <= 1024px) {
+    .header-container {
+      padding: 0 1rem;
+    }
+  
+    .header-nav {
+      margin: 0 1rem;
+    }
+  }
+  
+  /* iPad Pro 和平板设备的导航响应式 */
+  @media (width <= 1200px) {
+    /* iPad及以下设备：隐藏桌面导航，显示移动导航 */
+    .desktop-nav {
+      display: none !important;
+    }
+  
+    .mobile-nav {
+      display: block;
+    }
+  
+    /* 确保移动端下桌面导航完全隐藏 */
+    .header-nav .nav-links {
+      display: none;
+    }
+  }
+  
+  @media (width <= 768px) {
+    body {
+      padding-top: var(--content-top-spacing-large);
+    }
+  
+    .header-container {
+      height: var(--header-height);
+      padding: 0 0.75rem;
+    }
+  
+    /* 移动端：隐藏部分文字标签 */
+    .desktop-only {
+      display: none;
+    }
+  
+    /* 移动端：隐藏header中的logo */
+    .header-logo {
+      display: none;
+    }
+  
+    .mobile-header-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .mobile-header-logo > a:has(> img.xxlb) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    /* 移动端：显示返回主页按钮 */
+    .mobile-home-button {
+      display: flex;
+      width: 40px;
+      height: 40px;
+    }
+  
+    /* 移动端：调整左侧区域布局 */
+    .header-left-section {
+      gap: 1rem;
+    }
+  
+    .home-button-link {
+      padding: 0.5rem;
+      min-height: 36px;
+      min-width: 36px;
+    }
+  
+    .user-trigger {
+      gap: 0.5rem;
+      min-height: 36px;
+    }
+  
+    .mobile-nav-trigger {
+      gap: 0.5rem;
+      min-height: 36px;
+    }
+  
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+    }
+  
+    .user-menu {
+      width: 100%;
+      min-width: 200px;
+      right: -8px;
+    }
+  
+    /* 移动端：切换到下拉菜单样式 */
+    .desktop-auth {
+      display: none; /* 隐藏桌面端传统链接 */
+    }
+  
+    .mobile-auth-dropdown {
+      display: block; /* 显示移动端下拉菜单 */
+    }
+  
+    .auth-links {
+      gap: 0.25rem;
+    }
+  
+    .auth-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      min-width: auto;
+      min-height: 36px;
+    }
+  
+    /* 移动端：Account文字样式 */
+    .mobile-auth-trigger .auth-icon {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (width <= 480px) {
+    body {
+      padding-top: var(--content-top-spacing-large);
+    }
+  
+    .header-container {
+      flex-direction: row;
+      justify-content: space-between;
+      height: auto;
+      padding: 0.5rem 0.75rem;
+      gap: 0.5rem;
+    }
+  
+    /* 确保在极小屏幕下logo依然隐藏 */
+    .header-logo {
+      display: none;
+    }
+  
+    /* 确保在极小屏幕下返回主页按钮显示 */
+    .mobile-home-button {
+      display: flex;
+    }
+  
+    /* 小屏幕下优化按钮大小 */
+    .home-button-link {
+      padding: 0.4rem;
+      border-radius: 8px;
+      min-height: 32px;
+      min-width: 32px;
+    }
+  
+    .home-icon {
+      font-size: 1.1rem;
+    }
+  
+    /* 480px以下的按钮尺寸统一 */
+    .user-trigger {
+      padding: 0.4rem 0.6rem;
+      gap: 0.4rem;
+      min-height: 32px;
+    }
+  
+    .mobile-nav-trigger {
+      padding: 0.4rem 0.6rem;
+      gap: 0.4rem;
+      min-height: 32px;
+    }
+  
+    .auth-link {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.75rem;
+      min-height: 32px;
+    }
+  
+    /* 极小屏幕下优化Account文字显示 */
+    .mobile-auth-trigger .auth-icon {
+      font-size: 0.8rem;
+    }
+  
+    .scroll-indicator {
+      top: -3px;
+      right: -6px;
+      width: 12px;
+      height: 12px;
+    }
+  
+    .indicator-dot {
+      width: 4px;
+      height: 4px;
+    }
+  
+    .header-nav {
+      width: 100%;
+      margin: 0;
+      order: 2; /* 导航放在中间 */
+    }
+  
+    /* 480px下也确保桌面导航隐藏 */
+    .desktop-nav {
+      display: none !important;
+    }
+  
+    .header-nav .nav-links {
+      display: none !important;
+    }
+  
+    .header-user {
+      order: 3; /* 用户区域放在最后 */
+      justify-content: center;
+    }
+  
+    .header-logo {
+      order: 1; /* Logo放在最前 */
+      justify-content: center;
+    }
+  
+    /* 480px下移动导航菜单位置调整 */
+    .mobile-nav-menu {
+      left: 0;
+      right: auto;
+      transform: none;
+    }
+  
+    .user-menu {
+      right: -5px;
+      left: auto;
+      transform: none;
+      min-width: 180px;
+      max-width: 90vw;
+    }
+  }
+  
+

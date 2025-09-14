@@ -1,0 +1,626 @@
+/* Events Showcase */
+.events-showcase {
+    max-width: var(--container-max-width);
+    margin: var(--container-margin);
+    margin-bottom: 3rem;
+    padding: var(--container-padding);
+}
+
+.events-showcase-container {
+    width: 100%;
+}
+
+.events-grid {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    /* 确保所有卡片高度一致 */
+}
+
+/* 活动卡片基础样式 */
+.event-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgb(20 20 25 / 90%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 30%), 0 2px 8px rgb(0 0 0 / 20%);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 轮播渐变效果 - 优化为更平滑的过渡 */
+.event-card.transitioning {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-card.transitioning .event-image {
+    filter: blur(4px) brightness(0.7);
+    transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-card.transitioning .event-hover-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 非过渡状态的平滑回归 */
+.event-card:not(.transitioning) {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-card:not(.transitioning) .event-image {
+    filter: blur(0) brightness(1);
+    transition: filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-card:not(.transitioning) .event-hover-info {
+    opacity: 0;
+    transform: translateY(0);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 移除了状态指示器相关样式 */
+
+/* 前两个卡片：固定宽高比显示 */
+.event-card:nth-child(1),
+.event-card:nth-child(2) {
+    flex: 1 1 0;
+    min-width: 0;
+    aspect-ratio: 1279 / 372;
+    /* 固定宽高比例 */
+    height: auto;
+}
+
+/* 旧浏览器回退方案 */
+@supports not (aspect-ratio: 1279 / 372) {
+
+    .event-card:nth-child(1),
+    .event-card:nth-child(2) {
+        height: calc(100vw * 372 / 1279 / 3);
+        /* 基于视口宽度计算高度 */
+    }
+
+    .event-card.more-card {
+        height: calc(100vw * 372 / 1279 / 3);
+        /* 保持相同高度 */
+    }
+
+    .event-card-large {
+        height: calc(100vw * 372 / 1279);
+        /* events页面的卡片高度 */
+    }
+}
+
+/* 第三个卡片：more 按钮，宽度为前两个卡片一半，高度与前两个卡片保持一致 */
+.event-card.more-card {
+    flex: 0.5 1 0;
+    min-width: 0;
+    aspect-ratio: 1279 / 372;
+    /* 与活动卡片相同的宽高比 */
+    height: auto;
+    background: linear-gradient(135deg,
+            rgb(100 100 120 / 40%) 0%,
+            rgb(80 80 100 / 60%) 100%);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-self: stretch;
+}
+
+.event-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+/* 活动图片容器 */
+.event-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* 填满卡片 */
+    overflow: hidden;
+}
+
+.event-image {
+    width: 100%;
+    height: 100%;
+    /* 填满容器 */
+    object-fit: cover;
+    /* 裁剪适配，保持宽高比 */
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 悬浮信息遮罩 */
+.event-hover-info {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgb(0 0 0 / 50%) 0%,
+            rgb(0 0 0 / 30%) 30%,
+            rgb(0 0 0 / 70%) 70%,
+            rgb(0 0 0 / 90%) 100%);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+/* 悬浮状态 */
+.event-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgb(255 255 255 / 30%);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 8px 24px rgb(0 0 0 / 30%);
+}
+
+.event-card:hover .event-image {
+    transform: scale(1.1);
+}
+
+.event-card:hover .event-hover-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 活动状态样式 */
+.event-status {
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.event-status.status-ongoing {
+    color: #10b981;
+    background: rgb(16 185 129 / 15%);
+    border: 1px solid rgb(16 185 129 / 30%);
+}
+
+.event-status.status-ended {
+    color: #9ca3af;
+    background: rgb(156 163 175 / 15%);
+    border: 1px solid rgb(156 163 175 / 30%);
+}
+
+/* 活动详情 */
+.event-details {
+    text-align: left;
+}
+
+.event-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 70%);
+    line-height: 1.3;
+}
+
+.event-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgb(255 255 255 / 90%);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+    flex-wrap: wrap;
+}
+
+.event-category,
+.event-time {
+    white-space: nowrap;
+}
+
+/* More 卡片样式 */
+.more-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: rgb(255 255 255 / 70%);
+    transition: all 0.3s ease;
+}
+
+.more-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.more-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.more-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 70%);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.more-hover-text {
+    text-align: center;
+    color: white;
+}
+
+.more-hover-text span:first-child {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.more-count {
+    font-size: 0.85rem;
+    color: rgb(255 255 255 / 80%);
+}
+
+/* More 卡片悬浮效果 */
+.more-card:hover {
+    background: linear-gradient(135deg,
+            rgb(120 120 140 / 60%) 0%,
+            rgb(100 100 120 / 80%) 100%);
+}
+
+.more-card:hover .more-content {
+    transform: scale(0.9);
+    opacity: 0.3;
+}
+
+.more-card:hover .more-overlay {
+    opacity: 1;
+}
+
+.more-card:hover .more-icon {
+    transform: translateX(10px);
+}
+
+/* Events Showcase 智能间距 */
+.events-showcase {
+    margin-top: var(--content-top-spacing);
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+/* 主页特殊样式调整 */
+.home-page .events-showcase {
+    margin-top: 2rem;
+    /* 主页中events应该紧贴header */
+}
+
+/* 移动端适配 */
+@media (width <=768px) {
+    .events-grid {
+        gap: 0.75rem;
+    }
+
+    .event-title {
+        font-size: 1rem;
+    }
+
+    .event-meta {
+        font-size: 0.75rem;
+    }
+
+    .more-icon {
+        font-size: 1.5rem;
+    }
+
+    .more-text {
+        font-size: 1rem;
+    }
+}
+
+@media (width <=480px) {
+    .events-showcase {
+        padding: 0 0.75rem;
+        margin: 1rem;
+    }
+
+    .events-grid {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .event-card:nth-child(1),
+    .event-card:nth-child(2) {
+        flex: none;
+        aspect-ratio: 1279 / 372;
+        /* 移动端也保持固定宽高比 */
+        height: auto;
+    }
+
+    .event-card.more-card {
+        flex: none;
+        aspect-ratio: 1279 / 372;
+        /* 移动端More卡片也保持相同比例 */
+        height: auto;
+    }
+
+    .event-hover-info {
+        opacity: 1;
+        transform: translateY(0);
+        background: linear-gradient(to bottom,
+                transparent 0%,
+                rgb(0 0 0 / 80%) 100%);
+    }
+}
+
+/* Events Page Styles */
+.events-page {
+    min-height: 100vh;
+    padding: 2rem 0;
+    margin-top: var(--content-top-spacing);
+}
+
+.events-page-container {
+    max-width: var(--container-max-width);
+    margin: var(--container-margin);
+    padding: var(--container-padding);
+}
+
+.events-page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+
+.events-page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 1rem;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+}
+
+.events-page-subtitle {
+    font-size: 1.1rem;
+    color: rgb(255 255 255 / 80%);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Events Grid for Page */
+.events-grid-page {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* PC版固定为两列 */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Large Event Cards */
+.event-card-large {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgb(20 20 25 / 90%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 30%), 0 4px 16px rgb(0 0 0 / 20%);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    aspect-ratio: 1279 / 372;
+    /* 固定宽高比例，与主页一致 */
+    height: auto;
+}
+
+.event-card-large:hover {
+    transform: translateY(-12px) scale(1.03);
+    border-color: rgb(255 255 255 / 30%);
+    box-shadow: 0 24px 80px rgb(0 0 0 / 50%), 0 8px 32px rgb(0 0 0 / 30%);
+}
+
+.event-link-large {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.event-image-container-large {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* 填满卡片 */
+    overflow: hidden;
+}
+
+.event-image-large {
+    width: 100%;
+    height: 100%;
+    /* 填满容器 */
+    object-fit: cover;
+    /* 裁剪适配，保持宽高比 */
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-card-large:hover .event-image-large {
+    transform: scale(1.05);
+}
+
+/* Large Card Overlay */
+.event-overlay-large {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgb(0 0 0 / 40%) 0%,
+            rgb(0 0 0 / 20%) 40%,
+            rgb(0 0 0 / 80%) 80%,
+            rgb(0 0 0 / 95%) 100%);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+
+}
+
+.event-card-large:hover .event-overlay-large {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 详情页状态样式 */
+.event-status-large {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.event-status-large.status-ongoing {
+    color: #10b981;
+    background: rgb(16 185 129 / 20%);
+    border: 1px solid rgb(16 185 129 / 40%);
+    box-shadow: 0 0 8px rgb(16 185 129 / 20%);
+}
+
+.event-status-large.status-ended {
+    color: #9ca3af;
+    background: rgb(156 163 175 / 20%);
+    border: 1px solid rgb(156 163 175 / 40%);
+}
+
+/* Large Card Info */
+.event-info-large {
+    text-align: left;
+}
+
+.event-title-large {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    text-shadow: 0 2px 8px rgb(0 0 0 / 70%);
+    line-height: 1.3;
+}
+
+.event-description {
+    color: rgb(255 255 255 / 90%);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
+}
+
+.event-meta-large {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: rgb(255 255 255 / 80%);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+    flex-wrap: wrap;
+}
+
+.event-category-large,
+.event-time-large {
+    white-space: nowrap;
+}
+
+/* Mobile Responsive for Events Page */
+@media (width <=1024px) {
+    .events-grid-page {
+        grid-template-columns: 1fr;
+        /* 平板和手机改为单列 */
+        gap: 1.5rem;
+    }
+}
+
+@media (width <=768px) {
+    .events-page {
+        padding: 2rem 0;
+        margin: 2rem;
+    }
+
+    .events-page-title {
+        font-size: 2rem;
+    }
+
+    .events-page-subtitle {
+        font-size: 1rem;
+    }
+
+    .event-title-large {
+        font-size: 1.0rem;
+    }
+
+    .event-description {
+        font-size: 0.9rem;
+    }
+
+    .event-meta-large {
+        font-size: 0.8rem;
+    }
+}
+
+@media (width <=480px) {
+    .events-page {
+        padding: 1rem 0;
+        margin-top: 1.5rem;
+        /* 小屏设备增加更多间距 */
+    }
+
+    .events-page-header {
+        margin-bottom: 2rem;
+    }
+
+    .events-page-title {
+        font-size: 1.8rem;
+    }
+
+
+
+    /* 移除详情页面的固定比例，让图片决定高度 */
+
+    .event-overlay-large {
+        opacity: 1;
+        transform: translateY(0);
+        background: linear-gradient(to bottom,
+                transparent 0%,
+                rgb(0 0 0 / 70%) 60%,
+                rgb(0 0 0 / 90%) 100%);
+    }
+
+    .event-overlay-large {
+        padding: 1rem;
+    }
+
+    .event-description {
+        display: none;
+    }
+
+}
