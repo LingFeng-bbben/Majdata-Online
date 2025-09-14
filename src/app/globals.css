@@ -1570,7 +1570,7 @@ p {
 }
 
 .event-card-large:hover .event-image-large {
-  transform: scale(1.15);
+  transform: scale(1.05);
 }
 
 /* Large Card Overlay */
@@ -1585,12 +1585,13 @@ p {
     rgb(0 0 0 / 95%) 100%
   );
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(10px);
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 1.5rem;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+ 
 }
 
 .event-card-large:hover .event-overlay-large {
@@ -1681,7 +1682,7 @@ p {
   }
 
   .event-title-large {
-    font-size: 1.3rem;
+    font-size: 1.0rem;
   }
 
   .event-description {
@@ -1727,6 +1728,11 @@ p {
   .event-overlay-large {
     padding: 1rem;
   }
+
+  .event-description {
+    display: none;
+  }
+
 }
 
 .seprate {
