@@ -1,5 +1,16 @@
 [
-    {
+  {
+    "id": "zppz",
+    "href": "/space?id=这谱谱这无名战",
+    "src": "/events/event7.png",
+    "alt": "这谱谱这无名战",
+    "title": "这谱谱这无名战",
+    "category": "私立赛事",
+    "createDate": "2025-09-20",
+    "endDate": "2025-10-31",
+    "description": ""
+  },
+  {
     "id": "hajicup",
     "href": "/space?id=哈基杯",
     "src": "/events/event6.jpg",
@@ -10,7 +21,7 @@
     "endDate": "2025-09-17",
     "description": ""
   },
-    {
+  {
     "id": "mufc",
     "href": "/space?id=MUFC",
     "src": "/events/event5.png",
