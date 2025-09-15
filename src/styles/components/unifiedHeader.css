@@ -743,6 +743,14 @@
   .mobile-auth-dropdown {
     display: none;
   }
+
+
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   
   /* 智能响应式 Header 高度系统 */
   @media (width <= 1200px) {
@@ -799,6 +807,11 @@
     body {
       padding-top: var(--content-top-spacing-large);
     }
+
+    .nav-links {
+      gap: 0.5rem;
+    }
+  
   
     .header-container {
       height: var(--header-height);

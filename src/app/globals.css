@@ -83,12 +83,6 @@ p {
 
 
 
-.nav-links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
 
 
@@ -149,9 +143,6 @@ h2 {
  
 
 
-  .nav-links {
-    gap: 0.5rem;
-  }
 
   .events-container {
     grid-template-columns: 1fr;
