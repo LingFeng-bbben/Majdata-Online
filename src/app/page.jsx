@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
+import { useSearchParams } from "next/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -367,18 +368,27 @@ function MainComp() {
   const [page, setPage] = useState(0);
   const [maxpage, setMaxpage] = useState(999999);
   const [sortType, setSortType] = useState(0);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!isLoaded) {
-      const a = localStorage.getItem("search");
+      // 检查URL中的search参数
+      const urlSearchParam = searchParams.get("search");
+      const a = urlSearchParam || localStorage.getItem("search");
       const b = localStorage.getItem("lastclickpage");
       const s = localStorage.getItem("sort");
+      
       setSearch(a ? a : "");
       setPage(parseInt(b ? b : 0));
       setIsLoaded(true);
       setSortType(s ? parseInt(s) : 0);
+      
+      // 如果URL中有search参数，保存到localStorage
+      if (urlSearchParam) {
+        localStorage.setItem("search", urlSearchParam);
+      }
     }
-  }, [isLoaded]);
+  }, [isLoaded, searchParams]);
 
   const debounced = useDebouncedCallback(
     // function

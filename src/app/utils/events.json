@@ -1,5 +1,17 @@
 [
   {
+    "id": "REK",
+    "href": "/?search=Re:KALEIDXSCOPE",
+    "src": "/events/REK.png",
+    "alt": "Project Re:KALEIDXSCOPE",
+    "title": "Project Re:KALEIDXSCOPE",
+    "category": "私立企划",
+    "createDate": "2024-12-26",
+    "endDate": "2025-10-16",
+    "description": "Project Re:KALEIDXSCOPE"
+  },
+
+  {
     "id": "zppz",
     "href": "/space?id=这谱谱这无名战",
     "src": "/events/event7.png",
@@ -88,8 +100,8 @@
     "description": "BEMANI音游主题——第9届舞萌自制月赛（MMFC9）结算，详情请见B站视频。"
   },
 
-
-  { "id": "xmmcg4",
+  {
+    "id": "xmmcg4",
     "href": "https://www.bilibili.com/video/BV14W5XzmE1v",
     "src": "/events/xmmcg4.png",
     "alt": "小妹妹唱歌4",
@@ -99,7 +111,6 @@
     "endDate": "2025-04-22",
     "description": "偶像企划主体的谱面比赛 主办→SniperPigeon"
   },
-
 
   {
     "id": "mmfc8",
@@ -122,87 +133,84 @@
     "createDate": "2024-03-10",
     "endDate": "2024-03-12",
     "description": "韩系音游——第7届舞萌自制月赛（MMFC7）结算，详情请见B站视频。"
+  },
+
+  {
+    "id": "mmfc6",
+    "href": "https://www.bilibili.com/video/BV1eg4y1C7qR",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC6结算",
+    "title": "MMFC6结算",
+    "category": "大型赛事",
+    "createDate": "2023-11-21",
+    "endDate": "2023-12-21",
+    "description": "Vocaloid主题——第6届舞萌自制月赛（MMFC6）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc5",
+    "href": "https://www.bilibili.com/video/BV1DH4y1d7cZ/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC5结算",
+    "title": "MMFC5结算",
+    "category": "大型赛事",
+    "createDate": "2023-09-10",
+    "endDate": "2023-10-08",
+    "description": "东方project曲库队伍赛——第5届舞萌自制月赛（MMFC5）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc4",
+    "href": "https://www.bilibili.com/video/BV1uh4y1L7fH",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC4结算",
+    "title": "MMFC4结算",
+    "category": "大型赛事",
+    "createDate": "2023-06-18",
+    "endDate": "2023-07-18",
+    "description": "BMS主题——第4届舞萌自制月赛（MMFC4）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc3",
+    "href": "https://www.bilibili.com/video/BV1Wg4y1c7hK/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC3结算",
+    "title": "MMFC3结算",
+    "category": "大型赛事",
+    "createDate": "2023-04-10",
+    "endDate": "2023-05-22",
+    "description": "游戏音乐——第3届舞萌自制月赛（MMFC3）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc2",
+    "href": "https://www.bilibili.com/video/BV1LM4y1U7iQ/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC2结算",
+    "title": "MMFC2结算",
+    "category": "大型赛事",
+    "createDate": "2023-02-10",
+    "endDate": "2023-03-29",
+    "description": "10年前怀旧金曲主题——第2届舞萌自制月赛（MMFC2）结算，详情请见B站视频。"
+  },
+  {
+    "id": "mmfc1",
+    "href": "https://www.bilibili.com/video/BV1Nv4y117M9/",
+    "src": "/events/mmfc_event.jpg",
+    "alt": "MMFC1结算",
+    "title": "MMFC1结算",
+    "category": "大型赛事",
+    "createDate": "2022-12-15",
+    "endDate": "2023-01-14",
+    "description": "2022新番主题——第1届舞萌自制月赛（MMFC1）结算，详情请见B站视频。"
+  },
+
+  {
+    "id": "tsuki",
+    "href": "/space?id=Project「異色の月」",
+    "src": "/events/tsuki.jpg",
+    "alt": "異色の月",
+    "title": "異色の月",
+    "category": "私立企划",
+    "createDate": "2025-08-23",
+    "endDate": "2025-10-07",
+    "description": "Project「異色の月」"
   }
-
-,
-{
-  "id": "mmfc6",
-  "href": "https://www.bilibili.com/video/BV1eg4y1C7qR",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC6结算",
-  "title": "MMFC6结算",
-  "category": "大型赛事",
-  "createDate": "2023-11-21",
-  "endDate": "2023-12-21",
-  "description": "Vocaloid主题——第6届舞萌自制月赛（MMFC6）结算，详情请见B站视频。"
-},
-{
-  "id": "mmfc5",
-  "href": "https://www.bilibili.com/video/BV1DH4y1d7cZ/",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC5结算",
-  "title": "MMFC5结算",
-  "category": "大型赛事",
-  "createDate": "2023-09-10",
-  "endDate": "2023-10-08",
-  "description": "东方project曲库队伍赛——第5届舞萌自制月赛（MMFC5）结算，详情请见B站视频。"
-},
-{
-  "id": "mmfc4",
-  "href": "https://www.bilibili.com/video/BV1uh4y1L7fH",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC4结算",
-  "title": "MMFC4结算",
-  "category": "大型赛事",
-  "createDate": "2023-06-18",
-  "endDate": "2023-07-18",
-  "description": "BMS主题——第4届舞萌自制月赛（MMFC4）结算，详情请见B站视频。"
-},
-{
-  "id": "mmfc3",
-  "href": "https://www.bilibili.com/video/BV1Wg4y1c7hK/",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC3结算",
-  "title": "MMFC3结算",
-  "category": "大型赛事",
-  "createDate": "2023-04-10",
-  "endDate": "2023-05-22",
-  "description": "游戏音乐——第3届舞萌自制月赛（MMFC3）结算，详情请见B站视频。"
-},
-{
-  "id": "mmfc2",
-  "href": "https://www.bilibili.com/video/BV1LM4y1U7iQ/",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC2结算",
-  "title": "MMFC2结算",
-  "category": "大型赛事",
-  "createDate": "2023-02-10",
-  "endDate": "2023-03-29",
-  "description": "10年前怀旧金曲主题——第2届舞萌自制月赛（MMFC2）结算，详情请见B站视频。"
-},
-{
-  "id": "mmfc1",
-  "href": "https://www.bilibili.com/video/BV1Nv4y117M9/",
-  "src": "/events/mmfc_event.jpg",
-  "alt": "MMFC1结算",
-  "title": "MMFC1结算",
-  "category": "大型赛事",
-  "createDate": "2022-12-15",
-  "endDate": "2023-01-14",
-  "description": "2022新番主题——第1届舞萌自制月赛（MMFC1）结算，详情请见B站视频。"
-},
-
-{
-  "id": "tsuki",
-  "href": "/space?id=Project「異色の月」",
-  "src": "/events/tsuki.jpg",
-  "alt": "異色の月",
-  "title": "異色の月",
-  "category": "私立企划",
-  "createDate": "2025-08-23",
-  "endDate": "2025-10-07",
-  "description": "Project「異色の月」"
-}
-
-
 ]
