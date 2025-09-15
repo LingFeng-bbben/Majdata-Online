@@ -95,6 +95,7 @@ export default function IntroUploader() {
             className="pagingButton linkContent"
             id="submitbutton3"
             type="submit"
+            style={{ margin: "30px 0" }}
           >
             {loc("Upload")}
           </button>

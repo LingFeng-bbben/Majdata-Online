@@ -75,43 +75,12 @@ p {
   filter: blur(8px) brightness(30%);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .linkContent.featured {
   background: linear-gradient(45deg, #ffd700, #ffed4e);
   color: #000;
   font-weight: bold;
   transform: scale(1.05);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 h1 {
   color: whitesmoke;
@@ -139,15 +108,7 @@ h2 {
 }
 
 /* Mobile Responsive */
-@media screen and (width <= 768px) {
- 
-
-
-
-  .events-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+@media screen and (width <=768px) {
 
   .search-container {
     padding: 0.5rem;
@@ -202,7 +163,7 @@ h2 {
   display: inline;
 }
 
-@media screen and (width <= 500px) {
+@media screen and (width <=500px) {
   .xxlb {
     width: 2.5rem;
     height: 2.5rem;
@@ -235,14 +196,7 @@ h2 {
     z-index: 10000;
   }
 
-  .settings-container {
-    padding: 1.5rem;
-  }
 
-  .settings-group {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
 
   .setting-item {
     padding: 1rem;
@@ -252,11 +206,6 @@ h2 {
     font-size: 1.3rem;
   }
 
-  .settings-title {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.8rem;
-  }
 
   .setting-label {
     font-size: 0.85rem;
@@ -273,7 +222,6 @@ h2 {
 }
 
 .linkContent {
-  /* background-color: red; */
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
@@ -283,7 +231,6 @@ h2 {
 }
 
 .linkContentWithBorder {
-  /* background-color: red; */
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
@@ -430,15 +377,17 @@ h2 {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4);
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientShift 3s ease-in-out infinite;
+  background: none;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  animation: none;
+  text-shadow:
+    0 0 2px #a78bfa,
+    0 0 4px #60a5fa;
 }
 
 @keyframes gradientShift {
+
   0%,
   100% {
     background-position: 0% 50%;
@@ -780,7 +729,7 @@ h2 {
   transform: translateX(5px);
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -938,7 +887,6 @@ h2 {
   margin-bottom: 2.5rem;
   text-align: left;
 
-  /* border-left: 4px solid #10B981; */
   padding-left: 1rem;
 }
 
@@ -1114,7 +1062,7 @@ h2 {
 }
 
 /* Edit Page Mobile Responsive */
-@media (width <= 768px) {
+@media (width <=768px) {
   .edit-content {
     padding: 0 0.75rem;
   }
@@ -1173,7 +1121,7 @@ h2 {
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .edit-hero {
     padding: 1.5rem 1rem;
   }
@@ -1576,7 +1524,7 @@ h2 {
   flex-shrink: 0;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .avatar-display-section {
     flex-direction: column;
     gap: 1.5rem;
@@ -1730,9 +1678,8 @@ h2 {
   border-radius: 2px;
 }
 
-/* 移除了 .activity-content, .charts-content 的容器样式，让 SongList 直接浮在背景上 */
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .settings-grid {
     gap: 1.5rem;
     padding: 1rem;
@@ -1822,22 +1769,23 @@ img.songImg {
   justify-content: center;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .songCardWrapper {
-    flex: 1 1 150px; /* On smaller screens, each card will take up less space */
+    flex: 1 1 150px;
+
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .songCardWrapper {
-    flex: 1 1 100%; /* On very small screens, cards will stack vertically */
+    flex: 1 1 100%;
+
   }
 }
 
 .songInfo {
   margin-left: 8.9rem;
 
-  /* border: 1px solid red; */
 }
 
 .songTitle {
@@ -1946,20 +1894,20 @@ img.songImg {
 }
 
 /* Medium screens (tablets) - 针对中等屏幕的搜索优化 */
-@media (width <= 1024px) and (width >= 769px) {
+@media (width <=1024px) and (width >=769px) {
   .search-controls {
     gap: 1.5rem;
   }
 }
 
-@media screen and (width >= 1100px) {
+@media screen and (width >=1100px) {
   .search-controls {
     flex-direction: row;
   }
 }
 
 /* 移动端搜索栏优化 */
-@media (width <= 768px) {
+@media (width <=768px) {
   .search-section {
     margin-bottom: 0.25rem;
     margin-top: 1rem;
@@ -1971,17 +1919,23 @@ img.songImg {
   }
 
   .search-controls {
-    flex-flow: column nowrap; /* 移动端下拉框并列排列 */
+    flex-flow: column nowrap;
+
     gap: 0.75rem;
-    justify-content: space-between; /* 确保不换行 */
-    align-items: center; /* 垂直居中对齐 */
+    justify-content: space-between;
+
+    align-items: center;
+
   }
 
   .sort-selector,
   .download-format-selector {
-    flex: 1; /* 两个下拉框等宽分布 */
-    min-width: 0; /* 允许flex项目收缩 */
-    overflow: hidden; /* 防止内容溢出 */
+    flex: 1;
+
+    min-width: 0;
+
+    overflow: hidden;
+
     flex-direction: column;
   }
 
@@ -1994,19 +1948,27 @@ img.songImg {
   .sort-label {
     font-size: 0.85rem;
     margin-bottom: 0.25rem;
-    white-space: nowrap; /* 防止标签换行 */
-    overflow: hidden; /* 防止内容溢出 */
-    text-overflow: ellipsis; /* 超长文本显示省略号 */
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
   }
 
   .modern-select {
     padding: 0.6rem;
     font-size: 0.85rem;
-    white-space: nowrap; /* 防止选项文本换行 */
-    overflow: hidden; /* 防止内容溢出 */
-    text-overflow: ellipsis; /* 超长文本显示省略号 */
-    width: 100%; /* 确保在移动端占满容器宽度 */
-    min-width: 0; /* 允许收缩 */
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    width: 100%;
+
+    min-width: 0;
+
     height: 2.5rem;
   }
 
@@ -2104,11 +2066,9 @@ img.songImg {
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgb(255 255 255 / 60%),
-    rgb(255 255 255 / 30%)
-  );
+  background: linear-gradient(90deg,
+      rgb(255 255 255 / 60%),
+      rgb(255 255 255 / 30%));
   transition: width 0.3s ease;
 }
 
@@ -2163,7 +2123,7 @@ img.songImg {
 }
 
 /* 小屏幕优化 */
-@media (width <= 480px) {
+@media (width <=480px) {
   .search-section {
     margin-top: 0.75rem;
   }
@@ -2178,8 +2138,10 @@ img.songImg {
 
   .search-controls {
     gap: 1rem;
-    flex-wrap: nowrap; /* 确保不换行 */
-    align-items: center; /* 垂直居中对齐 */
+    flex-wrap: nowrap;
+
+    align-items: center;
+
   }
 
   /* 小屏幕下确保label隐藏 */
@@ -2191,16 +2153,22 @@ img.songImg {
   .sort-label {
     font-size: 0.8rem;
     margin-bottom: 0.2rem;
-    white-space: nowrap; /* 防止标签换行 */
-    overflow: hidden; /* 防止内容溢出 */
-    text-overflow: ellipsis; /* 超长文本显示省略号 */
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
   }
 
   .modern-select {
-    width: 100%; /* 确保在移动端占满容器宽度 */
+    width: 100%;
+
     padding: 0.5rem 0.2rem;
-    white-space: nowrap; /* 防止选项文本换行 */
-    overflow: hidden; /* 防止内容溢出 */
+    white-space: nowrap;
+
+    overflow: hidden;
+
   }
 
   /* 小屏幕下拉框的placeholder样式 */
@@ -2229,7 +2197,7 @@ img.songImg {
   text-align: center;
   height: 2rem;
 
-  /* 宽度根据内容自适应 */
+
   width: auto;
   min-width: 80px;
   max-width: 100%;
@@ -2237,10 +2205,11 @@ img.songImg {
   border-radius: 10px;
   box-shadow: 2px 2px 5px gray;
   color: white;
-  padding: 0 1.2em; /* 两侧留白，防止内容贴边 */
+  padding: 0 1.2em;
+
   font-size: 1rem;
 
-  /* 防止内容溢出 */
+
   white-space: nowrap;
 }
 
@@ -2298,10 +2267,11 @@ img.songImg {
   font-size: 20px;
   line-height: 1.8;
   color: #333;
-  white-space: pre-line; /* 保留 <br /> 的换行效果 */
+  white-space: pre-line;
+
 }
 
-@media screen and (width <= 700px) {
+@media screen and (width <=700px) {
   .songDetail {
     width: 100%;
     border: none;
@@ -2309,7 +2279,7 @@ img.songImg {
   }
 }
 
-@media screen and (width >= 700px) {
+@media screen and (width >=700px) {
   .majViewPort {
     margin-top: 20px;
     width: 100%;
@@ -2329,7 +2299,7 @@ img.songImg {
   }
 }
 
-@media screen and (aspect-ratio >= 2/3) {
+@media screen and (aspect-ratio >=2/3) {
   .majSticky {
     position: unset;
   }
@@ -2411,15 +2381,6 @@ img.songImg {
   opacity: 1;
 }
 
-/* Settings Section */
-.settings-section {
-  max-width: var(--container-max-width);
-  margin: var(--container-margin);
-  margin-top: 4rem;
-  margin-bottom: 3rem;
-  padding: var(--container-padding);
-  animation: slideInUp 0.6s ease-out 0.3s both;
-}
 
 @keyframes slideInUp {
   from {
@@ -2433,30 +2394,6 @@ img.songImg {
   }
 }
 
-.settings-container {
-  background: var(--glassmorphism-bg-secondary);
-  backdrop-filter: var(--glassmorphism-backdrop);
-  border-radius: var(--glassmorphism-border-radius);
-  padding: 2rem;
-  border: var(--glassmorphism-border);
-  box-shadow: var(--glassmorphism-shadow);
-}
-
-.settings-title {
-  color: #e5e5e5;
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin: 0 0 1.5rem;
-  text-align: center;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgb(255 255 255 / 10%);
-}
-
-.settings-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
 
 .setting-item {
   display: flex;
@@ -2631,11 +2568,9 @@ img.songImg {
   padding: 3rem 1rem 4rem;
   text-align: center;
   border-top: 1px solid rgb(255 255 255 / 10%);
-  background: linear-gradient(
-    to bottom,
-    rgb(20 20 20 / 95%),
-    rgb(10 10 10 / 98%)
-  );
+  background: linear-gradient(to bottom,
+      rgb(20 20 20 / 95%),
+      rgb(10 10 10 / 98%));
   backdrop-filter: blur(10px);
 }
 
@@ -2850,7 +2785,7 @@ img.songImg {
 }
 
 /* Floating Buttons Mobile Responsive */
-@media (width <= 768px) {
+@media (width <=768px) {
   .floating-buttons {
     bottom: 1.5rem;
     right: 1.5rem;
@@ -2875,7 +2810,7 @@ img.songImg {
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .floating-buttons {
     bottom: 1rem;
     right: 1rem;
@@ -2977,7 +2912,7 @@ img.songImg {
 }
 
 /* Mobile Responsive */
-@media (width <= 768px) {
+@media (width <=768px) {
   .footer-content {
     margin-bottom: 1.5rem;
     gap: 0.5rem;
@@ -3094,7 +3029,7 @@ img.songImg {
   margin-top: 0;
 }
 
-@media screen and (width >= 700px) {
+@media screen and (width >=700px) {
   .songDescription {
     width: 100%;
   }
@@ -3110,18 +3045,16 @@ img.songImg {
   border: 1px solid white;
   border-radius: 10px;
   animation: glowing 20s linear infinite;
-  background: linear-gradient(
-    45deg,
-    #f00,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #f00
-  );
+  background: linear-gradient(45deg,
+      #f00,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #f00);
   background-size: 400%;
 }
 
@@ -3146,7 +3079,7 @@ img.songImg {
   margin-top: 10px;
 }
 
-@media screen and (width <= 500px) {
+@media screen and (width <=500px) {
   .biliPlayer {
     width: 100%;
   }
@@ -3162,16 +3095,14 @@ img.songImg {
 .hr-solid {
   border: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(255 255 255 / 20%) 15%,
-    rgb(255 255 255 / 40%) 30%,
-    rgb(255 255 255 / 60%) 50%,
-    rgb(255 255 255 / 40%) 70%,
-    rgb(255 255 255 / 20%) 85%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgb(255 255 255 / 20%) 15%,
+      rgb(255 255 255 / 40%) 30%,
+      rgb(255 255 255 / 60%) 50%,
+      rgb(255 255 255 / 40%) 70%,
+      rgb(255 255 255 / 20%) 85%,
+      transparent 100%);
   width: 70%;
   margin: 2rem auto;
   position: relative;
@@ -3231,7 +3162,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: var(--background-start) !important;
 }
 
-@media (width <= 767px) {
+@media (width <=767px) {
   .markdown-body {
     padding: 15px;
   }
@@ -3246,9 +3177,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .uploadMetaRow {
   display: flex;
   align-items: center;
-  gap: 6px; /* 控制 label 和内容的间距 */
+  gap: 6px;
   margin: 4px 0;
-  flex-wrap: wrap; /* 内容太长时自动换行 */
+  flex-wrap: wrap;
 }
 
 .uploadMetaLabel {
@@ -3384,10 +3315,8 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0 0 2rem;
   text-align: center;
   text-shadow: 0 4px 8px rgb(0 0 0 / 50%);
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
-  background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: none;
+  -webkit-text-fill-color: unset;
 }
 
 /* Song页面排行榜成绩卡片样式 */
@@ -3397,11 +3326,9 @@ input[type="number"]::-webkit-inner-spin-button {
   gap: 1rem;
   padding: 1rem 1.5rem;
   margin: 1rem 2rem;
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 10%),
-    rgb(255 255 255 / 5%)
-  );
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 10%),
+      rgb(255 255 255 / 5%));
   backdrop-filter: blur(10px);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 12px;
@@ -3551,9 +3478,9 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #fde68a !important;
   font-weight: 800 !important;
   text-shadow:
-    /* 金色荧光效果 */ 0 0 8px rgb(253 230 138 / 60%),
+    0 0 8px rgb(253 230 138 / 60%),
     0 0 12px rgb(251 191 36 / 40%), 0 0 16px rgb(251 191 36 / 20%),
-    /* 深度阴影 */ 0 2px 4px rgb(0 0 0 / 40%) !important;
+    0 2px 4px rgb(0 0 0 / 40%) !important;
   filter: brightness(1.1) contrast(1.1);
 }
 
@@ -3562,9 +3489,9 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #93c5fd !important;
   font-weight: 800 !important;
   text-shadow:
-    /* 蓝色荧光效果 */ 0 0 8px rgb(147 197 253 / 60%),
+    0 0 8px rgb(147 197 253 / 60%),
     0 0 12px rgb(59 130 246 / 40%), 0 0 16px rgb(59 130 246 / 20%),
-    /* 深度阴影 */ 0 2px 4px rgb(0 0 0 / 40%) !important;
+    0 2px 4px rgb(0 0 0 / 40%) !important;
   filter: brightness(1.1) contrast(1.1);
 }
 
@@ -3575,12 +3502,10 @@ input[type="number"]::-webkit-inner-spin-button {
   gap: 0.75rem;
   padding: 1.25rem 1.75rem;
   margin: 1rem;
-  max-width: 33.33vw; /* 限制最大宽度为屏幕的1/3 */
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 8%),
-    rgb(255 255 255 / 4%)
-  );
+  max-width: 33.33vw;
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 8%),
+      rgb(255 255 255 / 4%));
   backdrop-filter: blur(10px);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 12px;
@@ -3689,11 +3614,9 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .modern-interaction-btn {
-  background: linear-gradient(
-    135deg,
-    rgb(59 130 246 / 20%),
-    rgb(37 99 235 / 30%)
-  );
+  background: linear-gradient(135deg,
+      rgb(59 130 246 / 20%),
+      rgb(37 99 235 / 30%));
   backdrop-filter: blur(10px);
   border: 1px solid rgb(59 130 246 / 30%);
   border-radius: 12px;
@@ -3703,11 +3626,9 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .modern-interaction-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(59 130 246 / 30%),
-    rgb(37 99 235 / 40%)
-  );
+  background: linear-gradient(135deg,
+      rgb(59 130 246 / 30%),
+      rgb(37 99 235 / 40%));
   border-color: rgb(59 130 246 / 50%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgb(59 130 246 / 20%), 0 4px 12px rgb(0 0 0 / 30%);
@@ -3715,14 +3636,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 评论发送器 - 与hr-solid保持一致的宽度 */
 .song-comment-sender {
-  width: 70%; /* 与hr-solid保持一致 */
+  width: 70%;
   margin: 2rem auto;
   padding: 2rem;
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 10%),
-    rgb(255 255 255 / 5%)
-  );
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 10%),
+      rgb(255 255 255 / 5%));
   backdrop-filter: blur(10px);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 15px;
@@ -3731,11 +3650,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 高级评论输入框样式 */
 .modern-textarea {
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 8%),
-    rgb(255 255 255 / 4%)
-  );
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 8%),
+      rgb(255 255 255 / 4%));
   backdrop-filter: blur(15px);
   border: 1px solid rgb(255 255 255 / 20%);
   border-radius: 12px;
@@ -3754,11 +3671,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .modern-textarea:focus {
   outline: none;
   border-color: rgb(59 130 246 / 40%);
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 12%),
-    rgb(255 255 255 / 6%)
-  );
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 6%));
   box-shadow: 0 6px 20px rgb(0 0 0 / 20%), 0 0 0 2px rgb(59 130 246 / 20%),
     inset 0 1px 0 rgb(255 255 255 / 15%);
   transform: translateY(-1px);
@@ -3890,10 +3805,10 @@ input[type="number"]::-webkit-inner-spin-button {
 /* 点赞互动布局样式 */
 .interaction-layout {
   display: flex;
-  align-items: stretch; /* 让所有子元素等高 */
+  align-items: stretch;
   gap: 2rem;
   padding: 1.5rem;
-  min-height: 140px; /* 确保有最小高度 */
+  min-height: 140px;
 }
 
 .interaction-buttons {
@@ -3901,8 +3816,8 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: column;
   gap: 1rem;
   flex-shrink: 0;
-  justify-content: center; /* 垂直居中对齐按钮 */
-  align-items: center; /* 水平居中对齐按钮 */
+  justify-content: center;
+  align-items: center;
 }
 
 .large-interaction-btn {
@@ -3931,16 +3846,14 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .interaction-divider {
   width: 2px;
-  height: 100%; /* 填满整个容器高度 */
-  align-self: stretch; /* 确保拉伸到容器全高 */
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgb(255 255 255 / 20%) 20%,
-    rgb(255 255 255 / 40%) 50%,
-    rgb(255 255 255 / 20%) 80%,
-    transparent 100%
-  );
+  height: 100%;
+  align-self: stretch;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      rgb(255 255 255 / 20%) 20%,
+      rgb(255 255 255 / 40%) 50%,
+      rgb(255 255 255 / 20%) 80%,
+      transparent 100%);
   border-radius: 1px;
   flex-shrink: 0;
 }
@@ -3950,7 +3863,7 @@ input[type="number"]::-webkit-inner-spin-button {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 垂直居中对齐内容 */
+  justify-content: center;
 }
 
 .liked-users-title {
@@ -4038,6 +3951,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: scale(1);
@@ -4051,7 +3965,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* Song页面响应式设计 */
-@media (width <= 768px) {
+@media (width <=768px) {
+
   .song-info-container,
   .song-interaction-container,
   .song-comment-sender,
@@ -4065,8 +3980,8 @@ input[type="number"]::-webkit-inner-spin-button {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1rem;
-    min-height: auto; /* 移动端不需要固定最小高度 */
-    align-items: center; /* 移动端居中对齐 */
+    min-height: auto;
+    align-items: center;
   }
 
   .interaction-buttons {
@@ -4084,14 +3999,12 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 100%;
     height: 2px;
     min-height: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(255 255 255 / 20%) 20%,
-      rgb(255 255 255 / 40%) 50%,
-      rgb(255 255 255 / 20%) 80%,
-      transparent 100%
-    );
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgb(255 255 255 / 20%) 20%,
+        rgb(255 255 255 / 40%) 50%,
+        rgb(255 255 255 / 20%) 80%,
+        transparent 100%);
   }
 
   .user-avatar-img {
@@ -4116,7 +4029,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 
   .song-comment-sender {
-    width: 85%; /* 768px断点下放宽一些 */
+    width: 85%;
     padding: 1.5rem;
   }
 
@@ -4138,7 +4051,8 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
+
   .song-info-container,
   .song-interaction-container,
   .song-comment-sender,
@@ -4164,7 +4078,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 
   .song-comment-sender {
-    width: 95%; /* 480px断点下进一步放宽 */
+    width: 95%;
     padding: 1rem;
   }
 
@@ -4187,8 +4101,8 @@ input[type="number"]::-webkit-inner-spin-button {
   .interaction-layout {
     padding: 0.75rem;
     gap: 1rem;
-    min-height: auto; /* 小屏幕不需要固定最小高度 */
-    align-items: center; /* 小屏幕居中对齐 */
+    min-height: auto;
+    align-items: center;
   }
 
   .large-interaction-btn {
@@ -4221,7 +4135,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* Song页面排行榜和评论响应式样式 - 768px */
-@media (width <= 768px) {
+@media (width <=768px) {
   .ranking-main-title {
     font-size: 1.7rem;
     margin-bottom: 1.5rem;
@@ -4259,7 +4173,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .comment-card {
     padding: 1rem 1.5rem;
-    max-width: 50vw; /* 768px断点下放宽到屏幕的1/2 */
+    max-width: 50vw;
   }
 
   .commenter-avatar {
@@ -4277,7 +4191,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* Song页面排行榜和评论响应式样式 - 480px */
-@media (width <= 480px) {
+@media (width <=480px) {
   .ranking-main-title {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -4327,7 +4241,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .comment-card {
     padding: 0.75rem;
-    max-width: 90vw; /* 480px断点下放宽到90% */
+    max-width: 90vw;
   }
 
   .commenter-avatar {
@@ -4369,14 +4283,12 @@ input[type="number"]::-webkit-inner-spin-button {
 .song-details-divider {
   width: 80%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(255 255 255 / 30%) 20%,
-    rgb(255 255 255 / 50%) 50%,
-    rgb(255 255 255 / 30%) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgb(255 255 255 / 30%) 20%,
+      rgb(255 255 255 / 50%) 50%,
+      rgb(255 255 255 / 30%) 80%,
+      transparent 100%);
   margin: 2rem auto;
   position: relative;
 }
@@ -4417,8 +4329,8 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 20rem;
   height: 20rem;
   display: flex;
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中（如有需要） */
+  align-items: center;
+  justify-content: center;
 }
 
 .song-cover-section:hover {
@@ -4590,11 +4502,9 @@ input[type="number"]::-webkit-inner-spin-button {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 10%),
-    rgb(255 255 255 / 5%)
-  );
+  background: linear-gradient(135deg,
+      rgb(255 255 255 / 10%),
+      rgb(255 255 255 / 5%));
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
@@ -4763,20 +4673,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .share-button:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(59 130 246 / 20%),
-    rgb(37 99 235 / 15%)
-  );
+  background: linear-gradient(135deg,
+      rgb(59 130 246 / 20%),
+      rgb(37 99 235 / 15%));
   border-color: rgb(59 130 246 / 40%);
 }
 
 .download-button:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(16 185 129 / 20%),
-    rgb(5 150 105 / 15%)
-  );
+  background: linear-gradient(135deg,
+      rgb(16 185 129 / 20%),
+      rgb(5 150 105 / 15%));
   border-color: rgb(16 185 129 / 40%);
 }
 
@@ -4907,21 +4813,17 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .tag-private {
-  background: linear-gradient(
-    135deg,
-    rgb(139 69 19 / 30%),
-    rgb(101 67 33 / 20%)
-  );
+  background: linear-gradient(135deg,
+      rgb(139 69 19 / 30%),
+      rgb(101 67 33 / 20%));
   color: rgb(255 215 0 / 90%);
   border-color: rgb(139 69 19 / 40%);
 }
 
 .tag-private:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(139 69 19 / 50%),
-    rgb(101 67 33 / 40%)
-  );
+  background: linear-gradient(135deg,
+      rgb(139 69 19 / 50%),
+      rgb(101 67 33 / 40%));
   color: #ffd700;
   border-color: rgb(139 69 19 / 70%);
   transform: translateY(-1px);
@@ -4929,21 +4831,17 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .tag-public {
-  background: linear-gradient(
-    135deg,
-    rgb(34 197 94 / 30%),
-    rgb(22 163 74 / 20%)
-  );
+  background: linear-gradient(135deg,
+      rgb(34 197 94 / 30%),
+      rgb(22 163 74 / 20%));
   color: rgb(74 222 128 / 90%);
   border-color: rgb(34 197 94 / 40%);
 }
 
 .tag-public:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(34 197 94 / 50%),
-    rgb(22 163 74 / 40%)
-  );
+  background: linear-gradient(135deg,
+      rgb(34 197 94 / 50%),
+      rgb(22 163 74 / 40%));
   color: #4ade80;
   border-color: rgb(34 197 94 / 70%);
   transform: translateY(-1px);
@@ -4962,14 +4860,13 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 1.5rem;
 }
 
-/* 覆盖原有的interaction-container样式，使其与新容器融合 */
 .song-interaction-section .interaction-layout {
   background: rgb(255 255 255 / 2%);
   backdrop-filter: blur(10px);
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: 16px;
   padding: 2rem;
-  margin: 0; /* 移除margin，因为现在在统一容器内 */
+  margin: 0;
   transition: all 0.3s ease;
 }
 
@@ -5030,9 +4927,8 @@ input[type="number"]::-webkit-inner-spin-button {
   box-shadow: 0 4px 15px rgb(0 0 0 / 30%);
 }
 
-/* ===== 响应式设计 ===== */
 
-@media (width <= 1024px) {
+@media (width <=1024px) {
   .song-details-main-container {
     margin-top: 1.5rem;
     padding: 0 1rem;
@@ -5052,7 +4948,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .song-details-main-container {
     margin-top: 1rem;
     padding: 0 0.75rem;
@@ -5072,8 +4968,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .song-cover-section {
     align-self: center;
-    margin: 0 auto; /* 水平居中 */
-    width: 12rem; /* 移动端稍微缩小封面尺寸 */
+    margin: 0 auto;
+    width: 12rem;
     height: 12rem;
   }
 
@@ -5156,7 +5052,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .song-details-main-container {
     padding: 0 0.5rem;
     border-radius: 10px;
@@ -5172,7 +5068,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 
   .song-cover-section {
-    width: 10rem; /* 极小屏幕进一步缩小封面尺寸 */
+    width: 10rem;
     height: 10rem;
   }
 
@@ -5192,7 +5088,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 
   .action-text {
-    display: none; /* 在小屏幕上隐藏文字，只显示图标 */
+    display: none;
   }
 
   .song-meta-card {
@@ -5220,14 +5116,14 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* ===== HR-Solid 响应式设计 ===== */
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .hr-solid {
     width: 80%;
     margin: 1.5rem auto;
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .hr-solid {
     width: 90%;
     margin: 1.25rem auto;
@@ -5236,15 +5132,11 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* ===== 移动端 Swiper 活动组件样式 ===== */
 
-/* 移动端活动展示容器 */
 .mobile-events-showcase {
   max-width: var(--container-max-width);
   margin: var(--container-margin);
-  margin-top: calc(
-    var(--content-top-spacing) - 2rem
-  ); /* 大幅减少与 header 的间距 */
-
-  margin-bottom: 0; /* 减少与 search 的间距 */
+  margin-top: calc(var(--content-top-spacing) - 2rem);
+  margin-bottom: 0;
   padding: 0 1rem;
 }
 
@@ -5253,28 +5145,24 @@ input[type="number"]::-webkit-inner-spin-button {
   position: relative;
 }
 
-/* Swiper 包装器 */
 .mobile-swiper-wrapper {
   position: relative;
   width: 100%;
 }
 
-/* Swiper 容器样式 */
 .mobile-events-swiper {
-  padding-bottom: 3rem; /* 为分页器留出空间 */
+  padding-bottom: 3rem;
   overflow: visible;
 }
 
-/* Swiper 滑块 */
 .mobile-event-slide {
   height: auto;
   display: flex;
 }
 
-/* 移动端活动卡片 */
 .mobile-event-card {
   width: 100%;
-  aspect-ratio: 1279 / 372; /* 与桌面端保持相同的宽高比 */
+  aspect-ratio: 1279 / 372;
   border-radius: var(--glassmorphism-border-radius);
   overflow: hidden;
   background: var(--glassmorphism-bg-primary);
@@ -5291,7 +5179,6 @@ input[type="number"]::-webkit-inner-spin-button {
   border-color: rgb(255 255 255 / 20%);
 }
 
-/* 移动端活动图片容器 */
 .mobile-event-image-container {
   position: relative;
   width: 100%;
@@ -5310,7 +5197,6 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: scale(1.05);
 }
 
-/* 移动端活动信息覆盖层 */
 .mobile-event-overlay {
   position: absolute;
   bottom: 0;
@@ -5364,7 +5250,6 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #ef4444;
 }
 
-/* 移动端链接样式 */
 .mobile-event-link {
   display: block;
   width: 100%;
@@ -5373,7 +5258,6 @@ input[type="number"]::-webkit-inner-spin-button {
   color: inherit;
 }
 
-/* More 卡片 - 作为 Swiper 的一页 */
 .mobile-more-slide {
   height: auto;
   display: flex;
@@ -5381,15 +5265,13 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .mobile-more-card {
   width: 100%;
-  aspect-ratio: 1279 / 372; /* 与桌面端和活动卡片保持相同的宽高比 */
+  aspect-ratio: 1279 / 372;
   border-radius: var(--glassmorphism-border-radius);
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    rgb(59 130 246 / 20%) 0%,
-    rgb(139 92 246 / 20%) 50%,
-    rgb(239 68 68 / 20%) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(59 130 246 / 20%) 0%,
+      rgb(139 92 246 / 20%) 50%,
+      rgb(239 68 68 / 20%) 100%);
   backdrop-filter: var(--glassmorphism-backdrop);
   border: 1px solid rgb(255 255 255 / 15%);
   box-shadow: var(--glassmorphism-shadow);
@@ -5404,12 +5286,10 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: translateY(-4px);
   box-shadow: 0 12px 35px rgb(59 130 246 / 30%);
   border-color: rgb(255 255 255 / 25%);
-  background: linear-gradient(
-    135deg,
-    rgb(59 130 246 / 30%) 0%,
-    rgb(139 92 246 / 30%) 50%,
-    rgb(239 68 68 / 30%) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(59 130 246 / 30%) 0%,
+      rgb(139 92 246 / 30%) 50%,
+      rgb(239 68 68 / 30%) 100%);
 }
 
 .mobile-more-card-content {
@@ -5452,7 +5332,6 @@ input[type="number"]::-webkit-inner-spin-button {
   justify-content: center;
 }
 
-/* 移动端链接样式更新 */
 .mobile-more-slide .mobile-event-link {
   display: block;
   width: 100%;
@@ -5461,7 +5340,6 @@ input[type="number"]::-webkit-inner-spin-button {
   color: inherit;
 }
 
-/* 无活动状态 */
 .mobile-no-events {
   width: 100%;
   padding: 3rem 1rem;
@@ -5496,7 +5374,6 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #60a5fa;
 }
 
-/* Swiper 分页器自定义样式 */
 .mobile-events-swiper .swiper-pagination {
   bottom: 0.5rem;
   left: 50%;
@@ -5522,26 +5399,23 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 10px;
 }
 
-/* 中等屏幕优化 */
-@media (width <= 768px) {
+@media (width <=768px) {
   .mobile-events-showcase {
-    margin-top: 1rem; /* 移动端大幅减少与 header 的间距 */
-    margin-bottom: 0; /* 减少与 search 的间距 */
+    margin-top: 1rem;
+    margin-bottom: 0;
   }
 }
 
-/* 小屏幕优化 */
-@media (width <= 480px) {
+@media (width <=480px) {
   .mobile-events-showcase {
     padding: 0 0.75rem;
-    margin-top: 1rem; /* 小屏幕下进一步减少与 header 的间距 */
-    margin-bottom: 0; /* 小屏幕下进一步减少与 search 的间距 */
+    margin-top: 1rem;
+    margin-bottom: 0;
   }
 
-  /* 保持宽高比，不设置固定高度 */
   .mobile-event-card,
   .mobile-more-card {
-    aspect-ratio: 1279 / 372; /* 继续使用相同的宽高比 */
+    aspect-ratio: 1279 / 372;
   }
 
   .mobile-event-title {
@@ -5564,24 +5438,21 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-/* 为不支持 aspect-ratio 的旧浏览器提供回退方案 */
 @supports not (aspect-ratio: 1279 / 372) {
+
   .mobile-event-card,
   .mobile-more-card {
-    height: calc(100vw * 372 / 1279); /* 基于视口宽度计算高度 */
+    height: calc(100vw * 372 / 1279);
   }
 
-  @media (width <= 480px) {
+  @media (width <=480px) {
+
     .mobile-event-card,
     .mobile-more-card {
-      height: calc((100vw - 1.5rem) * 372 / 1279); /* 减去padding */
+      height: calc((100vw - 1.5rem) * 372 / 1279);
     }
   }
 }
-
-/* =============================================
-   PC端 Events Swiper 样式
-   ============================================= */
 
 .desktop-swiper-wrapper {
   width: 100%;
@@ -5590,7 +5461,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .desktop-events-swiper {
   width: 100%;
-  padding-bottom: 2rem; /* 为分页器留出空间 */
+  padding-bottom: 2rem;
 }
 
 .desktop-event-slide {
@@ -5601,14 +5472,14 @@ input[type="number"]::-webkit-inner-spin-button {
 .desktop-event-slide .event-card {
   width: 100%;
   height: 100%;
-  aspect-ratio: 1279 / 372; /* 保持原有的宽高比 */
-  margin: 0; /* 移除可能的外边距 */
+  aspect-ratio: 1279 / 372;
+  margin: 0;
 }
 
 .desktop-more-slide .event-card.more-card {
   width: 100%;
   height: 100%;
-  aspect-ratio: 1279 / 372; /* 与活动卡片相同的宽高比 */
+  aspect-ratio: 1279 / 372;
 }
 
 /* PC端 Swiper 分页器样式 */
@@ -5648,12 +5519,11 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: scale(1);
 }
 
-/* 确保PC端事件卡片的hover效果正常工作 */
 .desktop-event-slide .event-card:hover {
   transform: scale(1.01);
   border-color: rgb(255 255 255 / 30%);
   box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 8px 24px rgb(0 0 0 / 30%);
-  z-index: 10; /* 确保悬浮时卡片在最上层 */
+  z-index: 10;
 }
 
 .desktop-event-slide .event-card:hover .event-image {
@@ -5666,11 +5536,9 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .desktop-event-slide .more-card:hover {
-  background: linear-gradient(
-    135deg,
-    rgb(120 120 140 / 60%) 0%,
-    rgb(100 100 120 / 80%) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(120 120 140 / 60%) 0%,
+      rgb(100 100 120 / 80%) 100%);
   z-index: 10;
 }
 
@@ -5684,7 +5552,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 /* 大屏幕优化 */
-@media (width >= 1440px) {
+@media (width >=1440px) {
   .desktop-events-swiper {
     padding-bottom: 2.5rem;
   }
