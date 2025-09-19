@@ -1,0 +1,260 @@
+/* Floating buttons and language popup styles */
+/* Floating Buttons Container */
+.floating-buttons {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 100;
+}
+
+/* Common floating button styles */
+.floating-button {
+  width: 56px;
+  height: 56px;
+  background: rba(var(--glassmorphism-bg-primary), 0.8);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 40%), 0 8px 32px rgb(0 0 0 / 20%),
+    0 2px 0 rgb(255 255 255 / 8%) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  box-sizing: border-box;
+  line-height: 1;
+  text-align: center;
+}
+
+.floating-button:hover {
+  background: rgb(45 45 50 / 95%);
+  border-color: rgb(255 255 255 / 30%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgb(0 0 0 / 40%), 0 0 0 1px rgb(255 255 255 / 10%);
+}
+
+.floating-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 30%), 0 0 0 1px rgb(255 255 255 / 5%);
+}
+
+/* Language popup specific adjustments */
+.language-float-button.floating-button {
+  font-size: 1.2rem;
+}
+
+/* Language Popup */
+.language-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  z-index: 998;
+}
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(25 25 30 / 95%);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%);
+  z-index: 999;
+  min-width: 350px;
+  max-width: 400px;
+  padding: 1.5rem;
+  animation: popupFadeIn 0.2s ease-out;
+}
+
+.language-popup-simple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(25 25 30 / 95%);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%);
+  z-index: 999;
+  min-width: 320px;
+  max-width: 440px;
+  padding: 2.5rem 1.5rem 1.5rem;
+  animation: popupFadeIn 0.2s ease-out;
+}
+
+.language-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.language-selector-simple {
+  width: 100%;
+}
+
+.language-select-simple {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-select-simple:hover {
+  background: rgb(255 255 255 / 12%);
+  border-color: rgb(59 130 246 / 50%);
+}
+
+.language-select-simple:focus {
+  outline: none;
+  border-color: rgb(59 130 246 / 60%);
+  box-shadow: 0 0 0 2px rgb(59 130 246 / 20%);
+}
+
+.language-select-simple option {
+  background: #1a1a1f;
+  color: #e0e0e0;
+  padding: 0.5rem;
+}
+
+.language-changing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: rgb(59 130 246 / 10%);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.language-popup-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.language-popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.language-popup-close:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 10%);
+}
+
+/* Floating Buttons Mobile Responsive */
+@media (width <=768px) {
+  .floating-buttons {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .floating-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+
+  .language-float-button.floating-button {
+    font-size: 1.1rem;
+  }
+
+  .language-popup {
+    min-width: 280px;
+    max-width: 90vw;
+    margin: 0 1rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (width <=480px) {
+  .floating-buttons {
+    bottom: 1rem;
+    right: 1rem;
+    gap: 0.5rem;
+  }
+
+  .floating-button {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .language-float-button.floating-button {
+    font-size: 1rem;
+  }
+}
+
+/* TopButton specific adjustments */
+.topButton.floating-button {
+  font-size: 1.2rem;
+  user-select: none;
+}
