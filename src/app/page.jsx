@@ -296,6 +296,7 @@ function MobileEventsSwiper() {
 
 function SearchBar({ onChange, initS, sortType, onSortChange }) {
   const [isMobile, setIsMobile] = useState(false);
+  const [currentValue, setCurrentValue] = useState(initS);
 
   const sortOptions = [
     loc("UploadDate"),
@@ -315,18 +316,47 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // 更新当前值
+  useEffect(() => {
+    setCurrentValue(initS);
+  }, [initS]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCurrentValue(value);
+    onChange(e);
+  };
+
+  const handleClearSearch = () => {
+    setCurrentValue("");
+    const fakeEvent = { target: { value: "" } };
+    onChange(fakeEvent);
+  };
+
   return (
     <div className="search-section">
       <div className="search-container">
         <div className="search-row">
           <div className="search-bar">
-            <input
-              type="text"
-              className="modern-search"
-              placeholder={initS === "" ? loc("SearchPlaceholder") : initS}
-              onChange={onChange}
-              onClick={onChange}
-            />
+            <div className="search-input-wrapper">
+              <input
+                type="text"
+                className="modern-search"
+                placeholder={initS === "" ? loc("SearchPlaceholder") : initS}
+                value={currentValue}
+                onChange={handleInputChange}
+                onClick={handleInputChange}
+              />
+              {currentValue && (
+                <button
+                  className="search-clear-button"
+                  onClick={handleClearSearch}
+                  title="清空搜索"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="search-controls">
