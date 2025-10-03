@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { setLanguage } from "../utils";
 import { PageLayout } from "../widgets";
+import EventsFilter from "../widgets/EventsFilter";
 import {
   getEventStatusClass,
   getEventStatusText,
@@ -10,6 +11,7 @@ import {
 
 export default function EventsPage() {
   const [ready, setReady] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("全部");
 
   useEffect(() => {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
@@ -22,6 +24,19 @@ export default function EventsPage() {
   // 获取完整的活动列表（带智能时间计算），按创建日期排序
   const allEvents = getEventsWithTimeAgo()
     .sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+
+  // 获取所有唯一的category类型
+  const categories = [...new Set(allEvents.map(event => event.category))];
+
+  // 根据选择的category筛选活动
+  const filteredEvents = selectedCategory === "全部" 
+    ? allEvents 
+    : allEvents.filter(event => event.category === selectedCategory);
+
+  // 处理category变化
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
 
   if (!ready) return <div className="loading"></div>;
 
@@ -37,8 +52,14 @@ export default function EventsPage() {
           </p>
         </header>
 
+        <EventsFilter
+          selectedCategory={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+          categories={categories}
+        />
+
         <div className="events-grid-page">
-          {allEvents.map((event, i) => (
+          {filteredEvents.map((event, i) => (
             <div key={i} className="event-card-large">
               <a href={event.href} className="event-link-large">
                 <div className="event-image-container-large">

@@ -408,6 +408,65 @@
     line-height: 1.6;
 }
 
+/* Events Filter Styles */
+.events-filter {
+    max-width: var(--container-max-width);
+    margin: 2rem auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.filter-label {
+    color: rgb(255 255 255 / 90%);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    background: rgb(30 30 35 / 80%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    color: rgb(255 255 255 / 80%);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+}
+
+.filter-button:hover {
+    background: rgb(40 40 50 / 90%);
+    border-color: rgb(255 255 255 / 30%);
+    color: rgb(255 255 255 / 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+}
+
+.filter-button.active {
+    background: linear-gradient(135deg, rgb(59 130 246 / 80%) 0%, rgb(37 99 235 / 90%) 100%);
+    border-color: rgb(59 130 246 / 60%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgb(59 130 246 / 40%);
+    transform: translateY(-1px);
+}
+
+.filter-button.active:hover {
+    background: linear-gradient(135deg, rgb(59 130 246 / 90%) 0%, rgb(37 99 235 / 100%) 100%);
+    box-shadow: 0 6px 20px rgb(59 130 246 / 50%);
+    transform: translateY(-3px);
+}
+
 /* Events Grid for Page */
 .events-grid-page {
     display: grid;
@@ -585,6 +644,26 @@
     .event-meta-large {
         font-size: 0.8rem;
     }
+
+    /* Filter mobile styles */
+    .events-filter {
+        margin: 1.5rem auto;
+        padding: 0 0.75rem;
+    }
+
+    .filter-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+
+    .filter-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
 }
 
 @media (width <=480px) {
@@ -600,6 +679,27 @@
 
     .events-page-title {
         font-size: 1.8rem;
+    }
+
+    /* Small screen filter styles */
+    .events-filter {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+    }
+
+    .filter-label {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-buttons {
+        gap: 0.4rem;
+    }
+
+    .filter-button {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+        border-radius: 6px;
     }
 
 
