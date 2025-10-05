@@ -234,6 +234,20 @@ function buildSearchKeywordMap() {
         console.warn("Failed to decode search parameter:", event.href);
       }
     }
+    
+    // 检查href是否包含eventTag页面的链接格式
+    if (event.href && event.href.includes("/eventTag?id=")) {
+      try {
+        const idParam = event.href.split("/eventTag?id=")[1];
+        // URL解码
+        const decodedIdParam = decodeURIComponent(idParam);
+        // 使用eventId作为键来映射活动（用于eventTag页面查找活动信息）
+        searchKeywordToEventMap.set(decodedIdParam, event);
+      } catch (error) {
+        // 忽略URL解码错误
+        console.warn("Failed to decode eventTag parameter:", event.href);
+      }
+    }
   });
   
   return searchKeywordToEventMap;

@@ -169,5 +169,6 @@
   "EventCategoryMajor": "大型イベント",
   "EventCategoryPrivateProject": "個人企画",
   "EventCategoryPrivateContest": "個人コンテスト",
-  "EventEnded": "終了"
+  "EventEnded": "終了",
+  "RelatedCharts": "関連譜面"
 }

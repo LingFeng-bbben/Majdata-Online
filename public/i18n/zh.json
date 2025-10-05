@@ -169,5 +169,6 @@
   "EventCategoryMajor": "大型赛事", 
   "EventCategoryPrivateProject": "私立企划",
   "EventCategoryPrivateContest": "私立赛事",
-  "EventEnded": "结束"
+  "EventEnded": "结束",
+  "RelatedCharts": "相关谱面"
 }

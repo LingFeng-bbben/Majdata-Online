@@ -2,7 +2,7 @@
 
   {
     "id": "infinitybossrush",
-    "href": "/?search=Infinity Boss Rush",
+    "href": "/eventTag?id=Infinity Boss Rush",
     "src": "/events/bossrush.png",
     "alt": "Infinity Boss Rush",
     "title": "Infinity Boss Rush",
@@ -41,7 +41,7 @@
 
   {
     "id": "REK",
-    "href": "/?search=Re:KALEIDXSCOPE",
+    "href": "/eventTag?id=Re:KALEIDXSCOPE",
     "src": "/events/REK.png",
     "alt": "Project Re:KALEIDXSCOPE",
     "title": "Project Re:KALEIDXSCOPE",

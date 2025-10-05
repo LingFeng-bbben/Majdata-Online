@@ -57,24 +57,23 @@ const EventBanner = memo(({ event }) => {
         <div className="event-banner-overlay">
           <div className="event-banner-content">
             <div className="event-banner-info">
-            <div className="event-banner-header">
-              <h2 className="event-banner-title">{event.title}</h2>
+             
+                <div className="event-banner-header">
+                  <h2 className="event-banner-title">{event.title}</h2>
+                </div>
+                <p className="event-banner-description">{event.description}</p>
+             
+              <div className="event-banner-meta-bottom">
+                <span className="event-banner-category">
+                  {categoryTranslation}
+                </span>
+                <span className="event-banner-date">
+                  • {timeAgo}
+                </span>
+              </div>
             </div>
-            <p className="event-banner-description">{event.description}</p>
-            <div className="event-banner-meta-bottom">
-              <span className="event-banner-category">
-                {categoryTranslation}
-              </span>
-              <span className="event-banner-date">
-                • {timeAgo}
-              </span>
-            </div>
-            </div>
-          </div>
-          <div className="event-banner-close">
-            <span className="event-banner-hint">{loc("EventBannerSearching")}</span>
-          </div>
         </div>
+      </div>
       </div>
     </div>
   );
