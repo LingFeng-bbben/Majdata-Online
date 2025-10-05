@@ -11,12 +11,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { loc, setLanguage } from "./utils";
 import { PageLayout, SongList } from "./widgets";
+import EventBanner from "./widgets/EventBanner";
 import { apiroot3 } from "./apiroot";
 import {
   getEventStatusClass,
   getEventStatusText,
   getNonFeaturedEventsCount,
   getOngoingEvents,
+  getEventBySearchKeyword,
 } from "./utils/eventsData";
 
 export default function Page() {
@@ -398,6 +400,7 @@ function MainComp() {
   const [page, setPage] = useState(0);
   const [maxpage, setMaxpage] = useState(999999);
   const [sortType, setSortType] = useState(0);
+  const [currentEvent, setCurrentEvent] = useState(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -419,6 +422,24 @@ function MainComp() {
       }
     }
   }, [isLoaded, searchParams]);
+
+  
+  const debouncedEventCheck = useDebouncedCallback(
+    (searchTerm) => {
+      if (searchTerm && searchTerm.trim()) {
+        const matchedEvent = getEventBySearchKeyword(searchTerm.trim());
+        setCurrentEvent(matchedEvent);
+      } else {
+        setCurrentEvent(null);
+      }
+    },
+    300 // 防抖延迟
+  );
+
+
+  useEffect(() => {
+    debouncedEventCheck(Search);
+  }, [Search, debouncedEventCheck]);
 
   const debounced = useDebouncedCallback(
     // function
@@ -451,6 +472,9 @@ function MainComp() {
         sortType={sortType}
         onSortChange={onSortChange}
       />
+
+      {/* 如果搜索词匹配某个活动，显示活动横幅 */}
+      {currentEvent && <EventBanner event={currentEvent} />}
 
       <SongList
         url={apiroot3 +

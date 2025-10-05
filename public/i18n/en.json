@@ -159,5 +159,15 @@
   "PersonalSpace": "'s Profile",
   "FooterCopyright": "© Majdata Net - Open Source Chart Sharing Platform",
   "FooterOpenSource": "GitHub",
-  "FooterCommunity": "Thanks to chart creators for their support"
+  "FooterCommunity": "Thanks to chart creators for their support",
+  "EventBannerSearching": "Searching for content related to this event",
+  "EventCreatedAt": "Created at",
+  "EventEndAt": "Ends at",
+  "FilterEventTypes": "Filter Event Types:",
+  "FilterAll": "All",
+  "EventCategoryUniversity": "University Events",
+  "EventCategoryMajor": "Major Events",
+  "EventCategoryPrivateProject": "Private Projects", 
+  "EventCategoryPrivateContest": "Private Contests",
+  "EventEnded": "ended"
 }

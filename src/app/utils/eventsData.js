@@ -212,3 +212,37 @@ export function getEventStatusClass(event) {
   }
   return "status-ended";
 }
+
+// 预构建搜索关键词到活动的映射表（性能优化）
+let searchKeywordToEventMap = null;
+
+function buildSearchKeywordMap() {
+  if (searchKeywordToEventMap) return searchKeywordToEventMap;
+  
+  searchKeywordToEventMap = new Map();
+  
+  eventsData.forEach((event) => {
+    // 检查href是否包含search参数
+    if (event.href && event.href.includes("?search=")) {
+      try {
+        const searchParam = event.href.split("?search=")[1];
+        // URL解码
+        const decodedSearchParam = decodeURIComponent(searchParam);
+        searchKeywordToEventMap.set(decodedSearchParam, event);
+      } catch (error) {
+        // 忽略URL解码错误
+        console.warn("Failed to decode search parameter:", event.href);
+      }
+    }
+  });
+  
+  return searchKeywordToEventMap;
+}
+
+// 根据搜索关键词获取对应的活动（高性能版本）
+export function getEventBySearchKeyword(searchKeyword) {
+  if (!searchKeyword) return null;
+  
+  const map = buildSearchKeywordMap();
+  return map.get(searchKeyword) || null;
+}

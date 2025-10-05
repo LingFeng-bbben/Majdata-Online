@@ -159,5 +159,15 @@
   "PersonalSpace": "のプロフィール",
   "FooterCopyright": "© Majdata Net - オープンソース譜面共有プラットフォーム",
   "FooterOpenSource": "GitHub",
-  "FooterCommunity": "譜面作成者の皆様に感謝"
+  "FooterCommunity": "譜面作成者の皆様に感謝",
+  "EventBannerSearching": "このイベントに関連するコンテンツを検索中",
+  "EventCreatedAt": "作成日",
+  "EventEndAt": "終了日",
+  "FilterEventTypes": "イベントタイプでフィルター：",
+  "FilterAll": "すべて",
+  "EventCategoryUniversity": "大学イベント",
+  "EventCategoryMajor": "大型イベント",
+  "EventCategoryPrivateProject": "個人企画",
+  "EventCategoryPrivateContest": "個人コンテスト",
+  "EventEnded": "終了"
 }

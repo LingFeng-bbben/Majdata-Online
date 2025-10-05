@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { setLanguage } from "../utils";
+import { setLanguage, loc } from "../utils";
 import { PageLayout } from "../widgets";
 import EventsFilter from "../widgets/EventsFilter";
 import {
@@ -11,12 +11,14 @@ import {
 
 export default function EventsPage() {
   const [ready, setReady] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("全部");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
+        // 语言加载完成后设置默认的"全部"文本
+        setSelectedCategory(loc("FilterAll"));
       },
     );
   }, []);
@@ -29,7 +31,7 @@ export default function EventsPage() {
   const categories = [...new Set(allEvents.map(event => event.category))];
 
   // 根据选择的category筛选活动
-  const filteredEvents = selectedCategory === "全部" 
+  const filteredEvents = selectedCategory === loc("FilterAll") 
     ? allEvents 
     : allEvents.filter(event => event.category === selectedCategory);
 

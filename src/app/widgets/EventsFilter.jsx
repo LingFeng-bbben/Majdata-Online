@@ -1,15 +1,29 @@
 import React from "react";
+import { loc } from "../utils";
 
 const EventsFilter = ({ selectedCategory, onCategoryChange, categories }) => {
+  // 获取category的翻译
+  const getCategoryTranslation = (category) => {
+    const categoryMap = {
+      "高校赛事": loc("EventCategoryUniversity"),
+      "大型赛事": loc("EventCategoryMajor"),
+      "私立企划": loc("EventCategoryPrivateProject"),
+      "私立赛事": loc("EventCategoryPrivateContest")
+    };
+    return categoryMap[category] || category;
+  };
+
+  const allText = loc("FilterAll");
+
   return (
     <div className="events-filter">
-      <div className="filter-label">活动类型：</div>
+      <div className="filter-label">{loc("FilterEventTypes")}</div>
       <div className="filter-buttons">
         <button
-          className={`filter-button ${selectedCategory === "全部" ? "active" : ""}`}
-          onClick={() => onCategoryChange("全部")}
+          className={`filter-button ${selectedCategory === allText ? "active" : ""}`}
+          onClick={() => onCategoryChange(allText)}
         >
-          全部
+          {allText}
         </button>
         {categories.map((category) => (
           <button
@@ -17,7 +31,7 @@ const EventsFilter = ({ selectedCategory, onCategoryChange, categories }) => {
             className={`filter-button ${selectedCategory === category ? "active" : ""}`}
             onClick={() => onCategoryChange(category)}
           >
-            {category}
+            {getCategoryTranslation(category)}
           </button>
         ))}
       </div>

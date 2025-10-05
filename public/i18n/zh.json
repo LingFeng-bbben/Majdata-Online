@@ -159,5 +159,15 @@
   "PersonalSpace": "的个人空间",
   "FooterCopyright": "© Majdata Net - 开源自制谱分享平台",
   "FooterOpenSource": "GitHub",
-  "FooterCommunity": "感谢谱面创作者们的支持"
+  "FooterCommunity": "感谢谱面创作者们的支持",
+  "EventBannerSearching": "正在搜索与此活动相关的内容",
+  "EventCreatedAt": "创建于",
+  "EventEndAt": "结束于",
+  "FilterEventTypes": "筛选活动类型：",
+  "FilterAll": "全部",
+  "EventCategoryUniversity": "高校赛事",
+  "EventCategoryMajor": "大型赛事", 
+  "EventCategoryPrivateProject": "私立企划",
+  "EventCategoryPrivateContest": "私立赛事",
+  "EventEnded": "结束"
 }

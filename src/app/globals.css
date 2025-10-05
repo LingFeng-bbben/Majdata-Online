@@ -3727,6 +3727,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+
 /* Song页面排行榜和评论响应式样式 - 768px */
 @media (width <=768px) {
   .ranking-main-title {
