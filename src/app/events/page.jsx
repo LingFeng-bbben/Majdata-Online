@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { setLanguage, loc } from "../utils";
-import { PageLayout } from "../widgets";
+import { PageLayout, EnhancedDescription } from "../widgets";
 import EventsFilter from "../widgets/EventsFilter";
 import {
   getEventStatusClass,
@@ -74,7 +74,10 @@ export default function EventsPage() {
                   <div className="event-overlay-large">
                     <div className="event-info-large">
                       <h3 className="event-title-large">{event.title}</h3>
-                      <p className="event-description">{event.description}</p>
+                      <EnhancedDescription 
+                        text={event.description} 
+                        className="event-description"
+                      />
                       <div className="event-meta-large">
                         <span className="event-category-large">
                           {event.category}

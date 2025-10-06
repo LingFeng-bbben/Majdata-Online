@@ -17,7 +17,7 @@ export default function EventTagPage() {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
-      },
+      }
     );
   }, []);
 
@@ -28,7 +28,7 @@ export default function EventTagPage() {
       // 构造搜索关键词，格式为 tag:eventId（这是传给后端API的参数）
       const keyword = `tag:${eventId}`;
       setSearchKeyword(keyword);
-      
+
       // 查找对应的活动（通过eventTag页面的URL格式）
       const matchedEvent = getEventBySearchKeyword(eventId);
       setCurrentEvent(matchedEvent);
@@ -38,10 +38,7 @@ export default function EventTagPage() {
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <PageLayout
-      showBackToHome={true}
-      className="event-tag-page"
-    >
+    <PageLayout showBackToHome={true} className="event-tag-page">
       {/* 活动横幅 */}
       {currentEvent && <EventBanner event={currentEvent} />}
 
@@ -49,15 +46,17 @@ export default function EventTagPage() {
       {searchKeyword && (
         <div className="event-tag-content">
           <div className="event-tag-section">
-            <h2 className="event-tag-section-title">
-              {loc("RelatedCharts")}
-            </h2>
+            <h2 className="event-tag-section-title">{loc("RelatedCharts")}</h2>
+
+            <div className="hr-solid"></div>
             <SongList
-              url={apiroot3 +
+              url={
+                apiroot3 +
                 "/maichart/list?sort=" +
                 "&page=0" +
                 "&search=" +
-                encodeURIComponent(searchKeyword)}
+                encodeURIComponent(searchKeyword)
+              }
               page={0}
               setMax={() => {}} // 这个页面展示所有相关谱面
             />

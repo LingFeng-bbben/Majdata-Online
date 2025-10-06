@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { loc } from "../utils";
+import EnhancedDescription from "./EnhancedDescription";
 
 const EventBanner = memo(({ event }) => {
   if (!event) return null;
@@ -61,7 +62,10 @@ const EventBanner = memo(({ event }) => {
                 <div className="event-banner-header">
                   <h2 className="event-banner-title">{event.title}</h2>
                 </div>
-                <p className="event-banner-description">{event.description}</p>
+                <EnhancedDescription 
+                  text={event.description} 
+                  className="event-banner-description"
+                />
              
               <div className="event-banner-meta-bottom">
                 <span className="event-banner-category">
