@@ -1,4 +1,15 @@
 [
+  {
+    "id": "umb_event",
+    "href": "/space?id=maimaiUMBRELLA%20offical",
+    "src": "/events/umb_event.png",
+    "alt": "maimai UMBRELLA",
+    "title": "maimai UMBRELLA",
+    "category": "私立企划",
+    "createDate": "2025-10-06",
+    "endDate": "2025-11-06",
+    "description": ""
+  },
 
   {
     "id": "infinitybossrush",
@@ -12,7 +23,6 @@
     "description": "本自制谱合集以“高难”为核心，无比赛、排名等任何要素，并全面在net中公开，重在为各位玩家提供高难自制谱面游玩，欢迎各位打机力强的大手前来游玩！"
   },
 
-
   {
     "id": "shuangyucup1",
     "href": "/space?id=双鱼杯",
@@ -25,8 +35,6 @@
     "description": "双鱼杯是在复旦大学音游社团拥有社团印象曲后的企划，主题是【真超檄】，曲目限制为2012年前，旨在致敬早期maimai。"
   },
 
-
-  
   {
     "id": "xmmcg5",
     "href": "/space?id=xmmcg5",
@@ -86,25 +94,25 @@
   },
   {
     "id": "dilei2025",
-    "href": "https://www.bilibili.com/video/BV1nApJzaEvm/",
+    "href": "/space?id=dilei",
     "src": "/events/dilei2025.jpg",
     "alt": "地雷杯",
     "title": "地雷杯",
     "category": "私立赛事",
     "createDate": "2025-07-15",
     "endDate": "2025-09-13",
-    "description": "这是香菜举办的MMFC赛制式雷亚歌曲主题的maimai写谱比赛。"
+    "description": "这是香菜举办的MMFC赛制式雷亚歌曲主题的maimai写谱比赛。链接：https://www.bilibili.com/video/BV1nApJzaEvm/"
   },
   {
     "id": "hxb",
-    "href": "https://www.bilibili.com/video/BV1bteHzVEuZ",
+    "href": "/space?id=海鲜杯",
     "src": "/events/hxb.jpg",
     "alt": "海鲜杯",
     "title": "海鲜杯",
     "category": "私立赛事",
     "createDate": "2025-07-27",
     "endDate": "2025-08-24",
-    "description": "vocaloid主体个人比赛 by 甘党水母"
+    "description": "vocaloid主体个人比赛 by 甘党水母 链接：https://www.bilibili.com/video/BV1bteHzVEuZ"
   },
   {
     "id": "mmfc11",
