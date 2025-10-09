@@ -1,4 +1,18 @@
 [
+
+  {
+    "id": "KOL",
+    "href": "/space?id=KOL_NEW",
+    "src": "/events/KOL.png",
+    "alt": "KOL",
+    "title": "KOL",
+    "category": "私立赛事",
+    "createDate": "2025-10-10",
+    "endDate": "2025-11-9",
+    "description": "以“互评”为核心的实验性小型比赛"
+  },
+
+
   {
     "id": "umb_event",
     "href": "/space?id=maimaiUMBRELLA%20offical",
@@ -67,7 +81,7 @@
     "title": "这谱谱这无名战",
     "category": "私立赛事",
     "createDate": "2025-09-20",
-    "endDate": "2025-10-31",
+    "endDate": "2025-10-08",
     "description": ""
   },
   {

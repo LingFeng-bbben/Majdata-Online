@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { setLanguage, loc } from "../utils";
-import { PageLayout, EnhancedDescription } from "../widgets";
+import { PageLayout, EnhancedDescription, TimelineModal } from "../widgets";
 import EventsFilter from "../widgets/EventsFilter";
 import {
   getEventStatusClass,
@@ -12,6 +12,7 @@ import {
 export default function EventsPage() {
   const [ready, setReady] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isTimelineModalOpen, setIsTimelineModalOpen] = useState(false);
 
   useEffect(() => {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
@@ -40,6 +41,17 @@ export default function EventsPage() {
     setSelectedCategory(category);
   };
 
+  // 处理时间轴点击
+  const handleTimelineClick = (e) => {
+    e.preventDefault();
+    setIsTimelineModalOpen(true);
+  };
+
+  // 关闭时间轴弹窗
+  const handleCloseTimelineModal = () => {
+    setIsTimelineModalOpen(false);
+  };
+
   if (!ready) return <div className="loading"></div>;
 
   return (
@@ -51,6 +63,13 @@ export default function EventsPage() {
         <header className="events-page-header">
           <p className="events-page-subtitle">
             在此处浏览各种谱面竞赛例如MMFC、线下活动等...
+            <span 
+              className="timeline-link"
+              onClick={handleTimelineClick}
+              title="查看活动时间轴"
+            >
+              时间轴
+            </span>
           </p>
         </header>
 
@@ -104,6 +123,12 @@ export default function EventsPage() {
           ))}
         </div>
       </div>
+
+      {/* 时间轴弹窗 */}
+      <TimelineModal 
+        isOpen={isTimelineModalOpen}
+        onClose={handleCloseTimelineModal}
+      />
     </PageLayout>
   );
 }
