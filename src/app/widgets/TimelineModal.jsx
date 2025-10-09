@@ -285,29 +285,6 @@ export default function TimelineModal({ isOpen, onClose }) {
     return scale;
   };
 
-  // 生成时间刻度（保留原函数作为后备）
-  const generateTimeScale = (startDate, endDate, totalDays) => {
-    const scale = [];
-    const current = new Date(startDate);
-    
-    // 根据时间跨度决定刻度密度
-    let stepDays = 1;
-    if (totalDays > 90) stepDays = 7; // 超过3个月，按周显示
-    else if (totalDays > 30) stepDays = 3; // 超过1个月，按3天显示
-    
-    while (current <= endDate) {
-      const position = ((current - startDate) / (endDate - startDate)) * 100;
-      scale.push({
-        date: new Date(current),
-        position,
-        isMonth: current.getDate() === 1,
-        isWeek: current.getDay() === 1 && stepDays >= 7
-      });
-      current.setDate(current.getDate() + stepDays);
-    }
-    
-    return scale;
-  };
 
   // 格式化日期显示
   const formatDate = (date) => {
@@ -325,55 +302,6 @@ export default function TimelineModal({ isOpen, onClose }) {
     });
   };
 
-  // 生成月份头部（支持压缩时间轴）
-  const getMonthHeaders = () => {
-    if (!timelineData.startDate || !timelineData.endDate) return [];
-    
-    const months = [];
-    const current = new Date(timelineData.startDate.getFullYear(), timelineData.startDate.getMonth(), 1);
-    const end = timelineData.endDate;
-    
-    while (current <= end) {
-      const monthStart = new Date(current);
-      const monthEnd = new Date(current.getFullYear(), current.getMonth() + 1, 0);
-      
-      let startPos, endPos;
-      
-      if (timelineData.isCompressed && timelineData.segments) {
-        // 压缩模式：根据段计算位置
-        startPos = calculateCompressedPosition(monthStart, monthStart, timelineData.segments).start;
-        endPos = calculateCompressedPosition(monthEnd, monthEnd, timelineData.segments).start;
-      } else {
-        // 正常模式：线性计算
-        startPos = Math.max(0, ((monthStart - timelineData.startDate) / (timelineData.endDate - timelineData.startDate)) * 100);
-        endPos = Math.min(100, ((monthEnd - timelineData.startDate) / (timelineData.endDate - timelineData.startDate)) * 100);
-      }
-      
-      // 确保月份头部有最小宽度
-      const width = Math.max(8, endPos - startPos);
-      
-      // 简化月份显示：如果宽度太小，只显示月份
-      let text;
-      if (width < 12) {
-        text = monthStart.toLocaleDateString("zh-CN", { month: "short" });
-      } else if (width < 20) {
-        text = monthStart.toLocaleDateString("zh-CN", { year: "2-digit", month: "short" });
-      } else {
-        text = monthStart.toLocaleDateString("zh-CN", { year: "numeric", month: "short" });
-      }
-      
-      months.push({
-        text: text,
-        position: startPos,
-        width: width,
-        compressed: timelineData.isCompressed
-      });
-      
-      current.setMonth(current.getMonth() + 1);
-    }
-    
-    return months;
-  };
 
   // 获取事件颜色
   const getEventColor = (event) => {
@@ -440,7 +368,7 @@ export default function TimelineModal({ isOpen, onClose }) {
                   </div>
                   
                   <div className="timeline-events-compact">
-                    {timelineData.events.map((event, index) => (
+                    {timelineData.events.map((event) => (
                       <div key={event.id} className="timeline-event-row-compact">
                         <div className="timeline-event-label">
                           <div className="timeline-event-title-compact">{event.title}</div>
