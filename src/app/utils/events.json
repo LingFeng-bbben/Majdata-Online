@@ -1,6 +1,18 @@
 [
 
   {
+    "id": "mmfc12",
+    "href": "/space?id=mmfc_bot",
+    "src": "/events/MMFC12.jpg",
+    "alt": "MMFC12",
+    "title": "MMFC12",
+    "category": "大型赛事",
+    "createDate": "2025-11-20",
+    "endDate": "2026-01-20",
+    "description": ""
+  },
+
+  {
     "id": "KOL",
     "href": "/space?id=KOL_NEW",
     "src": "/events/KOL.png",
@@ -21,7 +33,7 @@
     "title": "maimai UMBRELLA",
     "category": "私立企划",
     "createDate": "2025-10-06",
-    "endDate": "2025-11-06",
+    "endDate": "2025-12-25",
     "description": ""
   },
 
@@ -164,14 +176,14 @@
   },
   {
     "id": "xmmcg4",
-    "href": "https://www.bilibili.com/video/BV14W5XzmE1v",
+    "href": "/space?id=TeamXmmcg",
     "src": "/events/xmmcg4.png",
     "alt": "小妹妹唱歌4",
     "title": "小妹妹唱歌4",
     "category": "大型赛事",
     "createDate": "2025-03-22",
     "endDate": "2025-04-22",
-    "description": "偶像企划主体的谱面比赛 主办→SniperPigeon"
+    "description": "偶像企划主体的谱面比赛 主办→SniperPigeon 链接: https://www.bilibili.com/video/BV14W5XzmE1v"
   },
   {
     "id": "mmfc8",

@@ -23,25 +23,26 @@ export function getEventById(id) {
   return eventsData.find((event) => event.id === id);
 }
 
-// 智能计算时间差距（多少天前）
+// 智能计算时间差距（多少天前/后）
 export function getTimeAgo(createDate) {
   const eventDate = new Date(createDate);
   const currentDate = new Date();
-  const diffTime = Math.abs(currentDate - eventDate);
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const diffTime = eventDate - currentDate; // 不使用 Math.abs，保留正负号
+  const diffDays = Math.floor(Math.abs(diffTime) / (1000 * 60 * 60 * 24));
+  const isFuture = diffTime > 0; // 判断是否为未来时间
 
   if (diffDays < 1) {
     return "今天";
   } else if (diffDays === 1) {
-    return "1天前";
+    return isFuture ? "1天后" : "1天前";
   } else if (diffDays < 30) {
-    return `${diffDays}天前`;
+    return isFuture ? `${diffDays}天后` : `${diffDays}天前`;
   } else if (diffDays < 365) {
     const months = Math.floor(diffDays / 30);
-    return `${months}个月前`;
+    return isFuture ? `${months}个月后` : `${months}个月前`;
   } else {
     const years = Math.floor(diffDays / 365);
-    return `${years}年前`;
+    return isFuture ? `${years}年后` : `${years}年前`;
   }
 }
 
@@ -61,21 +62,34 @@ export function getEventsWithTimeAgo() {
   }));
 }
 
-// 检查活动是否正在进行中（基于当前日期和结束日期）
-export function isEventOngoing(event) {
+// 检查活动是否即将开始（createDate在未来）
+export function isEventUpcoming(event) {
   const currentDate = new Date();
-  const endDate = new Date(event.endDate);
-  return currentDate <= endDate;
+  const createDate = new Date(event.createDate);
+  return currentDate < createDate;
 }
 
-// 获取所有进行中的活动
+// 检查活动是否正在进行中（基于当前日期、创建日期和结束日期）
+export function isEventOngoing(event) {
+  const currentDate = new Date();
+  const createDate = new Date(event.createDate);
+  const endDate = new Date(event.endDate);
+  return currentDate >= createDate && currentDate <= endDate;
+}
+
+// 获取所有进行中的活动（已经开始且未结束的活动）
 export function getOngoingEvents() {
   return eventsData.filter((event) => isEventOngoing(event));
 }
 
+// 获取所有即将开始的活动
+export function getUpcomingEvents() {
+  return eventsData.filter((event) => isEventUpcoming(event));
+}
+
 // 获取所有已结束的活动
 export function getEndedEvents() {
-  return eventsData.filter((event) => !isEventOngoing(event));
+  return eventsData.filter((event) => !isEventOngoing(event) && !isEventUpcoming(event));
 }
 
 // 智能轮播管理器 - 用于主页活动展示
@@ -199,6 +213,9 @@ export function getRandomOngoingEvents() {
 
 // 获取活动状态的中文显示
 export function getEventStatusText(event) {
+  if (isEventUpcoming(event)) {
+    return "即将开始";
+  }
   if (isEventOngoing(event)) {
     return "进行中";
   }
@@ -207,6 +224,9 @@ export function getEventStatusText(event) {
 
 // 获取活动状态的样式类名
 export function getEventStatusClass(event) {
+  if (isEventUpcoming(event)) {
+    return "status-upcoming";
+  }
   if (isEventOngoing(event)) {
     return "status-ongoing";
   }
