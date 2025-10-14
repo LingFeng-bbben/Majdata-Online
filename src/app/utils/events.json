@@ -1,6 +1,19 @@
 [
 
   {
+    "id": "agcc",
+    "href": "/space?id=AGCC",
+    "src": "/events/agcc.png",
+    "alt": "agcc",
+    "title": "AGCC",
+    "category": "私立赛事",
+    "createDate": "2025-09-20",
+    "endDate": "2025-11-10",
+    "description": ""
+  },
+  
+
+  {
     "id": "mmfc12",
     "href": "/space?id=mmfc_bot",
     "src": "/events/MMFC12.jpg",

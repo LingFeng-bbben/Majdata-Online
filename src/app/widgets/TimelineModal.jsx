@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getOngoingEvents, isEventOngoing } from "../utils/eventsData";
+import { getActiveEvents, isEventOngoing, isEventUpcoming } from "../utils/eventsData";
 
 // 时间轴甘特图弹窗组件
 export default function TimelineModal({ isOpen, onClose }) {
@@ -15,7 +15,7 @@ export default function TimelineModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      const events = getOngoingEvents();
+      const events = getActiveEvents();
       setOngoingEvents(events);
       
       if (events.length > 0) {
@@ -92,6 +92,7 @@ export default function TimelineModal({ isOpen, onClose }) {
           width: (eventDuration / totalDays) * 100,
           duration: eventDuration,
           isOngoing: isEventOngoing(event),
+          isUpcoming: isEventUpcoming(event),
           row: index
         };
       });
@@ -123,6 +124,7 @@ export default function TimelineModal({ isOpen, onClose }) {
         width: position.width,
         duration: eventDuration,
         isOngoing: isEventOngoing(event),
+        isUpcoming: isEventUpcoming(event),
         row: index
       };
     });
@@ -305,13 +307,29 @@ export default function TimelineModal({ isOpen, onClose }) {
 
   // 获取事件颜色
   const getEventColor = (event) => {
-    const colors = {
+    const baseColors = {
       "大型赛事": "#3b82f6", // 蓝色
       "私立赛事": "#10b981", // 绿色
       "高校赛事": "#f59e0b", // 橙色
       "私立企划": "#8b5cf6", // 紫色
     };
-    return colors[event.category] || "#6b7280"; // 默认灰色
+    
+    const baseColor = baseColors[event.category] || "#6b7280"; // 默认灰色
+    
+    // 如果是即将开始的活动，使用更淡的颜色
+    if (event.isUpcoming) {
+      // 将颜色转换为更淡的版本
+      const upcomingColors = {
+        "#3b82f6": "#93c5fd", // 淡蓝色
+        "#10b981": "#6ee7b7", // 淡绿色
+        "#f59e0b": "#fbbf24", // 淡橙色
+        "#8b5cf6": "#c4b5fd", // 淡紫色
+        "#6b7280": "#9ca3af"  // 淡灰色
+      };
+      return upcomingColors[baseColor] || "#9ca3af";
+    }
+    
+    return baseColor;
   };
 
   if (!isOpen) return null;
@@ -329,14 +347,14 @@ export default function TimelineModal({ isOpen, onClose }) {
         <div className="timeline-modal-content">
           {ongoingEvents.length === 0 ? (
             <div className="timeline-empty">
-              <p>当前没有进行中的活动</p>
+              <p>当前没有活跃的活动</p>
             </div>
           ) : (
             <>
               <div className="timeline-info">
                 <div className="timeline-stats">
                   <span className="timeline-stat">
-                    <strong>{ongoingEvents.length}</strong> 个进行中的活动
+                    <strong>{ongoingEvents.length}</strong> 个活跃的活动
                   </span>
                   <span className="timeline-stat">
                     时间跨度：<strong>{timelineData.totalDays}</strong> 天

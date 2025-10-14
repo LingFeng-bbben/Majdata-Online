@@ -13,8 +13,8 @@ export function getEventsCount() {
 
 // 获取其他活动数量（除了主页轮播显示的）
 export function getNonFeaturedEventsCount() {
-  const ongoingEvents = getOngoingEvents();
-  const displayedCount = Math.min(ongoingEvents.length, 2);
+  const activeEvents = getActiveEvents();
+  const displayedCount = Math.min(activeEvents.length, 2);
   return Math.max(0, eventsData.length - displayedCount);
 }
 
@@ -82,6 +82,11 @@ export function getOngoingEvents() {
   return eventsData.filter((event) => isEventOngoing(event));
 }
 
+// 获取所有活跃的活动（进行中 + 即将开始的活动）
+export function getActiveEvents() {
+  return eventsData.filter((event) => isEventOngoing(event) || isEventUpcoming(event));
+}
+
 // 获取所有即将开始的活动
 export function getUpcomingEvents() {
   return eventsData.filter((event) => isEventUpcoming(event));
@@ -103,10 +108,10 @@ class EventCarouselManager {
 
   // 初始化事件池
   initialize() {
-    const ongoingEvents = getOngoingEvents();
+    const activeEvents = getActiveEvents();
 
-    if (ongoingEvents.length === 0) {
-      // 没有进行中的活动，使用最新的活动
+    if (activeEvents.length === 0) {
+      // 没有活跃的活动，使用最新的活动
       const recentEvents = getEventsWithTimeAgo()
         .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
         .slice(0, 2);
@@ -116,19 +121,31 @@ class EventCarouselManager {
       return { events: this.displayedEvents, shouldRotate: false };
     }
 
-    // 为每个活动添加时间信息
-    this.eventPool = ongoingEvents.map((event) => ({
-      ...event,
-      timeAgo: getTimeAgo(event.createDate),
-      createDateFormatted: new Date(event.createDate).toLocaleDateString(
-        "zh-CN",
-        {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        },
-      ),
-    }));
+    // 为每个活动添加时间信息，并按优先级排序（进行中的活动优先，然后是即将开始的）
+    this.eventPool = activeEvents
+      .sort((a, b) => {
+        const aOngoing = isEventOngoing(a);
+        const bOngoing = isEventOngoing(b);
+        
+        // 进行中的活动优先级更高
+        if (aOngoing && !bOngoing) return -1;
+        if (!aOngoing && bOngoing) return 1;
+        
+        // 同类型活动按创建时间排序（最新的在前）
+        return new Date(b.createDate) - new Date(a.createDate);
+      })
+      .map((event) => ({
+        ...event,
+        timeAgo: getTimeAgo(event.createDate),
+        createDateFormatted: new Date(event.createDate).toLocaleDateString(
+          "zh-CN",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          },
+        ),
+      }));
 
     // 初始显示前两个
     this.displayedEvents = this.eventPool.slice(0, 2);
@@ -201,8 +218,8 @@ export function resetCarousel() {
 
 // 检查是否应该进行轮播
 export function shouldEnableCarousel() {
-  const ongoingEvents = getOngoingEvents();
-  return ongoingEvents.length > 2;
+  const activeEvents = getActiveEvents();
+  return activeEvents.length > 2;
 }
 
 // 保留原有函数作为兼容（已废弃，建议使用新的轮播管理器）

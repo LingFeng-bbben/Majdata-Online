@@ -16,7 +16,8 @@ import {
   getEventStatusClass,
   getEventStatusText,
   getNonFeaturedEventsCount,
-  getOngoingEvents,
+  getActiveEvents,
+  getTimeAgo,
 } from "./utils/eventsData";
 
 export default function Page() {
@@ -76,14 +77,10 @@ function DesktopEventsSwiper() {
   const remainingEventsCount = getNonFeaturedEventsCount();
 
   useEffect(() => {
-    // 获取所有进行中的活动
-    const events = getOngoingEvents().map((event) => ({
+    // 获取所有活跃的活动（进行中 + 即将开始）
+    const events = getActiveEvents().map((event) => ({
       ...event,
-      timeAgo: new Date(event.createDate) < new Date()
-        ? Math.floor(
-          (new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24),
-        ) + "天前"
-        : "今天",
+      timeAgo: getTimeAgo(event.createDate),
       createDateFormatted: new Date(event.createDate).toLocaleDateString(
         "zh-CN",
         {
@@ -131,7 +128,7 @@ function DesktopEventsSwiper() {
             }}
             className="desktop-events-swiper"
           >
-            {/* 进行中的活动 */}
+            {/* 活跃的活动（进行中 + 即将开始） */}
             {ongoingEvents.map((event) => (
               <SwiperSlide key={event.id} className="desktop-event-slide">
                 <div className="event-card">
@@ -203,14 +200,10 @@ function MobileEventsSwiper() {
   const [ongoingEvents, setOngoingEvents] = useState([]);
 
   useEffect(() => {
-    // 获取所有进行中的活动
-    const events = getOngoingEvents().map((event) => ({
+    // 获取所有活跃的活动（进行中 + 即将开始）
+    const events = getActiveEvents().map((event) => ({
       ...event,
-      timeAgo: new Date(event.createDate) < new Date()
-        ? Math.floor(
-          (new Date() - new Date(event.createDate)) / (1000 * 60 * 60 * 24),
-        ) + "天前"
-        : "今天",
+      timeAgo: getTimeAgo(event.createDate),
       createDateFormatted: new Date(event.createDate).toLocaleDateString(
         "zh-CN",
         {
@@ -258,7 +251,7 @@ function MobileEventsSwiper() {
             }}
             className="mobile-events-swiper"
           >
-            {/* 进行中的活动 */}
+            {/* 活跃的活动（进行中 + 即将开始） */}
             {ongoingEvents.map((event) => (
               <SwiperSlide key={event.id} className="mobile-event-slide">
                 <a href={event.href} className="mobile-event-link">
