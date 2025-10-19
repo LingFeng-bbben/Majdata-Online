@@ -53,7 +53,6 @@ export default function EventTagPage() {
               url={
                 apiroot3 +
                 "/maichart/list?sort=" +
-                "&page=0" +
                 "&search=" +
                 encodeURIComponent(searchKeyword)
               }
