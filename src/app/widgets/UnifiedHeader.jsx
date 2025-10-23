@@ -106,6 +106,9 @@ export default function UnifiedHeader() {
               <a href="/events" className="nav-item">
                 <span className="nav-label">{loc("Contest")}</span>
               </a>
+              <a href="/eventTag?id=Original" className="nav-item">
+                <span className="nav-label">{loc("OriginalSongs")}</span>
+              </a>
             </div>
 
             {/* 移动端：汉堡菜单 */}
@@ -133,6 +136,9 @@ export default function UnifiedHeader() {
                   </a>
                   <a href="/events" className="mobile-nav-item">
                     <span className="nav-label">{loc("Contest")}</span>
+                  </a>
+                  <a href="/eventTag?id=Original" className="mobile-nav-item">
+                    <span className="nav-label">{loc("OriginalSongs")}</span>
                   </a>
                 </div>
               )}

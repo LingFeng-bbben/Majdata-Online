@@ -170,5 +170,7 @@
   "EventCategoryPrivateProject": "私立企划",
   "EventCategoryPrivateContest": "私立赛事",
   "EventEnded": "结束",
-  "RelatedCharts": "相关谱面"
+  "RelatedCharts": "相关谱面",
+  "OriginalSongs": "原创曲",
+  "OriginalSongsDesc": "来自maj合作团队的原创歌曲与谱面哟!"
 }

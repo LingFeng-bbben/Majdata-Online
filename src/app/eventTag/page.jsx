@@ -22,6 +22,9 @@ export default function EventTagPage() {
   }, []);
 
   useEffect(() => {
+    // 只在语言加载完成后处理
+    if (!ready) return;
+    
     // 获取URL中的id参数
     const eventId = searchParams.get("id");
     if (eventId) {
@@ -29,11 +32,26 @@ export default function EventTagPage() {
       const keyword = `tag:${eventId}`;
       setSearchKeyword(keyword);
 
-      // 查找对应的活动（通过eventTag页面的URL格式）
-      const matchedEvent = getEventBySearchKeyword(eventId);
-      setCurrentEvent(matchedEvent);
+      // 特殊处理：Original 原创曲
+      if (eventId === "Original") {
+        setCurrentEvent({
+          id: "original",
+          href: "/eventTag?id=Original",
+          src: "/events/original.png",
+          alt: "Original Songs",
+          title: loc("OriginalSongs"),
+          category: "Maj企划",
+          createDate: new Date().toISOString().split('T')[0],
+          endDate: "2099-12-31",
+          description: loc("OriginalSongsDesc")
+        });
+      } else {
+        // 查找对应的活动（通过eventTag页面的URL格式）
+        const matchedEvent = getEventBySearchKeyword(eventId);
+        setCurrentEvent(matchedEvent);
+      }
     }
-  }, [searchParams]);
+  }, [searchParams, ready]);
 
   if (!ready) return <div className="loading"></div>;
 

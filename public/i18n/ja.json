@@ -170,5 +170,7 @@
   "EventCategoryPrivateProject": "個人企画",
   "EventCategoryPrivateContest": "個人コンテスト",
   "EventEnded": "終了",
-  "RelatedCharts": "関連譜面"
+  "RelatedCharts": "関連譜面",
+  "OriginalSongs": "オリジナル楽曲",
+  "OriginalSongsDesc": "majコラボチームによるオリジナル楽曲と譜面です！"
 }

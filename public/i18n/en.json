@@ -170,5 +170,7 @@
   "EventCategoryPrivateProject": "Private Projects", 
   "EventCategoryPrivateContest": "Private Contests",
   "EventEnded": "ended",
-  "RelatedCharts": "Related Charts"
+  "RelatedCharts": "Related Charts",
+  "OriginalSongs": "Original Songs",
+  "OriginalSongsDesc": "Original songs and charts from the maj collaboration team!"
 }
