@@ -740,116 +740,147 @@
 
 /* Event Banner Styles */
 .event-banner {
-    max-width: 80%;
-    margin: 2rem auto;
-    padding: 0 1rem;
+  max-width: 80%;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
 .event-banner-container {
-    position: relative;
-    border: 1px solid rgb(255 255 255 / 90%);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgb(0 0 0 / 30%), 0 2px 8px rgb(0 0 0 / 20%);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 200px;
-
+  position: relative;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 30%), 0 4px 16px rgb(0 0 0 / 20%);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  aspect-ratio: 1279 / 372;
+  height: auto;
+  background: rgb(20 20 25 / 90%);
 }
 
 .event-banner-container:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 25%);
-    border-color: rgb(255 255 255 / 95%);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 50%), 0 8px 32px rgb(0 0 0 / 30%);
+  border-color: rgb(255 255 255 / 30%);
 }
 
-/* 毛玻璃遮罩层 */
+/* 活动图片 - 完全填充容器 */
+.event-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.event-banner-container:hover .event-banner-image {
+  transform: scale(1.05);
+}
+
+/* 未hover时的提示栏 - 底部展示 */
+.event-banner-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 60%) 40%,
+      rgb(0 0 0 / 85%) 100%);
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 1;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.event-banner-container:hover .event-banner-hint {
+  opacity: 0;
+}
+
+.hint-icon {
+  font-size: 1rem;
+  color: rgb(255 255 255 / 90%);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+}
+
+/* hover时展开的信息遮罩层 - 只占用下50%高度 */
 .event-banner-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg,
-            rgb(0 0 0 / 60%) 0%,
-            rgb(0 0 0 / 40%) 50%,
-            rgb(0 0 0 / 70%) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 5%) 10%,
+      rgb(0 0 0 / 15%) 20%,
+      rgb(0 0 0 / 30%) 30%,
+      rgb(0 0 0 / 50%) 40%,
+      rgb(0 0 0 / 70%) 55%,
+      rgb(0 0 0 / 85%) 75%,
+      rgb(0 0 0 / 95%) 100%);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
 }
 
-.event-banner-content {
-    flex: 1;
-    display: flex;
-    padding: 1.5rem;
-    align-items: stretch;
-    /* 让内容区域填满整个高度 */
-    /* 移除滚动条相关样式 */
+.event-banner-container:hover .event-banner-overlay {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .event-banner-info {
-    flex: 1;
-    min-width: 0;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* 让内容在垂直方向上分散对齐 */
+  text-align: left;
 }
 
 .event-banner-header {
-    margin-bottom: 0.5rem;
-    text-align: left;
-}
-
-
-.event-banner-meta-bottom {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: rgb(255 255 255 / 80%);
-    flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .event-banner-title {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
-    line-height: 1.3;
-    text-align: left;
-}
-
-.event-banner-category {
-    color: rgb(255 255 255 / 80%);
-    font-size: 0.9rem;
-    font-weight: 500;
-    white-space: nowrap;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 70%);
+  line-height: 1.3;
 }
 
 .event-banner-description {
-    color: rgb(255 255 255 / 90%);
-    font-size: 1rem;
-    line-height: 1.5;
-    margin: 0.5rem 0 1rem;
-    text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+  color: rgb(255 255 255 / 90%);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-.event-banner-date,
-.event-banner-end-date {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    white-space: nowrap;
+.event-banner-meta-bottom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: rgb(255 255 255 / 80%);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+  flex-wrap: wrap;
+}
+
+.event-banner-category {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.event-banner-date {
+  white-space: nowrap;
 }
 
 
@@ -858,22 +889,23 @@
     .event-banner {
         margin: 1.5rem auto;
         padding: 0 0.75rem;
+        max-width: 90%;
     }
 
     .event-banner-container {
-        min-height: 180px;
+        border-radius: 12px;
     }
 
-    .event-banner-content {
+    .event-banner-overlay {
         padding: 1.25rem;
     }
 
-    .event-banner-header {
-        margin-bottom: 0.5rem;
+    .event-banner-hint {
+        padding: 0.75rem 1.25rem;
     }
 
-    .event-banner-meta-bottom {
-        font-size: 0.8rem;
+    .hint-icon {
+        font-size: 1.5rem;
     }
 
     .event-banner-title {
@@ -884,20 +916,42 @@
         font-size: 0.9rem;
         margin-bottom: 0.75rem;
     }
+
+    .event-banner-meta-bottom {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+    }
 }
 
 @media (width <=480px) {
     .event-banner {
         margin: 1rem auto;
         padding: 0 0.5rem;
+        max-width: 95%;
     }
 
     .event-banner-container {
-        min-height: 160px;
+        border-radius: 10px;
     }
 
-    .event-banner-content {
+    .event-banner-overlay {
         padding: 1rem;
+        /* 移动端直接显示信息，不需要hover */
+        opacity: 1;
+        transform: translateY(0);
+        top: 50%;
+        background: linear-gradient(to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 10%) 15%,
+            rgb(0 0 0 / 30%) 30%,
+            rgb(0 0 0 / 60%) 50%,
+            rgb(0 0 0 / 85%) 80%,
+            rgb(0 0 0 / 95%) 100%);
+    }
+
+    /* 移动端隐藏提示栏 */
+    .event-banner-hint {
+        display: none;
     }
 
     .event-banner-title {
@@ -906,12 +960,19 @@
 
     .event-banner-description {
         font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        /* 移动端限制描述行数 */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .event-banner-meta-bottom {
-        flex-direction: column;
-        gap: 0.5rem;
         font-size: 0.75rem;
+        gap: 0.4rem;
+        flex-wrap: wrap;
     }
 }
 
@@ -1852,6 +1913,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
 }
 

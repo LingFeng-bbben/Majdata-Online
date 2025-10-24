@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from "react";
+import { IoChevronUpOutline } from "react-icons/io5";
 import { loc } from "../utils";
 import EnhancedDescription from "./EnhancedDescription";
 
@@ -48,36 +49,40 @@ const EventBanner = memo(({ event }) => {
 
   return (
     <div className="event-banner">
-      <div 
-        className="event-banner-container"
-        style={{
-          backgroundImage: `url(${event.src})`,
-        }}
-      >
-        {/* 毛玻璃遮罩层 */}
-        <div className="event-banner-overlay">
-          <div className="event-banner-content">
-            <div className="event-banner-info">
-             
-                <div className="event-banner-header">
-                  <h2 className="event-banner-title">{event.title}</h2>
-                </div>
-                <EnhancedDescription 
-                  text={event.description} 
-                  className="event-banner-description"
-                />
-             
-              <div className="event-banner-meta-bottom">
-                <span className="event-banner-category">
-                  {categoryTranslation}
-                </span>
-                <span className="event-banner-date">
-                  • {timeAgo}
-                </span>
-              </div>
-            </div>
+      <div className="event-banner-container">
+        {/* 活动背景图片 */}
+        <img 
+          className="event-banner-image" 
+          src={event.src} 
+          alt={event.alt}
+          loading="eager"
+        />
+        
+        {/* 未hover时的提示栏 */}
+        <div className="event-banner-hint">
+          <IoChevronUpOutline className="hint-icon" />
         </div>
-      </div>
+        
+        {/* hover时展开的信息遮罩层 */}
+        <div className="event-banner-overlay">
+          <div className="event-banner-info">
+            <div className="event-banner-header">
+              <h2 className="event-banner-title">{event.title}</h2>
+            </div>
+            <EnhancedDescription 
+              text={event.description} 
+              className="event-banner-description"
+            />
+            <div className="event-banner-meta-bottom">
+              <span className="event-banner-category">
+                {categoryTranslation}
+              </span>
+              <span className="event-banner-date">
+                • {timeAgo}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
