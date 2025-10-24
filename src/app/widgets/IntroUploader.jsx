@@ -101,6 +101,7 @@ export default function IntroUploader() {
           </button>
         </form>
       </div>
+      <div className={"hr-solid"}></div>
       <h2>{loc("Preview")}</h2>
       <article className="markdown-body">
         <Markdown
@@ -123,7 +124,7 @@ export default function IntroUploader() {
           {intro}
         </Markdown>
       </article>
-      <div className={"hr-solid"}></div>
+      
     </>
   );
 }
