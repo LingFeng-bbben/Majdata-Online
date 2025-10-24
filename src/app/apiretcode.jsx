@@ -1,0 +1,18 @@
+'use client';
+
+export const CODE_PERMISSION_DENIED = -127;
+export const CODE_NOT_LOGGED_IN = -1;
+
+export const CODE_ALREADY_LOGGED_IN = 0;
+export const CODE_INVALID_INVITE_CODE = 1;
+export const CODE_PASSWORD_IS_EMPTY = 2;
+export const CODE_INVALID_EMAIL_ADDRESS = 3;
+export const CODE_USERNAME_ALREADY_EXISTS = 4;
+export const CODE_EMAIL_ALREADY_EXISTS = 5;
+export const CODE_INVALID_VALUE = 6;
+export const CODE_PAYLOAD_REQUIRED = 7;
+export const CODE_FORMAT_NOT_SUPPORTED = 8;
+export const CODE_PAYLOAD_TOO_LARGE = 9;
+export const CODE_INVALID_CREDENTIALS = 10;
+export const CODE_LOGIN_FAILED_PENDING_VERIFCATION = 11;
+export const CODE_LOGIN_FAILED_USER_BANNED = 12;
