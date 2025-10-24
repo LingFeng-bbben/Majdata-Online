@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc, setLanguage } from "../utils";
 import { PageLayout } from "../widgets";
+import * as retCode from "../apiretcode";
 
 export default function Page() {
     const [ready, setReady] = useState(false);
@@ -83,11 +84,21 @@ function Login() {
             credentials: "include",
         });
         if (response.status !== 200) {
-            if (response.status === 404) {
-                toast.error(loc("WrongCredential"));
-                return;
+            const rsp = await response.json();
+            switch (rsp.code) {
+                case retCode.CODE_INVALID_CREDENTIALS:
+                    toast.error(loc("WrongCredential"));
+                    break;
+                case retCode.CODE_LOGIN_FAILED_PENDING_VERIFCATION:
+                    toast.error(loc("[Login]PendingVerifcation"));
+                    break;
+                case retCode.CODE_LOGIN_FAILED_USER_BANNED:
+                    toast.error(loc("[Login]UserBanned"));
+                    break;
+                default:
+                    toast.error(await response.text());
+                    break;
             }
-            toast.error(await response.text());
             return;
         }
         //document.cookie = "token=" + (await response.text()) + ";max-age=604800";

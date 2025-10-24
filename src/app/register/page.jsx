@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc, setLanguage } from "../utils";
 import { PageLayout } from "../widgets";
+import * as retCode from "../apiretcode";
 
 export default function Page() {
     const [ready, setReady] = useState(false);
@@ -56,14 +57,34 @@ function Register() {
                 body: formData,
             });
             if (response.status !== 200) {
+                const rsp = await response.json();
                 if (response.status === 400) {
-                    const data = await response.json()
-                    toast.error(data.message);
+                    switch (rsp.code) {
+                        case retCode.CODE_INVALID_INVITE_CODE:
+                            toast.error(loc("InvalidInviteCode"));
+                            break;
+                        case retCode.CODE_INVALID_VALUE:
+                            toast.error(loc("InvalidUsernameOrPassword"));
+                            break;
+                        case retCode.CODE_INVALID_EMAIL_ADDRESS:
+                            toast.error(loc("InvalidEmail"));
+                            break;
+                        case retCode.CODE_USERNAME_ALREADY_EXISTS:
+                            toast.error(loc("UsernameExists"));
+                            break;
+                        case retCode.CODE_EMAIL_ALREADY_EXISTS:
+                            toast.error(loc("EmailExists"));
+                            break;
+                        default:
+                            toast.error(rsp.message);
+                            break;
+                    }
                     return;
                 }
                 toast.error(await response.text());
                 return;
             } else {
+                toast.success("[Register]EmailSent");
                 router.push("/login");
             }
 

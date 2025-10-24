@@ -174,5 +174,13 @@
   "OriginalSongsDesc": "来自maj合作团队的原创歌曲与谱面哟!",
   "InvalidOTP": "无效的OTP",
   "UnknownError": "未知错误",
-  "AccountActivated": "账号已激活"
+  "AccountActivated": "账号已激活",
+  "InvalidInviteCode": "邀请码无效",
+  "InvalidUsernameOrPassword": "用户名或密码不符合要求",
+  "InvalidEmail": "邮箱地址无效",
+  "UsernameExists": "该用户名已被注册",
+  "EmailExists": "该邮箱已被注册",
+  "[Register]EmailSent": "已发送验证邮件至您的邮箱，请检查您的收件箱",
+  "[Login]PendingVerifcation": "该用户尚未激活",
+  "[Login]UserBanned": "该用户已被封禁"
 }
