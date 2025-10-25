@@ -43,5 +43,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /.vs
+/.vscode
 .idea/
 src/app/apiroot.jsx
