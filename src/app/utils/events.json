@@ -1,4 +1,15 @@
 [
+  {
+    "id": "agcc",
+    "href": "/space?id=LOA",
+    "src": "/events/loa.png",
+    "alt": "loa",
+    "title": "Love of Anisong",
+    "category": "高校赛事",
+    "createDate": "2025-10-27",
+    "endDate": "2025-12-10",
+    "description": ""
+  },
 
   {
     "id": "agcc",
