@@ -9,6 +9,7 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
+import * as retCode from "../apiretcode";
 
 export default function SongList({ url, setMax, page, isRanking, isManage }) {
   const { data, error, isLoading } = useSWR(url, fetcher, {
@@ -34,7 +35,7 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
   if (data.length < 30) {
     if (page != null && setMax != null) setMax(page);
   }
-  if (data == "" || data == undefined) {
+  if (data == "" || data == undefined || !Array.isArray(data)) {
     return <div className="notReady">空的</div>;
   }
   const list = data.map((o, index) => (

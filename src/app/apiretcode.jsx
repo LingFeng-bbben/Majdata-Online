@@ -16,3 +16,9 @@ export const CODE_PAYLOAD_TOO_LARGE = 9;
 export const CODE_INVALID_CREDENTIALS = 10;
 export const CODE_LOGIN_FAILED_PENDING_VERIFCATION = 11;
 export const CODE_LOGIN_FAILED_USER_BANNED = 12;
+
+export const CODE_NO_SUCH_SESSION = 13;
+export const CODE_NO_SUCH_USER = 14;
+
+export const CODE_SUCCESS = 114514;
+export const CODE_ERROR = -114514;
