@@ -23,7 +23,7 @@ export default function UnifiedHeader() {
     error,
     isLoading,
   } = useSWR(apiroot3 + "/account/info/", fetcher);
-  const username = userInfo?.Username || "";
+  const username = userInfo?.username || "";
   const isLoggedIn = !!username && !error;
 
   useEffect(() => {
@@ -114,9 +114,8 @@ export default function UnifiedHeader() {
             {/* 移动端：汉堡菜单 */}
             <div className="mobile-nav">
               <button
-                className={`mobile-nav-trigger ${
-                  isMainNavOpen ? "active" : ""
-                }`}
+                className={`mobile-nav-trigger ${isMainNavOpen ? "active" : ""
+                  }`}
                 onClick={() => setIsMainNavOpen(!isMainNavOpen)}
               >
                 <span className="hamburger-icon">
@@ -171,99 +170,97 @@ export default function UnifiedHeader() {
               </div>
             )
             : isLoggedIn
-            ? (
-              <div className="user-dropdown">
-                <button
-                  className={`user-trigger ${isUserMenuOpen ? "active" : ""}`}
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                >
-                  <img
-                    className="user-avatar"
-                    src={apiroot3 + "/account/Icon?username=" + username}
-                    alt={username}
-                  />
-                  <span className="username desktop-only">{username}</span>
-                  <span
-                    className={`dropdown-arrow ${isUserMenuOpen ? "open" : ""}`}
-                  >
-                    ▼
-                  </span>
-                </button>
-
-                {isUserMenuOpen && (
-                  <div className="user-menu">
-                    <a href={"/space?id=" + username} className="menu-item">
-                      <span className="menu-label">
-                        {loc("PersonalHomePage")}
-                      </span>
-                    </a>
-                    {
-                      /* <a href="/user" className="menu-item">
-                    <span className="menu-label">用户中心</span>
-                  </a> */
-                    }
-                    <a href="/user/charts" className="menu-item">
-                      <span className="menu-label">
-                        {loc("ChartsManagement")}
-                      </span>
-                    </a>
-                    <a href="/user/profile" className="menu-item">
-                      <span className="menu-label">
-                        {loc("AccountSetting")}
-                      </span>
-                    </a>
-                    <div className="menu-divider"></div>
-                    <button onClick={handleLogout} className="menu-item logout">
-                      <span className="menu-label">{loc("Logout")}</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            )
-            : (
-              <div className="auth-section" ref={mobileAuthMenuRef}>
-                {/* 桌面端：传统链接形式 */}
-                <div className="auth-links desktop-auth">
-                  <a href="/login" className="auth-link">
-                    <span className="auth-label">{loc("Login")}</span>
-                  </a>
-                  <a href="/register" className="auth-link register">
-                    <span className="auth-label">{loc("Register")}</span>
-                  </a>
-                </div>
-
-                {/* 移动端：下拉菜单形式 */}
-                <div className="mobile-auth-dropdown">
+              ? (
+                <div className="user-dropdown">
                   <button
-                    className={`mobile-auth-trigger ${
-                      isMobileAuthMenuOpen ? "active" : ""
-                    }`}
-                    onClick={() =>
-                      setIsMobileAuthMenuOpen(!isMobileAuthMenuOpen)}
+                    className={`user-trigger ${isUserMenuOpen ? "active" : ""}`}
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   >
-                    <span className="auth-icon">Account</span>
+                    <img
+                      className="user-avatar"
+                      src={apiroot3 + "/account/Icon?username=" + username}
+                      alt={username}
+                    />
+                    <span className="username desktop-only">{username}</span>
                     <span
-                      className={`dropdown-arrow ${
-                        isMobileAuthMenuOpen ? "open" : ""
-                      }`}
+                      className={`dropdown-arrow ${isUserMenuOpen ? "open" : ""}`}
                     >
                       ▼
                     </span>
                   </button>
 
-                  {isMobileAuthMenuOpen && (
-                    <div className="mobile-auth-menu">
-                      <a href="/login" className="mobile-auth-item">
-                        <span className="menu-label">{loc("Login")}</span>
+                  {isUserMenuOpen && (
+                    <div className="user-menu">
+                      <a href={"/space?id=" + username} className="menu-item">
+                        <span className="menu-label">
+                          {loc("PersonalHomePage")}
+                        </span>
                       </a>
-                      <a href="/register" className="mobile-auth-item register">
-                        <span className="menu-label">{loc("Register")}</span>
+                      {
+                        /* <a href="/user" className="menu-item">
+                      <span className="menu-label">用户中心</span>
+                    </a> */
+                      }
+                      <a href="/user/charts" className="menu-item">
+                        <span className="menu-label">
+                          {loc("ChartsManagement")}
+                        </span>
                       </a>
+                      <a href="/user/profile" className="menu-item">
+                        <span className="menu-label">
+                          {loc("AccountSetting")}
+                        </span>
+                      </a>
+                      <div className="menu-divider"></div>
+                      <button onClick={handleLogout} className="menu-item logout">
+                        <span className="menu-label">{loc("Logout")}</span>
+                      </button>
                     </div>
                   )}
                 </div>
-              </div>
-            )}
+              )
+              : (
+                <div className="auth-section" ref={mobileAuthMenuRef}>
+                  {/* 桌面端：传统链接形式 */}
+                  <div className="auth-links desktop-auth">
+                    <a href="/login" className="auth-link">
+                      <span className="auth-label">{loc("Login")}</span>
+                    </a>
+                    <a href="/register" className="auth-link register">
+                      <span className="auth-label">{loc("Register")}</span>
+                    </a>
+                  </div>
+
+                  {/* 移动端：下拉菜单形式 */}
+                  <div className="mobile-auth-dropdown">
+                    <button
+                      className={`mobile-auth-trigger ${isMobileAuthMenuOpen ? "active" : ""
+                        }`}
+                      onClick={() =>
+                        setIsMobileAuthMenuOpen(!isMobileAuthMenuOpen)}
+                    >
+                      <span className="auth-icon">Account</span>
+                      <span
+                        className={`dropdown-arrow ${isMobileAuthMenuOpen ? "open" : ""
+                          }`}
+                      >
+                        ▼
+                      </span>
+                    </button>
+
+                    {isMobileAuthMenuOpen && (
+                      <div className="mobile-auth-menu">
+                        <a href="/login" className="mobile-auth-item">
+                          <span className="menu-label">{loc("Login")}</span>
+                        </a>
+                        <a href="/register" className="mobile-auth-item register">
+                          <span className="menu-label">{loc("Register")}</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
         </div>
       </div>
     </header>

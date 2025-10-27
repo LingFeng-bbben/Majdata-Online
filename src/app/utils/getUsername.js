@@ -14,5 +14,5 @@ export default function getUsername() {
     return undefined;
   }
   if (isLoading) return "";
-  return data.Username;
+  return data.username;
 }

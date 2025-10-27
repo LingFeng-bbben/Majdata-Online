@@ -16,9 +16,9 @@ export default function InteractCount({ songid }) {
     return <div>..</div>;
   }
   if (data === "" || data === undefined) return <div>?</div>;
-  const commentcount = data.Comments;
-  const likecount = data.Likes;
-  var playcount = data.Plays;
+  const commentcount = data.comments;
+  const likecount = data.likes;
+  var playcount = data.plays;
   if (playcount > 1000) {
     playcount = (playcount / 1000).toFixed(1) + "k";
   }

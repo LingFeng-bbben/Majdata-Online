@@ -28,7 +28,7 @@ export default function UserInfo() {
     );
   }
   console.log(data);
-  if (data.Username === undefined) {
+  if (data.username === undefined) {
     return (
       <div className="linkContent">
         <a href="../login">{loc("Login")}</a>
@@ -40,9 +40,9 @@ export default function UserInfo() {
       <a href="../user">
         <img
           className="smallIcon"
-          src={apiroot3 + "/account/Icon?username=" + data.Username}
+          src={apiroot3 + "/account/Icon?username=" + data.username}
         />
-        {data.Username}
+        {data.username}
       </a>
     </div>
   );

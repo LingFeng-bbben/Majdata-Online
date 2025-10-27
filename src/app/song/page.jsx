@@ -252,7 +252,7 @@ function SongInfo({ id, tippy }) {
           <span className="meta-label">{loc("Tags") || "标签"}:</span>
           <div className="meta-tags-container">
             {(o.tags || o.publicTags) &&
-                (o.tags.length > 0 || o.publicTags.length > 0)
+              (o.tags.length > 0 || o.publicTags.length > 0)
               ? (
                 <>
                   {o.tags.map((tag, index) => (
@@ -343,9 +343,9 @@ function LikeSender({ songid }) {
   if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
-  const likecount = data.Likes.length;
-  const dislikecount = data.DisLikeCount;
-  let playcount = data.Plays;
+  const likecount = data.likes.length;
+  const dislikecount = data.disLikeCount;
+  let playcount = data.plays;
   if (playcount === undefined) {
     playcount = 0;
   }
@@ -371,11 +371,11 @@ function LikeSender({ songid }) {
     if (response.status === 200) {
       if (type == "like") {
         toast.success(
-          data.IsLiked ? loc("CancelSuccess") : name + loc("Success"),
+          data.isLiked ? loc("CancelSuccess") : name + loc("Success"),
         );
       } else {
         toast.success(
-          data.IsDisLiked ? loc("CancelSuccess") : name + loc("Success"),
+          data.isDisLiked ? loc("CancelSuccess") : name + loc("Success"),
         );
       }
 
@@ -397,7 +397,7 @@ function LikeSender({ songid }) {
             type="button"
             onClick={() => onSubmit("like")}
             style={{
-              background: data.IsLiked
+              background: data.isLiked
                 ? "linear-gradient(135deg, #10b981, #059669)"
                 : "",
             }}
@@ -421,7 +421,7 @@ function LikeSender({ songid }) {
             type="button"
             onClick={() => onSubmit("dislike")}
             style={{
-              background: data.IsDisLiked
+              background: data.isDisLiked
                 ? "linear-gradient(135deg, #ef4444, #dc2626)"
                 : "",
             }}
@@ -445,9 +445,9 @@ function LikeSender({ songid }) {
         <div className="liked-users-section">
           <h4 className="liked-users-title">{loc("LikedBy")}</h4>
           <div className="liked-users-grid">
-            {data.Likes && data.Likes.length > 0
+            {data.likes && data.likes.length > 0
               ? (
-                data.Likes.map((username, index) => (
+                data.likes.map((username, index) => (
                   <a
                     key={username}
                     href={"/space?id=" + username}
@@ -563,27 +563,27 @@ function CommentList({ songid }) {
   if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
-  const commentList = data.Comments.reverse();
+  const commentList = data.comments.reverse();
   console.log(commentList);
   const objlist = commentList.map((o) => (
     <div key={o[0]}>
       <div className="comment-card modern-comment-card">
         <div className="comment-header">
-          <a href={"/space?id=" + o.Sender.Username} className="commenter-link">
+          <a href={"/space?id=" + o.sender} className="commenter-link">
             <img
               className="commenter-avatar"
-              src={apiroot3 + "/account/Icon?username=" + o.Sender.Username}
-              alt={o.Sender.Username}
+              src={apiroot3 + "/account/Icon?username=" + o.sender}
+              alt={o.sender}
             />
             <div className="commenter-info">
-              <span className="commenter-username">{o.Sender.Username}</span>
+              <span className="commenter-username">{o.sender}</span>
               <span className="comment-timestamp">
-                {new Date(o.Timestamp).toLocaleDateString()}
+                {new Date(o.timestamp).toLocaleDateString()}
               </span>
             </div>
           </a>
         </div>
-        <div className="comment-content">{o.Content}</div>
+        <div className="comment-content">{o.content}</div>
       </div>
     </div>
   ));
@@ -683,13 +683,12 @@ function scoreCard(score, index) {
         </div>
         <div className="score-results">
           <div
-            className={`score-accuracy ${
-              comboState === "AP+" || comboState === "AP"
-                ? "score-accuracy-ap"
-                : comboState === "FC+" || comboState === "FC"
+            className={`score-accuracy ${comboState === "AP+" || comboState === "AP"
+              ? "score-accuracy-ap"
+              : comboState === "FC+" || comboState === "FC"
                 ? "score-accuracy-fc"
                 : ""
-            }`}
+              }`}
           >
             {score.acc.toFixed(4)}%
           </div>
