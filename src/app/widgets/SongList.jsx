@@ -9,7 +9,6 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
-import * as retCode from "../apiretcode";
 
 export default function SongList({ url, setMax, page, isRanking, isManage }) {
   const { data, error, isLoading } = useSWR(url, fetcher, {
