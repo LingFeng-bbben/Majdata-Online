@@ -17,6 +17,8 @@ import {
   TagManageWidget,
 } from "../widgets";
 import SongDifficultyLevels from "./SongDifficultyLevels";
+import { FaComments } from 'react-icons/fa';
+import { AiFillDelete } from 'react-icons/ai';
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -476,84 +478,419 @@ function LikeSender({ songid }) {
   );
 }
 
+// CommentComposer - 统一的评论输入组件
+function CommentComposer({
+  value,
+  onChange,
+  onSubmit,
+  onCancel,
+  placeholder,
+  autoFocus = false,
+  isReply = false,
+  isSubmitting = false,
+}) {
+  return (
+    <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
+      <textarea
+        className="userinput commentbox modern-textarea"
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        value={value}
+        autoFocus={autoFocus}
+      />
+      <div className="comment-actions">
+        <button
+          className="linkContentWithBorder modern-interaction-btn comment-action-btn"
+          type="button"
+          onClick={onSubmit}
+          disabled={!value.trim() || isSubmitting}
+        >
+          {isSubmitting ? loc("PleaseWait") : loc("Post")}
+        </button>
+        {isReply && onCancel && (
+          <button
+            className="linkContentWithBorder modern-interaction-btn comment-action-btn cancel-btn"
+            type="button"
+            onClick={onCancel}
+            disabled={isSubmitting}
+          >
+            {loc("CancelReply")}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function CommentSender({ songid }) {
-  const [comment, SetComment] = useState("");
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutate } = useSWR(
+    apiroot3 + "/maichart/" + songid + "/interact",
+  );
+
   const onSubmit = async () => {
-    const formData = new FormData();
-    if (comment === "") {
+    if (comment.trim() === "") {
       toast.error(loc("EmptyComment"));
       return;
     }
 
+    const formData = new FormData();
     formData.set("type", "comment");
     formData.set("content", comment);
 
-    if (typeof window !== "undefined") {
-      document.getElementById("submitbutton").disabled = true;
-      document.getElementById("submitbutton").textContent = loc("PleaseWait");
-    }
+    setIsSubmitting(true);
     const sending = toast.loading(loc("Sending"));
-    const response = await fetch(
-      apiroot3 + "/maichart/" + songid + "/interact",
-      {
-        method: "POST",
-        body: formData,
-        mode: "cors",
-        credentials: "include",
-      },
-    );
-    toast.done(sending);
-    if (response.status === 200) {
-      toast.success(loc("CommentSuccess"));
-      if (typeof window !== "undefined") {
-        document.getElementById("commentcontent").value = "";
-        SetComment("");
+
+    try {
+      const response = await fetch(
+        apiroot3 + "/maichart/" + songid + "/interact",
+        {
+          method: "POST",
+          body: formData,
+          mode: "cors",
+          credentials: "include",
+        },
+      );
+
+      toast.done(sending);
+
+      if (response.status === 200) {
+        toast.success(loc("CommentSuccess"));
+        setComment("");
+        mutate();
+      } else if (response.status === 400) {
+        toast.error(loc("CommentFailedLoginPrompt"));
+      } else {
+        toast.error(loc("CommentFailedLoginPrompt"));
       }
-    } else if (response.status === 400) {
+    } catch (error) {
+      toast.done(sending);
       toast.error(loc("CommentFailedLoginPrompt"));
-    } else {
-      toast.error(loc("CommentFailedLoginPrompt"));
-    }
-    if (typeof window !== "undefined") {
-      document.getElementById("submitbutton").disabled = false;
-      document.getElementById("submitbutton").textContent = loc("Post");
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
   return (
     <div className="song-comment-sender">
       <div className="comment-sender-header">
         <h3 className="comment-sender-title">{loc("Comment")}</h3>
       </div>
       <div className="comment-input-section">
-        <textarea
-          id="commentcontent"
-          className="userinput commentbox modern-textarea"
-          placeholder={loc("CommentPlaceholder")}
-          onChange={() => SetComment(event.target.value)}
+        <CommentComposer
           value={comment}
+          onChange={setComment}
+          onSubmit={onSubmit}
+          placeholder={loc("CommentPlaceholder")}
+          isSubmitting={isSubmitting}
         />
-        <div className="comment-actions">
-          <button
-            className="linkContentWithBorder modern-interaction-btn comment-submit-button"
-            id="submitbutton"
-            type="button"
-            onClick={onSubmit}
-            disabled={!comment.trim()}
-          >
-            {loc("Post")}
-          </button>
-        </div>
       </div>
     </div>
   );
 }
 
+// CommentCard - 单条评论卡片（仅用于子回复）
+function CommentCard({
+  comment,
+  currentUser,
+  onReply,
+  onDelete,
+  isPending,
+  isReply = false,
+  onToggleReplies,
+  isRepliesExpanded,
+  replyCount,
+}) {
+  const canDelete = currentUser && comment.sender === currentUser;
+
+  return (
+    <div className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}>
+      <div className="comment-header">
+        <a href={"/space?id=" + comment.sender} className="commenter-link">
+          <img
+            className="commenter-avatar"
+            src={apiroot3 + "/account/Icon?username=" + comment.sender}
+            alt={comment.sender}
+          />
+          <div className="commenter-info">
+            <span className="commenter-username">{comment.sender}</span>
+            <span className="comment-timestamp">
+              {new Date(comment.timestamp).toLocaleDateString()}
+            </span>
+          </div>
+        </a>
+      </div>
+      <div className="comment-content">{comment.content}</div>
+      <div className="comment-footer">
+        {onReply && (
+          <button
+            className="comment-footer-btn comment-icon-btn"
+            onClick={() => onReply(comment)}
+            disabled={isPending}
+            title={loc("Reply")}
+          >
+            <FaComments />
+          </button>
+        )}
+        {canDelete && onDelete && (
+          <button
+            className="comment-footer-btn delete-btn comment-icon-btn"
+            onClick={() => onDelete(comment)}
+            disabled={isPending}
+            title={loc("DeleteComment")}
+          >
+            <AiFillDelete />
+          </button>
+        )}
+        {!isReply && replyCount > 0 && (
+          <button
+            className="comment-footer-btn expand-btn"
+            onClick={onToggleReplies}
+          >
+            {isRepliesExpanded ? `收起 ${replyCount} 条回复` : `展开 ${replyCount} 条回复`}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// CommentThread - 完整的评论线程（包含源评论和所有回复）
+function CommentThread({
+  comment,
+  currentUser,
+  onReply,
+  onDelete,
+  isPending,
+  isExpanded,
+  onToggleReplies,
+  replyComposer,
+}) {
+  const canDelete = currentUser && comment.sender === currentUser;
+  const replies = comment.replies || [];
+
+  return (
+    <div className="comment-card modern-comment-card">
+      {/* 源评论头部 */}
+      <div className="comment-header">
+        <a href={"/space?id=" + comment.sender} className="commenter-link">
+          <img
+            className="commenter-avatar"
+            src={apiroot3 + "/account/Icon?username=" + comment.sender}
+            alt={comment.sender}
+          />
+          <div className="commenter-info">
+            <span className="commenter-username">{comment.sender}</span>
+            <span className="comment-timestamp">
+              {new Date(comment.timestamp).toLocaleDateString()}
+            </span>
+          </div>
+        </a>
+      </div>
+
+      {/* 源评论内容 */}
+      <div className="comment-content">{comment.content}</div>
+
+      {/* 源评论操作按钮 */}
+      <div className="comment-footer">
+        <button
+          className="comment-footer-btn comment-icon-btn"
+          onClick={() => onReply(comment)}
+          disabled={isPending}
+          title={loc("Reply")}
+        >
+          <FaComments />
+        </button>
+        {canDelete && (
+          <button
+            className="comment-footer-btn delete-btn comment-icon-btn"
+            onClick={() => onDelete(comment)}
+            disabled={isPending}
+            title={loc("DeleteComment")}
+          >
+            <AiFillDelete />
+          </button>
+        )}
+        {replies.length > 0 && (
+          <button
+            className="comment-footer-btn expand-btn"
+            onClick={onToggleReplies}
+          >
+            {isExpanded ? `收起 ${replies.length} 条回复` : `展开 ${replies.length} 条回复`}
+          </button>
+        )}
+      </div>
+
+      {/* 回复输入框 */}
+      {replyComposer}
+
+      {/* 子回复列表 */}
+      {isExpanded && replies.length > 0 && (
+        <div className="comment-reply-list">
+          {replies.map((reply) => (
+            <CommentCard
+              key={reply.id}
+              comment={reply}
+              currentUser={currentUser}
+              onDelete={onDelete}
+              isPending={isPending === reply.id}
+              isReply={true}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 function CommentList({ songid }) {
-  const { data, error, isLoading } = useSWR(
+  const [replyTargetId, setReplyTargetId] = useState(null);
+  const [replyContent, setReplyContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [expandedComments, setExpandedComments] = useState(new Set());
+
+  // 获取当前用户信息
+  useEffect(() => {
+    fetch(apiroot3 + "/account/info/", {
+      mode: "cors",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.username) {
+          setCurrentUser(data.username);
+        }
+      })
+      .catch(() => {
+        // 用户未登录或获取失败
+        setCurrentUser(null);
+      });
+  }, []);
+
+  const { data, error, isLoading, mutate } = useSWR(
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
-    { refreshInterval: 3000 },
+    { 
+      refreshInterval: replyTargetId ? 0 : 3000 // 回复输入时暂停自动刷新
+    },
   );
+
+  const handleToggleReplies = (commentId) => {
+    setExpandedComments(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(commentId)) {
+        newSet.delete(commentId);
+      } else {
+        newSet.add(commentId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleReply = (comment) => {
+    if (replyTargetId === comment.id) {
+      // 再次点击同一评论，关闭输入框
+      setReplyTargetId(null);
+      setReplyContent("");
+    } else {
+      setReplyTargetId(comment.id);
+      setReplyContent("");
+      // 自动展开回复列表
+      setExpandedComments(prev => new Set(prev).add(comment.id));
+    }
+  };
+
+  const handleCancelReply = () => {
+    setReplyTargetId(null);
+    setReplyContent("");
+  };
+
+  const handleSubmitReply = async () => {
+    if (replyContent.trim() === "") {
+      toast.error(loc("EmptyComment"));
+      return;
+    }
+
+    const formData = new FormData();
+    formData.set("type", "comment");
+    formData.set("content", replyContent);
+    formData.set("replyTo", replyTargetId);
+
+    setIsSubmitting(true);
+    const sending = toast.loading(loc("Sending"));
+
+    try {
+      const response = await fetch(
+        apiroot3 + "/maichart/" + songid + "/interact",
+        {
+          method: "POST",
+          body: formData,
+          mode: "cors",
+          credentials: "include",
+        },
+      );
+
+      toast.done(sending);
+
+      if (response.status === 200) {
+        toast.success(loc("ReplySuccess"));
+        setReplyContent("");
+        setReplyTargetId(null);
+        mutate();
+      } else if (response.status === 400) {
+        toast.error(loc("CommentFailedLoginPrompt"));
+      } else {
+        toast.error(loc("CommentFailedLoginPrompt"));
+      }
+    } catch (error) {
+      toast.done(sending);
+      toast.error(loc("CommentFailedLoginPrompt"));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (comment) => {
+    if (!window.confirm(loc("DeleteCommentConfirm"))) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.set("type", "comment");
+    formData.set("commentId", comment.id);
+
+    setPendingAction(comment.id);
+
+    try {
+      const response = await fetch(
+        apiroot3 + "/maichart/" + songid + "/interact",
+        {
+          method: "DELETE",
+          body: formData,
+          mode: "cors",
+          credentials: "include",
+        },
+      );
+
+      if (response.status === 200) {
+        toast.success(loc("DeleteSuccess"));
+        mutate();
+      } else if (response.status === 400) {
+        toast.error(loc("DeleteFailed") + ": " + loc("FailedLoginPrompt"));
+      } else {
+        toast.error(loc("DeleteFailed"));
+      }
+    } catch (error) {
+      toast.error(loc("DeleteFailed"));
+    } finally {
+      setPendingAction(null);
+    }
+  };
+
   if (error) {
     return <div>failed to load</div>;
   }
@@ -563,31 +900,53 @@ function CommentList({ songid }) {
   if (data === "" || data === undefined) {
     return <div>failed to load</div>;
   }
-  const commentList = data.comments.reverse();
-  console.log(commentList);
-  const objlist = commentList.map((o) => (
-    <div key={o[0]}>
-      <div className="comment-card modern-comment-card">
-        <div className="comment-header">
-          <a href={"/space?id=" + o.sender} className="commenter-link">
-            <img
-              className="commenter-avatar"
-              src={apiroot3 + "/account/Icon?username=" + o.sender}
-              alt={o.sender}
-            />
-            <div className="commenter-info">
-              <span className="commenter-username">{o.sender}</span>
-              <span className="comment-timestamp">
-                {new Date(o.timestamp).toLocaleDateString()}
-              </span>
-            </div>
-          </a>
+
+  // 处理评论数据 - 确保使用新的树形结构
+  const comments = Array.isArray(data.comments) ? data.comments : [];
+  
+  return (
+    <div className="theList song-comment-list">
+      {comments.length === 0 ? (
+        <div className="no-comments-placeholder">
+          <p>{loc("NoRecentRecords")}</p>
         </div>
-        <div className="comment-content">{o.content}</div>
-      </div>
+      ) : (
+        comments.map((comment) => {
+          const isExpanded = expandedComments.has(comment.id);
+          
+          return (
+            <div key={comment.id} className="comment-thread-container">
+              <CommentThread
+                comment={comment}
+                currentUser={currentUser}
+                onReply={handleReply}
+                onDelete={handleDelete}
+                isPending={pendingAction}
+                isExpanded={isExpanded}
+                onToggleReplies={() => handleToggleReplies(comment.id)}
+                replyComposer={
+                  replyTargetId === comment.id && (
+                    <div className="reply-composer-wrapper">
+                      <CommentComposer
+                        value={replyContent}
+                        onChange={setReplyContent}
+                        onSubmit={handleSubmitReply}
+                        onCancel={handleCancelReply}
+                        placeholder={loc("ReplyPlaceholder")}
+                        autoFocus={true}
+                        isReply={true}
+                        isSubmitting={isSubmitting}
+                      />
+                    </div>
+                  )
+                }
+              />
+            </div>
+          );
+        })
+      )}
     </div>
-  ));
-  return <div className="theList song-comment-list">{objlist}</div>;
+  );
 }
 
 function ScoreList({ songid }) {

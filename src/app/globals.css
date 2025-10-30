@@ -3186,6 +3186,234 @@ input[type="number"]::-webkit-inner-spin-button {
   word-break: break-word;
 }
 
+/* 评论操作按钮区域 */
+.comment-footer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgb(255 255 255 / 5%);
+}
+
+.comment-footer-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(255 255 255 / 70%);
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comment-footer-btn:hover:not(:disabled) {
+  color: rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(255 255 255 / 20%);
+  transform: translateY(-1px);
+}
+
+.comment-footer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-footer-btn.delete-btn {
+  color: rgb(239 68 68 / 80%);
+}
+
+.comment-footer-btn.delete-btn:hover:not(:disabled) {
+  color: rgb(239 68 68 / 100%);
+  background: rgb(239 68 68 / 10%);
+  border-color: rgb(239 68 68 / 30%);
+}
+
+/* 图标按钮特殊样式 */
+.comment-footer-btn.comment-icon-btn {
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: auto;
+}
+
+.comment-footer-btn.comment-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 评论输入组件 */
+.comment-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comment-composer.comment-composer-reply {
+  padding: 0;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.comment-action-btn {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.comment-action-btn.cancel-btn {
+  background: rgb(255 255 255 / 3%);
+  color: rgb(255 255 255 / 60%);
+}
+
+.comment-action-btn.cancel-btn:hover:not(:disabled) {
+  background: rgb(255 255 255 / 8%);
+  color: rgb(255 255 255 / 80%);
+}
+
+/* 评论线程容器 - 整体容器包含源评论和所有回复 */
+.comment-thread-container {
+  margin-bottom: 1.5rem;
+}
+
+/* 子回复列表 - 在同一个框内 */
+.comment-reply-list {
+
+  padding-left: 1.5rem;
+  padding-top:1rem;
+
+  position: relative;
+}
+
+.comment-reply-list::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
+
+/* 子回复卡片 - 完全透明，只显示内容 */
+.comment-card--reply {
+  margin: 0.75rem 0;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.comment-card--reply:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.comment-card--reply .commenter-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.comment-card--reply .comment-footer {
+  border-top: none;
+  padding-top: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.comment-card--reply .comment-header {
+  padding: 0;
+}
+
+.comment-card--reply .comment-content {
+  padding: 0.25rem 0;
+}
+
+/* 回复输入框容器 - 在同一个框内 */
+.reply-composer-wrapper {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgb(255 255 255 / 3%);
+  border-radius: 8px;
+  border: 1px solid rgb(255 255 255 / 8%);
+}
+
+/* 展开按钮特殊样式 */
+.comment-footer-btn.expand-btn {
+  color: rgb(255 255 255 / 70%);
+  margin-left: auto;
+}
+
+.comment-footer-btn.expand-btn:hover:not(:disabled) {
+  color: rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(255 255 255 / 20%);
+}
+
+/* 无评论占位符 */
+.no-comments-placeholder {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgb(255 255 255 / 50%);
+  font-size: 1rem;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .comment-reply-list {
+    padding-left: 0.5rem;
+  }
+
+  .comment-card {
+    max-width: 90vw;
+    padding: 1rem;
+    margin: 0.75rem;
+  }
+
+  .comment-footer {
+    flex-wrap: wrap;
+  }
+
+  .comment-footer-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .comment-card--reply {
+    padding: 0 !important;
+    margin: 0.5rem 0;
+  }
+
+  .comment-card--reply .commenter-avatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .comment-reply-list {
+    padding-left: 0.5rem;
+  }
+
+  .reply-composer-wrapper {
+    padding: 0.75rem;
+  }
+}
+
 /* Song页面现代化样式 */
 .song-info-container {
   max-width: var(--container-max-width);
