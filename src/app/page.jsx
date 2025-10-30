@@ -103,7 +103,7 @@ function DesktopEventsSwiper() {
             slidesPerView={2}
             centeredSlides={false}
             autoplay={{
-                delay: 2500,
+                delay: 5000,
                 disableOnInteraction: false
               }}
             pagination={{
@@ -226,7 +226,7 @@ function MobileEventsSwiper() {
             slidesPerView={1}
             centeredSlides={true}
             autoplay={{
-                delay: 2500,
+                delay: 5000,
                 disableOnInteraction: false,
               }}
             pagination={{
