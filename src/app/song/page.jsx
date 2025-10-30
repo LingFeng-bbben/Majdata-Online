@@ -596,16 +596,16 @@ function parseCommentContent(content) {
   // 使用更灵活的正则，匹配任何文字 + @用户名 + 冒号的组合
   const replyMentionRegex = /^(.+?)\s+@([a-zA-Z0-9_\u4e00-\u9fa5]+)[：:]/;
   const replyMatch = content.match(replyMentionRegex);
-  
+
   let startIndex = 0;
   const parts = [];
-  
+
   // 如果是回复格式，先处理前缀
   if (replyMatch) {
     const prefix = replyMatch[1]; // "回复" 或 "Reply to" 等
     const username = replyMatch[2];
     const separator = replyMatch[0].slice(-1); // 获取冒号（中文或英文）
-    
+
     parts.push(
       <span key="reply-prefix" className="comment-reply-prefix">
         {prefix}{' '}
@@ -630,7 +630,7 @@ function parseCommentContent(content) {
     );
     startIndex = replyMatch[0].length;
   }
-  
+
   // 继续处理剩余内容中的 @mention
   const mentionRegex = /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g;
   const remainingContent = content.substring(startIndex);
@@ -756,8 +756,45 @@ function CommentThread({
   onToggleReplies,
   replyComposer,
 }) {
+  function flattenComments(comments, parentComment) {
+    const result = [];
+    const stack = [...comments];
+
+    while (stack.length > 0) {
+      const item = stack.pop();
+      result.push(item);
+
+      if (item.replies && item.replies.length > 0) {
+        for (let i = item.replies.length - 1; i >= 0; i--) {
+          let { replies, ...replyComment } = item.replies[i];
+          replyComment.replyTo = item.id;
+          stack.push(replyComment);
+        }
+      }
+    }
+    for (let i = 0; i < result.length; i++) {
+      let comment = result[i];
+      if (!comment.replyTo) {
+        let { replies, ...copy } = comment;
+        copy.replyTo = parentComment.id;
+        result[i] = copy;
+      }
+      else {
+        const target = result.find(c => c.id === comment.replyTo);
+        const origContent = comment.content;
+        comment.content = `${loc("ReplyTo")} @${target.sender}: ${origContent}`;
+      }
+    }
+
+    return result.sort(
+      (a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  }
   const canDelete = currentUser && comment.sender === currentUser;
-  const replies = comment.replies || [];
+  const replies = (comment.replies && flattenComments(comment.replies, comment.id)) || [];
+
+  //if (replies.length > 0) {
+  //  replies = flattenComments(replies);
+  //}
 
   return (
     <div className="comment-card modern-comment-card">
@@ -836,6 +873,7 @@ function CommentThread({
 
 
 function CommentList({ songid }) {
+  const [replyThreadId, setReplyThreadId] = useState(null);
   const [replyTargetId, setReplyTargetId] = useState(null);
   const [replyTargetUser, setReplyTargetUser] = useState(null); // 被回复的用户名
   const [replyContent, setReplyContent] = useState("");
@@ -865,8 +903,8 @@ function CommentList({ songid }) {
   const { data, error, isLoading, mutate } = useSWR(
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
-    { 
-      refreshInterval: replyTargetId ? 0 : 3000 // 回复输入时暂停自动刷新
+    {
+      refreshInterval: replyThreadId ? 0 : 3000 // 回复输入时暂停自动刷新
     },
   );
 
@@ -885,18 +923,20 @@ function CommentList({ songid }) {
   const handleReply = (comment, parentComment = null) => {
     // 找到顶层评论的 ID
     const topLevelCommentId = parentComment ? parentComment.id : comment.id;
-    
-    if (replyTargetId === topLevelCommentId && replyTargetUser === comment.sender) {
+
+    if (replyThreadId === topLevelCommentId && replyTargetUser === comment.sender) {
       // 再次点击同一评论，关闭输入框
-      setReplyTargetId(null);
+      setReplyThreadId(null);
       setReplyTargetUser(null);
       setReplyContent("");
     } else {
-      setReplyTargetId(topLevelCommentId);
+      setReplyThreadId(topLevelCommentId);
       // 如果是回复子评论，记录被回复的用户名
       if (parentComment) {
+        setReplyTargetId(comment.id);
         setReplyTargetUser(comment.sender);
       } else {
+        setReplyTargetId(topLevelCommentId);
         setReplyTargetUser(null);
       }
       setReplyContent("");
@@ -906,7 +946,7 @@ function CommentList({ songid }) {
   };
 
   const handleCancelReply = () => {
-    setReplyTargetId(null);
+    setReplyThreadId(null);
     setReplyTargetUser(null);
     setReplyContent("");
   };
@@ -918,14 +958,14 @@ function CommentList({ songid }) {
     }
 
     // 如果是回复楼中楼，自动添加前缀
-    let finalContent = replyContent;
-    if (replyTargetUser) {
-      finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}`;
-    }
+    //let finalContent = replyContent;
+    //if (replyTargetUser) {
+    //  finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}`;
+    //}
 
     const formData = new FormData();
     formData.set("type", "comment");
-    formData.set("content", finalContent);
+    formData.set("content", replyContent);
     formData.set("replyTo", replyTargetId);
 
     setIsSubmitting(true);
@@ -947,7 +987,7 @@ function CommentList({ songid }) {
       if (response.status === 200) {
         toast.success(loc("ReplySuccess"));
         setReplyContent("");
-        setReplyTargetId(null);
+        setReplyThreadId(null);
         setReplyTargetUser(null);
         mutate();
       } else if (response.status === 400) {
@@ -1012,7 +1052,7 @@ function CommentList({ songid }) {
 
   // 处理评论数据 - 确保使用新的树形结构
   const comments = Array.isArray(data.comments) ? data.comments : [];
-  
+
   return (
     <div className="theList song-comment-list">
       {comments.length === 0 ? (
@@ -1022,7 +1062,7 @@ function CommentList({ songid }) {
       ) : (
         comments.map((comment) => {
           const isExpanded = expandedComments.has(comment.id);
-          
+
           return (
             <div key={comment.id} className="comment-thread-container">
               <CommentThread
@@ -1034,7 +1074,7 @@ function CommentList({ songid }) {
                 isExpanded={isExpanded}
                 onToggleReplies={() => handleToggleReplies(comment.id)}
                 replyComposer={
-                  replyTargetId === comment.id && (
+                  replyThreadId === comment.id && (
                     <div className="reply-composer-wrapper">
                       <CommentComposer
                         value={replyContent}
