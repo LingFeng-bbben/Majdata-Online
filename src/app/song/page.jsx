@@ -590,6 +590,91 @@ function CommentSender({ songid }) {
   );
 }
 
+// 解析评论内容，将 @用户名 转换为超链接
+function parseCommentContent(content) {
+  // 优先匹配 "回复 @用户名：" 格式
+  const replyMentionRegex = /^回复 @([a-zA-Z0-9_\u4e00-\u9fa5]+)：/;
+  const replyMatch = content.match(replyMentionRegex);
+  
+  let startIndex = 0;
+  const parts = [];
+  
+  // 如果是回复格式，先处理 "回复 @用户名："
+  if (replyMatch) {
+    const username = replyMatch[1];
+    parts.push(
+      <span key="reply-prefix" className="comment-reply-prefix">
+        回复{' '}
+      </span>
+    );
+    parts.push(
+      <a
+        key="reply-mention"
+        href={`/space?id=${username}`}
+        className="comment-mention"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        @{username}
+      </a>
+    );
+    parts.push(
+      <span key="reply-colon">：</span>
+    );
+    startIndex = replyMatch[0].length;
+  }
+  
+  // 继续处理剩余内容中的 @mention
+  const mentionRegex = /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g;
+  const remainingContent = content.substring(startIndex);
+  let lastIndex = 0;
+  let match;
+
+  while ((match = mentionRegex.exec(remainingContent)) !== null) {
+    // 添加 @mention 之前的文本
+    if (match.index > lastIndex) {
+      parts.push(
+        <span key={`text-${startIndex + lastIndex}`}>
+          {remainingContent.substring(lastIndex, match.index)}
+        </span>
+      );
+    }
+
+    // 添加 @mention 链接
+    const username = match[1];
+    parts.push(
+      <a
+        key={`mention-${startIndex + match.index}`}
+        href={`/space?id=${username}`}
+        className="comment-mention"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        @{username}
+      </a>
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // 添加剩余的文本
+  if (lastIndex < remainingContent.length) {
+    parts.push(
+      <span key={`text-${startIndex + lastIndex}`}>
+        {remainingContent.substring(lastIndex)}
+      </span>
+    );
+  }
+
+  return parts.length > 0 ? parts : content;
+}
+
 // CommentCard - 单条评论卡片（仅用于子回复）
 function CommentCard({
   comment,
@@ -621,7 +706,7 @@ function CommentCard({
           </div>
         </a>
       </div>
-      <div className="comment-content">{comment.content}</div>
+      <div className="comment-content">{parseCommentContent(comment.content)}</div>
       <div className="comment-footer">
         {onReply && (
           <button
@@ -690,7 +775,7 @@ function CommentThread({
       </div>
 
       {/* 源评论内容 */}
-      <div className="comment-content">{comment.content}</div>
+      <div className="comment-content">{parseCommentContent(comment.content)}</div>
 
       {/* 源评论操作按钮 */}
       <div className="comment-footer">
@@ -733,6 +818,7 @@ function CommentThread({
               key={reply.id}
               comment={reply}
               currentUser={currentUser}
+              onReply={(replyComment) => onReply(replyComment, comment)}
               onDelete={onDelete}
               isPending={isPending === reply.id}
               isReply={true}
@@ -747,6 +833,7 @@ function CommentThread({
 
 function CommentList({ songid }) {
   const [replyTargetId, setReplyTargetId] = useState(null);
+  const [replyTargetUser, setReplyTargetUser] = useState(null); // 被回复的用户名
   const [replyContent, setReplyContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
@@ -791,21 +878,32 @@ function CommentList({ songid }) {
     });
   };
 
-  const handleReply = (comment) => {
-    if (replyTargetId === comment.id) {
+  const handleReply = (comment, parentComment = null) => {
+    // 找到顶层评论的 ID
+    const topLevelCommentId = parentComment ? parentComment.id : comment.id;
+    
+    if (replyTargetId === topLevelCommentId && replyTargetUser === comment.sender) {
       // 再次点击同一评论，关闭输入框
       setReplyTargetId(null);
+      setReplyTargetUser(null);
       setReplyContent("");
     } else {
-      setReplyTargetId(comment.id);
+      setReplyTargetId(topLevelCommentId);
+      // 如果是回复子评论，记录被回复的用户名
+      if (parentComment) {
+        setReplyTargetUser(comment.sender);
+      } else {
+        setReplyTargetUser(null);
+      }
       setReplyContent("");
       // 自动展开回复列表
-      setExpandedComments(prev => new Set(prev).add(comment.id));
+      setExpandedComments(prev => new Set(prev).add(topLevelCommentId));
     }
   };
 
   const handleCancelReply = () => {
     setReplyTargetId(null);
+    setReplyTargetUser(null);
     setReplyContent("");
   };
 
@@ -815,9 +913,15 @@ function CommentList({ songid }) {
       return;
     }
 
+    // 如果是回复楼中楼，自动添加 "回复 @用户名："前缀
+    let finalContent = replyContent;
+    if (replyTargetUser) {
+      finalContent = `回复 @${replyTargetUser}：${replyContent}`;
+    }
+
     const formData = new FormData();
     formData.set("type", "comment");
-    formData.set("content", replyContent);
+    formData.set("content", finalContent);
     formData.set("replyTo", replyTargetId);
 
     setIsSubmitting(true);
@@ -840,6 +944,7 @@ function CommentList({ songid }) {
         toast.success(loc("ReplySuccess"));
         setReplyContent("");
         setReplyTargetId(null);
+        setReplyTargetUser(null);
         mutate();
       } else if (response.status === 400) {
         toast.error(loc("CommentFailedLoginPrompt"));
@@ -932,7 +1037,11 @@ function CommentList({ songid }) {
                         onChange={setReplyContent}
                         onSubmit={handleSubmitReply}
                         onCancel={handleCancelReply}
-                        placeholder={loc("ReplyPlaceholder")}
+                        placeholder={
+                          replyTargetUser
+                            ? `回复 @${replyTargetUser}`
+                            : loc("ReplyPlaceholder")
+                        }
                         autoFocus={true}
                         isReply={true}
                         isSubmitting={isSubmitting}

@@ -3186,6 +3186,30 @@ input[type="number"]::-webkit-inner-spin-button {
   word-break: break-word;
 }
 
+/* @mention 样式 */
+.comment-mention {
+  color: #5c9ff6;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.1rem 0.25rem;
+  border-radius: 3px;
+  background: rgba(92, 190, 246, 0.08);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.comment-mention:hover {
+  color: #5c9ff6;
+  background: rgba(106, 173, 255, 0.15);
+  text-decoration: none;
+}
+
+/* 回复前缀样式 */
+.comment-reply-prefix {
+  color: rgb(255 255 255 / 50%);
+  font-weight: 400;
+}
+
 /* 评论操作按钮区域 */
 .comment-footer {
   display: flex;
