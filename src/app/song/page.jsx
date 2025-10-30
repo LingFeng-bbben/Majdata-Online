@@ -592,19 +592,23 @@ function CommentSender({ songid }) {
 
 // 解析评论内容，将 @用户名 转换为超链接
 function parseCommentContent(content) {
-  // 优先匹配 "回复 @用户名：" 格式
-  const replyMentionRegex = /^回复 @([a-zA-Z0-9_\u4e00-\u9fa5]+)：/;
+  // 优先匹配 "回复 @用户名：" 或 "Reply to @username:" 或 "返信先 @username:" 格式
+  // 使用更灵活的正则，匹配任何文字 + @用户名 + 冒号的组合
+  const replyMentionRegex = /^(.+?)\s+@([a-zA-Z0-9_\u4e00-\u9fa5]+)[：:]/;
   const replyMatch = content.match(replyMentionRegex);
   
   let startIndex = 0;
   const parts = [];
   
-  // 如果是回复格式，先处理 "回复 @用户名："
+  // 如果是回复格式，先处理前缀
   if (replyMatch) {
-    const username = replyMatch[1];
+    const prefix = replyMatch[1]; // "回复" 或 "Reply to" 等
+    const username = replyMatch[2];
+    const separator = replyMatch[0].slice(-1); // 获取冒号（中文或英文）
+    
     parts.push(
       <span key="reply-prefix" className="comment-reply-prefix">
-        回复{' '}
+        {prefix}{' '}
       </span>
     );
     parts.push(
@@ -622,7 +626,7 @@ function parseCommentContent(content) {
       </a>
     );
     parts.push(
-      <span key="reply-colon">：</span>
+      <span key="reply-colon">{separator}</span>
     );
     startIndex = replyMatch[0].length;
   }
@@ -913,10 +917,10 @@ function CommentList({ songid }) {
       return;
     }
 
-    // 如果是回复楼中楼，自动添加 "回复 @用户名："前缀
+    // 如果是回复楼中楼，自动添加前缀
     let finalContent = replyContent;
     if (replyTargetUser) {
-      finalContent = `回复 @${replyTargetUser}：${replyContent}`;
+      finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}`;
     }
 
     const formData = new FormData();
@@ -1039,7 +1043,7 @@ function CommentList({ songid }) {
                         onCancel={handleCancelReply}
                         placeholder={
                           replyTargetUser
-                            ? `回复 @${replyTargetUser}`
+                            ? `${loc("ReplyTo")} @${replyTargetUser}`
                             : loc("ReplyPlaceholder")
                         }
                         autoFocus={true}

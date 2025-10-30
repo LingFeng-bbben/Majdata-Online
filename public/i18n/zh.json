@@ -156,6 +156,7 @@
   "CommentFailedLoginPrompt": "评论失败：登录了吗？",
   "CommentPlaceholder": "分享你对这个谱面的想法...",
   "Reply": "回复",
+  "ReplyTo": "回复",
   "CancelReply": "取消回复",
   "ReplyPlaceholder": "回复这条评论...",
   "ReplySuccess": "回复成功",

@@ -157,6 +157,7 @@
   "CommentFailedLoginPrompt": "コメント失敗：ログインしていますか？",
   "CommentPlaceholder": "この譜面についての感想を共有してください...",
   "Reply": "返信",
+  "ReplyTo": "返信",
   "CancelReply": "返信をキャンセル",
   "ReplyPlaceholder": "このコメントに返信...",
   "ReplySuccess": "返信成功",

@@ -157,6 +157,7 @@
   "CommentFailedLoginPrompt": "Comment failed: Are you logged in?",
   "CommentPlaceholder": "Share your thoughts about this chart...",
   "Reply": "Reply",
+  "ReplyTo": "Reply to",
   "CancelReply": "Cancel Reply",
   "ReplyPlaceholder": "Reply to this comment...",
   "ReplySuccess": "Reply posted successfully",
