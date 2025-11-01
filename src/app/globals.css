@@ -2433,6 +2433,12 @@ img.songImg {
   }
 }
 
+/* 加载图标旋转动画 */
+.loading-icon-spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
 @keyframes successPulse {
   0% {
     transform: scale(1);

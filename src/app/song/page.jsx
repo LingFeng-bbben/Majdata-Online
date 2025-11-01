@@ -19,6 +19,7 @@ import {
 import SongDifficultyLevels from "./SongDifficultyLevels";
 import { FaComments } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -332,6 +333,8 @@ function MajdataView({ id }) {
 }
 
 function LikeSender({ songid }) {
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const [isDislikeLoading, setIsDislikeLoading] = useState(false);
   const { data, error, isLoading, mutate } = useSWR(
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
@@ -352,40 +355,57 @@ function LikeSender({ songid }) {
     playcount = 0;
   }
   const onSubmit = async (type) => {
+    // 防止重复点击
+    if (type === "like" && isLikeLoading) return;
+    if (type === "dislike" && isDislikeLoading) return;
+
     const formData = new FormData();
     formData.set("type", type);
     formData.set("content", type);
     var name = "";
     if (type == "like") {
       name = loc("LikeAction");
+      setIsLikeLoading(true);
     } else {
       name = loc("DislikeAction");
+      setIsDislikeLoading(true);
     }
-    const response = await fetch(
-      apiroot3 + "/maichart/" + songid + "/interact",
-      {
-        method: "POST",
-        body: formData,
-        mode: "cors",
-        credentials: "include",
-      },
-    );
-    if (response.status === 200) {
-      if (type == "like") {
-        toast.success(
-          data.isLiked ? loc("CancelSuccess") : name + loc("Success"),
-        );
-      } else {
-        toast.success(
-          data.isDisLiked ? loc("CancelSuccess") : name + loc("Success"),
-        );
-      }
+    
+    try {
+      const response = await fetch(
+        apiroot3 + "/maichart/" + songid + "/interact",
+        {
+          method: "POST",
+          body: formData,
+          mode: "cors",
+          credentials: "include",
+        },
+      );
+      if (response.status === 200) {
+        if (type == "like") {
+          toast.success(
+            data.isLiked ? loc("CancelSuccess") : name + loc("Success"),
+          );
+        } else {
+          toast.success(
+            data.isDisLiked ? loc("CancelSuccess") : name + loc("Success"),
+          );
+        }
 
-      mutate();
-    } else if (response.status === 400) {
+        mutate();
+      } else if (response.status === 400) {
+        toast.error(name + loc("FailedLoginPrompt"));
+      } else {
+        toast.error(name + loc("FailedLoginPrompt"));
+      }
+    } catch (error) {
       toast.error(name + loc("FailedLoginPrompt"));
-    } else {
-      toast.error(name + loc("FailedLoginPrompt"));
+    } finally {
+      if (type === "like") {
+        setIsLikeLoading(false);
+      } else {
+        setIsDislikeLoading(false);
+      }
     }
   };
   return (
@@ -398,22 +418,29 @@ function LikeSender({ songid }) {
             id="submitbuttonlike"
             type="button"
             onClick={() => onSubmit("like")}
+            disabled={isLikeLoading || isDislikeLoading}
             style={{
               background: data.isLiked
                 ? "linear-gradient(135deg, #10b981, #059669)"
                 : "",
+              opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
+              cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
             }}
           >
-            <svg
-              className="commentIco"
-              xmlns="http://www.w3.org/2000/svg"
-              height="28"
-              viewBox="0 -960 960 960"
-              width="28"
-              style={{ width: "28px", height: "28px" }}
-            >
-              <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
-            </svg>
+            {isLikeLoading ? (
+              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "28px", height: "28px" }} />
+            ) : (
+              <svg
+                className="commentIco"
+                xmlns="http://www.w3.org/2000/svg"
+                height="28"
+                viewBox="0 -960 960 960"
+                width="28"
+                style={{ width: "28px", height: "28px" }}
+              >
+                <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
+              </svg>
+            )}
             <span className="btn-count">{likecount}</span>
           </button>
 
@@ -422,20 +449,27 @@ function LikeSender({ songid }) {
             id="submitbuttondislike"
             type="button"
             onClick={() => onSubmit("dislike")}
+            disabled={isLikeLoading || isDislikeLoading}
             style={{
               background: data.isDisLiked
                 ? "linear-gradient(135deg, #ef4444, #dc2626)"
                 : "",
+              opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
+              cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
             }}
           >
-            <svg
-              className="commentIco"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 -960 960 960"
-              style={{ width: "28px", height: "28px" }}
-            >
-              <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
-            </svg>
+            {isDislikeLoading ? (
+              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "28px", height: "28px" }} />
+            ) : (
+              <svg
+                className="commentIco"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 -960 960 960"
+                style={{ width: "28px", height: "28px" }}
+              >
+                <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
+              </svg>
+            )}
             <span className="btn-count">{dislikecount}</span>
           </button>
         </div>
@@ -497,6 +531,7 @@ function CommentComposer({
         onChange={(e) => onChange(e.target.value)}
         value={value}
         autoFocus={autoFocus}
+        disabled={isSubmitting}
       />
       <div className="comment-actions">
         <button
@@ -504,8 +539,19 @@ function CommentComposer({
           type="button"
           onClick={onSubmit}
           disabled={!value.trim() || isSubmitting}
+          style={{
+            opacity: (!value.trim() || isSubmitting) ? 0.6 : 1,
+            cursor: (!value.trim() || isSubmitting) ? "not-allowed" : "pointer",
+          }}
         >
-          {isSubmitting ? loc("PleaseWait") : loc("Post")}
+          {isSubmitting ? (
+            <>
+              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "16px", height: "16px", marginRight: "4px" }} />
+              {loc("PleaseWait")}
+            </>
+          ) : (
+            loc("Post")
+          )}
         </button>
         {isReply && onCancel && (
           <button
@@ -513,6 +559,10 @@ function CommentComposer({
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
+            style={{
+              opacity: isSubmitting ? 0.6 : 1,
+              cursor: isSubmitting ? "not-allowed" : "pointer",
+            }}
           >
             {loc("CancelReply")}
           </button>
@@ -692,6 +742,8 @@ function CommentCard({
   replyCount,
 }) {
   const canDelete = currentUser && comment.sender === currentUser;
+  // 检查当前评论是否正在被操作
+  const isCommentPending = isPending === comment.id;
 
   return (
     <div className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}>
@@ -716,26 +768,47 @@ function CommentCard({
           <button
             className="comment-footer-btn comment-icon-btn"
             onClick={() => onReply(comment)}
-            disabled={isPending}
+            disabled={isCommentPending}
             title={loc("Reply")}
+            style={{
+              opacity: isCommentPending ? 0.6 : 1,
+              cursor: isCommentPending ? "not-allowed" : "pointer",
+            }}
           >
-            <FaComments />
+            {isCommentPending ? (
+              <AiOutlineLoading3Quarters className="loading-icon-spin" />
+            ) : (
+              <FaComments />
+            )}
           </button>
         )}
         {canDelete && onDelete && (
           <button
             className="comment-footer-btn delete-btn comment-icon-btn"
             onClick={() => onDelete(comment)}
-            disabled={isPending}
+            disabled={isCommentPending}
             title={loc("DeleteComment")}
+            style={{
+              opacity: isCommentPending ? 0.6 : 1,
+              cursor: isCommentPending ? "not-allowed" : "pointer",
+            }}
           >
-            <AiFillDelete />
+            {isCommentPending ? (
+              <AiOutlineLoading3Quarters className="loading-icon-spin" />
+            ) : (
+              <AiFillDelete />
+            )}
           </button>
         )}
         {!isReply && replyCount > 0 && (
           <button
             className="comment-footer-btn expand-btn"
             onClick={onToggleReplies}
+            disabled={isCommentPending}
+            style={{
+              opacity: isCommentPending ? 0.6 : 1,
+              cursor: isCommentPending ? "not-allowed" : "pointer",
+            }}
           >
             {isRepliesExpanded ? `收起 ${replyCount} 条回复` : `展开 ${replyCount} 条回复`}
           </button>
@@ -752,12 +825,15 @@ function CommentThread({
   onReply,
   onDelete,
   isPending,
+  isSubmittingReply,
   isExpanded,
   onToggleReplies,
   replyComposer,
 }) {
   const canDelete = currentUser && comment.sender === currentUser;
   const replies = comment.replies || [];
+  // 检查当前评论是否正在被操作（删除或提交回复）
+  const isCommentPending = isPending === comment.id || isSubmittingReply;
 
   return (
     <div className="comment-card modern-comment-card">
@@ -786,25 +862,46 @@ function CommentThread({
         <button
           className="comment-footer-btn comment-icon-btn"
           onClick={() => onReply(comment)}
-          disabled={isPending}
+          disabled={isCommentPending}
           title={loc("Reply")}
+          style={{
+            opacity: isCommentPending ? 0.6 : 1,
+            cursor: isCommentPending ? "not-allowed" : "pointer",
+          }}
         >
-          <FaComments />
+          {isCommentPending ? (
+            <AiOutlineLoading3Quarters className="loading-icon-spin" />
+          ) : (
+            <FaComments />
+          )}
         </button>
         {canDelete && (
           <button
             className="comment-footer-btn delete-btn comment-icon-btn"
             onClick={() => onDelete(comment)}
-            disabled={isPending}
+            disabled={isCommentPending}
             title={loc("DeleteComment")}
+            style={{
+              opacity: isCommentPending ? 0.6 : 1,
+              cursor: isCommentPending ? "not-allowed" : "pointer",
+            }}
           >
-            <AiFillDelete />
+            {isCommentPending ? (
+              <AiOutlineLoading3Quarters className="loading-icon-spin" />
+            ) : (
+              <AiFillDelete />
+            )}
           </button>
         )}
         {replies.length > 0 && (
           <button
             className="comment-footer-btn expand-btn"
             onClick={onToggleReplies}
+            disabled={isCommentPending}
+            style={{
+              opacity: isCommentPending ? 0.6 : 1,
+              cursor: isCommentPending ? "not-allowed" : "pointer",
+            }}
           >
             {isExpanded ? `收起 ${replies.length} 条回复` : `展开 ${replies.length} 条回复`}
           </button>
@@ -824,7 +921,7 @@ function CommentThread({
               currentUser={currentUser}
               onReply={(replyComment) => onReply(replyComment, comment)}
               onDelete={onDelete}
-              isPending={isPending === reply.id}
+              isPending={isPending}
               isReply={true}
             />
           ))}
@@ -1031,6 +1128,7 @@ function CommentList({ songid }) {
                 onReply={handleReply}
                 onDelete={handleDelete}
                 isPending={pendingAction}
+                isSubmittingReply={isSubmitting && replyTargetId === comment.id}
                 isExpanded={isExpanded}
                 onToggleReplies={() => handleToggleReplies(comment.id)}
                 replyComposer={
