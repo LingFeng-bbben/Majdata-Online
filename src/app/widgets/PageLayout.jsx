@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loc } from "../utils";
-import { AdComponent, FloatingButtons, UnifiedHeader } from "./index";
+import { AmbientBackground, AdComponent, FloatingButtons, UnifiedHeader } from "./index";
+import "../../styles/components/ambientBackground.css";
 
 export default function PageLayout({
   children,
@@ -13,11 +14,16 @@ export default function PageLayout({
   showBackToHome = true,
   title = null,
   className = "",
+  useAmbientBackground = true,
 }) {
   return (
     <>
       {/* Background */}
-      <div className="bg"></div>
+      {useAmbientBackground ? (
+        <AmbientBackground />
+      ) : (
+        <div className="bg"></div>
+      )}
 
       {/* Unified Header */}
       <UnifiedHeader />

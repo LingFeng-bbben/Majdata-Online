@@ -43,6 +43,7 @@ export default function Page() {
       className="song-page"
       showBackToHome={true}
       showNavigation={false}
+      useAmbientBackground={false}
     >
       {/* 自定义背景 - 覆盖PageLayout的默认背景 */}
       <div

@@ -1,6 +1,6 @@
 /* Page layout and footer styles extracted from globals */
+/* Note: .bg class is kept for pages with custom backgrounds (like song page) */
 .bg {
-  background-image: url("/6thbg.webp");
   position: fixed;
   z-index: -99;
   background-size: cover;
@@ -109,8 +109,8 @@
   text-align: center;
   border-top: 1px solid rgb(255 255 255 / 10%);
   background: linear-gradient(to bottom,
-      rgb(20 20 20 / 95%),
-      rgb(10 10 10 / 98%));
+      rgb(20 20 20 / 30%),
+      rgb(10 10 10 / 30%));
   backdrop-filter: blur(10px);
 }
 

@@ -40,7 +40,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgb(8 10 15 / 88%);
+    background: rgb(8 10 15 / 30%);
     backdrop-filter: blur(28px) saturate(180%) brightness(110%);
     border-bottom: 1px solid rgb(255 255 255 / 12%);
     box-shadow: 0 8px 40px rgb(0 0 0 / 25%), 0 2px 0 rgb(255 255 255 / 8%) inset,

@@ -1,3 +1,4 @@
+export { default as AmbientBackground } from "./AmbientBackground";
 export { default as AvatarUploader } from "./AvatarUploader";
 export { default as ChartUploader } from "./ChartUploader";
 export { default as CoverPic } from "./CoverPic";
