@@ -52,15 +52,15 @@ export default function AmbientBackground() {
         this.compositeStyle = "lighter";
 
         this.particleSettings = [
-          { id: "small", num: 300, fromX: 0, toX: this.totalWidth, ballwidth: 3, alphamax: 0.4, areaHeight: .5, color: "#0cdbf3", fill: false },
-          { id: "medium", num: 100, fromX: 0, toX: this.totalWidth, ballwidth: 8, alphamax: 0.3, areaHeight: 1, color: "#6fd2f3", fill: true },
-          { id: "large", num: 10, fromX: 0, toX: this.totalWidth, ballwidth: 30, alphamax: 0.2, areaHeight: 1, color: "#93e9f3", fill: true }
+          { id: "small", num: 100, fromX: 0, toX: this.totalWidth, ballwidth: 3, alphamax: 0.4, areaHeight: .5, color: "#0cdbf3", fill: false },
+          { id: "medium", num: 50, fromX: 0, toX: this.totalWidth, ballwidth: 15, alphamax: 0.3, areaHeight: 1, color: "#6fd2f3", fill: true },
+          { id: "large", num: 30, fromX: 0, toX: this.totalWidth, ballwidth: 30, alphamax: 0.2, areaHeight: 1, color: "#93e9f3", fill: true }
         ];
         this.particleArray = [];
         this.lights = [
-          { ellipseWidth: 400, ellipseHeight: 100, alpha: 0.6, offsetX: 0, offsetY: 0, color: "#6ac6e8" },
-          { ellipseWidth: 350, ellipseHeight: 250, alpha: 0.3, offsetX: -50, offsetY: 0, color: "#54d5e8" },
-          { ellipseWidth: 100, ellipseHeight: 80, alpha: 0.2, offsetX: 80, offsetY: -50, color: "#2ae8d8" }
+          // { ellipseWidth: 400, ellipseHeight: 100, alpha: 0.6, offsetX: 0, offsetY: 0, color: "#dda463ff" },
+          // { ellipseWidth: 350, ellipseHeight: 250, alpha: 0.3, offsetX: -50, offsetY: 0, color: "#4e270cff" },
+          // { ellipseWidth: 100, ellipseHeight: 80, alpha: 0.2, offsetX: 80, offsetY: -50, color: "#80560eff" }
         ];
 
         this.stage.compositeOperation = _ParticleEngine.compositeStyle;
@@ -185,7 +185,7 @@ export default function AmbientBackground() {
           return Math.round(decimal * num) / decimal;
         }
 
-        drawBgLight();
+        //drawBgLight();
         drawParticles();
       }
 
