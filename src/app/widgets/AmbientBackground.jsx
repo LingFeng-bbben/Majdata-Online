@@ -65,34 +65,34 @@ export default function AmbientBackground() {
 
         this.stage.compositeOperation = _ParticleEngine.compositeStyle;
 
-        function drawBgLight() {
-          var light;
-          var bounds;
-          var blurFilter;
-          for (var i = 0, len = _ParticleEngine.lights.length; i < len; i++) {
-            light = new window.createjs.Shape();
-            light.graphics.beginFill(_ParticleEngine.lights[i].color).drawEllipse(0, 0, _ParticleEngine.lights[i].ellipseWidth, _ParticleEngine.lights[i].ellipseHeight);
-            light.regX = _ParticleEngine.lights[i].ellipseWidth / 2;
-            light.regY = _ParticleEngine.lights[i].ellipseHeight / 2;
-            light.y = light.initY = _ParticleEngine.totalHeight / 2 + _ParticleEngine.lights[i].offsetY;
-            light.x = light.initX = _ParticleEngine.totalWidth / 2 + _ParticleEngine.lights[i].offsetX;
+        // function drawBgLight() {
+        //   var light;
+        //   var bounds;
+        //   var blurFilter;
+        //   for (var i = 0, len = _ParticleEngine.lights.length; i < len; i++) {
+        //     light = new window.createjs.Shape();
+        //     light.graphics.beginFill(_ParticleEngine.lights[i].color).drawEllipse(0, 0, _ParticleEngine.lights[i].ellipseWidth, _ParticleEngine.lights[i].ellipseHeight);
+        //     light.regX = _ParticleEngine.lights[i].ellipseWidth / 2;
+        //     light.regY = _ParticleEngine.lights[i].ellipseHeight / 2;
+        //     light.y = light.initY = _ParticleEngine.totalHeight / 2 + _ParticleEngine.lights[i].offsetY;
+        //     light.x = light.initX = _ParticleEngine.totalWidth / 2 + _ParticleEngine.lights[i].offsetX;
 
-            blurFilter = new window.createjs.BlurFilter(_ParticleEngine.lights[i].ellipseWidth, _ParticleEngine.lights[i].ellipseHeight, 1);
-            bounds = blurFilter.getBounds();
-            light.filters = [blurFilter];
-            light.cache(bounds.x - _ParticleEngine.lights[i].ellipseWidth / 2, bounds.y - _ParticleEngine.lights[i].ellipseHeight / 2, bounds.width * 2, bounds.height * 2);
-            light.alpha = _ParticleEngine.lights[i].alpha;
+        //     blurFilter = new window.createjs.BlurFilter(_ParticleEngine.lights[i].ellipseWidth, _ParticleEngine.lights[i].ellipseHeight, 1);
+        //     bounds = blurFilter.getBounds();
+        //     light.filters = [blurFilter];
+        //     light.cache(bounds.x - _ParticleEngine.lights[i].ellipseWidth / 2, bounds.y - _ParticleEngine.lights[i].ellipseHeight / 2, bounds.width * 2, bounds.height * 2);
+        //     light.alpha = _ParticleEngine.lights[i].alpha;
 
-            light.compositeOperation = "screen";
-            _ParticleEngine.stage.addChildAt(light, 0);
+        //     light.compositeOperation = "screen";
+        //     _ParticleEngine.stage.addChildAt(light, 0);
 
-            _ParticleEngine.lights[i].elem = light;
-          }
+        //     _ParticleEngine.lights[i].elem = light;
+        //   }
 
-          window.TweenMax.fromTo(_ParticleEngine.lights[0].elem, 10, { scaleX: 1.5, x: _ParticleEngine.lights[0].elem.initX, y: _ParticleEngine.lights[0].elem.initY }, { yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleX: 2, scaleY: 0.7 });
-          window.TweenMax.fromTo(_ParticleEngine.lights[1].elem, 12, { x: _ParticleEngine.lights[1].elem.initX, y: _ParticleEngine.lights[1].elem.initY }, { delay: 5, yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleY: 2, scaleX: 2, y: _ParticleEngine.totalHeight / 2 - 50, x: _ParticleEngine.totalWidth / 2 + 100 });
-          window.TweenMax.fromTo(_ParticleEngine.lights[2].elem, 8, { x: _ParticleEngine.lights[2].elem.initX, y: _ParticleEngine.lights[2].elem.initY }, { delay: 2, yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleY: 1.5, scaleX: 1.5, y: _ParticleEngine.totalHeight / 2, x: _ParticleEngine.totalWidth / 2 - 200 });
-        }
+        //   window.TweenMax.fromTo(_ParticleEngine.lights[0].elem, 10, { scaleX: 1.5, x: _ParticleEngine.lights[0].elem.initX, y: _ParticleEngine.lights[0].elem.initY }, { yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleX: 2, scaleY: 0.7 });
+        //   window.TweenMax.fromTo(_ParticleEngine.lights[1].elem, 12, { x: _ParticleEngine.lights[1].elem.initX, y: _ParticleEngine.lights[1].elem.initY }, { delay: 5, yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleY: 2, scaleX: 2, y: _ParticleEngine.totalHeight / 2 - 50, x: _ParticleEngine.totalWidth / 2 + 100 });
+        //   window.TweenMax.fromTo(_ParticleEngine.lights[2].elem, 8, { x: _ParticleEngine.lights[2].elem.initX, y: _ParticleEngine.lights[2].elem.initY }, { delay: 2, yoyo: true, repeat: -1, ease: window.Power1.easeInOut, scaleY: 1.5, scaleX: 1.5, y: _ParticleEngine.totalHeight / 2, x: _ParticleEngine.totalWidth / 2 - 200 });
+        // }
 
         function drawParticles() {
           for (var i = 0, len = _ParticleEngine.particleSettings.length; i < len; i++) {

@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "@typescript-eslint/no-this-alias" : "warn"
       }
 }
