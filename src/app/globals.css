@@ -5002,3 +5002,165 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 1.25rem auto;
   }
 }
+
+/* ===== 评论Markdown预览样式 ===== */
+.comment-preview-toggle {
+  margin: 8px 0;
+  text-align: right;
+}
+
+.preview-toggle-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 4px 12px;
+  cursor: pointer;
+  color: #4a9eff;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.preview-toggle-btn:hover {
+  background-color: rgba(74, 158, 255, 0.1);
+  border-color: rgba(74, 158, 255, 0.3);
+}
+
+.markdown-preview {
+  min-height: 100px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-preview {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.preview-placeholder {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* 确保评论中的图片自适应大小 */
+.comment-content img,
+.markdown-preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+  border-radius: 4px;
+}
+
+/* 评论中的链接样式 */
+.comment-content a,
+.markdown-preview a {
+  color: #4a9eff;
+  text-decoration: none;
+}
+
+.comment-content a:hover,
+.markdown-preview a:hover {
+  text-decoration: underline;
+}
+
+/* 粗体样式 - 增加粗体效果 */
+.comment-content strong,
+.markdown-preview strong,
+.comment-content b,
+.markdown-preview b {
+  font-weight: 800;
+  color: #fff;
+}
+
+/* 斜体样式 */
+.comment-content em,
+.markdown-preview em,
+.comment-content i,
+.markdown-preview i {
+  font-style: italic;
+  color: #e0e0e0;
+}
+
+/* 代码块样式 */
+.comment-content pre,
+.markdown-preview pre {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 10px 0;
+}
+
+.comment-content code,
+.markdown-preview code {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.comment-content pre code,
+.markdown-preview pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* 引用块样式 */
+.comment-content blockquote,
+.markdown-preview blockquote {
+  border-left: 4px solid #4a9eff;
+  padding-left: 16px;
+  margin: 10px 0;
+  color: #ccc;
+}
+
+/* 表格样式 */
+.comment-content table,
+.markdown-preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.comment-content th,
+.comment-content td,
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid #444;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.comment-content th,
+.markdown-preview th {
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+/* 列表样式 */
+.comment-content ol,
+.comment-content ul,
+.markdown-preview ol,
+.markdown-preview ul {
+  margin: 10px 0;
+  padding-left: 30px;
+}
+
+.comment-content li,
+.markdown-preview li {
+  margin: 5px 0;
+}

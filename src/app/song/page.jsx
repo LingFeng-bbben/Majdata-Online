@@ -20,6 +20,8 @@ import SongDifficultyLevels from "./SongDifficultyLevels";
 import { FaComments } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -524,6 +526,8 @@ function CommentComposer({
   isReply = false,
   isSubmitting = false,
 }) {
+  const [showPreview, setShowPreview] = useState(false);
+  
   return (
     <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
       <textarea
@@ -534,6 +538,48 @@ function CommentComposer({
         autoFocus={autoFocus}
         disabled={isSubmitting}
       />
+      
+      <div className="comment-preview-toggle">
+        <button 
+          className="preview-toggle-btn"
+          onClick={() => setShowPreview(!showPreview)}
+        >
+          {showPreview ? loc("HidePreview") : loc("ShowPreview")}
+        </button>
+      </div>
+      
+      {showPreview && (
+        <div className="markdown-preview comment-preview">
+          {value.trim() ? (
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                ol(props) {
+                  const { ...rest } = props;
+                  return <ol type="1" {...rest} />;
+                },
+                ul(props) {
+                  const { ...rest } = props;
+                  return <ol style={{ listStyleType: "disc" }} {...rest} />;
+                },
+                img(props) {
+                  const { ...rest } = props;
+                  return <img style={{ maxWidth: "100%", height: "auto" }} {...rest} />;
+                },
+                a(props) {
+                  const { ...rest } = props;
+                  return <a target="_blank" rel="noopener noreferrer" {...rest} />;
+                },
+              }}
+            >
+              {value}
+            </Markdown>
+          ) : (
+            <div className="preview-placeholder">{loc("PreviewPlaceholder")}</div>
+          )}
+        </div>
+      )}
+      
       <div className="comment-actions">
         <button
           className="linkContentWithBorder modern-interaction-btn comment-action-btn"
@@ -641,7 +687,68 @@ function CommentSender({ songid }) {
   );
 }
 
-// 解析评论内容，将 @用户名 转换为超链接
+// MarkdownCommentContent - 渲染包含@mention的markdown内容
+function MarkdownCommentContent({ content }) {
+  // 首先处理@mention，将它们转换为特殊标记
+  const processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+    return `[@${username}](/space?id=${username})`;
+  });
+
+  return (
+    <Markdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        ol(props) {
+          const { ...rest } = props;
+          return <ol type="1" {...rest} />;
+        },
+        ul(props) {
+          const { ...rest } = props;
+          return <ol style={{ listStyleType: "disc" }} {...rest} />;
+        },
+        img(props) {
+          const { ...rest } = props;
+          return <img style={{ maxWidth: "100%", height: "auto" }} {...rest} />;
+        },
+        a(props) {
+          const { href, children, ...rest } = props;
+          // 检查是否是@mention链接
+          if (href && href.startsWith('/space?id=') && children && typeof children[0] === 'string' && children[0].startsWith('@')) {
+            return (
+              <a
+                href={href}
+                className="comment-mention"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                {...rest}
+              >
+                {children}
+              </a>
+            );
+          }
+          // 普通链接在新窗口打开
+          return (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              {...rest}
+            >
+              {children}
+            </a>
+          );
+        },
+      }}
+    >
+      {processedContent}
+    </Markdown>
+  );
+}
+
+// 解析评论内容，将 @用户名 转换为超链接（保留原函数作为备用）
 function parseCommentContent(content) {
   // 优先匹配 "回复 @用户名：" 或 "Reply to @username:" 或 "返信先 @username:" 格式
   // 使用更灵活的正则，匹配任何文字 + @用户名 + 冒号的组合
@@ -763,7 +870,9 @@ function CommentCard({
           </div>
         </a>
       </div>
-      <div className="comment-content">{parseCommentContent(comment.content)}</div>
+      <div className="comment-content">
+        <MarkdownCommentContent content={comment.content} />
+      </div>
       <div className="comment-footer">
         {onReply && (
           <button
@@ -856,7 +965,9 @@ function CommentThread({
       </div>
 
       {/* 源评论内容 */}
-      <div className="comment-content">{parseCommentContent(comment.content)}</div>
+      <div className="comment-content">
+        <MarkdownCommentContent content={comment.content} />
+      </div>
 
       {/* 源评论操作按钮 */}
       <div className="comment-footer">
