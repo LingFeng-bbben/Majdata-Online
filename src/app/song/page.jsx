@@ -564,7 +564,7 @@ function CommentComposer({
                 },
                 img(props) {
                   const { ...rest } = props;
-                  return <img style={{ maxWidth: "100%", height: "auto" }} {...rest} />;
+                  return <img style={{ width: "200px", height: "auto" }} {...rest} />;
                 },
                 a(props) {
                   const { ...rest } = props;
@@ -708,7 +708,7 @@ function MarkdownCommentContent({ content }) {
         },
         img(props) {
           const { ...rest } = props;
-          return <img style={{ maxWidth: "100%", height: "auto" }} {...rest} />;
+          return <img style={{ width: "200px", height: "auto" }} {...rest} />;
         },
         a(props) {
           const { href, children, ...rest } = props;
@@ -748,94 +748,6 @@ function MarkdownCommentContent({ content }) {
   );
 }
 
-// 解析评论内容，将 @用户名 转换为超链接（保留原函数作为备用）
-function parseCommentContent(content) {
-  // 优先匹配 "回复 @用户名：" 或 "Reply to @username:" 或 "返信先 @username:" 格式
-  // 使用更灵活的正则，匹配任何文字 + @用户名 + 冒号的组合
-  const replyMentionRegex = /^(.+?)\s+@([a-zA-Z0-9_\u4e00-\u9fa5]+)[：:]/;
-  const replyMatch = content.match(replyMentionRegex);
-  
-  let startIndex = 0;
-  const parts = [];
-  
-  // 如果是回复格式，先处理前缀
-  if (replyMatch) {
-    const prefix = replyMatch[1]; // "回复" 或 "Reply to" 等
-    const username = replyMatch[2];
-    const separator = replyMatch[0].slice(-1); // 获取冒号（中文或英文）
-    
-    parts.push(
-      <span key="reply-prefix" className="comment-reply-prefix">
-        {prefix}{' '}
-      </span>
-    );
-    parts.push(
-      <a
-        key="reply-mention"
-        href={`/space?id=${username}`}
-        className="comment-mention"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        @{username}
-      </a>
-    );
-    parts.push(
-      <span key="reply-colon">{separator}</span>
-    );
-    startIndex = replyMatch[0].length;
-  }
-  
-  // 继续处理剩余内容中的 @mention
-  const mentionRegex = /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g;
-  const remainingContent = content.substring(startIndex);
-  let lastIndex = 0;
-  let match;
-
-  while ((match = mentionRegex.exec(remainingContent)) !== null) {
-    // 添加 @mention 之前的文本
-    if (match.index > lastIndex) {
-      parts.push(
-        <span key={`text-${startIndex + lastIndex}`}>
-          {remainingContent.substring(lastIndex, match.index)}
-        </span>
-      );
-    }
-
-    // 添加 @mention 链接
-    const username = match[1];
-    parts.push(
-      <a
-        key={`mention-${startIndex + match.index}`}
-        href={`/space?id=${username}`}
-        className="comment-mention"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        @{username}
-      </a>
-    );
-
-    lastIndex = match.index + match[0].length;
-  }
-
-  // 添加剩余的文本
-  if (lastIndex < remainingContent.length) {
-    parts.push(
-      <span key={`text-${startIndex + lastIndex}`}>
-        {remainingContent.substring(lastIndex)}
-      </span>
-    );
-  }
-
-  return parts.length > 0 ? parts : content;
-}
 
 // CommentCard - 单条评论卡片（仅用于子回复）
 function CommentCard({
