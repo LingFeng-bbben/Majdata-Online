@@ -194,6 +194,6 @@
   "UsernameExists": "该用户名已被注册",
   "EmailExists": "该邮箱已被注册",
   "[Register]EmailSent": "已发送验证邮件至您的邮箱，请检查您的收件箱",
-  "[Login]PendingVerifcation": "该用户尚未激活",
+  "[Login]PendingVerifcation": "该用户尚未激活, 验证邮件已重发",
   "[Login]UserBanned": "该用户已被封禁"
 }

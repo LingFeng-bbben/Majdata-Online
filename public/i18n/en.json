@@ -185,5 +185,8 @@
   "EventEnded": "ended",
   "RelatedCharts": "Related Charts",
   "OriginalSongs": "Original Songs",
-  "OriginalSongsDesc": "Original songs and charts from the maj collaboration team!"
+  "OriginalSongsDesc": "Original songs and charts from the maj collaboration team!",
+  "[Register]EmailSent": "A verification email has been sent to your inbox. Please check your email.",
+  "[Login]PendingVerifcation": "This account has not been activated. A verification email has been resent.",
+  "[Login]UserBanned": "This account has been banned."
 }

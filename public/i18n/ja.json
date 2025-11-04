@@ -185,5 +185,8 @@
   "EventEnded": "終了",
   "RelatedCharts": "関連譜面",
   "OriginalSongs": "オリジナル楽曲",
-  "OriginalSongsDesc": "majコラボチームによるオリジナル楽曲と譜面です！"
+  "OriginalSongsDesc": "majコラボチームによるオリジナル楽曲と譜面です！",
+  "[Register]EmailSent": "認証メールをあなたのメールアドレスに送信しました。受信箱をご確認ください。",
+  "[Login]PendingVerifcation": "このユーザーはまだ有効化されていません。認証メールを再送しました。",
+  "[Login]UserBanned": "このユーザーはBANされています。"
 }

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import md5 from "js-md5";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { apiroot3 } from "../apiroot";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,7 +39,7 @@ export default function Page() {
 }
 
 function Register() {
-    const router = useRouter();
+    //const router = useRouter();
     const [isPosting, setIsPosting] = useState(false);
     async function onSubmit(event) {
         setIsPosting(true)
@@ -84,8 +84,8 @@ function Register() {
                 toast.error(await response.text());
                 return;
             } else {
-                toast.success("[Register]EmailSent");
-                router.push("/login");
+                toast.success(loc("[Register]EmailSent"),{autoClose:false});
+                //router.push("/login");
             }
 
             // Handle response if necessary
@@ -101,7 +101,7 @@ function Register() {
             <div className="auth-card">
                 <div className="auth-header">
                     <h2 className="auth-title">创建账户</h2>
-                    <p className="auth-subtitle">加入 Majdata 社区，开始您的音乐之旅</p>
+                    <p className="auth-subtitle">加入 Majdata 社区，开始您的谱面创作之旅</p>
                 </div>
                 <form className="auth-form" onSubmit={onSubmit}>
                     <div className="form-group">
