@@ -551,29 +551,7 @@ function CommentComposer({
       {showPreview && (
         <div className="markdown-preview comment-preview">
           {value.trim() ? (
-            <Markdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                ol(props) {
-                  const { ...rest } = props;
-                  return <ol type="1" {...rest} />;
-                },
-                ul(props) {
-                  const { ...rest } = props;
-                  return <ol style={{ listStyleType: "disc" }} {...rest} />;
-                },
-                img(props) {
-                  const { ...rest } = props;
-                  return <img style={{ width: "200px", height: "auto" }} {...rest} />;
-                },
-                a(props) {
-                  const { ...rest } = props;
-                  return <a target="_blank" rel="noopener noreferrer" {...rest} />;
-                },
-              }}
-            >
-              {value}
-            </Markdown>
+            <MarkdownCommentContent content={value}/>
           ) : (
             <div className="preview-placeholder">{loc("PreviewPlaceholder")}</div>
           )}
@@ -693,7 +671,7 @@ function MarkdownCommentContent({ content }) {
   const processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
     return `[@${username}](/space?id=${username})`;
   });
-
+  console.log(processedContent)
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
@@ -1041,7 +1019,7 @@ function CommentList({ songid }) {
     // 如果是回复楼中楼，自动添加前缀
     let finalContent = replyContent;
     if (replyTargetUser) {
-      finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}`;
+      finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}\n`;
     }
 
     const formData = new FormData();
