@@ -667,11 +667,26 @@ function CommentSender({ songid }) {
 }
 
 // MarkdownCommentContent - 渲染包含@mention的markdown内容
-function MarkdownCommentContent({ content }) {
+function MarkdownCommentContent({ content, comment }) {
   // 首先处理@mention，将它们转换为特殊标记
-  const processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
-    return `[@${username}](/space?id=${username})`;
-  });
+  let processedContent = "";
+  if (comment) {
+    if (comment.contentBody) {
+      processedContent = comment.contentPrefix + comment.contentBody.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+        return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+      });
+    }
+    else {
+      processedContent = comment.content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+        return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+      });
+    }
+  }
+  else {
+    processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+      return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+    });
+  }
   //console.log(processedContent)
   return (
     <Markdown
@@ -762,7 +777,7 @@ function CommentCard({
         </a>
       </div>
       <div className="comment-content">
-        <MarkdownCommentContent content={comment.content} />
+        <MarkdownCommentContent content={comment.content} comment={comment} />
       </div>
       <div className="comment-footer">
         {onReply && (
@@ -859,11 +874,15 @@ function CommentThread({
       if (!comment.replyTo) {
         comment.replies = undefined;
         comment.replyTo = parentComment.id;
+        comment.contentPrefix = "";
+        comment.contentBody = comment.content;
       }
       else {
         const target = result.find(c => c.id === comment.replyTo);
         const origContent = comment.content;
-        comment.content = `${loc("ReplyTo")} @${target.sender}: ${origContent}\n`;
+        comment.contentPrefix = `${loc("ReplyTo")} [@${target.sender}](/space?id=${encodeURIComponent(target.sender)}): `;
+        comment.contentBody = origContent
+        comment.content = comment.contentPrefix + comment.contentBody;
       }
     }
 
@@ -896,7 +915,7 @@ function CommentThread({
 
       {/* 源评论内容 */}
       <div className="comment-content">
-        <MarkdownCommentContent content={comment.content} />
+        <MarkdownCommentContent content={comment.content} comment={comment} />
       </div>
 
       {/* 源评论操作按钮 */}
