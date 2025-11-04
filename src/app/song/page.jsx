@@ -374,7 +374,7 @@ function LikeSender({ songid }) {
       name = loc("DislikeAction");
       setIsDislikeLoading(true);
     }
-    
+
     try {
       const response = await fetch(
         apiroot3 + "/maichart/" + songid + "/interact",
@@ -528,7 +528,7 @@ function CommentComposer({
   isSubmitting = false,
 }) {
   const [showPreview, setShowPreview] = useState(false);
-  
+
   return (
     <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
       <textarea
@@ -539,26 +539,26 @@ function CommentComposer({
         autoFocus={autoFocus}
         disabled={isSubmitting}
       />
-      
+
       <div className="comment-preview-toggle">
-        <button 
+        <button
           className="preview-toggle-btn"
           onClick={() => setShowPreview(!showPreview)}
         >
           {showPreview ? loc("HidePreview") : loc("ShowPreview")}
         </button>
       </div>
-      
+
       {showPreview && (
         <div className="markdown-preview comment-preview">
           {value.trim() ? (
-            <MarkdownCommentContent content={value}/>
+            <MarkdownCommentContent content={value} />
           ) : (
             <div className="preview-placeholder">{loc("PreviewPlaceholder")}</div>
           )}
         </div>
       )}
-      
+
       <div className="comment-actions">
         <button
           className="linkContentWithBorder modern-interaction-btn comment-action-btn"
@@ -831,29 +831,34 @@ function CommentThread({
   onToggleReplies,
   replyComposer,
 }) {
-  
+
   function flattenComments(comments, parentComment) {
     const result = [];
+    if (!comments) {
+      return result;
+    }
     const stack = [...comments];
 
     while (stack.length > 0) {
-      const item = stack.pop();
+      const orig = stack.pop();
+      const item = { ...orig };
       result.push(item);
 
       if (item.replies && item.replies.length > 0) {
         for (let i = item.replies.length - 1; i >= 0; i--) {
-          let { replies, ...replyComment } = item.replies[i];
+          const origReply = item.replies[i];
+          let replyComment = { ...origReply };
           replyComment.replyTo = item.id;
           stack.push(replyComment);
         }
       }
+      item.replies = undefined;
     }
     for (let i = 0; i < result.length; i++) {
       let comment = result[i];
       if (!comment.replyTo) {
-        let { replies, ...copy } = comment;
-        copy.replyTo = parentComment.id;
-        result[i] = copy;
+        comment.replies = undefined;
+        comment.replyTo = parentComment.id;
       }
       else {
         const target = result.find(c => c.id === comment.replyTo);
@@ -866,7 +871,7 @@ function CommentThread({
       (a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   }
   const canDelete = currentUser && comment.sender === currentUser;
-  const replies = (comment.replies && flattenComments(comment.replies, comment.id)) || [];
+  const replies = flattenComments(comment.replies, comment.id);
   // 检查当前评论是否正在被操作（删除或提交回复）
   const isCommentPending = isPending === comment.id || isSubmittingReply;
 
@@ -1002,7 +1007,7 @@ function CommentList({ songid }) {
   const { data, error, isLoading, mutate } = useSWR(
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
-    { 
+    {
       refreshInterval: replyThreadId ? 0 : 3000 // 回复输入时暂停自动刷新
     },
   );
@@ -1022,7 +1027,7 @@ function CommentList({ songid }) {
   const handleReply = (comment, parentComment = null) => {
     // 找到顶层评论的 ID
     const topLevelCommentId = parentComment ? parentComment.id : comment.id;
-    
+
     if (replyThreadId === topLevelCommentId && replyTargetUser === comment.sender) {
       // 再次点击同一评论，关闭输入框
       setReplyTargetId(null);
@@ -1157,7 +1162,7 @@ function CommentList({ songid }) {
 
   // 处理评论数据 - 确保使用新的树形结构
   const comments = Array.isArray(data.comments) ? data.comments : [];
-  
+
   return (
     <div className="theList song-comment-list">
       {comments.length === 0 ? (
@@ -1167,7 +1172,7 @@ function CommentList({ songid }) {
       ) : (
         comments.map((comment) => {
           const isExpanded = expandedComments.has(comment.id);
-          
+
           return (
             <div key={comment.id} className="comment-thread-container">
               <CommentThread
