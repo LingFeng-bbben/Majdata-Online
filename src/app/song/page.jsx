@@ -671,7 +671,7 @@ function MarkdownCommentContent({ content }) {
   const processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
     return `[@${username}](/space?id=${username})`;
   });
-  console.log(processedContent)
+  //console.log(processedContent)
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
@@ -830,8 +830,42 @@ function CommentThread({
   onToggleReplies,
   replyComposer,
 }) {
+  
+  function flattenComments(comments, parentComment) {
+    const result = [];
+    const stack = [...comments];
+
+    while (stack.length > 0) {
+      const item = stack.pop();
+      result.push(item);
+
+      if (item.replies && item.replies.length > 0) {
+        for (let i = item.replies.length - 1; i >= 0; i--) {
+          let { replies, ...replyComment } = item.replies[i];
+          replyComment.replyTo = item.id;
+          stack.push(replyComment);
+        }
+      }
+    }
+    for (let i = 0; i < result.length; i++) {
+      let comment = result[i];
+      if (!comment.replyTo) {
+        let { replies, ...copy } = comment;
+        copy.replyTo = parentComment.id;
+        result[i] = copy;
+      }
+      else {
+        const target = result.find(c => c.id === comment.replyTo);
+        const origContent = comment.content;
+        comment.content = `${loc("ReplyTo")} @${target.sender}: ${origContent}\n`;
+      }
+    }
+
+    return result.sort(
+      (a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  }
   const canDelete = currentUser && comment.sender === currentUser;
-  const replies = comment.replies || [];
+  const replies = (comment.replies && flattenComments(comment.replies, comment.id)) || [];
   // 检查当前评论是否正在被操作（删除或提交回复）
   const isCommentPending = isPending === comment.id || isSubmittingReply;
 
@@ -935,7 +969,10 @@ function CommentThread({
 
 
 function CommentList({ songid }) {
+  //表示回复对象
   const [replyTargetId, setReplyTargetId] = useState(null);
+  //表示当前应该展开的回复
+  const [replyThreadId, setReplyThreadId] = useState(null);
   const [replyTargetUser, setReplyTargetUser] = useState(null); // 被回复的用户名
   const [replyContent, setReplyContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -965,7 +1002,7 @@ function CommentList({ songid }) {
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
     { 
-      refreshInterval: replyTargetId ? 0 : 3000 // 回复输入时暂停自动刷新
+      refreshInterval: replyThreadId ? 0 : 3000 // 回复输入时暂停自动刷新
     },
   );
 
@@ -985,18 +1022,24 @@ function CommentList({ songid }) {
     // 找到顶层评论的 ID
     const topLevelCommentId = parentComment ? parentComment.id : comment.id;
     
-    if (replyTargetId === topLevelCommentId && replyTargetUser === comment.sender) {
+    if (replyThreadId === topLevelCommentId && replyTargetUser === comment.sender) {
       // 再次点击同一评论，关闭输入框
       setReplyTargetId(null);
+      setReplyThreadId(null);
       setReplyTargetUser(null);
       setReplyContent("");
     } else {
-      setReplyTargetId(topLevelCommentId);
+      //设置打开哪个帖子的回复框
+      setReplyThreadId(topLevelCommentId);
       // 如果是回复子评论，记录被回复的用户名
       if (parentComment) {
         setReplyTargetUser(comment.sender);
+        setReplyTargetId(comment.id);
+        //console.log(comment.id)
       } else {
         setReplyTargetUser(null);
+        setReplyTargetId(topLevelCommentId);
+        console.log(comment.id)
       }
       setReplyContent("");
       // 自动展开回复列表
@@ -1006,6 +1049,7 @@ function CommentList({ songid }) {
 
   const handleCancelReply = () => {
     setReplyTargetId(null);
+    setReplyThreadId(null);
     setReplyTargetUser(null);
     setReplyContent("");
   };
@@ -1017,14 +1061,14 @@ function CommentList({ songid }) {
     }
 
     // 如果是回复楼中楼，自动添加前缀
-    let finalContent = replyContent;
-    if (replyTargetUser) {
-      finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}\n`;
-    }
+    // let finalContent = replyContent;
+    // if (replyTargetUser) {
+    //   finalContent = `${loc("ReplyTo")} @${replyTargetUser}：${replyContent}\n`;
+    // }
 
     const formData = new FormData();
     formData.set("type", "comment");
-    formData.set("content", finalContent);
+    formData.set("content", replyContent);
     formData.set("replyTo", replyTargetId);
 
     setIsSubmitting(true);
@@ -1046,6 +1090,7 @@ function CommentList({ songid }) {
       if (response.status === 200) {
         toast.success(loc("ReplySuccess"));
         setReplyContent("");
+        setReplyThreadId(null);
         setReplyTargetId(null);
         setReplyTargetUser(null);
         mutate();
@@ -1130,11 +1175,11 @@ function CommentList({ songid }) {
                 onReply={handleReply}
                 onDelete={handleDelete}
                 isPending={pendingAction}
-                isSubmittingReply={isSubmitting && replyTargetId === comment.id}
+                isSubmittingReply={isSubmitting && replyThreadId === comment.id}
                 isExpanded={isExpanded}
                 onToggleReplies={() => handleToggleReplies(comment.id)}
                 replyComposer={
-                  replyTargetId === comment.id && (
+                  replyThreadId === comment.id && (
                     <div className="reply-composer-wrapper">
                       <CommentComposer
                         value={replyContent}
