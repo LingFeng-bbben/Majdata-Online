@@ -399,6 +399,12 @@ h2 {
   gap: 0.5rem;
 }
 
+.form-group-checkbox {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
 .form-label {
   color: #e5e5e5;
   font-size: 0.9rem;

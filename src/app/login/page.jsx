@@ -77,6 +77,7 @@ function Login() {
             toast.error(loc("NoPasswd"));
             return;
         }
+        formData.set("rememberMe", formData.get("rememberMe") != null)
         formData.set("password", md5(formData.get("password")));
         const response = await fetch(apiroot3 + "/account/Login", {
             method: "POST",
@@ -137,6 +138,11 @@ function Login() {
                             required
                         />
                     </div>
+                    <div className="form-group-checkbox">
+                        <input className="form-input" type="checkbox" name="rememberMe"></input>
+                        <label className="form-label">{loc("RememberMe")}</label>
+                    </div>
+                    
                     <button className="auth-button" type="submit">
                         <span className="auth-button-text">{loc("Login")}</span>
                     </button>
