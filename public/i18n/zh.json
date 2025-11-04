@@ -196,5 +196,9 @@
   "[Register]EmailSent": "已发送验证邮件至您的邮箱，请检查您的收件箱",
   "[Login]PendingVerifcation": "该用户尚未激活, 验证邮件已重发",
   "[Login]UserBanned": "该用户已被封禁",
-  "RememberMe": "保持登录"
+  "RememberMe": "保持登录",
+  "SearchHintID": "id:xxxx 可以按id查询谱面",
+  "SearchHintHash": "hash:xxxx 可以按hash查询谱面",
+  "SearchHintTag": "tag:xxxx 可以只看这个tag的谱面",
+  "SearchHintUploader": "uploader:xxxx 可以只看他传的谱面"
 }

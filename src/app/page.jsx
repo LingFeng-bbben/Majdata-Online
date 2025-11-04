@@ -33,17 +33,14 @@ export default function Page() {
     setLanguage(localStorage.getItem("language") || navigator.language).then(
       () => {
         setReady(true);
-      },
+      }
     );
   }, []);
 
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <PageLayout
-      showBackToHome={false}
-      className="home-page"
-    >
+    <PageLayout showBackToHome={false} className="home-page">
       {/* Events Carousel */}
       <EventsCarousel />
 
@@ -87,7 +84,7 @@ function DesktopEventsSwiper() {
           year: "numeric",
           month: "long",
           day: "numeric",
-        },
+        }
       ),
     }));
     setOngoingEvents(events);
@@ -103,9 +100,9 @@ function DesktopEventsSwiper() {
             slidesPerView={2}
             centeredSlides={false}
             autoplay={{
-                delay: 5000,
-                disableOnInteraction: false
-              }}
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
             pagination={{
               clickable: true,
               dynamicBullets: true,
@@ -148,9 +145,9 @@ function DesktopEventsSwiper() {
                               {event.category}
                             </span>
                             <span
-                              className={`event-status ${
-                                getEventStatusClass(event)
-                              }`}
+                              className={`event-status ${getEventStatusClass(
+                                event
+                              )}`}
                             >
                               • {getEventStatusText(event)}
                             </span>
@@ -210,7 +207,7 @@ function MobileEventsSwiper() {
           year: "numeric",
           month: "long",
           day: "numeric",
-        },
+        }
       ),
     }));
     setOngoingEvents(events);
@@ -226,9 +223,9 @@ function MobileEventsSwiper() {
             slidesPerView={1}
             centeredSlides={true}
             autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
-              }}
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
             pagination={{
               clickable: true,
               dynamicBullets: true,
@@ -355,9 +352,13 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
           <div className="search-controls">
             <div className="sort-selector">
               <select
-                value={isMobile
-                  ? (sortType === undefined ? "placeholder" : sortType)
-                  : sortType}
+                value={
+                  isMobile
+                    ? sortType === undefined
+                      ? "placeholder"
+                      : sortType
+                    : sortType
+                }
                 onChange={(e) => {
                   if (e.target.value === "placeholder") return;
                   const val = parseInt(e.target.value);
@@ -400,12 +401,12 @@ function MainComp() {
       const a = urlSearchParam || localStorage.getItem("search");
       const b = localStorage.getItem("lastclickpage");
       const s = localStorage.getItem("sort");
-      
+
       setSearch(a ? a : "");
       setPage(parseInt(b ? b : 0));
       setIsLoaded(true);
       setSortType(s ? parseInt(s) : 0);
-      
+
       // 如果URL中有search参数，保存到localStorage
       if (urlSearchParam) {
         localStorage.setItem("search", urlSearchParam);
@@ -423,7 +424,7 @@ function MainComp() {
       localStorage.setItem("lastclickpage", 0);
     },
     // delay in ms
-    500,
+    500
   );
 
   const onSortChange = (val) => {
@@ -446,13 +447,15 @@ function MainComp() {
       />
 
       <SongList
-        url={apiroot3 +
+        url={
+          apiroot3 +
           "/maichart/list?sort=" +
           sortWords[sortType] +
           "&page=" +
           page +
           "&search=" +
-          encodeURIComponent(Search)}
+          encodeURIComponent(Search)
+        }
         page={page}
         setMax={setMaxpage}
       />
@@ -508,6 +511,12 @@ function MainComp() {
         >
           {loc("FrontPage")}
         </button>
+        <div>
+          <p>{loc("SearchHintID")}</p>
+          <p>{loc("SearchHintHash")}</p>
+          <p>{loc("SearchHintTag")}</p>
+          <p>{loc("SearchHintUploader")}</p>
+        </div>
         <IntegratedDownloadTypeSelector isMobile={true} />
       </div>
     </>
@@ -547,7 +556,7 @@ function IntegratedDownloadTypeSelector({ isMobile }) {
         </label>
       )}
       <select
-        value={isMobile ? (currentType || "placeholder") : currentType}
+        value={isMobile ? currentType || "placeholder" : currentType}
         onChange={handleChange}
         className="modern-select"
         data-mobile-label={loc("DownloadFormat")}

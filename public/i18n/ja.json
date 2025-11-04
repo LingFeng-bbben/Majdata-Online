@@ -189,5 +189,9 @@
   "[Register]EmailSent": "認証メールをあなたのメールアドレスに送信しました。受信箱をご確認ください。",
   "[Login]PendingVerifcation": "このユーザーはまだ有効化されていません。認証メールを再送しました。",
   "[Login]UserBanned": "このユーザーはBANされています。",
-  "RememberMe": "ログイン状態を保持する"
+  "RememberMe": "ログイン状態を保持する",
+  "SearchHintID": "id:xxxx で譜面IDで検索",
+  "SearchHintHash": "hash:xxxx でハッシュで検索",
+  "SearchHintTag": "tag:xxxx でタグで検索",
+  "SearchHintUploader": "uploader:xxxx でアップローダーで検索"
 }

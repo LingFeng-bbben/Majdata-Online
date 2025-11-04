@@ -189,5 +189,9 @@
   "[Register]EmailSent": "A verification email has been sent to your inbox. Please check your email.",
   "[Login]PendingVerifcation": "This account has not been activated. A verification email has been resent.",
   "[Login]UserBanned": "This account has been banned.",
-  "RememberMe": "Remember Me"
+  "RememberMe": "Remember Me",
+  "SearchHintID": "id:xxxx to search by chart ID",
+  "SearchHintHash": "hash:xxxx to search by chart hash",
+  "SearchHintTag": "tag:xxxx to search by tag",
+  "SearchHintUploader": "uploader:xxxx to search by uploader"
 }
