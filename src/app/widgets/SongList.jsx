@@ -69,6 +69,10 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
                   <img
                     className="smallIcon"
                     src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                    loading="lazy"
+                    // eslint-disable-next-line react/no-unknown-property
+                    fetchPriority="low"
+                    decoding="async"
                   />
                   {o.uploader + "@" + o.designer}
                 </a>

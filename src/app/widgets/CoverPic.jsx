@@ -20,7 +20,7 @@ export default function CoverPic({ id, display }) {
         loadingElement={<div className="loading"></div>}
       >
         <PhotoView src={urlfull}>
-          <img className= {"songImg " + (isLoaded ? " loadedImg" :" loadingImg")} loading="lazy" src={url} alt="" 
+          <img className= {"songImg " + (isLoaded ? " loadedImg" :" loadingImg")} decoding="async" loading="lazy" src={url} alt="" 
           onLoad={() =>setIsLoaded(true)} />
         </PhotoView>
       </PhotoProvider>
