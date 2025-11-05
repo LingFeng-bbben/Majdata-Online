@@ -26,11 +26,9 @@ export default function MMFCDatasetPage() {
     >
       <div className="mmfc-dataset-container">
         <header className="mmfc-dataset-header">
-          <h1 className="mmfc-dataset-title">MMFC资料集</h1>
           <p className="mmfc-dataset-description">
             这里汇总了历届MMFC比赛的相关信息和数据
           </p>
-          <div className="status-badge status-ended">已结束</div>
         </header>
 
         <div className="mmfc-dataset-content">
