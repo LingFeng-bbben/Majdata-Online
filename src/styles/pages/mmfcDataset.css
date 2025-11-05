@@ -1,0 +1,191 @@
+/* MMFC资料集页面样式 */
+.mmfc-dataset-page {
+  min-height: 100vh;
+}
+
+.mmfc-dataset-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.mmfc-dataset-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.mmfc-dataset-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.mmfc-dataset-description {
+  font-size: 1.1rem;
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-ended {
+  background: rgba(153, 153, 153, 0.2);
+  color: #999;
+  border: 1px solid rgba(153, 153, 153, 0.3);
+}
+
+.mmfc-dataset-content {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* iframe容器 - 响应式设计 */
+.iframe-container {
+  position: relative;
+  width: 100%;
+  /* 使用padding-top实现16:9的宽高比，也可以根据需要调整 */
+  padding-top: 75%; /* 4:3比例 */
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tencent-doc-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+.iframe-tip {
+  margin-top: 1rem;
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.iframe-tip p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.iframe-tip p:last-child {
+  margin-bottom: 0;
+}
+
+.iframe-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.iframe-link a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* 平板设备 */
+@media (max-width: 1024px) {
+  .mmfc-dataset-title {
+    font-size: 2rem;
+  }
+
+  .mmfc-dataset-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .iframe-container {
+    padding-top: 80%; /* 在平板上稍微增加高度 */
+  }
+}
+
+/* 移动设备 */
+@media (max-width: 768px) {
+  .mmfc-dataset-title {
+    font-size: 1.8rem;
+  }
+
+  .mmfc-dataset-description {
+    font-size: 1rem;
+  }
+
+  .mmfc-dataset-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .mmfc-dataset-content {
+    padding: 1rem;
+  }
+
+  .iframe-container {
+    padding-top: 100%; /* 在移动设备上使用1:1比例 */
+  }
+
+  .iframe-tip {
+    font-size: 0.85rem;
+  }
+}
+
+/* 小屏幕移动设备 */
+@media (max-width: 480px) {
+  .mmfc-dataset-title {
+    font-size: 1.5rem;
+  }
+
+  .mmfc-dataset-description {
+    font-size: 0.9rem;
+  }
+
+  .status-badge {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.8rem;
+  }
+
+  .iframe-container {
+    padding-top: 120%; /* 在小屏幕上增加高度以便更好地查看 */
+  }
+}
+
+/* 大屏幕 */
+@media (min-width: 1440px) {
+  .iframe-container {
+    padding-top: 60%; /* 在大屏幕上减少高度比例 */
+  }
+}
+
+/* 加载动画优化 */
+.tencent-doc-iframe {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* 深色模式优化（如果需要） */
+@media (prefers-color-scheme: dark) {
+  .mmfc-dataset-content {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}
+
