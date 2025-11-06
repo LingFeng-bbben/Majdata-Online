@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
 import { useSearchParams } from "next/navigation";
+import Tippy from "@tippyjs/react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -323,6 +324,16 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
     onChange(fakeEvent);
   };
 
+  // 搜索提示内容
+  const searchHints = (
+    <div className="search-hints-tooltip">
+      <p>{loc("SearchHintID")}</p>
+      <p>{loc("SearchHintHash")}</p>
+      <p>{loc("SearchHintTag")}</p>
+      <p>{loc("SearchHintUploader")}</p>
+    </div>
+  );
+
   return (
     <div className="search-section">
       <div className="search-container">
@@ -346,6 +357,29 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
                   ×
                 </button>
               )}
+              <Tippy 
+                content={searchHints} 
+                placement="bottom" 
+                arrow={true}
+                theme="light"
+                interactive={true}
+                animation="scale"
+                appendTo={() => document.body}
+                popperOptions={{
+                  modifiers: [
+                    {
+                      name: 'preventOverflow',
+                      options: {
+                        boundary: 'viewport',
+                      },
+                    },
+                  ],
+                }}
+              >
+                <button className="search-hint-button" title="搜索提示">
+                  ?
+                </button>
+              </Tippy>
             </div>
           </div>
 
@@ -511,12 +545,6 @@ function MainComp() {
         >
           {loc("FrontPage")}
         </button>
-        <div>
-          <p>{loc("SearchHintID")}</p>
-          <p>{loc("SearchHintHash")}</p>
-          <p>{loc("SearchHintTag")}</p>
-          <p>{loc("SearchHintUploader")}</p>
-        </div>
         <IntegratedDownloadTypeSelector isMobile={true} />
       </div>
     </>
