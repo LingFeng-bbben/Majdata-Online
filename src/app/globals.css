@@ -1841,17 +1841,6 @@ img.songImg {
     transform: translateY(-50%) scale(1.05);
   }
 
-  .search-hint-button {
-    right: 2.5rem;
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-  }
-
-  .search-hint-button:hover {
-    transform: translateY(-50%) scale(1.05);
-  }
-
   .search-controls {
     flex-flow: column nowrap;
 
@@ -1998,107 +1987,6 @@ img.songImg {
 .search-clear-button:active {
   transform: translateY(-50%) scale(0.95);
   background: rgb(255 255 255 / 15%);
-}
-
-/* 搜索提示按钮样式 */
-.search-hint-button {
-  position: absolute;
-  right: 3.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: transparent;
-  border: 1px solid rgb(255 255 255 / 20%);
-  color: rgb(255 255 255 / 70%);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  z-index: 2;
-}
-
-.search-hint-button:hover {
-  background: rgb(255 255 255 / 10%);
-  color: rgb(255 255 255 / 90%);
-  border-color: rgb(255 255 255 / 30%);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 0 0 6px rgb(255 255 255 / 2%), 0 0 8px rgb(255 255 255 / 8%);
-}
-
-.search-hint-button:active {
-  transform: translateY(-50%) scale(0.95);
-  background: rgb(255 255 255 / 15%);
-}
-
-/* 搜索提示tooltip样式 */
-.search-hints-tooltip {
-  padding: 0.75rem 1rem;
-  max-width: 280px;
-  background: rgba(30, 30, 35, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.search-hints-tooltip p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.4;
-}
-
-.search-hints-tooltip p:first-child {
-  margin-top: 0;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 1);
-  margin-bottom: 0.5rem;
-}
-
-.search-hints-tooltip p:last-child {
-  margin-bottom: 0;
-}
-
-/* Tippy tooltip主题自定义 */
-.tippy-box[data-theme~='light'] {
-  background-color: transparent;
-  border: none;
-}
-
-.tippy-box[data-theme~='light'] .tippy-content {
-  padding: 0;
-}
-
-/* 自定义箭头样式 - 增加箭头长度 */
-.tippy-box[data-theme~='light'] .tippy-arrow {
-  width: 16px;
-  height: 12px;
-}
-
-.tippy-box[data-theme~='light'][data-placement^='top'] > .tippy-arrow:before {
-  border-top-color: rgba(30, 30, 35, 0.95);
-  border-width: 12px 8px 0;
-}
-
-.tippy-box[data-theme~='light'][data-placement^='bottom'] > .tippy-arrow:before {
-  border-bottom-color: rgba(30, 30, 35, 0.95);
-  border-width: 0 8px 12px;
-}
-
-.tippy-box[data-theme~='light'][data-placement^='left'] > .tippy-arrow:before {
-  border-left-color: rgba(30, 30, 35, 0.95);
-  border-width: 8px 0 8px 12px;
-}
-
-.tippy-box[data-theme~='light'][data-placement^='right'] > .tippy-arrow:before {
-  border-right-color: rgba(30, 30, 35, 0.95);
-  border-width: 8px 12px 8px 0;
 }
 
 .modern-search::placeholder {

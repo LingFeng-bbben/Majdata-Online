@@ -4,6 +4,7 @@ import "tippy.js/dist/tippy.css";
 import { useDebouncedCallback } from "use-debounce";
 import { useSearchParams } from "next/navigation";
 import Tippy from "@tippyjs/react";
+import "../styles/components/searchHints.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -359,11 +360,12 @@ function SearchBar({ onChange, initS, sortType, onSortChange }) {
               )}
               <Tippy 
                 content={searchHints} 
-                placement="bottom" 
+                placement="top" 
                 arrow={true}
                 theme="light"
                 interactive={true}
                 animation="scale"
+                offset={[0, 20]}
                 appendTo={() => document.body}
                 popperOptions={{
                   modifiers: [
