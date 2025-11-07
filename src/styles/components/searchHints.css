@@ -53,9 +53,6 @@
 
 .search-hints-tooltip p:first-child {
   margin-top: 0;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 1);
-  margin-bottom: 0.5rem;
 }
 
 .search-hints-tooltip p:last-child {
