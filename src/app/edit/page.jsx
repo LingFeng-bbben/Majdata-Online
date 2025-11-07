@@ -187,6 +187,26 @@ export default function Page() {
             </a>
           </div>
         </section>
+
+        {/* 友情链接部分 */}
+        <section className="edit-links-section">
+          <h2 className="section-title">友情链接</h2>
+          <div className="links-grid">
+            <a
+              href="https://docs.qq.com/sheet/DVG92WXZPTURNa25N"
+              className="link-card"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="link-content">
+                <h3 className="link-title">MMFC资料库</h3>
+                <p className="link-description">
+                  存储了往届MMFC赛事详细结果
+                </p>
+              </div>
+            </a>
+          </div>
+        </section>
       </div>
     </PageLayout>
   );

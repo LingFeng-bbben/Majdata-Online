@@ -781,7 +781,8 @@ h2 {
 /* Section Styles */
 .edit-tutorials-section,
 .edit-videos-section,
-.edit-support-section {
+.edit-support-section,
+.edit-links-section {
   margin-bottom: 4rem;
 }
 
@@ -966,6 +967,53 @@ h2 {
   transform: scale(1.05);
 }
 
+/* Links Grid */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.link-card {
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border-radius: var(--glassmorphism-border-radius);
+  padding: 2rem;
+  border: var(--glassmorphism-border);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+}
+
+.link-card:hover {
+  background: rgb(35 35 40 / 95%);
+  border-color: rgb(59 130 246 / 30%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 30%), 0 4px 15px rgb(59 130 246 / 10%);
+}
+
+.link-content {
+  width: 100%;
+}
+
+.link-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem;
+  border-bottom: 2px solid rgb(59 130 246 / 40%);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.link-description {
+  font-size: 1rem;
+  color: #b0b0b0;
+  margin: 0;
+  line-height: 1.6;
+}
+
 /* Edit Page Mobile Responsive */
 @media (width <=768px) {
   .edit-content {
@@ -1011,6 +1059,15 @@ h2 {
     padding: 1.5rem;
   }
 
+  .links-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .link-card {
+    padding: 1.5rem;
+  }
+
   .section-title {
     font-size: 1.5rem;
     text-align: left;
@@ -1022,6 +1079,10 @@ h2 {
   }
 
   .support-title {
+    font-size: 1.2rem;
+  }
+
+  .link-title {
     font-size: 1.2rem;
   }
 }
@@ -1066,6 +1127,10 @@ h2 {
     padding: 1.25rem;
   }
 
+  .link-card {
+    padding: 1.25rem;
+  }
+
   .section-title {
     font-size: 1.3rem;
     text-align: left;
@@ -1085,6 +1150,14 @@ h2 {
   }
 
   .support-description {
+    font-size: 0.9rem;
+  }
+
+  .link-title {
+    font-size: 1.1rem;
+  }
+
+  .link-description {
     font-size: 0.9rem;
   }
 }
