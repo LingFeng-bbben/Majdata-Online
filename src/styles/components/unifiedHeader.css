@@ -206,14 +206,6 @@
     position: relative;
   }
   
-  .header-nav .nav-item.featured {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgb(59 130 246 / 40%),
-      0 1px 0 rgb(255 255 255 / 10%) inset;
-    transform: translateY(0);
-  }
   
   .header-nav .nav-item:not(.featured):hover {
     background: linear-gradient(
@@ -701,24 +693,7 @@
       0 1px 0 rgb(255 255 255 / 10%) inset;
   }
   
-  .mobile-nav-item.featured {
-    background: linear-gradient(
-      135deg,
-      rgb(59 130 246 / 20%),
-      rgb(29 78 216 / 15%)
-    );
-    color: #60a5fa;
-    font-weight: 600;
-  }
   
-  .mobile-nav-item.featured:hover {
-    background: linear-gradient(
-      135deg,
-      rgb(59 130 246 / 30%),
-      rgb(29 78 216 / 25%)
-    );
-    color: #93c5fd;
-  }
   
   /* 移动端导航标签文字居中 */
   .mobile-nav-item .nav-label {

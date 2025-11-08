@@ -66,12 +66,6 @@ p {
   margin: 1rem;
 }
 
-.linkContent.featured {
-  background: linear-gradient(45deg, #ffd700, #ffed4e);
-  color: #000;
-  font-weight: bold;
-  transform: scale(1.05);
-}
 
 h1 {
   color: whitesmoke;

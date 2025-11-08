@@ -97,7 +97,7 @@ export default function UnifiedHeader() {
           <nav className="header-nav" ref={mainNavRef}>
             {/* 桌面端：完整导航 */}
             <div className="nav-links desktop-nav">
-              <a href="/ranking" className="nav-item featured">
+              <a href="/ranking" className="nav-item">
                 <span className="nav-label">{loc("RankingList")}</span>
               </a>
               <a href="/edit" className="nav-item">
@@ -127,7 +127,7 @@ export default function UnifiedHeader() {
 
               {isMainNavOpen && (
                 <div className="mobile-nav-menu">
-                  <a href="/ranking" className="mobile-nav-item featured">
+                  <a href="/ranking" className="mobile-nav-item">
                     <span className="nav-label">{loc("RankingList")}</span>
                   </a>
                   <a href="/edit" className="mobile-nav-item">
