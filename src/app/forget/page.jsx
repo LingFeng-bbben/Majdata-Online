@@ -89,7 +89,7 @@ function FindAccount() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder={loc("UsernamePlaceholder")}
+                            placeholder={loc("EnterUsername")}
                             required
                         />
                     </div>
@@ -99,7 +99,7 @@ function FindAccount() {
                             className="form-input"
                             type="email"
                             name="email"
-                            placeholder={loc("EmailPlaceholder")}
+                            placeholder={loc("EnterEmail")}
                             required
                         />
                     </div>
@@ -173,7 +173,7 @@ function ResetPassword({otp}) {
                             className="form-input"
                             type="password"
                             name="newpassword"
-                            placeholder={loc("PasswordPlaceholder")}
+                            placeholder={loc("EnterPassword")}
                             required
                         />
                     </div>
@@ -183,7 +183,7 @@ function ResetPassword({otp}) {
                             className="form-input"
                             type="password"
                             name="newpassword-2"
-                            placeholder={loc("ConfirmPasswordPlaceholder")}
+                            placeholder={loc("ReEnterPassword")}
                             required
                         />
                     </div>

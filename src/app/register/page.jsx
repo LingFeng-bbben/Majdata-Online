@@ -110,7 +110,7 @@ function Register() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder={loc("UsernamePlaceholder")}
+                            placeholder={loc("EnterUsername")}
                             required
                         />
                     </div>
@@ -120,7 +120,7 @@ function Register() {
                             className="form-input"
                             type="password"
                             name="password"
-                            placeholder={loc("PasswordPlaceholder")}
+                            placeholder={loc("EnterPassword")}
                             required
                         />
                     </div>
@@ -130,7 +130,7 @@ function Register() {
                             className="form-input"
                             type="password"
                             name="password2"
-                            placeholder={loc("ConfirmPasswordPlaceholder2")}
+                            placeholder={loc("ReEnterPassword")}
                             required
                         />
                     </div>
@@ -140,7 +140,7 @@ function Register() {
                             className="form-input"
                             type="email"
                             name="email"
-                            placeholder={loc("EmailAddressPlaceholder")}
+                            placeholder={loc("EnterEmail")}
                             required
                         />
                     </div>

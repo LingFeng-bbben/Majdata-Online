@@ -222,10 +222,8 @@
   "LoginNow": "立即登录",
   "RegisterNow": "立即注册",
   "VerificationFailed": "验证失败：",
-  "UsernamePlaceholder": "请输入用户名",
-  "PasswordPlaceholder": "请输入密码",
-  "ConfirmPasswordPlaceholder": "请再输入一次",
-  "EmailPlaceholder": "请输入邮箱",
-  "ConfirmPasswordPlaceholder2": "请再次输入密码",
-  "EmailAddressPlaceholder": "请输入邮箱地址"
+  "EnterUsername": "请输入用户名",
+  "EnterPassword": "请输入密码",
+  "EnterEmail": "请输入邮箱",
+  "ReEnterPassword": "请再次输入密码"
 }

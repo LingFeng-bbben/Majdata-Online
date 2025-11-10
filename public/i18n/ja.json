@@ -215,10 +215,8 @@
   "LoginNow": "今すぐログイン",
   "RegisterNow": "今すぐ登録",
   "VerificationFailed": "認証に失敗しました：",
-  "UsernamePlaceholder": "ユーザー名を入力",
-  "PasswordPlaceholder": "パスワードを入力",
-  "ConfirmPasswordPlaceholder": "もう一度入力してください",
-  "EmailPlaceholder": "メールアドレスを入力",
-  "ConfirmPasswordPlaceholder2": "パスワードを再入力",
-  "EmailAddressPlaceholder": "メールアドレスを入力"
+  "EnterUsername": "ユーザー名を入力",
+  "EnterPassword": "パスワードを入力",
+  "EnterEmail": "メールアドレスを入力",
+  "ReEnterPassword": "パスワードを再入力"
 }

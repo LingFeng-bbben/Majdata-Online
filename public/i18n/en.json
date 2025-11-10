@@ -215,10 +215,8 @@
   "LoginNow": "Login Now",
   "RegisterNow": "Register Now",
   "VerificationFailed": "Verification failed: ",
-  "UsernamePlaceholder": "Enter username",
-  "PasswordPlaceholder": "Enter password",
-  "ConfirmPasswordPlaceholder": "Re-enter password",
-  "EmailPlaceholder": "Enter email",
-  "ConfirmPasswordPlaceholder2": "Re-enter password",
-  "EmailAddressPlaceholder": "Enter email address"
+  "EnterUsername": "Enter username",
+  "EnterPassword": "Enter password",
+  "EnterEmail": "Enter email",
+  "ReEnterPassword": "Re-enter password"
 }

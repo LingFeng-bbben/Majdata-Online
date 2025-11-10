@@ -452,6 +452,24 @@
     }
   }
   
+  /* 去掉下面这几个字的按钮 */
+  .auth-footer .auth-link {
+    border: none;
+    background: none;
+    padding: 0.5rem 0;
+    text-align: center;
+    display: inline;
+    color: rgb(59 130 246 / 90%);
+  }
+  
+  .auth-footer .auth-link:hover {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    text-decoration: underline;
+    transform: none;
+  }
+  
   /* Auth Section Container */
   .auth-section {
     position: relative;

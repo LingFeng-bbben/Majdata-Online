@@ -124,7 +124,7 @@ function Login() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder={loc("UsernamePlaceholder")}
+                            placeholder={loc("EnterUsername")}
                             required
                         />
                     </div>
@@ -134,7 +134,7 @@ function Login() {
                             className="form-input"
                             type="password"
                             name="password"
-                            placeholder={loc("PasswordPlaceholder")}
+                            placeholder={loc("EnterPassword")}
                             required
                         />
                     </div>
