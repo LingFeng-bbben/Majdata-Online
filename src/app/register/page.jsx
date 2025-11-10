@@ -145,14 +145,12 @@ function Register() {
                         />
                     </div>
                     <div className="form-group">
-                        <label className="form-label">{loc("Invite Code")}</label>
-                        <input
-                            className="form-input"
-                            type="text"
-                            name="invitecode"
-                            placeholder="请输入邀请码"
-                            required
-                        />
+                        <script
+                            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                            async
+                            defer
+                        ></script>  
+                    <div className="cf-turnstile" data-sitekey="0x4AAAAAACAEyA1EhHmEDS0o"></div>
                     </div>
                     <button className="auth-button" type="submit" disabled={isPosting}>
                         <span className="auth-button-text">{loc("Register")}</span>
