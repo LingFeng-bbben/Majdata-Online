@@ -76,7 +76,7 @@ function Register() {
                             toast.error(loc("EmailExists"));
                             break;
                         default:
-                            toast.error(rsp.message);
+                            toast.error("验证失败："+rsp.message);
                             break;
                     }
                     return;
