@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { loc, setLanguage } from "../utils";
 
+const SUPPORTED_LANGUAGES = ["en", "zh", "ja", "ko"];
+
 const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState("en");
   const [isChanging, setIsChanging] = useState(false);
@@ -8,7 +10,11 @@ const LanguageSelector = () => {
   useEffect(() => {
     const savedLang = localStorage.getItem("language");
     const browserLang = navigator.language.slice(0, 2);
-    const lang = savedLang || browserLang;
+    const lang =
+      (savedLang && SUPPORTED_LANGUAGES.includes(savedLang)
+        ? savedLang
+        : undefined) ||
+      (SUPPORTED_LANGUAGES.includes(browserLang) ? browserLang : "en");
     setCurrentLang(lang);
     setLanguage(lang);
   }, []);
@@ -45,6 +51,7 @@ const LanguageSelector = () => {
         <option value="en">🇺🇸 English</option>
         <option value="zh">🇨🇳 中文</option>
         <option value="ja">🇯🇵 日本語</option>
+        <option value="ko">🇰🇷 한국어</option>
       </select>
       {isChanging && (
         <div className="language-changing-indicator">
