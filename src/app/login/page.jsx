@@ -148,8 +148,12 @@ function Login() {
                     </button>
                 </form>
                 <div className="auth-footer">
+                    {/* TODO: i18n here */}
                     <p>
-                        还没有账户？ <a href="./register" className="auth-link">立即注册</a>
+                        <a href="./forget" className="auth-link">找回密码</a>
+                    </p>
+                    <p>
+                        <a href="./register" className="auth-link">立即注册</a>
                     </p>
                 </div>
             </div>
