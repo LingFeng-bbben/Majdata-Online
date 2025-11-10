@@ -76,7 +76,7 @@ function Register() {
                             toast.error(loc("EmailExists"));
                             break;
                         default:
-                            toast.error("验证失败："+rsp.message);
+                            toast.error(loc("VerificationFailed")+rsp.message);
                             break;
                     }
                     return;
@@ -100,8 +100,8 @@ function Register() {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-                    <h2 className="auth-title">创建账户</h2>
-                    <p className="auth-subtitle">加入 Majdata 社区，开始您的谱面创作之旅</p>
+                    <h2 className="auth-title">{loc("CreateAccount")}</h2>
+                    <p className="auth-subtitle">{loc("RegisterSubtitle")}</p>
                 </div>
                 <form className="auth-form" onSubmit={onSubmit}>
                     <div className="form-group">
@@ -110,7 +110,7 @@ function Register() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder="请输入用户名"
+                            placeholder={loc("UsernamePlaceholder")}
                             required
                         />
                     </div>
@@ -120,7 +120,7 @@ function Register() {
                             className="form-input"
                             type="password"
                             name="password"
-                            placeholder="请输入密码"
+                            placeholder={loc("PasswordPlaceholder")}
                             required
                         />
                     </div>
@@ -130,7 +130,7 @@ function Register() {
                             className="form-input"
                             type="password"
                             name="password2"
-                            placeholder="请再次输入密码"
+                            placeholder={loc("ConfirmPasswordPlaceholder2")}
                             required
                         />
                     </div>
@@ -140,7 +140,7 @@ function Register() {
                             className="form-input"
                             type="email"
                             name="email"
-                            placeholder="请输入邮箱地址"
+                            placeholder={loc("EmailAddressPlaceholder")}
                             required
                         />
                     </div>
@@ -158,7 +158,7 @@ function Register() {
                 </form>
                 <div className="auth-footer">
                     <p>
-                        已有账户？ <a href="./login" className="auth-link">立即登录</a>
+                        {loc("AlreadyHaveAccount")} <a href="./login" className="auth-link">{loc("LoginNow")}</a>
                     </p>
                 </div>
             </div>

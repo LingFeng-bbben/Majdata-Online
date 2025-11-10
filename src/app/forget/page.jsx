@@ -61,10 +61,10 @@ function FindAccount() {
             const rsp = await response.json();
             switch (rsp.code) {
                 case retCode.CODE_INVALID_VALUE:
-                    toast.error("用户名或邮箱未填");
+                    toast.error(loc("UserNameOrEmailEmpty"));
                     break;
                 case retCode.CODE_NO_SUCH_ITEM:
-                    toast.error("没有这个用户");
+                    toast.error(loc("NoSuchUser"));
                     break;
                 default:
                     toast.error(await response.text());
@@ -72,15 +72,15 @@ function FindAccount() {
             }
             return;
         }
-        toast.success("重置邮件已发送",{autoClose:false})
+        toast.success(loc("ResetEmailSent"),{autoClose:false})
     }
 
     return (
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-                    <h2 className="auth-title">找回密码</h2>
-                    <p className="auth-subtitle">请输入注册时使用的用户名和邮箱</p>
+                    <h2 className="auth-title">{loc("ForgetPasswordTitle")}</h2>
+                    <p className="auth-subtitle">{loc("ForgetPasswordSubtitle")}</p>
                 </div>
                 <form className="auth-form" onSubmit={onSubmit}>
                     <div className="form-group">
@@ -89,7 +89,7 @@ function FindAccount() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder="请输入用户名"
+                            placeholder={loc("UsernamePlaceholder")}
                             required
                         />
                     </div>
@@ -99,20 +99,19 @@ function FindAccount() {
                             className="form-input"
                             type="email"
                             name="email"
-                            placeholder="请输入邮箱"
+                            placeholder={loc("EmailPlaceholder")}
                             required
                         />
                     </div>
                     
                     <button className="auth-button" type="submit">
-                        <span className="auth-button-text">{"发送验证邮件"}</span>
+                        <span className="auth-button-text">{loc("SendVerificationEmail")}</span>
                     </button>
                 </form>
                 <div className="auth-footer">
-                    {/* TODO: i18n here */}
                     <p>
-                        又想起来了？
-                        <a href="./login" className="auth-link">登录</a>
+                        {loc("RememberPassword")}
+                        <a href="./login" className="auth-link">{loc("Login")}</a>
                     </p>
                 </div>
             </div>
@@ -149,7 +148,7 @@ function ResetPassword({otp}) {
             const rsp = await response.json();
             switch (rsp.code) {
                 case retCode.CODE_INVALID_VALUE:
-                    toast.error("未填必填项目或者OTP过期");
+                    toast.error(loc("OTPExpiredOrEmpty"));
                     break;
                 default:
                     toast.error(await response.text());
@@ -157,15 +156,15 @@ function ResetPassword({otp}) {
             }
             return;
         }
-        toast.success("重置成功！",{autoClose:false})
+        toast.success(loc("ResetPasswordSuccess"),{autoClose:false})
     }
 
     return (
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-                    <h2 className="auth-title">重设密码</h2>
-                    <p className="auth-subtitle">请输入新的密码</p>
+                    <h2 className="auth-title">{loc("ResetPasswordTitle")}</h2>
+                    <p className="auth-subtitle">{loc("ResetPasswordSubtitle")}</p>
                 </div>
                 <form className="auth-form" onSubmit={onSubmit}>
                     <div className="form-group">
@@ -174,7 +173,7 @@ function ResetPassword({otp}) {
                             className="form-input"
                             type="password"
                             name="newpassword"
-                            placeholder="请输入密码"
+                            placeholder={loc("PasswordPlaceholder")}
                             required
                         />
                     </div>
@@ -184,20 +183,19 @@ function ResetPassword({otp}) {
                             className="form-input"
                             type="password"
                             name="newpassword-2"
-                            placeholder="请再输入一次"
+                            placeholder={loc("ConfirmPasswordPlaceholder")}
                             required
                         />
                     </div>
                     
                     <button className="auth-button" type="submit">
-                        <span className="auth-button-text">{"重置密码"}</span>
+                        <span className="auth-button-text">{loc("ResetPasswordButton")}</span>
                     </button>
                 </form>
                 <div className="auth-footer">
-                    {/* TODO: i18n here */}
                     <p>
-                        又想起来了？
-                        <a href="./login" className="auth-link">登录</a>
+                        {loc("RememberPassword")}
+                        <a href="./login" className="auth-link">{loc("Login")}</a>
                     </p>
                 </div>
             </div>

@@ -53,10 +53,10 @@ async function PostOTP() {
         });
         if (verifyRsp.status !== 200) {
             if (verifyRsp.status === 400) {
-                toast.error("InvalidOTP")
+                toast.error(loc("InvalidOTP"))
             }
             else {
-                toast.error("UnknownError")
+                toast.error(loc("UnknownError"))
             }
         }
         else {
@@ -114,8 +114,8 @@ function Login() {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-                    <h2 className="auth-title">欢迎回来</h2>
-                    <p className="auth-subtitle">登录您的账户以继续</p>
+                    <h2 className="auth-title">{loc("WelcomeBack")}</h2>
+                    <p className="auth-subtitle">{loc("LoginSubtitle")}</p>
                 </div>
                 <form className="auth-form" onSubmit={onSubmit}>
                     <div className="form-group">
@@ -124,7 +124,7 @@ function Login() {
                             className="form-input"
                             type="text"
                             name="username"
-                            placeholder="请输入用户名"
+                            placeholder={loc("UsernamePlaceholder")}
                             required
                         />
                     </div>
@@ -134,7 +134,7 @@ function Login() {
                             className="form-input"
                             type="password"
                             name="password"
-                            placeholder="请输入密码"
+                            placeholder={loc("PasswordPlaceholder")}
                             required
                         />
                     </div>
@@ -148,12 +148,11 @@ function Login() {
                     </button>
                 </form>
                 <div className="auth-footer">
-                    {/* TODO: i18n here */}
                     <p>
-                        <a href="./forget" className="auth-link">找回密码</a>
+                        <a href="./forget" className="auth-link">{loc("ForgetPassword")}</a>
                     </p>
                     <p>
-                        <a href="./register" className="auth-link">立即注册</a>
+                        <a href="./register" className="auth-link">{loc("RegisterNow")}</a>
                     </p>
                 </div>
             </div>
