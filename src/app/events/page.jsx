@@ -7,6 +7,7 @@ import {
   getEventStatusClass,
   getEventStatusText,
   getEventsWithTimeAgo,
+  getCategoryTranslation,
 } from "../utils/eventsData";
 
 export default function EventsPage() {
@@ -56,19 +57,19 @@ export default function EventsPage() {
 
   return (
     <PageLayout
-      title="活动列表"
+      title={loc("EventsPageTitle")}
       className="events-page"
     >
       <div className="events-page-container">
         <header className="events-page-header">
           <p className="events-page-subtitle">
-            在此处浏览各种谱面竞赛例如MMFC、线下活动等...
+            {loc("EventsPageSubtitle")}
             <span 
               className="timeline-link"
               onClick={handleTimelineClick}
-              title="查看活动时间轴"
+              title={loc("ViewTimeline")}
             >
-              时间轴
+              {loc("Timeline")}
             </span>
           </p>
         </header>
@@ -99,7 +100,7 @@ export default function EventsPage() {
                       />
                       <div className="event-meta-large">
                         <span className="event-category-large">
-                          {event.category}
+                          {getCategoryTranslation(event.category)}
                         </span>
                         <span
                           className={`event-status-large ${
@@ -110,7 +111,7 @@ export default function EventsPage() {
                         </span>
                         <span
                           className="event-time-large"
-                          title={`活动创建于 ${event.createDateFormatted}`}
+                          title={`${loc("EventCreatedPrefix")} ${event.createDateFormatted}`}
                         >
                           • {event.timeAgo}
                         </span>

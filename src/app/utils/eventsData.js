@@ -1,5 +1,6 @@
 // 从JSON文件加载活动数据
 import eventsData from "./events.json";
+import { getTranslatedString as loc } from "./getTranslatedString";
 
 // 获取所有活动数据
 export function getAllEvents() {
@@ -32,18 +33,31 @@ export function getTimeAgo(createDate) {
   const isFuture = diffTime > 0; // 判断是否为未来时间
 
   if (diffDays < 1) {
-    return "今天";
+    return loc("TimeToday");
   } else if (diffDays === 1) {
-    return isFuture ? "1天后" : "1天前";
+    return isFuture ? `1${loc("TimeDaysLater")}` : `1${loc("TimeDaysAgo")}`;
   } else if (diffDays < 30) {
-    return isFuture ? `${diffDays}天后` : `${diffDays}天前`;
+    return isFuture ? `${diffDays}${loc("TimeDaysLater")}` : `${diffDays}${loc("TimeDaysAgo")}`;
   } else if (diffDays < 365) {
     const months = Math.floor(diffDays / 30);
-    return isFuture ? `${months}个月后` : `${months}个月前`;
+    return isFuture ? `${months}${loc("TimeMonthsLater")}` : `${months}${loc("TimeMonthsAgo")}`;
   } else {
     const years = Math.floor(diffDays / 365);
-    return isFuture ? `${years}年后` : `${years}年前`;
+    return isFuture ? `${years}${loc("TimeYearsLater")}` : `${years}${loc("TimeYearsAgo")}`;
   }
+}
+
+// 获取当前语言的日期locale
+function getDateLocale() {
+  if (typeof localStorage === "undefined") return "zh-CN"; // SSR环境默认值
+  const lang = localStorage.getItem("language") || "zh";
+  const localeMap = {
+    "zh": "zh-CN",
+    "en": "en-US",
+    "ja": "ja-JP",
+    "ko": "ko-KR"
+  };
+  return localeMap[lang] || "zh-CN";
 }
 
 // 获取带智能时间显示的活动数据
@@ -52,7 +66,7 @@ export function getEventsWithTimeAgo() {
     ...event,
     timeAgo: getTimeAgo(event.createDate),
     createDateFormatted: new Date(event.createDate).toLocaleDateString(
-      "zh-CN",
+      getDateLocale(),
       {
         year: "numeric",
         month: "long",
@@ -138,7 +152,7 @@ class EventCarouselManager {
         ...event,
         timeAgo: getTimeAgo(event.createDate),
         createDateFormatted: new Date(event.createDate).toLocaleDateString(
-          "zh-CN",
+          getDateLocale(),
           {
             year: "numeric",
             month: "long",
@@ -228,15 +242,15 @@ export function getRandomOngoingEvents() {
   return result.events;
 }
 
-// 获取活动状态的中文显示
+// 获取活动状态的显示文本（支持多语言）
 export function getEventStatusText(event) {
   if (isEventUpcoming(event)) {
-    return "即将开始";
+    return loc("EventStatusUpcoming");
   }
   if (isEventOngoing(event)) {
-    return "进行中";
+    return loc("EventStatusOngoing");
   }
-  return "已结束";
+  return loc("EventStatusEnded");
 }
 
 // 获取活动状态的样式类名
@@ -248,6 +262,17 @@ export function getEventStatusClass(event) {
     return "status-ongoing";
   }
   return "status-ended";
+}
+
+// 获取活动类型的翻译（支持多语言）
+export function getCategoryTranslation(category) {
+  const categoryMap = {
+    "高校赛事": loc("EventCategoryUniversity"),
+    "大型赛事": loc("EventCategoryMajor"),
+    "私立企划": loc("EventCategoryPrivateProject"),
+    "私立赛事": loc("EventCategoryPrivateContest")
+  };
+  return categoryMap[category] || category;
 }
 
 // 预构建搜索关键词到活动的映射表（性能优化）

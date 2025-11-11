@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getActiveEvents, isEventOngoing, isEventUpcoming } from "../utils/eventsData";
+import { loc } from "../utils";
 
 // 时间轴甘特图弹窗组件
 export default function TimelineModal({ isOpen, onClose }) {
@@ -288,9 +289,21 @@ export default function TimelineModal({ isOpen, onClose }) {
   };
 
 
+  // 获取当前语言的locale
+  const getDateLocale = () => {
+    const lang = localStorage.getItem("language") || "zh";
+    const localeMap = {
+      "zh": "zh-CN",
+      "en": "en-US",
+      "ja": "ja-JP",
+      "ko": "ko-KR"
+    };
+    return localeMap[lang] || "zh-CN";
+  };
+
   // 格式化日期显示
   const formatDate = (date) => {
-    return date.toLocaleDateString("zh-CN", {
+    return date.toLocaleDateString(getDateLocale(), {
       month: "short",
       day: "numeric"
     });
@@ -298,7 +311,7 @@ export default function TimelineModal({ isOpen, onClose }) {
 
   // 格式化紧凑日期显示
   const formatCompactDate = (date) => {
-    return date.toLocaleDateString("zh-CN", {
+    return date.toLocaleDateString(getDateLocale(), {
       month: "numeric",
       day: "numeric"
     });
@@ -338,7 +351,7 @@ export default function TimelineModal({ isOpen, onClose }) {
     <div className="timeline-modal-overlay" onClick={onClose}>
       <div className="timeline-modal" onClick={(e) => e.stopPropagation()}>
         <div className="timeline-modal-header">
-          <h2 className="timeline-modal-title">活动时间轴</h2>
+          <h2 className="timeline-modal-title">{loc("EventTimeline")}</h2>
           <button className="timeline-modal-close" onClick={onClose}>
             ✕
           </button>
@@ -347,17 +360,17 @@ export default function TimelineModal({ isOpen, onClose }) {
         <div className="timeline-modal-content">
           {ongoingEvents.length === 0 ? (
             <div className="timeline-empty">
-              <p>当前没有活跃的活动</p>
+              <p>{loc("NoActiveEvents")}</p>
             </div>
           ) : (
             <>
               <div className="timeline-info">
                 <div className="timeline-stats">
                   <span className="timeline-stat">
-                    <strong>{ongoingEvents.length}</strong> 个活跃的活动
+                    <strong>{ongoingEvents.length}</strong> {loc("ActiveEvents")}
                   </span>
                   <span className="timeline-stat">
-                    时间跨度：<strong>{timelineData.totalDays}</strong> 天
+                    {loc("TimeSpan")}<strong>{timelineData.totalDays}</strong> {loc("Days")}
                   </span>
                 </div>
                 <div className="timeline-date-range">
@@ -411,7 +424,7 @@ export default function TimelineModal({ isOpen, onClose }) {
                                width: `${event.width}%`,
                                backgroundColor: getEventColor(event),
                              }}
-                             title={`${event.title}\n${formatCompactDate(new Date(event.createDate))} - ${formatCompactDate(new Date(event.endDate))}\n持续 ${event.duration} 天\n点击查看详情`}
+                             title={`${event.title}\n${formatCompactDate(new Date(event.createDate))} - ${formatCompactDate(new Date(event.endDate))}\n${loc("Duration")} ${event.duration} ${loc("Days")}\n${loc("ClickToViewDetails")}`}
                              target="_blank"
                              rel="noopener noreferrer"
                            >

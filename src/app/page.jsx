@@ -20,6 +20,7 @@ import {
   getNonFeaturedEventsCount,
   getActiveEvents,
   getTimeAgo,
+  getCategoryTranslation,
 } from "./utils/eventsData";
 
 export default function Page() {
@@ -144,7 +145,7 @@ function DesktopEventsSwiper() {
                           <h3 className="event-title">{event.title}</h3>
                           <div className="event-meta">
                             <span className="event-category">
-                              {event.category}
+                              {getCategoryTranslation(event.category)}
                             </span>
                             <span
                               className={`event-status ${getEventStatusClass(
@@ -155,7 +156,7 @@ function DesktopEventsSwiper() {
                             </span>
                             <span
                               className="event-time"
-                              title={`活动创建于 ${event.createDateFormatted}`}
+                              title={`${loc("EventCreatedPrefix")} ${event.createDateFormatted}`}
                             >
                               • {event.timeAgo}
                             </span>
@@ -199,12 +200,24 @@ function MobileEventsSwiper() {
   const [ongoingEvents, setOngoingEvents] = useState([]);
 
   useEffect(() => {
+    // 获取当前语言的locale
+    const getDateLocale = () => {
+      const lang = localStorage.getItem("language") || "zh";
+      const localeMap = {
+        "zh": "zh-CN",
+        "en": "en-US",
+        "ja": "ja-JP",
+        "ko": "ko-KR"
+      };
+      return localeMap[lang] || "zh-CN";
+    };
+
     // 获取所有活跃的活动（进行中 + 即将开始）
     const events = getActiveEvents().map((event) => ({
       ...event,
       timeAgo: getTimeAgo(event.createDate),
       createDateFormatted: new Date(event.createDate).toLocaleDateString(
-        "zh-CN",
+        getDateLocale(),
         {
           year: "numeric",
           month: "long",
