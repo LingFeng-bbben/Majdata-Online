@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { loc, setLanguage } from "../utils";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const SUPPORTED_LANGUAGES = ["en", "zh", "ja", "ko"];
 
@@ -55,7 +56,7 @@ const LanguageSelector = () => {
       </select>
       {isChanging && (
         <div className="language-changing-indicator">
-          <span className="loading-spinner">🔄</span>
+          <AiOutlineLoading3Quarters className="loading-spinner" />
           <span>{loc("Switching")}</span>
         </div>
       )}

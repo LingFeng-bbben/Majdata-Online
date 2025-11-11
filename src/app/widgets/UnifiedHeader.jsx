@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { MajdataLogo } from "./index";
 import { loc } from "../utils";
 import { apiroot3 } from "../apiroot";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function UnifiedHeader() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -162,7 +163,7 @@ export default function UnifiedHeader() {
             ? (
               <div className="auth-links">
                 <div className="auth-link loading-placeholder">
-                  <span className="auth-icon">⏳</span>
+                  <AiOutlineLoading3Quarters className="loading-spinner" />
                   <span className="auth-label desktop-only">
                     {loc("Loading")}
                   </span>
@@ -239,7 +240,7 @@ export default function UnifiedHeader() {
                       onClick={() =>
                         setIsMobileAuthMenuOpen(!isMobileAuthMenuOpen)}
                     >
-                      <span className="auth-icon">Account</span>
+                      <AiOutlineLoading3Quarters className="auth-icon" />
                       <span
                         className={`dropdown-arrow ${isMobileAuthMenuOpen ? "open" : ""
                           }`}
