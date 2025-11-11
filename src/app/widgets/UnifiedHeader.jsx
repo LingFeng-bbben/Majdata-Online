@@ -99,7 +99,7 @@ export default function UnifiedHeader() {
             {/* 桌面端：完整导航 */}
             <div className="nav-links desktop-nav">
               <a href="/ranking" className="nav-item">
-                <span className="nav-label">{loc("RankingList")}</span>
+                <span className="nav-label">{loc("Recommend")}</span>
               </a>
               <a href="/edit" className="nav-item">
                 <span className="nav-label">{loc("ChartEditor")}</span>
