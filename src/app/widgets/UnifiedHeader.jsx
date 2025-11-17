@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { MajdataLogo } from "./index";
 import { loc } from "../utils";
 import { apiroot3 } from "../apiroot";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiOutlineLoading3Quarters, AiOutlineUser } from "react-icons/ai";
 
 export default function UnifiedHeader() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -110,6 +110,9 @@ export default function UnifiedHeader() {
               <a href="/eventTag?id=Original" className="nav-item">
                 <span className="nav-label">{loc("OriginalSongs")}</span>
               </a>
+              <a href="/user-ranking" className="nav-item">
+                <span className="nav-label">{"肝帝榜"}</span>
+              </a>
             </div>
 
             {/* 移动端：汉堡菜单 */}
@@ -139,6 +142,9 @@ export default function UnifiedHeader() {
                   </a>
                   <a href="/eventTag?id=Original" className="mobile-nav-item">
                     <span className="nav-label">{loc("OriginalSongs")}</span>
+                  </a>
+                  <a href="/user-ranking" className="mobile-nav-item">
+                    <span className="nav-label">{"肝帝榜"}</span>
                   </a>
                 </div>
               )}
@@ -240,7 +246,7 @@ export default function UnifiedHeader() {
                       onClick={() =>
                         setIsMobileAuthMenuOpen(!isMobileAuthMenuOpen)}
                     >
-                      <AiOutlineLoading3Quarters className="auth-icon" />
+                      <AiOutlineUser className="auth-icon" />
                       <span
                         className={`dropdown-arrow ${isMobileAuthMenuOpen ? "open" : ""
                           }`}
