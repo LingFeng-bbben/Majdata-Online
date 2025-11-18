@@ -10,7 +10,7 @@ import "github-markdown-css/github-markdown-dark.css";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { loc, setLanguage } from "../utils";
-import { PageLayout, RecentPlayed, SongList } from "../widgets";
+import { PageLayout, RecentPlayed, SongList, ScoreCount } from "../widgets";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -57,6 +57,13 @@ export default function Page() {
             encodeURIComponent("uploader:" + username)}
         />
       </section>
+
+      <section className="charts-section">
+        <h2 className="section-title">{"谁最爱玩"}</h2>
+        <div className="hr-solid"></div>
+        <ScoreCount uploader={username} page={0} pageSize={30} />
+      </section>
+
     </PageLayout>
   );
 }

@@ -5,7 +5,7 @@ import useSWR from "swr";
 
 export default function ScoreCount({uploader, page, pageSize}) {
   const { data, error, isLoading } = useSWR(
-    apiroot3 +  "/stats/score-sums?uploader="+uploader+"&page="+page+"&pageSize="+pageSize,
+    apiroot3 +  "/stats/score-sums?uploader="+encodeURIComponent(uploader)+"&page="+page+"&pageSize="+pageSize,
     fetcher,
     { refreshInterval: 30000 }
   );
