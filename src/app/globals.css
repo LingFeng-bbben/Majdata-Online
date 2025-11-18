@@ -4457,6 +4457,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .song-level-chip.clickable {
   cursor: pointer;
+  /* 移动端触摸优化 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .song-level-chip.clickable:hover {
@@ -4483,6 +4487,8 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-bottom: 0.1rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  /* 防止子元素阻止点击事件，确保点击总是触发父元素的事件处理器 */
+  pointer-events: none;
 }
 
 .level-value {
@@ -4491,6 +4497,8 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #fff;
   text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
   line-height: 1;
+  /* 防止子元素阻止点击事件，确保点击总是触发父元素的事件处理器 */
+  pointer-events: none;
 }
 
 /* 各难度等级的配色方案 - 对应原始maimai颜色 */

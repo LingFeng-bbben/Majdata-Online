@@ -35,7 +35,7 @@ export default function SongList({ url, setMax, page, isRanking, isManage }) {
     if (page != null && setMax != null) setMax(page);
   }
   if (data == "" || data == undefined || !Array.isArray(data)) {
-    return <div className="notReady">空的</div>;
+    return <div className="notReady">{loc("EmptyData")}</div>;
   }
   const list = data.map((o, index) => (
     <div

@@ -111,7 +111,7 @@ export default function UnifiedHeader() {
                 <span className="nav-label">{loc("OriginalSongs")}</span>
               </a>
               <a href="/user-ranking" className="nav-item">
-                <span className="nav-label">{"肝帝榜"}</span>
+                <span className="nav-label">{loc("UserRankingTitle")}</span>
               </a>
             </div>
 
@@ -144,7 +144,7 @@ export default function UnifiedHeader() {
                     <span className="nav-label">{loc("OriginalSongs")}</span>
                   </a>
                   <a href="/user-ranking" className="mobile-nav-item">
-                    <span className="nav-label">{"肝帝榜"}</span>
+                    <span className="nav-label">{loc("UserRankingTitle")}</span>
                   </a>
                 </div>
               )}

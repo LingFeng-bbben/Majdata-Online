@@ -251,5 +251,6 @@
   "UserRankingTitle": "肝帝榜",
   "UserRankingDescription": "总达成率榜之谁是自制谱鉴赏老资历？",
   "FailedToLoad": "加载失败",
-  "WhoLovesToPlay": "谁最爱玩"
+  "WhoLovesToPlay": "谁最爱玩",
+  "EmptyData": "空的"
 }

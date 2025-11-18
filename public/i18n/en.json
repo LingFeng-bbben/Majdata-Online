@@ -244,5 +244,6 @@
   "UserRankingTitle": "Master Ranking",
   "UserRankingDescription": "Total Achievement Rate Ranking - Who is the top of chart appreciation?",
   "FailedToLoad": "Failed to load",
-  "WhoLovesToPlay": "Top Players"
+  "WhoLovesToPlay": "Top Players",
+  "EmptyData": "Empty"
 }

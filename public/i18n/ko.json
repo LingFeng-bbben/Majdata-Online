@@ -243,5 +243,6 @@
   "UserRankingTitle": "헤비 플레이어 랭킹",
   "UserRankingDescription": "총 달성률 랭킹 - 커스텀 채보 감상의 베테랑은 누구?",
   "FailedToLoad": "불러오기에 실패했습니다",
-  "WhoLovesToPlay": "최고 플레이어"
+  "WhoLovesToPlay": "최고 플레이어",
+  "EmptyData": "비어있음"
 }
