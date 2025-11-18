@@ -239,5 +239,9 @@
   "EnterUsername": "사용자 이름을 입력하세요",
   "EnterPassword": "비밀번호를 입력하세요",
   "EnterEmail": "이메일을 입력하세요",
-  "ReEnterPassword": "비밀번호를 다시 입력하세요"
+  "ReEnterPassword": "비밀번호를 다시 입력하세요",
+  "UserRankingTitle": "헤비 플레이어 랭킹",
+  "UserRankingDescription": "총 달성률 랭킹 - 커스텀 채보 감상의 베테랑은 누구?",
+  "FailedToLoad": "불러오기에 실패했습니다",
+  "WhoLovesToPlay": "최고 플레이어"
 }

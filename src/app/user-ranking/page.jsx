@@ -23,12 +23,12 @@ export default function Page() {
 
   return (
     <PageLayout
-      title={"肝帝榜"}
+      title={loc("UserRankingTitle")}
       navigationItems={navigationItems}
       className="ranking-page"
     >
       <div className="ranking-intro">
-        <p className="ranking-description">{"总达成率榜之谁是自制谱鉴赏老资历？"}</p>
+        <p className="ranking-description">{loc("UserRankingDescription")}</p>
       </div>
 
       <div className="ranking-sections">

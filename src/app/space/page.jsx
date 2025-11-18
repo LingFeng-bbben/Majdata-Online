@@ -59,7 +59,7 @@ export default function Page() {
       </section>
 
       <section className="charts-section">
-        <h2 className="section-title">{"谁最爱玩"}</h2>
+        <h2 className="section-title">{loc("WhoLovesToPlay")}</h2>
         <div className="hr-solid"></div>
         <ScoreCount uploader={username} page={0} pageSize={30} />
       </section>

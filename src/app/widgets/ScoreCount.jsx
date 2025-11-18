@@ -2,6 +2,7 @@
 import React from "react";
 import { apiroot3 } from "../apiroot";
 import useSWR from "swr";
+import { loc } from "../utils";
 
 export default function ScoreCount({uploader, page, pageSize}) {
   const { data, error, isLoading } = useSWR(
@@ -10,13 +11,13 @@ export default function ScoreCount({uploader, page, pageSize}) {
     { refreshInterval: 30000 }
   );
   if (error) {
-    return <div>failed to load</div>;
+    return <div>{loc("FailedToLoad")}</div>;
   }
   if (isLoading) {
     return <div className="loading"></div>;
   }
   if (data === "" || data === undefined) {
-    return <div>failed to load</div>;
+    return <div>{loc("FailedToLoad")}</div>;
   }
   const objlist = data.map((p) =>
     p.length !== 0 ? PlayCountScoreCard(p.username, p.dxAccSum, data[0].dxAccSum) : <></>

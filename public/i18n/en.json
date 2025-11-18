@@ -240,5 +240,9 @@
   "EnterUsername": "Enter username",
   "EnterPassword": "Enter password",
   "EnterEmail": "Enter email",
-  "ReEnterPassword": "Re-enter password"
+  "ReEnterPassword": "Re-enter password",
+  "UserRankingTitle": "Master Ranking",
+  "UserRankingDescription": "Total Achievement Rate Ranking - Who is the top of chart appreciation?",
+  "FailedToLoad": "Failed to load",
+  "WhoLovesToPlay": "Top Players"
 }

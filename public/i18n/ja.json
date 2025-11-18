@@ -240,5 +240,9 @@
   "EnterUsername": "ユーザー名を入力",
   "EnterPassword": "パスワードを入力",
   "EnterEmail": "メールアドレスを入力",
-  "ReEnterPassword": "パスワードを再入力"
+  "ReEnterPassword": "パスワードを再入力",
+  "UserRankingTitle": "ヘビープレイヤーランキング",
+  "UserRankingDescription": "総達成率ランキング - 自作譜面鑑賞のベテランは誰？",
+  "FailedToLoad": "読み込みに失敗しました",
+  "WhoLovesToPlay": "最もプレイしているユーザー"
 }
