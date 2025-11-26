@@ -72,7 +72,7 @@ h1 {
   text-align: center;
   font-size: 2.5rem;
   font-weight: bold;
-  user-select: none;
+  user-select: text;
 }
 
 h2 {
@@ -80,7 +80,7 @@ h2 {
   text-align: center;
   font-size: 2.5rem;
   font-weight: bold;
-  user-select: none;
+  user-select: text;
 }
 
 .links {
@@ -162,7 +162,7 @@ h2 {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    user-select: none;
+    user-select: text;
   }
 
 
@@ -1618,6 +1618,11 @@ h2 {
   background: rgb(0 0 0 / 30%);
   border-radius: 12px;
   padding: 1.5rem;
+  user-select: text;
+}
+
+.intro-content * {
+  user-select: text !important;
 }
 
 .activity-section,
@@ -3263,6 +3268,11 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 0.5rem 0;
   overflow-wrap: break-word;
   word-break: break-word;
+  user-select: text;
+}
+
+.comment-content * {
+  user-select: text !important;
 }
 
 /* @mention 样式 */
@@ -4307,6 +4317,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: all 0.3s ease;
+  user-select: text;
 }
 
 .song-title-modern:hover {
@@ -4348,6 +4359,7 @@ input[type="number"]::-webkit-inner-spin-button {
   font-style: italic;
   font-weight: 400;
   text-align: center;
+  user-select: text;
 }
 
 .clickable-artist {
