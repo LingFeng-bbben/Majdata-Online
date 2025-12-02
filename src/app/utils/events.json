@@ -1,6 +1,6 @@
 [
   {
-    "id": "agcc",
+    "id": "loa",
     "href": "/space?id=LOA",
     "src": "/events/loa.png",
     "alt": "loa",
@@ -36,6 +36,18 @@
     "description": ""
   },
 
+    {
+    "id": "zjb2",
+    "href": "/space?id=zjb2",
+    "src": "/events/zjb.jpg",
+    "alt": "zjb2",
+    "title": "zjb2",
+    "category": "私立赛事",
+    "createDate": "2025-12-1",
+    "endDate": "2025-12-25",
+    "description": ""
+  },
+
   {
     "id": "KOL",
     "href": "/space?id=KOL_NEW",
@@ -57,7 +69,7 @@
     "title": "maimai UMBRELLA",
     "category": "私立企划",
     "createDate": "2025-10-06",
-    "endDate": "2025-12-25",
+    "endDate": "2025-12-2",
     "description": ""
   },
 
