@@ -2854,13 +2854,31 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .markdown-body {
-  text-align: left;
+  text-align: center;
   box-sizing: border-box;
   min-width: 200px;
   max-width: 100%;
   margin: 0 auto;
   padding: 45px;
   background-color: var(--background-start) !important;
+}
+
+
+
+.markdown-body ul,
+.markdown-body ol {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+}
+
+.markdown-body ul li,
+.markdown-body ol li {
+  padding-left: 5px;
+  margin-bottom: 8px;
 }
 
 @media (width <=767px) {
