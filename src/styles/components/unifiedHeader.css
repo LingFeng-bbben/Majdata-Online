@@ -228,6 +228,95 @@
     font-size: 0.9rem;
   }
   
+  /* Nav Dropdown Styles */
+  .nav-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .nav-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: rgb(255 255 255 / 85%);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav-dropdown-trigger:hover,
+  .nav-dropdown-trigger.active {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+
+  .nav-dropdown-trigger .dropdown-arrow {
+    transition: transform 0.3s ease;
+    color: #a0a0a0;
+    font-size: 0.7rem;
+  }
+
+  .nav-dropdown-trigger .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    min-width: 200px;
+    background: linear-gradient(145deg, rgb(15 15 20 / 95%), rgb(10 12 18 / 98%));
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgb(0 0 0 / 50%), 0 4px 20px rgb(59 130 246 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+    overflow: hidden;
+    z-index: 1001;
+    animation: dropdownFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: #e5e5e5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .nav-dropdown-item:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 8%)
+    );
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgb(255 255 255 / 10%),
+      0 1px 0 rgb(255 255 255 / 10%) inset;
+  }
+  
   .header-user {
     display: flex;
     align-items: center;
@@ -717,6 +806,93 @@
   .mobile-nav-item .nav-label {
     text-align: center;
     width: 100%;
+  }
+
+  /* Mobile Nav Expandable Items */
+  .mobile-nav-item-wrapper {
+    position: relative;
+  }
+
+  .mobile-nav-expandable {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .mobile-nav-expandable .expand-arrow {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    color: #a0a0a0;
+    font-weight: 300;
+  }
+
+  .mobile-nav-expandable.active .expand-arrow {
+    transform: rotate(90deg);
+    color: #3b82f6;
+  }
+
+  .mobile-nav-expandable.active {
+    background: linear-gradient(
+      135deg,
+      rgb(59 130 246 / 15%),
+      rgb(59 130 246 / 8%)
+    );
+    color: #3b82f6;
+  }
+
+
+  .mobile-nav-submenu {
+    display: flex;
+    flex-direction: column;
+    background: rgb(0 0 0 / 40%);
+    animation: slideInFromLeft 0.3s ease-out;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  @keyframes slideInFromLeft {
+    from {
+      opacity: 0;
+      max-height: 0;
+      transform: translateX(-2px);
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+      transform: translateX(0);
+    }
+  }
+
+  .mobile-nav-subitem {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    color: #e5e5e5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-left: 2px solid transparent;
+    margin-left: 0.5rem;
+  }
+
+  .mobile-nav-subitem:hover {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 10%),
+      rgb(255 255 255 / 6%)
+    );
+    color: #fff;
+  }
+
+  .mobile-nav-subitem .nav-label {
+    text-align: left;
   }
   
   /* Desktop/Mobile Toggle Classes */

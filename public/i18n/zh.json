@@ -252,5 +252,9 @@
   "UserRankingDescription": "总达成率榜之谁是自制谱鉴赏老资历？",
   "FailedToLoad": "加载失败",
   "WhoLovesToPlay": "谁最爱玩",
-  "EmptyData": "空的"
+  "EmptyData": "空的",
+  "MMFCRanking": "MMFC打榜",
+  "MMFCRankingTitle": "MMFC打榜排名",
+  "MMFCRankingDescription": "展示参与者游玩mmfc_bot谱面的总分排名",
+  "NoMMFCRankingData": "暂无打榜数据，请先添加参与者"
 }

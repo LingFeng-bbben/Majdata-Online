@@ -492,6 +492,23 @@ h2 {
   margin-bottom: 3rem;
 }
 
+/* MMFC Ranking Page */
+.mmfc-ranking-page {
+  min-height: 100vh;
+  padding: 2rem 0;
+  margin-top: var(--content-top-spacing);
+}
+
+.mmfc-ranking-content {
+  max-width: var(--container-max-width);
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+}
+
+.mmfc-ranking-section {
+  width: 100%;
+}
+
 .ranking-description {
   color: #f7f7f7;
   font-size: 1.5rem;
@@ -1898,7 +1915,8 @@ img.songImg {
   }
 
   .modern-search {
-    padding: 0.8rem 2.5rem 0.8rem 1.5rem; /* 移动端调整右侧空间 */
+    padding: 0.8rem 2.5rem 0.8rem 1.5rem;
+    /* 移动端调整右侧空间 */
     height: 42px;
   }
 
@@ -3077,6 +3095,72 @@ input[type="number"]::-webkit-inner-spin-button {
   animation: glow 2s ease-in-out infinite alternate;
 }
 
+/* MMFC排名特殊样式 */
+.mmfc-score-card {
+  position: relative;
+  overflow: visible;
+}
+
+.rank-number.rank-first {
+  font-size: 1.8rem;
+  color: #fbbf24;
+  background: linear-gradient(135deg, #fbbf24 0%, #fcd34d 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 12px rgb(251 191 36 / 70%), 0 0 20px rgb(251 191 36 / 50%),
+    0 2px 4px rgb(0 0 0 / 50%);
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+  animation: mmfcGoldenGlow 2s ease-in-out infinite alternate;
+}
+
+
+.rank-number.rank-second,
+.rank-number.rank-third {
+  font-size: 1.7rem;
+  color: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 10px rgb(59 130 246 / 60%), 0 0 18px rgb(59 130 246 / 40%),
+    0 2px 4px rgb(0 0 0 / 50%);
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
+  animation: mmfcBlueGlow 2s ease-in-out infinite alternate;
+}
+
+.rank-number.rank-third {
+  font-size: 1.65rem;
+}
+
+@keyframes mmfcGoldenGlow {
+  from {
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+    text-shadow: 0 0 12px rgb(251 191 36 / 70%), 0 0 20px rgb(251 191 36 / 50%),
+      0 2px 4px rgb(0 0 0 / 50%);
+  }
+
+  to {
+    filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.9));
+    text-shadow: 0 0 16px rgb(251 191 36 / 85%), 0 0 28px rgb(251 191 36 / 65%),
+      0 2px 4px rgb(0 0 0 / 50%);
+  }
+}
+
+@keyframes mmfcBlueGlow {
+  from {
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
+    text-shadow: 0 0 10px rgb(59 130 246 / 60%), 0 0 18px rgb(59 130 246 / 40%),
+      0 2px 4px rgb(0 0 0 / 50%);
+  }
+
+  to {
+    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
+    text-shadow: 0 0 14px rgb(59 130 246 / 75%), 0 0 24px rgb(59 130 246 / 55%),
+      0 2px 4px rgb(0 0 0 / 50%);
+  }
+}
+
 @keyframes glow {
   from {
     text-shadow: 0 0 8px rgb(251 191 36 / 60%), 0 0 16px rgb(251 191 36 / 40%),
@@ -3399,7 +3483,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .comment-reply-list {
 
   padding-left: 1.5rem;
-  padding-top:1rem;
+  padding-top: 1rem;
 
   position: relative;
 }
@@ -3411,11 +3495,9 @@ input[type="number"]::-webkit-inner-spin-button {
   top: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.3),
+      transparent);
 }
 
 /* 子回复卡片 - 完全透明，只显示内容 */
@@ -5131,8 +5213,15 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .comment-preview {

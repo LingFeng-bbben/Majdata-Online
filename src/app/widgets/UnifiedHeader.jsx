@@ -10,9 +10,12 @@ export default function UnifiedHeader() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMainNavOpen, setIsMainNavOpen] = useState(false);
   const [isMobileAuthMenuOpen, setIsMobileAuthMenuOpen] = useState(false);
+  const [isRankingsMenuOpen, setIsRankingsMenuOpen] = useState(false);
+  const [isMobileRankingsOpen, setIsMobileRankingsOpen] = useState(false);
   const userMenuRef = useRef(null);
   const mainNavRef = useRef(null);
   const mobileAuthMenuRef = useRef(null);
+  const rankingsMenuRef = useRef(null);
 
   const fetcher = (url) =>
     fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
@@ -34,12 +37,19 @@ export default function UnifiedHeader() {
       }
       if (mainNavRef.current && !mainNavRef.current.contains(event.target)) {
         setIsMainNavOpen(false);
+        setIsMobileRankingsOpen(false); // 主菜单关闭时，同时关闭子菜单
       }
       if (
         mobileAuthMenuRef.current &&
         !mobileAuthMenuRef.current.contains(event.target)
       ) {
         setIsMobileAuthMenuOpen(false);
+      }
+      if (
+        rankingsMenuRef.current &&
+        !rankingsMenuRef.current.contains(event.target)
+      ) {
+        setIsRankingsMenuOpen(false);
       }
     }
 
@@ -98,9 +108,41 @@ export default function UnifiedHeader() {
           <nav className="header-nav" ref={mainNavRef}>
             {/* 桌面端：完整导航 */}
             <div className="nav-links desktop-nav">
-              <a href="/ranking" className="nav-item">
-                <span className="nav-label">{loc("Recommend")}</span>
-              </a>
+              {/* 榜单下拉菜单 */}
+              <div className="nav-dropdown" ref={rankingsMenuRef}>
+                <button
+                  className={`nav-item nav-dropdown-trigger ${
+                    isRankingsMenuOpen ? "active" : ""
+                  }`}
+                  onClick={() => setIsRankingsMenuOpen(!isRankingsMenuOpen)}
+                >
+                  <span className="nav-label">{loc("Rankings")}</span>
+                  <span
+                    className={`dropdown-arrow ${
+                      isRankingsMenuOpen ? "open" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
+                </button>
+
+                {isRankingsMenuOpen && (
+                  <div className="nav-dropdown-menu">
+                    <a href="/ranking" className="nav-dropdown-item">
+                      <span className="nav-label">{loc("Recommend")}</span>
+                    </a>
+                    <a href="/user-ranking" className="nav-dropdown-item">
+                      <span className="nav-label">
+                        {loc("UserRankingTitle")}
+                      </span>
+                    </a>
+                    <a href="/mmfc-ranking" className="nav-dropdown-item">
+                      <span className="nav-label">{loc("MMFCRanking")}</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+
               <a href="/edit" className="nav-item">
                 <span className="nav-label">{loc("ChartEditor")}</span>
               </a>
@@ -110,16 +152,14 @@ export default function UnifiedHeader() {
               <a href="/eventTag?id=Original" className="nav-item">
                 <span className="nav-label">{loc("OriginalSongs")}</span>
               </a>
-              <a href="/user-ranking" className="nav-item">
-                <span className="nav-label">{loc("UserRankingTitle")}</span>
-              </a>
             </div>
 
             {/* 移动端：汉堡菜单 */}
             <div className="mobile-nav">
               <button
-                className={`mobile-nav-trigger ${isMainNavOpen ? "active" : ""
-                  }`}
+                className={`mobile-nav-trigger ${
+                  isMainNavOpen ? "active" : ""
+                }`}
                 onClick={() => setIsMainNavOpen(!isMainNavOpen)}
               >
                 <span className="hamburger-icon">
@@ -131,9 +171,52 @@ export default function UnifiedHeader() {
 
               {isMainNavOpen && (
                 <div className="mobile-nav-menu">
-                  <a href="/ranking" className="mobile-nav-item">
-                    <span className="nav-label">{loc("RankingList")}</span>
-                  </a>
+                  {/* 榜单项 - 可展开 */}
+                  <div className="mobile-nav-item-wrapper">
+                    <button
+                      className={`mobile-nav-item mobile-nav-expandable ${
+                        isMobileRankingsOpen ? "active" : ""
+                      }`}
+                      onClick={() =>
+                        setIsMobileRankingsOpen(!isMobileRankingsOpen)
+                      }
+                    >
+                      <span className="nav-label">{loc("Rankings")}</span>
+                      <span
+                        className={`expand-arrow ${
+                          isMobileRankingsOpen ? "open" : ""
+                        }`}
+                      >
+                        ›
+                      </span>
+                    </button>
+
+                    {/* 榜单子菜单 - 横向展开 */}
+                    {isMobileRankingsOpen && (
+                      <div className="mobile-nav-submenu">
+                        <a href="/ranking" className="mobile-nav-subitem">
+                          <span className="nav-label">{loc("Recommend")}</span>
+                        </a>
+                        <a
+                          href="/user-ranking"
+                          className="mobile-nav-subitem"
+                        >
+                          <span className="nav-label">
+                            {loc("UserRankingTitle")}
+                          </span>
+                        </a>
+                        <a
+                          href="/mmfc-ranking"
+                          className="mobile-nav-subitem"
+                        >
+                          <span className="nav-label">
+                            {loc("MMFCRanking")}
+                          </span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
                   <a href="/edit" className="mobile-nav-item">
                     <span className="nav-label">{loc("ChartEditor")}</span>
                   </a>
@@ -142,9 +225,6 @@ export default function UnifiedHeader() {
                   </a>
                   <a href="/eventTag?id=Original" className="mobile-nav-item">
                     <span className="nav-label">{loc("OriginalSongs")}</span>
-                  </a>
-                  <a href="/user-ranking" className="mobile-nav-item">
-                    <span className="nav-label">{loc("UserRankingTitle")}</span>
                   </a>
                 </div>
               )}

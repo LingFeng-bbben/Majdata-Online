@@ -245,5 +245,10 @@
   "UserRankingDescription": "Total Achievement Rate Ranking - Who is the top of chart appreciation?",
   "FailedToLoad": "Failed to load",
   "WhoLovesToPlay": "Top Players",
-  "EmptyData": "Empty"
+  "EmptyData": "Empty",
+  "MMFCRanking": "MMFC Ranking",
+  "MMFCRankingTitle": "MMFC Challenge Ranking",
+  "MMFCRankingDescription": "Shows participants' total scores for playing mmfc_bot's charts",
+  "NoMMFCRankingData": "No ranking data available. Please add participants first",
+  "Rankings": "Rankings"
 }

@@ -245,5 +245,10 @@
   "UserRankingDescription": "総達成率ランキング - 自作譜面鑑賞のベテランは誰？",
   "FailedToLoad": "読み込みに失敗しました",
   "WhoLovesToPlay": "最もプレイしているユーザー",
-  "EmptyData": "空です"
+  "EmptyData": "空です",
+  "MMFCRanking": "MMFCランキング",
+  "MMFCRankingTitle": "MMFCチャレンジランキング",
+  "MMFCRankingDescription": "参加者のmmfc_bot譜面プレイ総合スコアランキング",
+  "NoMMFCRankingData": "ランキングデータがありません。まず参加者を追加してください",
+  "Rankings": "ランキング"
 }

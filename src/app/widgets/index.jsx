@@ -23,3 +23,4 @@ export { default as FloatingButtons } from "./FloatingButtons";
 export { default as EnhancedDescription } from "./EnhancedDescription";
 export { default as TimelineModal } from "./TimelineModal";
 export {default as ScoreCount} from "./ScoreCount"
+export {default as MMFCScoreCount} from "./MMFCScoreCount"
