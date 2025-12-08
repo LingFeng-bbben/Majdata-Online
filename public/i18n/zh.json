@@ -256,5 +256,6 @@
   "MMFCRanking": "MMFC打榜",
   "MMFCRankingTitle": "MMFC打榜排名",
   "MMFCRankingDescription": "展示参与者游玩mmfc_bot谱面的总分排名",
-  "NoMMFCRankingData": "暂无打榜数据，请先添加参与者"
+  "NoMMFCRankingData": "暂无打榜数据，请先添加参与者",
+  "Rankings": "榜单"
 }
