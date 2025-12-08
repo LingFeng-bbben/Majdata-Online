@@ -25,11 +25,11 @@ export default function Page() {
     id: "mmfc12",
     href: "/mmfc-ranking",
     src: "/events/MMFC12.jpg",
-    alt: "MMFC12 打榜",
-    title: "MMFC12 打榜",
-    category: "大型赛事",
+    alt: loc("MMFCRankingTitle"),
+    title: loc("MMFCRankingTitle"),
+    category: loc("EventCategoryMajor"),
     createDate: new Date().toISOString().split('T')[0],
-    description: "此处为MMFC12与线下合作方的联动打榜总分记录，详情参与可以通过官方社群了解。"
+    description: loc("MMFCRankingDescription")
   };
 
   return (
