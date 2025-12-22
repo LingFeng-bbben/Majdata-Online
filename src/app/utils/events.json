@@ -1,5 +1,17 @@
 [
   {
+    "id": "liftoff",
+    "href": "https://liftoff.whitenightawa.com",
+    "src": "/events/liftoff.png",
+    "alt": "liftoff",
+    "title": "AstroDX: Project LIFTOFF",
+    "category": "私立企划",
+    "createDate": "2025-12-22",
+    "endDate": "2026-1-12",
+    "description": ""
+  },
+  
+  {
     "id": "loa",
     "href": "/space?id=LOA",
     "src": "/events/loa.png",
