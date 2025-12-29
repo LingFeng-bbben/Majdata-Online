@@ -1723,6 +1723,8 @@ img.songImg {
   float: left;
   border-radius: 10px;
   height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   cursor: pointer;
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -3231,6 +3233,9 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .player-username {
@@ -3238,6 +3243,10 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 600;
   color: #fff;
   text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .score-results {
@@ -3911,7 +3920,7 @@ input[type="number"]::-webkit-inner-spin-button {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .liked-users-title {
@@ -3963,10 +3972,10 @@ input[type="number"]::-webkit-inner-spin-button {
 .no-likes-placeholder {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
-  text-align: center;
+  padding: 1rem 0;
+  text-align: left;
   opacity: 0.6;
   transition: all 0.3s ease;
 }
@@ -4167,7 +4176,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 
   .liked-users-title {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
   .user-avatar-img {
@@ -4412,10 +4421,6 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
   line-height: 1.2;
   text-shadow: 0 2px 8px rgb(0 0 0 / 50%);
-  background: linear-gradient(135deg, #fff, #e5e5e5);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   transition: all 0.3s ease;
   user-select: text;
 }
@@ -4434,13 +4439,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .clickable-title:hover {
-  background: linear-gradient(135deg, #fff, #f0f0f0) !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
+  color: #fff !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 4px 16px rgb(0 0 0 / 40%) !important;
-  text-shadow: none !important;
+  text-shadow: 0 4px 12px rgb(0 0 0 / 60%) !important;
   position: relative;
 }
 
@@ -4960,24 +4962,20 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 点赞用户区域样式优化 */
 .song-interaction-section .liked-users-section {
-  background: rgb(255 255 255 / 3%);
-  border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   transition: all 0.3s ease;
 }
 
-.song-interaction-section .liked-users-section:hover {
-  background: rgb(255 255 255 / 5%);
-  border-color: rgb(255 255 255 / 12%);
-}
-
 .song-interaction-section .liked-users-title {
-  color: rgb(255 255 255 / 90%);
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  color: rgb(255 255 255 / 95%);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  letter-spacing: 0.02em;
 }
 
 .song-interaction-section .liked-user-avatar {

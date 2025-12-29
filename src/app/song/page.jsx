@@ -1186,7 +1186,7 @@ function CommentList({ songid }) {
     <div className="theList song-comment-list">
       {comments.length === 0 ? (
         <div className="no-comments-placeholder">
-          <p>{loc("NoRecentRecords")}</p>
+          <p>{loc("NoComments")}</p>
         </div>
       ) : (
         comments.map((comment) => {
