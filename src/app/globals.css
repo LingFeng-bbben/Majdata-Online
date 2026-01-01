@@ -4293,6 +4293,17 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 0.9rem;
   }
 
+  /*480以下隐藏用户名 */
+  .mmfc-score-card .player-avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .mmfc-score-card .player-details {
+    display: none;
+  }
 
   .score-accuracy {
     font-size: 1rem;

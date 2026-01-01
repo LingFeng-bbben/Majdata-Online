@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+﻿/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -68,13 +68,6 @@ export default function Page() {
       <div className="hr-solid"></div>
       <CommentSender songid={param} />
       <CommentList songid={param} />
-      <div className="hr-solid"></div>
-      <div className="theList">
-        <div className="inputHint">{loc("Recommend")}</div>
-      </div>
-      <SongList
-        url={apiroot3 + "/Recommend/get?chartId=" + encodeURIComponent(param)}
-      />
     </PageLayout>
   );
 }
