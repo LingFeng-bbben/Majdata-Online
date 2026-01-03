@@ -1,6 +1,6 @@
 ﻿/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import useSWR from "swr";
 import { apiroot3 } from "../apiroot";
 import Tippy, { useSingleton } from "@tippyjs/react";
@@ -752,6 +752,16 @@ function CommentCard({
   const canDelete = currentUser && comment.sender === currentUser;
   // 检查当前评论是否正在被操作
   const isCommentPending = isPending === comment.id;
+  const [isContentExpanded, setIsContentExpanded] = useState(false);
+  const [shouldShowExpandButton, setShouldShowExpandButton] = useState(false);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      const maxHeight = 200; // 最大高度（像素）
+      setShouldShowExpandButton(contentRef.current.scrollHeight > maxHeight);
+    }
+  }, [comment.content]);
 
   return (
     <div className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}>
@@ -770,8 +780,21 @@ function CommentCard({
           </div>
         </a>
       </div>
-      <div className="comment-content">
-        <MarkdownCommentContent content={comment.content} comment={comment} />
+      <div className="comment-content-wrapper">
+        <div 
+          ref={contentRef}
+          className={`comment-content ${!isContentExpanded && shouldShowExpandButton ? "comment-content-collapsed" : ""}`}
+        >
+          <MarkdownCommentContent content={comment.content} comment={comment} />
+        </div>
+        {shouldShowExpandButton && (
+          <button
+            className={`comment-expand-btn ${!isContentExpanded ? "comment-expand-btn-merged" : ""}`}
+            onClick={() => setIsContentExpanded(!isContentExpanded)}
+          >
+            {isContentExpanded ? "▲ 点击收起" : "▼ 点击展开"}
+          </button>
+        )}
       </div>
       <div className="comment-footer">
         {onReply && (
@@ -887,6 +910,16 @@ function CommentThread({
   const replies = flattenComments(comment.replies, comment.id);
   // 检查当前评论是否正在被操作（删除或提交回复）
   const isCommentPending = isPending === comment.id || isSubmittingReply;
+  const [isContentExpanded, setIsContentExpanded] = useState(false);
+  const [shouldShowExpandButton, setShouldShowExpandButton] = useState(false);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      const maxHeight = 200; // 最大高度（像素）
+      setShouldShowExpandButton(contentRef.current.scrollHeight > maxHeight);
+    }
+  }, [comment.content]);
 
   return (
     <div className="comment-card modern-comment-card">
@@ -908,8 +941,23 @@ function CommentThread({
       </div>
 
       {/* 源评论内容 */}
-      <div className="comment-content">
-        <MarkdownCommentContent content={comment.content} comment={comment} />
+      <div className="comment-content-wrapper">
+        <div 
+          ref={contentRef}
+          className={`comment-content ${!isContentExpanded && shouldShowExpandButton ? "comment-content-collapsed" : ""}`}
+        >
+          <MarkdownCommentContent content={comment.content} comment={comment} />
+        </div>
+
+        {/* 展开/收起按钮 */}
+        {shouldShowExpandButton && (
+          <button
+            className={`comment-expand-btn ${!isContentExpanded ? "comment-expand-btn-merged" : ""}`}
+            onClick={() => setIsContentExpanded(!isContentExpanded)}
+          >
+            {isContentExpanded ? "▲ 点击收起" : "▼ 点击展开"}
+          </button>
+        )}
       </div>
 
       {/* 源评论操作按钮 */}

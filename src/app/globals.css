@@ -3380,10 +3380,74 @@ input[type="number"]::-webkit-inner-spin-button {
   overflow-wrap: break-word;
   word-break: break-word;
   user-select: text;
+  transition: max-height 0.3s ease;
 }
 
 .comment-content * {
   user-select: text !important;
+}
+
+.comment-content-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.comment-content-collapsed {
+  max-height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.comment-content-collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, rgba(20, 20, 30, 0.4) 30%, rgba(20, 20, 30, 0.95) 90%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.comment-expand-btn {
+  width: 100%;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.comment-expand-btn-merged {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  border: none;
+  height: 60px;
+  padding-bottom: 10px;
+  align-items: flex-end;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.comment-expand-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.comment-expand-btn-merged:hover {
+  background: transparent;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 /* @mention 样式 */
