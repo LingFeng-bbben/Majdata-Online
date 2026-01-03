@@ -23,6 +23,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -683,7 +684,7 @@ function MarkdownCommentContent({ content, comment }) {
   //console.log(processedContent)
   return (
     <Markdown
-      remarkPlugins={[remarkGfm]}
+      remarkPlugins={[remarkGfm, remarkBreaks]}
       components={{
         ol(props) {
           const { ...rest } = props;
