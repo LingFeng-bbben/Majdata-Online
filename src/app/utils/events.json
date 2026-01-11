@@ -1,5 +1,16 @@
 [
   {
+    "id": "LSP",
+    "href": "/space?id=LSP",
+    "src": "/events/LSP.jpg",
+    "alt": "LSP",
+    "title": "LSP",
+    "category": "私立赛事",
+    "createDate": "2026-1-11",
+    "endDate": "2026-3-1",
+    "description": "以Galgame为核心的比赛"
+  },
+  {
     "id": "liftoff",
     "href": "https://liftoff.whitenightawa.com",
     "src": "/events/liftoff.png",
