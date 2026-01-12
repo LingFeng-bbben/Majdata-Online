@@ -27,32 +27,32 @@ export default function SongDifficultyLevels({ levels, songid, isPlayer }) {
 
   // 难度颜色类名映射
   const levelColorClasses = [
-    "level-easy", // lv0 - Easy
-    "level-basic", // lv1 - Basic
-    "level-advanced", // lv2 - Advanced
-    "level-expert", // lv3 - Expert
-    "level-master", // lv4 - Master
-    "level-remaster", // lv5 - Re:Master
-    "level-utage", // lv6 - UTAGE
+    "level-easy",
+    "level-basic",
+    "level-advanced",
+    "level-expert",
+    "level-master",
+    "level-remaster",
+    "level-utage",
   ];
 
   return (
-    <div className="song-levels-container">
+    <div className="difficulty-levels-list">
       {processedLevels.map((level, index) => {
         if (level === "-") return null;
 
         return (
           <div
             key={index}
-            className={`song-level-chip ${levelColorClasses[index]} ${
+            className={`difficulty-level-item ${levelColorClasses[index]} ${
               isPlayer ? "clickable" : ""
             }`}
             id={`lv${index}`}
             onClick={levelClickCallback}
             title={`${levelNames[index]} ${level}`}
           >
-            <div className="level-name">{levelNames[index]}</div>
-            <div className="level-value">{renderLevel(level)}</div>
+            <span className="difficulty-level-name">{levelNames[index]}</span>
+            <span className="difficulty-level-value">{renderLevel(level)}</span>
           </div>
         );
       })}
