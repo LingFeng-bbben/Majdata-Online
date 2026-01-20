@@ -146,6 +146,9 @@ export default function UnifiedHeader() {
               <a href="/edit" className="nav-item">
                 <span className="nav-label">{loc("ChartEditor")}</span>
               </a>
+              <a href="/collections" className="nav-item">
+                <span className="nav-label">歌单</span>
+              </a>
               <a href="/events" className="nav-item">
                 <span className="nav-label">{loc("Contest")}</span>
               </a>
@@ -220,6 +223,9 @@ export default function UnifiedHeader() {
                   <a href="/edit" className="mobile-nav-item">
                     <span className="nav-label">{loc("ChartEditor")}</span>
                   </a>
+                  <a href="/collections" className="mobile-nav-item">
+                    <span className="nav-label">歌单</span>
+                  </a>
                   <a href="/events" className="mobile-nav-item">
                     <span className="nav-label">{loc("Contest")}</span>
                   </a>
@@ -291,6 +297,11 @@ export default function UnifiedHeader() {
                       <a href="/user/charts" className="menu-item">
                         <span className="menu-label">
                           {loc("ChartsManagement")}
+                        </span>
+                      </a>
+                      <a href="/collections/manage" className="menu-item">
+                        <span className="menu-label">
+                          歌单管理
                         </span>
                       </a>
                       <a href="/user/profile" className="menu-item">

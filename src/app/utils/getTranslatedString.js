@@ -28,3 +28,6 @@ export function getTranslatedString(key) {
   }
   return translations[key] || key;
 }
+
+// 导出 loc 作为 getTranslatedString 的别名
+export const loc = getTranslatedString;

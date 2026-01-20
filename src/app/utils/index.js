@@ -6,3 +6,4 @@ export { default as MakeLevelClickCallback } from "./scrollAndCallback";
 export { getTranslatedString as loc, setLanguage } from "./getTranslatedString";
 export { handleLogout } from "./logout";
 export { renderLevel } from "./renderLevel";
+export { handleNetworkError, safeFetch, handleApiResponse } from "./networkErrorHandler";

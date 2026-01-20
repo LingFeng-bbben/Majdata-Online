@@ -12,7 +12,6 @@
     "@iconscout/unicons": "^4.2.0",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.6.2",
-    "bcrypt": "^5.1.1",
     "bcryptjs-react": "^2.4.6",
     "github-markdown-css": "^5.8.1",
     "js-md5": "^0.8.3",

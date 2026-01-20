@@ -1,0 +1,250 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
+import { toast } from "react-toastify";
+import { apiroot3 } from "../apiroot";
+import { loc, setLanguage } from "../utils";
+import { PageLayout } from "../widgets";
+import "../../styles/components/collectionMarket.css";
+
+export default function CollectionMarket() {
+  const [ready, setReady] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoadingAction, setIsLoadingAction] = useState(false);
+
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language") || navigator.language).then(() => {
+      setReady(true);
+    });
+  }, []);
+
+  const fetcher = (url) =>
+    fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
+      res.json()
+    );
+
+  // 构建查询URL
+  const buildQueryUrl = () => {
+    let url = `${apiroot3}/collection/list`;
+    const params = new URLSearchParams();
+    
+    if (searchTerm.trim()) {
+      params.append("search", searchTerm);
+    }
+    
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+    
+    return url;
+  };
+
+  const { data, error, isLoading, mutate } = useSWR(
+    ready ? buildQueryUrl() : null,
+    fetcher
+  );
+
+  const handleAddToFavorites = async (collectionId) => {
+    if (isLoadingAction) return;
+
+    setIsLoadingAction(true);
+    try {
+      const response = await fetch(`${apiroot3}/accounts/myfavcollections/add?id=${collectionId}`, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        toast.success(loc("AddedToFavorites") || "已添加到收藏的歌单");
+        mutate();
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || (loc("FailedToAddToFavorites") || "添加到收藏失败"));
+      }
+    } catch (error) {
+      toast.error(loc("FailedToAddToFavorites") || "添加到收藏失败");
+    } finally {
+      setIsLoadingAction(false);
+    }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    mutate();
+  };
+
+  if (!ready) return <div className="loading"></div>;
+
+  return (
+    <PageLayout className="collection-market-page">
+      <div className="collection-market-container">
+        {/* 页面标题 */}
+        <div className="page-header">
+          <h1 className="page-title">{loc("CollectionMarket") || "歌单市场"}</h1>
+          <p className="page-subtitle">{loc("CollectionMarketDesc") || "发现和浏览其他用户创建的优秀歌单"}</p>
+        </div>
+
+        {/* 搜索栏 */}
+        <div className="search-section">
+          <form onSubmit={handleSearch} className="search-form">
+            <div className="search-input-wrapper">
+              <input
+                type="text"
+                className="search-input"
+                placeholder={loc("SearchCollections") || "搜索歌单..."}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className="search-button">
+                <svg
+                  className="search-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  viewBox="0 -960 960 960"
+                  width="20"
+                >
+                  <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* 歌单列表 */}
+        <div className="collections-grid">
+          {isLoading ? (
+            <div className="loading-state">
+              <div className="loading-spinner"></div>
+              <p>{loc("Loading") || "加载中..."}</p>
+            </div>
+          ) : error ? (
+            <div className="error-state">
+              <p>{loc("FailedToLoadCollections") || "加载歌单失败"}</p>
+            </div>
+          ) : !data || !data.collections || data.collections.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-icon">📋</div>
+              <h3>{loc("NoCollectionsFound") || "暂无歌单"}</h3>
+              <p>{loc("NoCollectionsFoundSubtitle") || "试试调整搜索条件"}</p>
+            </div>
+          ) : (
+            data.collections.map((collection) => (
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                onAddToFavorites={handleAddToFavorites}
+                isLoadingAction={isLoadingAction}
+              />
+            ))
+          )}
+        </div>
+
+        {/* 导航按钮 */}
+        <div className="navigation-buttons">
+          <a href="/collections/manage" className="nav-button secondary-nav">
+            {loc("MyCollections") || "我的歌单管理"}
+          </a>
+          <a href="/collections/create" className="nav-button primary-nav">
+            {loc("CreateCollection") || "创建歌单"}
+          </a>
+        </div>
+      </div>
+    </PageLayout>
+  );
+}
+
+// 单个歌单卡片组件
+function CollectionCard({ collection, onAddToFavorites, isLoadingAction }) {
+  return (
+    <div className="collection-card">
+      {/* 歌单封面 */}
+      <div className="collection-cover">
+        {collection.coverImage ? (
+          <img
+            src={collection.coverImage}
+            alt={collection.name}
+            className="cover-image"
+          />
+        ) : (
+          <div className="default-cover">
+            <svg
+              className="default-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              height="48"
+              viewBox="0 -960 960 960"
+              width="48"
+            >
+              <path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35ZM240-440q17 0 28.5-11.5T280-480q0-17-11.5-28.5T240-520q-17 0-28.5 11.5T200-480q0 17 11.5 28.5T240-440Zm480 280q17 0 28.5-11.5T760-200q0-17-11.5-28.5T720-240q-17 0-28.5 11.5T680-200q0 17 11.5 28.5T720-160Zm0-600q17 0 28.5-11.5T760-760q0-17-11.5-28.5T720-800q-17 0-28.5 11.5T680-760q0 17 11.5 28.5T720-720Zm0 240ZM240-480Zm480 280Z" />
+            </svg>
+          </div>
+        )}
+      </div>
+
+      {/* 歌单信息 */}
+      <div className="collection-info">
+        <h3 className="collection-name">{collection.name}</h3>
+        <p className="collection-description">
+          {collection.description || (loc("NoDescription") || "暂无描述")}
+        </p>
+        
+        <div className="collection-meta">
+          <div className="meta-item">
+            <span className="meta-label">{loc("CreatedBy") || "创建者"}:</span>
+            <span className="meta-value">{collection.creator || (loc("Unknown") || "未知")}</span>
+          </div>
+          <div className="meta-item">
+            <span className="meta-label">{loc("TotalSongs") || "歌曲数量"}:</span>
+            <span className="meta-value">{collection.songCount || 0}</span>
+          </div>
+          <div className="meta-item">
+            <span className="meta-label">{loc("CreatedTime") || "创建时间"}:</span>
+            <span className="meta-value">
+              {new Date(collection.createdAt).toLocaleDateString()}
+            </span>
+          </div>
+        </div>
+
+        {/* 标签 */}
+        {collection.tags && collection.tags.length > 0 && (
+          <div className="collection-tags">
+            {collection.tags.slice(0, 3).map((tag, index) => (
+              <span key={index} className="collection-tag">
+                {tag}
+              </span>
+            ))}
+            {collection.tags.length > 3 && (
+              <span className="collection-tag more-tags">
+                +{collection.tags.length - 3}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* 操作按钮 */}
+      <div className="collection-actions">
+        <a
+          href={`/collections/${collection.id}`}
+          className="action-button view-button"
+        >
+          {loc("ViewDetails") || "查看详情"}
+        </a>
+        <button
+          className="action-button favorite-button"
+          onClick={() => onAddToFavorites(collection.id)}
+          disabled={isLoadingAction}
+        >
+          {isLoadingAction ? (
+            <>
+              <div className="loading-spinner-small"></div>
+              {loc("Adding") || "添加中..."}
+            </>
+          ) : (
+            loc("AddToFavorites") || "收藏歌单"
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
