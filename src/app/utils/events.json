@@ -1,4 +1,15 @@
 [
+    {
+    "id": "KOL20",
+    "href": "/space?id=KOL_NEW%202",
+    "src": "/events/KOL2.jpg",
+    "alt": "KOL2",
+    "title": "KOL2",
+    "category": "私立赛事",
+    "createDate": "2026-01-24",
+    "endDate": "2026-02-14",
+    "description": "以”互评“为核心的实验性小型比赛，主题：「小众 2.5 次元企划」。"
+  },
   {
     "id": "LSP",
     "href": "/space?id=LSP",
