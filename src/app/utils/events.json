@@ -1,5 +1,16 @@
 [
-    {
+  {
+    "id": "ZJU3",
+    "href": "https://mugzju.top/",
+    "src": "/events/ZJU3.png",
+    "alt": "ZJU3",
+    "title": "ZJU无名战3rd",
+    "category": "高校赛事",
+    "createDate": "2026-01-21",
+    "endDate": "2026-01-30",
+    "description": "ZJU无名战3rd是浙江大学音游同好会举办的maimai自制谱比赛。本届主题为双人合作，由会场内互评选出正赛谱面，再经由实测组评委评审后与互评成绩加权得到最终评分。"
+  },
+  {
     "id": "KOL20",
     "href": "/space?id=KOL_NEW%202",
     "src": "/events/KOL2.jpg",
@@ -32,7 +43,6 @@
     "endDate": "2026-1-12",
     "description": ""
   },
-  
   {
     "id": "loa",
     "href": "/space?id=LOA",
@@ -44,7 +54,6 @@
     "endDate": "2025-12-10",
     "description": ""
   },
-
   {
     "id": "agcc",
     "href": "/space?id=AGCC",
@@ -56,8 +65,6 @@
     "endDate": "2025-11-10",
     "description": ""
   },
-  
-
   {
     "id": "mmfc12",
     "href": "/eventTag?id=MMFC12",
@@ -69,8 +76,7 @@
     "endDate": "2026-01-20",
     "description": "游戏音乐主题个人战——第12届舞萌自制月赛（MMFC12）结算，详情请见B站视频。链接：https://www.bilibili.com/video/BV1WLkgB3EkN"
   },
-
-    {
+  {
     "id": "zjb2",
     "href": "/space?id=zjb2",
     "src": "/events/zjb.jpg",
@@ -81,7 +87,6 @@
     "endDate": "2025-12-25",
     "description": ""
   },
-
   {
     "id": "KOL",
     "href": "/space?id=KOL_NEW",
@@ -93,8 +98,6 @@
     "endDate": "2025-11-7",
     "description": "以“互评”为核心的实验性小型比赛，结算链接 https://www.bilibili.com/video/BV1dW11BYE7t/"
   },
-
-
   {
     "id": "umb_event",
     "href": "/space?id=maimaiUMBRELLA%20offical",
@@ -106,7 +109,6 @@
     "endDate": "2025-12-2",
     "description": ""
   },
-
   {
     "id": "infinitybossrush",
     "href": "/eventTag?id=Infinity Boss Rush",
@@ -118,7 +120,6 @@
     "endDate": "2025-11-05",
     "description": "本自制谱合集以“高难”为核心，无比赛、排名等任何要素，并全面在net中公开，重在为各位玩家提供高难自制谱面游玩，欢迎各位打机力强的大手前来游玩！"
   },
-
   {
     "id": "shuangyucup1",
     "href": "/space?id=双鱼杯",
@@ -130,7 +131,6 @@
     "endDate": "2025-11-07",
     "description": "双鱼杯是在复旦大学音游社团拥有社团印象曲后的企划，主题是【真超檄】，曲目限制为2012年前，旨在致敬早期maimai。"
   },
-
   {
     "id": "xmmcg5",
     "href": "/space?id=xmmcg5",
@@ -142,7 +142,6 @@
     "endDate": "2025-10-21",
     "description": "偶像企划主体的谱面比赛 主办→SniperPigeon"
   },
-
   {
     "id": "REK",
     "href": "/eventTag?id=Re:KALEIDXSCOPE",
@@ -154,7 +153,6 @@
     "endDate": "2025-10-16",
     "description": "Project Re:KALEIDXSCOPE"
   },
-
   {
     "id": "zppz",
     "href": "/space?id=这谱谱这无名战",
@@ -221,7 +219,6 @@
     "endDate": "2025-04-06",
     "description": "花鸟风月队伍战——第11届舞萌自制月赛（MMFC11）结算，详情请见B站视频。链接：https://www.bilibili.com/video/BV1e2RzYjECa/"
   },
-
   {
     "id": "mmfc10",
     "href": "/eventTag?id=MMFC10",
@@ -343,7 +340,6 @@
     "endDate": "2023-01-14",
     "description": "2022新番主题——第1届舞萌自制月赛（MMFC1）结算，详情请见B站视频。链接：https://www.bilibili.com/video/BV1Nv4y117M9/"
   },
-
   {
     "id": "tsuki",
     "href": "/space?id=Project「異色の月」",
