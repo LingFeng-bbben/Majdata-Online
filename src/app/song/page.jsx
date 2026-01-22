@@ -17,6 +17,8 @@ import {
   TagManageTagLauncher,
   TagManageWidget,
 } from "../widgets";
+import CollectionModal from "../widgets/CollectionModal";
+import "../../../src/styles/components/collectionModal.css";
 import SongDifficultyLevels from "./SongDifficultyLevels";
 import { FaComments } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
@@ -90,6 +92,7 @@ function SongDetailsContainer({ id, tippy }) {
 
 function SongInfo({ id, tippy }) {
   const tagButtonRef = useState();
+  const [showCollectionModal, setShowCollectionModal] = useState(false);
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
     fetcher,
@@ -229,9 +232,26 @@ function SongInfo({ id, tippy }) {
               </TagManageWidget>
               <span className="action-text">{loc("Tags") || "标签"}</span>
             </div>
+
+            <button
+              className="action-button collection-button"
+              onClick={() => setShowCollectionModal(true)}
+              title={loc("AddToCollection") || "收藏到歌单"}
+            >
+              <span className="action-icon star-icon" style={{ fontSize: '16px' }}>⭐</span>
+              <span className="action-text">{loc("AddToCollection") || "收藏到歌单"}</span>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* 收藏到歌单模态框 */}
+      <CollectionModal
+        isOpen={showCollectionModal}
+        onClose={() => setShowCollectionModal(false)}
+        songId={o.id}
+        songTitle={o.title}
+      />
 
       {/* 详细信息卡片 */}
       <div className="song-meta-card">

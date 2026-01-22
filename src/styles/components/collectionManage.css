@@ -1,0 +1,538 @@
+/* 歌单管理页面样式 */
+.collection-manage-page {
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+.collection-manage-container {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  padding: var(--container-padding);
+}
+
+/* 页面标题区域 */
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.page-title {
+  color: #e5e5e5;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  background: none;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+}
+
+.page-subtitle {
+  color: #a0a0a0;
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 快速导航 */
+.quick-nav {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+  animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+.nav-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.primary-nav {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 15px rgb(59 130 246 / 30%);
+}
+
+.primary-nav:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgb(59 130 246 / 40%);
+}
+
+.secondary-nav {
+  background: var(--glassmorphism-bg-secondary);
+  color: #e5e5e5;
+  border: var(--glassmorphism-border);
+}
+
+.secondary-nav:hover {
+  background: rgb(35 35 40 / 95%);
+  border-color: rgb(59 130 246 / 50%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 30%);
+}
+
+/* 标签页容器 */
+.tabs-container {
+  animation: slideInUp 0.6s ease-out 0.4s both;
+}
+
+.tabs {
+  display: flex;
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #a0a0a0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  color: #e5e5e5;
+  background: rgb(255 255 255 / 5%);
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 2px 8px rgb(59 130 246 / 30%);
+}
+
+.tab-content {
+  min-height: 400px;
+}
+
+/* 歌单网格 */
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* 单个歌单卡片 */
+.collection-card {
+  background: var(--glassmorphism-bg-secondary);
+  backdrop-filter: var(--glassmorphism-backdrop);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: var(--glassmorphism-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgb(0 0 0 / 40%), 0 5px 20px rgb(0 0 0 / 30%);
+  border-color: rgb(59 130 246 / 30%);
+}
+
+/* 类型标识 */
+.collection-card.my-collection:hover {
+  border-color: rgb(59 130 246 / 40%);
+}
+
+.collection-card.favorite-collection:hover {
+  border-color: rgb(239 68 68 / 40%);
+}
+
+/* 歌单封面 */
+.collection-cover {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  background: rgb(30 30 35 / 80%);
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover .cover-image {
+  transform: scale(1.05);
+}
+
+.default-cover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgb(59 130 246 / 20%), rgb(37 99 235 / 10%));
+}
+
+.default-icon {
+  color: rgb(255 255 255 / 60%);
+  width: 48px;
+  height: 48px;
+}
+
+.card-type-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
+}
+
+.my-collection .card-type-badge {
+  background: rgb(59 130 246 / 80%);
+  color: white;
+}
+
+.favorite-collection .card-type-badge {
+  background: rgb(239 68 68 / 80%);
+  color: white;
+}
+
+/* 歌单信息 */
+.collection-info {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.collection-name {
+  color: #e5e5e5;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.collection-card:hover .collection-name {
+  color: #fff;
+}
+
+.collection-description {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 元数据 */
+.collection-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.meta-label {
+  color: rgb(255 255 255 / 70%);
+  font-weight: 500;
+}
+
+.meta-value {
+  color: #e5e5e5;
+  font-weight: 600;
+}
+
+/* 标签 */
+.collection-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.collection-tag {
+  background: rgb(59 130 246 / 15%);
+  color: #93c5fd;
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border: 1px solid rgb(59 130 246 / 25%);
+  transition: all 0.3s ease;
+}
+
+.collection-tag:hover {
+  background: rgb(59 130 246 / 25%);
+  color: #dbeafe;
+  transform: translateY(-1px);
+}
+
+.more-tags {
+  background: rgb(255 255 255 / 10%);
+  color: rgb(255 255 255 / 60%);
+}
+
+/* 操作按钮 */
+.collection-actions {
+  padding: 1.5rem;
+  padding-top: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.action-button {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.view-button {
+  background: rgb(255 255 255 / 10%);
+  color: #e5e5e5;
+  border: 1px solid rgb(255 255 255 / 20%);
+}
+
+.view-button:hover {
+  background: rgb(255 255 255 / 20%);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+.delete-button {
+  background: rgb(239 68 68 / 80%);
+  color: white;
+}
+
+.delete-button:hover {
+  background: rgb(220 38 38 / 90%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(239 68 68 / 30%);
+}
+
+.unfavorite-button {
+  background: rgb(168 85 247 / 80%);
+  color: white;
+}
+
+.unfavorite-button:hover {
+  background: rgb(147 51 234 / 90%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(168 85 247 / 30%);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 状态显示 */
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #a0a0a0;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgb(255 255 255 / 10%);
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  color: #e5e5e5;
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+}
+
+.empty-state p {
+  color: #a0a0a0;
+  font-size: 1rem;
+  margin: 0 0 2rem;
+}
+
+.btn-primary {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgb(59 130 246 / 40%);
+}
+
+/* 加载小图标 */
+.loading-spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgb(255 255 255 / 30%);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (width <=768px) {
+  .collection-manage-container {
+    padding: 0 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .quick-nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tab-button {
+    text-align: center;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .collection-cover {
+    height: 160px;
+  }
+
+  .collection-info {
+    padding: 1.25rem;
+  }
+
+  .collection-name {
+    font-size: 1.1rem;
+  }
+
+  .collection-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .action-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (width <=480px) {
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .collection-cover {
+    height: 140px;
+  }
+
+  .collection-info {
+    padding: 1rem;
+  }
+
+  .collection-name {
+    font-size: 1rem;
+  }
+
+  .collection-description {
+    font-size: 0.8rem;
+  }
+
+  .meta-item {
+    font-size: 0.75rem;
+  }
+
+  .collection-tag {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+}
