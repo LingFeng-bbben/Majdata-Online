@@ -1,4 +1,15 @@
 [
+  {
+    "id": "wsz",
+    "href": "/space?id=%E6%97%A0%E5%A3%B0%E6%88%98%20%C2%B7%20COS",
+    "src": "/events/wsz.png",
+    "alt": "无声战",
+    "title": "无声战",
+    "category": "私立赛事",
+    "createDate": "2026-01-23",
+    "endDate": "2026-02-28",
+    "description": "将「用音乐采音」与「用采音写谱」分离为两个人的谱面创作展示活动"
+  },
     {
     "id": "xmmcg6",
     "href": "https://xmmcg.majdata.net",
