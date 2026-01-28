@@ -123,6 +123,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  background: rgb(0 0 0 / 40%);
+  padding: 1.5rem;
+  border-radius: var(--glassmorphism-border-radius);
+  border: var(--glassmorphism-border);
 }
 
 .edit-input,
@@ -177,10 +181,10 @@
 
 .section-title {
   color: #e5e5e5;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin: 0 0 2rem;
-  text-align: center;
+  text-align: left;
   text-shadow: 0 2px 4px rgb(0 0 0 / 30%);
 }
 

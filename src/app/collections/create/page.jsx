@@ -82,7 +82,6 @@ export default function CreateCollection() {
     try {
       console.log('Submitting form data:', formData);
       
-      // 尝试多个可能的API端点
       let response;
       const requestData = {
         name: formData.name,
@@ -91,72 +90,80 @@ export default function CreateCollection() {
         tags: formData.tags
       };
 
-      // 首先尝试 /collection/add
-      try {
-        response = await fetch(`${apiroot3}/collection/add`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-          mode: "cors",
-          credentials: "include",
-        });
-        console.log('API Response status:', response.status);
-      } catch (error) {
-        console.error('First API call failed:', error);
-        response = null;
-      }
-
-      // 如果第一个失败，尝试 /collection/create
-      if (!response || !response.ok) {
-        try {
-          response = await fetch(`${apiroot3}/collection/create`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
-            mode: "cors",
-            credentials: "include",
-          });
-          console.log('Second API Response status:', response.status);
-        } catch (error) {
-          console.error('Second API call failed:', error);
-          response = null;
-        }
-      }
-
-      // 如果都失败，尝试不包含可选字段的简化版本
-      if (!response || !response.ok) {
-        try {
-          const minimalData = {
-            name: formData.name,
-            visibility: formData.visibility
-          };
-          response = await fetch(`${apiroot3}/collection/add`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(minimalData),
-            mode: "cors",
-            credentials: "include",
-          });
-          console.log('Minimal API Response status:', response.status);
-        } catch (error) {
-          console.error('Minimal API call failed:', error);
-          response = null;
-        }
-      }
+      response = await fetch(`${apiroot3}/collection/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+        mode: "cors",
+        credentials: "include",
+      });
+      console.log("API Response status:", response.status);
 
       if (response && response.ok) {
-        const result = await response.json();
+        let result = {};
+        try {
+          result = await response.json();
+        } catch (error) {
+          console.warn("Create collection response is not JSON:", error);
+        }
         console.log('Collection created successfully:', result);
         toast.success(loc("CollectionCreated") || "歌单创建成功");
-        // 跳转到歌单详情页
-        if (result.id) {
-          window.location.href = `/collections/detail?id=${result.id}`;
+
+        const resolveCreatedId = async (payload) => {
+          const candidates = [
+            payload?.collection?.id,
+            payload?.collectionId,
+            payload?.data?.id,
+            payload?.data?._id,
+            payload?._id,
+            payload?.id,
+          ].filter(Boolean);
+
+          for (const id of candidates) {
+            try {
+              const verifyResponse = await fetch(`${apiroot3}/collection/${id}`, {
+                mode: "cors",
+                credentials: "include",
+              });
+              if (verifyResponse.ok) {
+                return id;
+              }
+            } catch (error) {
+              console.warn("Verify created collection failed:", error);
+            }
+          }
+
+          try {
+            const userResponse = await fetch(`${apiroot3}/account/info/`, {
+              mode: "cors",
+              credentials: "include",
+            });
+            const userInfo = await userResponse.json();
+            const username = userInfo?.username;
+            if (!username) return null;
+
+            const listResponse = await fetch(
+              `${apiroot3}/collection/list?search=username:${encodeURIComponent(username)}`,
+              { mode: "cors", credentials: "include" }
+            );
+            const listData = await listResponse.json();
+            const collections = listData?.collections || [];
+            const matched = collections
+              .filter((item) => item?.name === formData.name)
+              .sort((a, b) => new Date(b?.createdAt || b?.updatedAt || 0) - new Date(a?.createdAt || a?.updatedAt || 0));
+
+            return matched[0]?.id || null;
+          } catch (error) {
+            console.warn("Resolve collection id from list failed:", error);
+            return null;
+          }
+        };
+
+        const createdId = await resolveCreatedId(result);
+        if (createdId) {
+          window.location.href = `/collections/detail?id=${createdId}`;
         } else {
           window.location.href = "/collections/manage";
         }
@@ -190,8 +197,8 @@ export default function CreateCollection() {
   if (!ready) return <div className="loading"></div>;
 
   return (
-    <PageLayout className="create-collection-page">
-      <div className="create-collection-container">
+    <PageLayout className="collection-create-page">
+      <div className="collection-create-container">
         {/* 页面标题 */}
         <div className="page-header">
           <h1 className="page-title">{loc("CreateCollection") || "创建歌单"}</h1>
@@ -206,8 +213,9 @@ export default function CreateCollection() {
         </div>
 
         {/* 创建表单 */}
-        <form onSubmit={handleSubmit} className="create-form">
-          <div className="form-section">
+        <div className="form-container">
+          <form onSubmit={handleSubmit} className="create-form">
+            <div className="form-section">
             <h2 className="section-title">{loc("BasicInfo") || "基本信息"}</h2>
             
             {/* 歌单名称 */}
@@ -275,7 +283,7 @@ export default function CreateCollection() {
             </div>
           </div>
 
-          <div className="form-section">
+            <div className="form-section">
             <h2 className="section-title">{loc("Tags") || "标签"}</h2>
             
             {/* 标签输入 */}
@@ -331,31 +339,32 @@ export default function CreateCollection() {
           </div>
 
           {/* 操作按钮 */}
-          <div className="form-actions">
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="btn-secondary"
-              disabled={isCreating}
-            >
-              {loc("Cancel") || "取消"}
-            </button>
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={isCreating || !formData.name.trim()}
-            >
-              {isCreating ? (
-                <>
-                  <div className="loading-spinner-small"></div>
-                  {loc("Creating") || "创建中..."}
-                </>
-              ) : (
-                loc("CreateCollection") || "创建歌单"
-              )}
-            </button>
-          </div>
-        </form>
+            <div className="form-actions">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="btn-secondary"
+                disabled={isCreating}
+              >
+                {loc("Cancel") || "取消"}
+              </button>
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={isCreating || !formData.name.trim()}
+              >
+                {isCreating ? (
+                  <>
+                    <div className="loading-spinner-small"></div>
+                    {loc("Creating") || "创建中..."}
+                  </>
+                ) : (
+                  loc("CreateCollection") || "创建歌单"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
 
         {/* 提示信息 */}
         <div className="tips-section">

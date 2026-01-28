@@ -46,8 +46,8 @@ export default function CollectionManage() {
 
     setIsLoadingAction(true);
     try {
-      const response = await fetch(`${apiroot3}/collection/${collectionId}`, {
-        method: "DELETE",
+      const response = await fetch(`${apiroot3}/collection/${collectionId}/destroy`, {
+        method: "POST",
         mode: "cors",
         credentials: "include",
       });
