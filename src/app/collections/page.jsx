@@ -225,7 +225,7 @@ function CollectionCard({ collection, onAddToFavorites, isLoadingAction }) {
       {/* 操作按钮 */}
       <div className="collection-actions">
         <a
-          href={`/collections/${collection.id}`}
+          href={`/collections/detail?id=${collection.id}`}
           className="action-button view-button"
         >
           {loc("ViewDetails") || "查看详情"}

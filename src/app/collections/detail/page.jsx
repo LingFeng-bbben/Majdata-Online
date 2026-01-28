@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 import { apiroot3 } from "../../apiroot";
@@ -8,16 +8,9 @@ import { loc, setLanguage } from "../../utils";
 import { PageLayout } from "../../widgets";
 import "../../../styles/components/collectionDetail.css";
 
-// 由于使用了 output: export，需要添加 generateStaticParams 函数
-export async function generateStaticParams() {
-  // 对于静态导出，返回一些可能的路径
-  // 在实际应用中，这里应该从API获取所有可能的歌单ID
-  return [];
-}
-
 export default function CollectionDetail() {
-  const params = useParams();
-  const collectionId = params.id;
+  const searchParams = useSearchParams();
+  const collectionId = searchParams.get('id');
   const [ready, setReady] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoadingAction, setIsLoadingAction] = useState(false);
@@ -40,12 +33,12 @@ export default function CollectionDetail() {
 
   // 获取歌单详情和歌曲列表
   const { data: collectionData, error: collectionError, mutate: mutateCollection } = useSWR(
-    ready ? `${apiroot3}/collection/${collectionId}` : null,
+    ready && collectionId ? `${apiroot3}/collection/${collectionId}` : null,
     fetcher
   );
 
   const { data: songsData, error: songsError, mutate: mutateSongs } = useSWR(
-    ready ? `${apiroot3}/collection/${collectionId}/songList` : null,
+    ready && collectionId ? `${apiroot3}/collection/${collectionId}/songList` : null,
     fetcher
   );
 
@@ -135,6 +128,19 @@ export default function CollectionDetail() {
   };
 
   if (!ready) return <div className="loading"></div>;
+
+  if (!collectionId) {
+    return (
+      <PageLayout className="collection-detail-page">
+        <div className="error-state">
+          <p>{loc("InvalidCollectionId") || "无效的歌单ID"}</p>
+          <a href="/collections" className="back-button">
+            {loc("BackToCollections") || "返回歌单列表"}
+          </a>
+        </div>
+      </PageLayout>
+    );
+  }
 
   if (collectionError || songsError) {
     return (

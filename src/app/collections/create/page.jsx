@@ -156,7 +156,7 @@ export default function CreateCollection() {
         toast.success(loc("CollectionCreated") || "歌单创建成功");
         // 跳转到歌单详情页
         if (result.id) {
-          window.location.href = `/collections/${result.id}`;
+          window.location.href = `/collections/detail?id=${result.id}`;
         } else {
           window.location.href = "/collections/manage";
         }
