@@ -1,4 +1,15 @@
 [
+    {
+    "id": "hajicup2",
+    "href": "/space?id=哈基杯",
+    "src": "/events/hjb2.png",
+    "alt": "哈基杯2",
+    "title": "哈基杯2",
+    "category": "私立赛事",
+    "createDate": "2026-01-28",
+    "endDate": "2026-02-28",
+    "description": ""
+  },
   {
     "id": "wsz",
     "href": "/space?id=%E6%97%A0%E5%A3%B0%E6%88%98%20%C2%B7%20COS",
