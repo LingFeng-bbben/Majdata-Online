@@ -1,4 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -62,7 +62,6 @@ export default function Page() {
         interactive={true}
       />
       <SongDetailsContainer id={param} tippy={target} />
-      <MajdataView id={param} />
       <div className="hr-solid"></div>
       <ScoreList songid={param} />
       <div className="hr-solid"></div>
@@ -197,21 +196,74 @@ function SongInfo({ id, tippy }) {
 
       <div className="content-grid grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 lg:items-start">
         <aside className="flex flex-col gap-4 song-info-sidebar">
-          <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-            <div className="glass-panel p-5 rounded-2xl">
-              <a href={"/space?id=" + o.uploader} className="designer-link">
-                <img
-                  className="designer-avatar"
-                  src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                  alt={o.uploader}
+          {/* 移动端：设计师和标签水平排列 */}
+          <div className="sidebar-top-row">
+            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
+              <div className="glass-panel p-5 rounded-2xl sidebar-designer-panel">
+                <a href={"/space?id=" + o.uploader} className="designer-link">
+                  <img
+                    className="designer-avatar"
+                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                    alt={o.uploader}
+                  />
+                  <div className="designer-info">
+                    <span className="designer-username">{o.uploader}</span>
+                    <span className="designer-name">{o.designer}</span>
+                  </div>
+                </a>
+              </div>
+            </Tippy>
+
+            <div className="glass-panel p-5 rounded-2xl sidebar-tags-panel">
+              <h3 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">
+                {loc("Tags") || "标签"}
+              </h3>
+              <div className="meta-tags-container">
+                {(o.tags || o.publicTags) &&
+                  (o.tags.length > 0 || o.publicTags.length > 0)
+                  ? (
+                    <>
+                      {o.tags.map((tag, index) => (
+                        <Tippy content={loc("SearchForTag")} key={index}>
+                          <span
+                            className="tag-chip tag-private"
+                            onClick={() => {
+                              localStorage.setItem("search", tag);
+                              window.location.href = "/";
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        </Tippy>
+                      ))}
+                      {o.publicTags?.map((tag, index) => (
+                        <Tippy content={loc("SearchForTag")} key={index}>
+                          <span
+                            className="tag-chip tag-public"
+                            onClick={() => {
+                              localStorage.setItem("search", "tag:" + tag);
+                              window.location.href = "/";
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        </Tippy>
+                      ))}
+                    </>
+                  )
+                  : (
+                    <span className="no-tags-text">
+                      {loc("NoTags") || "暂无标签"}
+                    </span>
+                  )}
+                <TagManageTagLauncher
+                  onClick={() => {
+                    tagButtonRef.current?.toggleWindow();
+                  }}
                 />
-                <div className="designer-info">
-                  <span className="designer-username">{o.uploader}</span>
-                  <span className="designer-name">{o.designer}</span>
-                </div>
-              </a>
+              </div>
             </div>
-          </Tippy>
+          </div>
 
           <div className="glass-panel p-5 rounded-2xl flex flex-col gap-2">
             <button
@@ -255,80 +307,49 @@ function SongInfo({ id, tippy }) {
             </div>
           </div>
 
-          <div className="glass-panel p-5 rounded-2xl">
-            <h3 className="text-sm font-bold text-white/50 mb-3 uppercase tracking-wider">
-              {loc("Tags") || "标签"}
-            </h3>
-            <div className="meta-tags-container">
-              {(o.tags || o.publicTags) &&
-                (o.tags.length > 0 || o.publicTags.length > 0)
-                ? (
-                  <>
-                    {o.tags.map((tag, index) => (
-                      <Tippy content={loc("SearchForTag")} key={index}>
-                        <span
-                          className="tag-chip tag-private"
-                          onClick={() => {
-                            localStorage.setItem("search", tag);
-                            window.location.href = "/";
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      </Tippy>
-                    ))}
-                    {o.publicTags?.map((tag, index) => (
-                      <Tippy content={loc("SearchForTag")} key={index}>
-                        <span
-                          className="tag-chip tag-public"
-                          onClick={() => {
-                            localStorage.setItem("search", "tag:" + tag);
-                            window.location.href = "/";
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      </Tippy>
-                    ))}
-                  </>
-                )
-                : (
-                  <span className="no-tags-text">
-                    {loc("NoTags") || "暂无标签"}
-                  </span>
-                )}
-              <TagManageTagLauncher
-                onClick={() => {
-                  tagButtonRef.current?.toggleWindow();
-                }}
-              />
-            </div>
-          </div>
-        </aside>
-
-        <main className="flex flex-col gap-8">
-          <div className="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col">
-            <div className="grid grid-cols-[100px_1fr] gap-y-4 text-sm">
+          {/* ID/HASH/点赞面板 */}
+          <div className="glass-panel p-5 rounded-2xl relative overflow-hidden flex flex-col sidebar-info-panel">
+            <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm">
               <span className="text-white/40">ID</span>
-              <code className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit">
+              <code 
+                className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
+                style={{ cursor: "pointer" }}
+                title="点击复制"
+                onClick={() => {
+                  navigator.clipboard.writeText(o.id);
+                  toast.success(loc("ClipboardSuccess"));
+                }}
+              >
                 {o.id}
               </code>
 
               <span className="text-white/40">HASH</span>
-              <code className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 truncate w-full max-w-md">
+              <code 
+                className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
+                style={{ cursor: "pointer" }}
+                title="点击复制"
+                onClick={() => {
+                  navigator.clipboard.writeText(o.hash);
+                  toast.success(loc("ClipboardSuccess"));
+                }}
+              >
                 {o.hash}
               </code>
 
-              <span className="text-white/40">{loc("UploadTime") || "上传时间"}</span>
-              <span className="text-white/80">
+              <span className="text-white/40 text-xs">{loc("UploadTime") || "上传时间"}</span>
+              <span className="text-white/80 w-fit text-xs text-center pl-[7px]">
                 {(new Date(o.timestamp)).toLocaleString()}
               </span>
             </div>
 
-            <div className="border-t border-white/10 my-4"></div>
+            <div className="border-t border-white/10 my-3"></div>
 
             <LikeSender songid={o.id} />
           </div>
+        </aside>
+
+        <main className="flex flex-col gap-8">
+          <MajdataView id={o.id} />
         </main>
       </div>
     </div>
@@ -541,7 +562,6 @@ function LikeSender({ songid }) {
               )
               : (
                 <div className="no-likes-placeholder">
-                  <div className="placeholder-icon">👍</div>
                   <p className="placeholder-text">{loc("BeFirstToLike")}</p>
                 </div>
               )}
