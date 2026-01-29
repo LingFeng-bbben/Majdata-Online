@@ -2320,6 +2320,8 @@ img.songImg {
   width: 100%;
   height: 100%;
   border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .majSticky {
@@ -2350,9 +2352,8 @@ img.songImg {
 
 @media screen and (width >=700px) {
   .majViewPort {
-    margin-top: 20px;
     width: 100%;
-    height: 40rem;
+    aspect-ratio: 1;
     transform: none;
     border-radius: 10px;
   }
@@ -3017,7 +3018,7 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: left top;
   background-repeat: no-repeat;
   filter: blur(20px) brightness(0.3);
   z-index: -1;
@@ -3025,7 +3026,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Song页面Majdata容器样式 */
 .majdata-container {
-  max-width: var(--container-max-width);
+  width: 100%;
 }
 
 /* Song页面排行榜标题样式 */
@@ -4014,21 +4015,36 @@ input[type="number"]::-webkit-inner-spin-button {
   z-index: 10;
 }
 
-.user-avatar-img {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
+.user-avatar-img,
+.more-likes {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
   border-radius: 50%;
-  border: 3px solid rgb(255 255 255 / 20%);
+  border: 1px solid rgb(255 255 255 / 20%);
   transition: all 0.3s ease;
-  object-fit: cover;
   background: var(--glassmorphism-bg-secondary);
   flex-shrink: 0;
   aspect-ratio: 1;
 }
 
-.liked-user-avatar:hover .user-avatar-img {
+.user-avatar-img {
+  object-fit: cover;
+}
+
+.more-likes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.liked-user-avatar:hover .user-avatar-img,
+.liked-user-avatar:hover .more-likes {
   border-color: rgb(59 130 246 / 60%);
   box-shadow: 0 8px 25px rgb(59 130 246 / 30%), 0 0 0 2px rgb(59 130 246 / 20%);
 }
@@ -4132,11 +4148,16 @@ input[type="number"]::-webkit-inner-spin-button {
         transparent 100%);
   }
 
-  .user-avatar-img {
+  .user-avatar-img,
+  .more-likes {
     width: 40px;
     height: 40px;
     min-width: 40px;
     min-height: 40px;
+  }
+
+  .more-likes {
+    font-size: 12px;
   }
 
   .song-detail-modern {
@@ -4243,11 +4264,16 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 1.25rem;
   }
 
-  .user-avatar-img {
+  .user-avatar-img,
+  .more-likes {
     width: 36px;
     height: 36px;
     min-width: 36px;
     min-height: 36px;
+  }
+
+  .more-likes {
+    font-size: 11px;
   }
 
   .no-likes-placeholder {
@@ -4401,18 +4427,20 @@ input[type="number"]::-webkit-inner-spin-button {
   max-width: var(--container-max-width);
   margin: var(--container-margin);
   margin-top: var(--content-top-spacing);
-  padding: var(--container-padding);
-  background: var(--glassmorphism-bg-primary);
-  backdrop-filter: var(--glassmorphism-backdrop);
-  border: var(--glassmorphism-border);
+  padding: 0;
+  background: rgb(255 255 255 / 12%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: none;
   border-radius: var(--glassmorphism-border-radius);
-  box-shadow: var(--glassmorphism-shadow);
+  box-shadow: 0 20px 50px rgb(0 0 0 / 35%),
+    inset 0 1px 0 rgb(255 255 255 / 25%);
   transition: all 0.3s ease;
 }
 
 .song-details-main-container:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 50px rgb(0 0 0 / 40%), 0 5px 20px rgb(0 0 0 / 30%);
+  box-shadow: 0 22px 60px rgb(0 0 0 / 35%),
+    inset 0 1px 0 rgb(255 255 255 / 28%);
 }
 
 /* 内部分割线 - 比其他hr-solid更小 */
@@ -4429,86 +4457,276 @@ input[type="number"]::-webkit-inner-spin-button {
   position: relative;
 }
 
+/* Song info glass layout */
+.glass-panel {
+  @apply bg-black/60 backdrop-blur-xl border border-white/20 shadow-2xl;
+}
+
+.btn-primary-gradient {
+  @apply bg-gradient-to-r from-purple-600 to-blue-600 text-white;
+}
+
+.btn-glass {
+  @apply bg-white/10 backdrop-blur-md text-white;
+}
+
+.hero-cover {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgb(0 0 0 / 45%);
+  transition: transform 0.3s ease;
+}
+
+.hero-cover:hover {
+  transform: scale(1.03);
+}
+
+.hero-cover img.songImg {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.mapper-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 2rem;
+  border: 1px solid rgb(255 255 255 / 20%);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 30%),
+    0 12px 30px rgb(0 0 0 / 35%);
+  min-width: 6rem;
+}
+
+.hero-badge-easy {
+  background: linear-gradient(180deg, rgb(111 171 250), rgb(37 99 235));
+}
+
+.hero-badge-basic {
+  background: linear-gradient(180deg, rgb(74 222 128), rgb(22 163 74));
+}
+
+.hero-badge-advanced {
+  background: linear-gradient(180deg, rgb(251 191 36), rgb(217 119 6));
+}
+
+.hero-badge-expert {
+  background: linear-gradient(180deg, rgb(248 113 113), rgb(220 38 38));
+}
+
+.hero-badge-master {
+  background: linear-gradient(180deg, rgb(147 51 234), rgb(49 46 129));
+}
+
+.hero-badge-remaster {
+  background: linear-gradient(180deg, rgb(192 38 211), rgb(88 28 135));
+}
+
+.hero-badge-utage {
+  background: linear-gradient(180deg, rgb(139 92 246), rgb(91 33 182));
+}
+
+.hero-badge.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-badge.clickable:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 40%),
+    0 15px 40px rgb(0 0 0 / 45%);
+}
+
+.hero-badge.clickable:active {
+  transform: translateY(0) scale(1);
+}
+
+.hero-badge-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(233 213 255);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.hero-badge-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-top: 0.25rem;
+  pointer-events: none;
+}
+
+/* 新版难度显示容器 */
+.difficulty-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.difficulty-display-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* 难度列表 - 横向布局 */
+.difficulty-levels-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: auto;
+}
+
+/* 单个难度项 - 横向排列难度名和等级 */
+.difficulty-level-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  min-height: 2.5rem;
+  width: 10rem;
+  flex-shrink: 0;
+}
+
+.difficulty-level-item.clickable {
+  cursor: pointer;
+}
+
+.difficulty-level-item.clickable:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+}
+
+.difficulty-level-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex: 1;
+  min-width: auto;
+  color: #ffffff;
+}
+
+.difficulty-level-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* 各难度颜色 - 新版横向布局 */
+.difficulty-level-item.level-easy {
+  background: linear-gradient(90deg, rgb(59 130 246 / 60%), rgb(59 130 246 / 40%));
+}
+
+.difficulty-level-item.level-basic {
+  background: linear-gradient(90deg, rgb(34 197 94 / 60%), rgb(34 197 94 / 40%));
+}
+
+.difficulty-level-item.level-advanced {
+  background: linear-gradient(90deg, rgb(234 179 8 / 60%), rgb(234 179 8 / 40%));
+}
+
+.difficulty-level-item.level-expert {
+  background: linear-gradient(90deg, rgb(239 68 68 / 60%), rgb(239 68 68 / 40%));
+}
+
+.difficulty-level-item.level-master {
+  background: linear-gradient(90deg, rgb(168 85 247 / 60%), rgb(168 85 247 / 40%));
+}
+
+.difficulty-level-item.level-remaster {
+  background: linear-gradient(90deg, rgb(192 38 211 / 60%), rgb(192 38 211 / 40%));
+}
+
+.difficulty-level-item.level-utage {
+  background: linear-gradient(90deg, rgb(139 92 246 / 60%), rgb(139 92 246 / 40%));
+}
+
+.song-info-sidebar .song-levels-container {
+  justify-content: flex-start;
+}
+
+/* 左侧边栏标签面板与右侧ID面板底部对齐 */
+.song-info-sidebar {
+  align-self: stretch;
+}
+
+/* 移除底部对齐，让所有面板正常流式排列 */
+
+/* 移动端：设计师和标签面板水平排列 */
+.sidebar-top-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.sidebar-top-row .sidebar-designer-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+}
+
+.sidebar-top-row .sidebar-tags-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 桌面端：恢复垂直排列 */
+@media screen and (min-width: 1024px) {
+  .sidebar-top-row {
+    flex-direction: column;
+  }
+}
+
+.hero-levels-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* Hero section inline glass panel */
+.hero-section .glass-panel {
+  max-width: fit-content;
+}
+
 /* ===== Song Info Section 样式 ===== */
 
 .song-info-section {
   padding: 1.5rem;
+  background: transparent;
 }
 
-/* 主歌曲信息卡片 */
-.song-main-card {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background: rgb(255 255 255 / 2%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.song-main-card:hover {
-  background: rgb(255 255 255 / 4%);
-  border-color: rgb(255 255 255 / 15%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 20%), 0 2px 8px rgb(0 0 0 / 10%);
-}
-
-/* 封面区域 */
-.song-cover-section {
-  flex-shrink: 0;
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  width: 20rem;
-  height: 20rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.song-cover-section:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
-}
-
-/* 内容区域 */
-.song-content-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* 基本信息 */
-.song-basic-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.song-title-modern {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
-  line-height: 1.2;
-  text-shadow: 0 2px 8px rgb(0 0 0 / 50%);
-  transition: all 0.3s ease;
-  user-select: text;
-}
-
-.song-title-modern:hover {
-  transform: translateY(-1px);
-  text-shadow: 0 4px 12px rgb(0 0 0 / 60%);
-}
-
+/* 可点击标题样式 */
 .clickable-title {
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0.1rem 0.3rem;
+  padding: 10px 20px;
   border-radius: 8px;
   display: inline-block;
 }
@@ -4530,6 +4748,7 @@ input[type="number"]::-webkit-inner-spin-button {
   z-index: -1;
 }
 
+/* 艺术家样式 */
 .song-artist-modern {
   font-size: 1.2rem;
   color: rgb(255 255 255 / 80%);
@@ -4542,7 +4761,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .clickable-artist {
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0.1rem 0.3rem;
+  padding: 5px 15px;
   border-radius: 6px;
   display: inline-block;
 }
@@ -4554,51 +4773,115 @@ input[type="number"]::-webkit-inner-spin-button {
   box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
 }
 
-.song-designer-modern {
-  margin-top: 0.5rem;
+.song-info-sidebar > .glass-panel:has(.designer-link) {
+  padding: 0;
+  overflow: hidden;
+}
+
+.song-info-sidebar > .glass-panel:has(.designer-link) .designer-link {
   display: flex;
-  justify-content: center;
+  width: 100%;
+  padding: 1.25rem;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* sidebar-top-row 中的设计师面板样式 */
+.sidebar-designer-panel .designer-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
+.song-info-sidebar > .glass-panel:has(.designer-link) .designer-link:hover {
+  background: rgb(255 255 255 / 8%);
+  transform: none;
+  box-shadow: none;
+}
+
+.sidebar-designer-panel .designer-link:hover {
+  background: rgb(255 255 255 / 8%);
+  transform: none;
+  box-shadow: none;
 }
 
 .designer-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
   text-decoration: none;
-  color: rgb(255 255 255 / 70%);
+  color: rgb(255 255 255 / 85%);
   transition: all 0.3s ease;
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid transparent;
+  padding: 0.75rem 1.125rem;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 10%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 20%);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 10%);
 }
 
 .designer-link:hover {
   color: #fff;
-  background: rgb(255 255 255 / 5%);
-  border-color: rgb(255 255 255 / 10%);
-  transform: translateX(4px);
+  background: rgb(255 255 255 / 15%);
+  border-color: rgb(255 255 255 / 30%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 30%), inset 0 1px 0 rgb(255 255 255 / 15%);
 }
 
 .designer-avatar {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 50%;
-  border: 2px solid rgb(255 255 255 / 20%);
+  border: 2px solid rgb(255 255 255 / 25%);
   transition: all 0.3s ease;
   flex-shrink: 0;
   aspect-ratio: 1;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
 }
 
 .designer-link:hover .designer-avatar {
-  border-color: rgb(255 255 255 / 50%);
-  transform: scale(1.1);
+  border-color: rgb(255 255 255 / 40%);
+  transform: scale(1.05);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 40%);
+}
+
+.designer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+}
+
+.designer-username {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(255 255 255 / 95%);
+  line-height: 1.3;
+}
+
+.designer-name {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgb(255 255 255 / 65%);
+  line-height: 1.3;
 }
 
 .designer-text {
   font-size: 0.95rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* 难度等级区域 */
@@ -5000,39 +5283,56 @@ input[type="number"]::-webkit-inner-spin-button {
 /* ===== Song Interaction Section 样式 ===== */
 
 .song-interaction-section {
-  padding: 1.5rem;
+  padding: 0;
 }
 
 .song-interaction-section .interaction-layout {
-  background: rgb(255 255 255 / 2%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: 16px;
-  padding: 2rem;
+  background: rgb(255 255 255 / 12%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  gap: 1rem;
+  min-height: 96px;
   margin: 0;
   transition: all 0.3s ease;
 }
 
 .song-interaction-section .interaction-layout:hover {
-  background: rgb(255 255 255 / 4%);
-  border-color: rgb(255 255 255 / 15%);
+  background: rgb(255 255 255 / 16%);
+  border-color: rgb(255 255 255 / 28%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgb(0 0 0 / 20%), 0 2px 8px rgb(0 0 0 / 10%);
 }
 
 /* 调整交互按钮的样式 */
 .song-interaction-section .modern-interaction-btn {
-  background: rgb(255 255 255 / 8%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgb(255 255 255 / 15%);
+  background: rgb(255 255 255 / 14%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 22%);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .song-interaction-section .modern-interaction-btn:hover {
-  background: rgb(255 255 255 / 15%);
-  border-color: rgb(255 255 255 / 30%);
+  background: rgb(255 255 255 / 20%);
+  border-color: rgb(255 255 255 / 35%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 2px 8px rgb(0 0 0 / 15%);
+}
+
+.song-interaction-section .interaction-buttons {
+  gap: 0.5rem;
+}
+
+.song-interaction-section .large-interaction-btn {
+  padding: 0.5rem 0.75rem;
+  min-width: 84px;
+  font-size: 0.82rem;
+  border-radius: 10px;
+}
+
+.song-interaction-section .btn-count {
+  font-size: 0.85rem;
 }
 
 /* 点赞用户区域样式优化 */
@@ -5047,23 +5347,114 @@ input[type="number"]::-webkit-inner-spin-button {
 .song-interaction-section .liked-users-title {
   color: rgb(255 255 255 / 95%);
   font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 16px;
+  margin-bottom: 0;
   text-align: left;
   letter-spacing: 0.02em;
 }
 
+.song-interaction-section .liked-users-grid {
+  gap: 0.35rem;
+}
+
 .song-interaction-section .liked-user-avatar {
   transition: all 0.3s ease;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid transparent;
+}
+
+.song-interaction-section .user-avatar-img,
+.song-interaction-section .more-likes {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-width: 2px;
+}
+
+.song-interaction-section .more-likes {
+  font-size: 11px;
+}
+
+.song-interaction-section .commentIco {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.song-interaction-section .liked-user-avatar:hover .user-avatar-img,
+.song-interaction-section .liked-user-avatar:hover .more-likes {
+  border-color: rgb(255 255 255 / 30%);
+  box-shadow: 0 4px 15px rgb(0 0 0 / 30%);
 }
 
 .song-interaction-section .liked-user-avatar:hover {
-  border-color: rgb(255 255 255 / 30%);
   transform: scale(1.1);
-  box-shadow: 0 4px 15px rgb(0 0 0 / 30%);
+}
+
+/* 新的点赞布局样式 - 无外框 */
+.interaction-layout-new {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.liked-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+
+.interaction-buttons-inline {
+  display: flex;
+  gap: 0.375rem;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.compact-interaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  min-width: auto;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 14%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 22%);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin: 0;
+}
+
+.compact-interaction-btn:hover {
+  background: rgb(255 255 255 / 20%);
+  border-color: rgb(255 255 255 / 35%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 2px 8px rgb(0 0 0 / 15%);
+}
+
+.compact-interaction-btn .btn-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.compact-interaction-btn svg,
+.compact-interaction-btn .commentIco {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.liked-users-section-new {
+  padding: 0;
+}
+
+.liked-users-section-new .liked-users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.375rem 0 0 0;
 }
 
 
@@ -5080,6 +5471,8 @@ input[type="number"]::-webkit-inner-spin-button {
   .song-main-card {
     gap: 1.5rem;
     padding: 1.5rem;
+    background: transparent;
+    border: none;
   }
 
   .song-title-modern {
@@ -5102,7 +5495,9 @@ input[type="number"]::-webkit-inner-spin-button {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.25rem;
-    border-radius: 12px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
   }
 
   .song-cover-section {
@@ -5128,6 +5523,31 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .designer-link {
     justify-content: center;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .song-info-sidebar > .glass-panel:has(.designer-link) .designer-link {
+    padding: 1rem;
+  }
+
+  .designer-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .designer-username {
+    font-size: 0.9rem;
+  }
+
+  .designer-name {
+    font-size: 0.75rem;
+  }
+
+  .designer-text {
+    font-size: 0.875rem;
   }
 
   .song-levels-section {
@@ -5153,6 +5573,21 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .level-value {
     font-size: 0.9rem;
+  }
+
+  /* 新版难度显示移动端适配 */
+  .difficulty-level-item {
+    padding: 0.4rem 0.75rem;
+    min-height: 2rem;
+  }
+
+  .difficulty-level-name {
+    font-size: 0.75rem;
+    min-width: 5rem;
+  }
+
+  .difficulty-level-value {
+    font-size: 1.25rem;
   }
 
   .song-actions-section {
@@ -5203,7 +5638,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
   .song-main-card {
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
   }
 
   .song-cover-section {

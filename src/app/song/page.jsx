@@ -18,9 +18,9 @@ import {
   TagManageWidget,
 } from "../widgets";
 import SongDifficultyLevels from "./SongDifficultyLevels";
-import { FaComments } from 'react-icons/fa';
-import { AiFillDelete } from 'react-icons/ai';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaComments } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
@@ -53,8 +53,7 @@ export default function Page() {
       <div
         className="bg song-bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
-      >
-      </div>
+      ></div>
 
       <Tippy
         singleton={source}
@@ -62,7 +61,6 @@ export default function Page() {
         placement="top-start"
         interactive={true}
       />
-      <MajdataView id={param} />
       <SongDetailsContainer id={param} tippy={target} />
       <div className="hr-solid"></div>
       <ScoreList songid={param} />
@@ -75,21 +73,20 @@ export default function Page() {
 
 const fetcher = (url) =>
   fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 function SongDetailsContainer({ id, tippy }) {
   return (
     <div className="song-details-main-container">
       <SongInfo id={id} tippy={tippy} />
-      <div className="song-details-divider"></div>
-      <LikeSender songid={id} />
     </div>
   );
 }
 
 function SongInfo({ id, tippy }) {
   const tagButtonRef = useState();
+  const [isLoadMajdata, setIsLoadMajdata] = useState(false);
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
     fetcher,
@@ -115,24 +112,47 @@ function SongInfo({ id, tippy }) {
     toast.success(loc("ClipboardSuccess"));
   };
   const o = data;
+  const levels = Array.isArray(o.levels) ? o.levels : [];
+  const isLevelValid = (level) => level !== "" && level != null;
+  let heroLevelIndex = -1;
+  if (isLevelValid(levels[5])) {
+    heroLevelIndex = 5;
+  } else if (isLevelValid(levels[4])) {
+    heroLevelIndex = 4;
+  } else {
+    heroLevelIndex = levels.findLastIndex((level) => isLevelValid(level));
+  }
+  const heroLevelLabel =
+    heroLevelIndex >= 0 ? getLevelName(heroLevelIndex) : "LEVEL";
+  const heroLevelValue = isLevelValid(levels[heroLevelIndex])
+    ? levels[heroLevelIndex]
+    : "?";
+  const heroBadgeTone =
+    heroLevelIndex === 5 ? "hero-badge-remaster" : "hero-badge-master";
 
   return (
     <div className="song-info-section">
-      {/* 主歌曲信息卡片 */}
-      <div className="song-main-card">
-        <div className="song-cover-section">
-          <CoverPic id={o.id} />
+      <section className="hero-section grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 mb-10">
+        <div className="flex justify-center items-start">
+          <div className="hero-cover w-48 h-48 md:w-64 md:h-64">
+            <CoverPic id={o.id} />
+          </div>
         </div>
 
-        <div className="song-content-section">
-          {/* 基本信息 */}
-          <div className="song-basic-info">
+        <div className="flex flex-col justify-between gap-3">
+          <div
+            style={{
+              marginTop: "20px",
+              lineHeight: "5.5",
+              textAlign: "center",
+            }}
+          >
             <Tippy
               content={loc("SearchForTitle") || "点击搜索该歌曲"}
               singleton={tippy}
             >
               <h1
-                className="song-title-modern clickable-title"
+                className="text-4xl md:text-5xl font-black tracking-tight drop-shadow-md clickable-title text-center"
                 id={o.id}
                 onClick={() => {
                   if (o.title && o.title !== "" && o.title !== null) {
@@ -144,158 +164,215 @@ function SongInfo({ id, tippy }) {
                 {o.title}
               </h1>
             </Tippy>
+
             <Tippy
               content={loc("SearchForArtist") || "点击搜索该艺术家"}
               singleton={tippy}
             >
-              <div
-                className="song-artist-modern clickable-artist"
-                onClick={() => {
-                  if (o.artist && o.artist !== "" && o.artist !== null) {
-                    localStorage.setItem("search", o.artist);
-                    window.location.href = "/";
-                  }
-                }}
-              >
-                {o.artist === "" || o.artist == null ? "-" : o.artist}
-              </div>
-            </Tippy>
-            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
-              <div className="song-designer-modern">
-                <a href={"/space?id=" + o.uploader} className="designer-link">
-                  <img
-                    className="designer-avatar"
-                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
-                    alt={o.uploader}
-                  />
-                  <span className="designer-text">
-                    {o.uploader + "@" + o.designer}
-                  </span>
-                </a>
+              <div className="text-xl md:text-2xl text-white/80 font-medium text-center">
+                <span
+                  className="song-artist-modern clickable-artist"
+                  onClick={() => {
+                    if (o.artist && o.artist !== "" && o.artist !== null) {
+                      localStorage.setItem("search", o.artist);
+                      window.location.href = "/";
+                    }
+                  }}
+                >
+                  Artist: {o.artist === "" || o.artist == null ? "-" : o.artist}
+                </span>
               </div>
             </Tippy>
           </div>
 
-          {/* 难度等级 */}
-          <div className="song-levels-section">
+          <div className="difficulty-display-container">
+            <h3 className="difficulty-display-title">All Difficulties</h3>
             <SongDifficultyLevels
               levels={o.levels}
               songid={o.id}
               isPlayer={true}
             />
           </div>
+        </div>
+      </section>
 
-          {/* 操作按钮 */}
-          <div className="song-actions-section">
-            <button
-              className="action-button share-button"
-              onClick={shareSong({ id: o.id })}
-              title={loc("Share")}
-            >
-              <svg
-                className="action-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                height="20"
-                viewBox="0 -960 960 960"
-                width="20"
-              >
-                <path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-640q17 0 28.5-11.5T760-760q0-17-11.5-28.5T720-800q-17 0-28.5 11.5T680-760q0 17 11.5 28.5T720-720ZM240-440q17 0 28.5-11.5T280-480q0-17-11.5-28.5T240-520q-17 0-28.5 11.5T200-480q0 17 11.5 28.5T240-440Zm480 280q17 0 28.5-11.5T760-200q0-17-11.5-28.5T720-240q-17 0-28.5 11.5T680-200q0 17 11.5 28.5T720-160Zm0-600ZM240-480Zm480 280Z" />
-              </svg>
-              <span className="action-text">{loc("Share") || "分享"}</span>
-            </button>
+      <div className="content-grid grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 lg:items-start">
+        <aside className="flex flex-col gap-4 song-info-sidebar">
+          {/* 移动端：设计师和标签水平排列 */}
+          <div className="sidebar-top-row">
+            <Tippy content={o.uploader + "@" + o.designer} singleton={tippy}>
+              <div className="glass-panel p-5 rounded-2xl sidebar-designer-panel">
+                <a href={"/space?id=" + o.uploader} className="designer-link">
+                  <img
+                    className="designer-avatar"
+                    src={apiroot3 + "/account/Icon?username=" + o.uploader}
+                    alt={o.uploader}
+                  />
+                  <div className="designer-info">
+                    <span className="designer-username">{o.uploader}</span>
+                    <span className="designer-name">{o.designer}</span>
+                  </div>
+                </a>
+              </div>
+            </Tippy>
 
+            <div className="glass-panel p-5 rounded-2xl sidebar-tags-panel">
+              <h3 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">
+                {loc("Tags") || "标签"}
+              </h3>
+              <div className="meta-tags-container">
+                {(o.tags || o.publicTags) &&
+                (o.tags.length > 0 || o.publicTags.length > 0) ? (
+                  <>
+                    {o.tags.map((tag, index) => (
+                      <Tippy content={loc("SearchForTag")} key={index}>
+                        <span
+                          className="tag-chip tag-private"
+                          onClick={() => {
+                            localStorage.setItem("search", tag);
+                            window.location.href = "/";
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      </Tippy>
+                    ))}
+                    {o.publicTags?.map((tag, index) => (
+                      <Tippy content={loc("SearchForTag")} key={index}>
+                        <span
+                          className="tag-chip tag-public"
+                          onClick={() => {
+                            localStorage.setItem("search", "tag:" + tag);
+                            window.location.href = "/";
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      </Tippy>
+                    ))}
+                  </>
+                ) : (
+                  <span className="no-tags-text">
+                    {loc("NoTags") || "暂无标签"}
+                  </span>
+                )}
+                <TagManageTagLauncher
+                  onClick={() => {
+                    tagButtonRef.current?.toggleWindow();
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="glass-panel p-5 rounded-2xl flex flex-col gap-2">
             <button
-              className="action-button download-button"
+              className="btn-glass w-full h-11 rounded-xl font-bold text-base shadow-lg transition-all border border-white/20"
               onClick={OnDownloadClick({ id: o.id, title: o.title })}
               title={loc("Download")}
             >
-              <svg
-                className="action-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                height="20"
-                viewBox="0 -960 960 960"
-                width="20"
-              >
-                <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
-              </svg>
-              <span className="action-text">{loc("Download") || "下载"}</span>
+              <span className="inline-flex items-center gap-2 justify-center w-full">
+                <svg
+                  className="action-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  viewBox="0 -960 960 960"
+                  width="20"
+                >
+                  <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                </svg>
+                <span>{loc("Download") || "下载"}</span>
+              </span>
             </button>
-
-            <div
-              className="action-button tag-manage-button"
-              onClick={() => tagButtonRef.current?.toggleWindow()}
+            <button
+              className="btn-glass w-full h-11 rounded-xl font-bold text-base shadow-lg transition-all border border-white/20"
+              onClick={shareSong({ id: o.id })}
+              title={loc("Share")}
             >
-              <TagManageWidget ref={tagButtonRef} songid={o.id}>
-              </TagManageWidget>
-              <span className="action-text">{loc("Tags") || "标签"}</span>
+              <span className="inline-flex items-center gap-2 justify-center w-full">
+                <svg
+                  className="action-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  viewBox="0 -960 960 960"
+                  width="20"
+                >
+                  <path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-640q17 0 28.5-11.5T760-760q0-17-11.5-28.5T720-800q-17 0-28.5 11.5T680-760q0 17 11.5 28.5T720-720ZM240-440q17 0 28.5-11.5T280-480q0-17-11.5-28.5T240-520q-17 0-28.5 11.5T200-480q0 17 11.5 28.5T240-440Zm480 280q17 0 28.5-11.5T760-200q0-17-11.5-28.5T720-240q-17 0-28.5 11.5T680-200q0 17 11.5 28.5T720-160Zm0-600ZM240-480Zm480 280Z" />
+                </svg>
+                <span>{loc("Share") || "分享"}</span>
+              </span>
+            </button>
+            <div style={{ display: "none" }}>
+              <TagManageWidget ref={tagButtonRef} songid={o.id} />
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* 详细信息卡片 */}
-      <div className="song-meta-card">
-        <div className="meta-row">
-          <span className="meta-label">{loc("UploadTime") || "上传时间"}:</span>
-          <span className="meta-value">
-            {(new Date(o.timestamp)).toLocaleString()}
-          </span>
-        </div>
-        <div className="meta-row">
-          <span className="meta-label">ID:</span>
-          <span className="meta-value meta-id">{o.id}</span>
-        </div>
-        <div className="meta-row">
-          <span className="meta-label">HASH:</span>
-          <span className="meta-value meta-hash">{o.hash}</span>
-        </div>
-        <div className="meta-row meta-tags-row">
-          <span className="meta-label">{loc("Tags") || "标签"}:</span>
-          <div className="meta-tags-container">
-            {(o.tags || o.publicTags) &&
-              (o.tags.length > 0 || o.publicTags.length > 0)
-              ? (
-                <>
-                  {o.tags.map((tag, index) => (
-                    <Tippy content={loc("SearchForTag")} key={index}>
-                      <span
-                        className="tag-chip tag-private"
-                        onClick={() => {
-                          localStorage.setItem("search", tag);
-                          window.location.href = "/";
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    </Tippy>
-                  ))}
-                  {o.publicTags?.map((tag, index) => (
-                    <Tippy content={loc("SearchForTag")} key={index}>
-                      <span
-                        className="tag-chip tag-public"
-                        onClick={() => {
-                          localStorage.setItem("search", "tag:" + tag);
-                          window.location.href = "/";
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    </Tippy>
-                  ))}
-                </>
-              )
-              : (
-                <span className="no-tags-text">
-                  {loc("NoTags") || "暂无标签"}
-                </span>
-              )}
-            <TagManageTagLauncher
-              onClick={() => {
-                tagButtonRef.current?.toggleWindow();
-              }}
-            />
+          {/* ID/HASH/点赞面板 */}
+          <div className="glass-panel p-5 rounded-2xl relative overflow-hidden flex flex-col sidebar-info-panel">
+            <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm">
+              <span className="text-white/40">ID</span>
+              <code
+                className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
+                style={{ cursor: "pointer" }}
+                title="点击复制"
+                onClick={() => {
+                  navigator.clipboard.writeText(o.id);
+                  toast.success(loc("ClipboardSuccess"));
+                }}
+              >
+                {o.id}
+              </code>
+
+              <span className="text-white/40">HASH</span>
+              <code
+                className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
+                style={{ cursor: "pointer" }}
+                title="点击复制"
+                onClick={() => {
+                  navigator.clipboard.writeText(o.hash);
+                  toast.success(loc("ClipboardSuccess"));
+                }}
+              >
+                {o.hash}
+              </code>
+
+              <span className="text-white/40 text-xs">
+                {loc("UploadTime") || "上传时间"}
+              </span>
+              <span className="text-white/80 w-fit text-xs text-center pl-[7px]">
+                {new Date(o.timestamp).toLocaleString()}
+              </span>
+            </div>
+
+            <div className="border-t border-white/10 my-3"></div>
+
+            <LikeSender songid={o.id} />
           </div>
-        </div>
+        </aside>
+
+        <main className="flex flex-col gap-8">
+          {isLoadMajdata ? (
+            <MajdataView id={o.id} />
+          ) : (
+            <button className="btn-glass majViewPort rounded-xl font-bold text-base shadow-lg transition-all border border-white/20"
+              onClick={()=>setIsLoadMajdata(true)}
+            >
+              <span className="inline-flex items-center gap-2 justify-center w-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="120px"
+                  viewBox="0 -960 960 960"
+                  width="120px"
+                  fill="#e3e3e3"
+                >
+                  <path d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg>
+              </span>
+            </button>
+          )}
+
+          {/*  */}
+        </main>
       </div>
     </div>
   );
@@ -408,80 +485,87 @@ function LikeSender({ songid }) {
   };
   return (
     <div className="song-interaction-section">
-      <div className="interaction-layout">
-        {/* 左侧：点赞点踩按钮 */}
-        <div className="interaction-buttons">
-          <button
-            className="linkContentWithBorder modern-interaction-btn large-interaction-btn"
-            id="submitbuttonlike"
-            type="button"
-            onClick={() => onSubmit("like")}
-            disabled={isLikeLoading || isDislikeLoading}
-            style={{
-              background: data.isLiked
-                ? "linear-gradient(135deg, #10b981, #059669)"
-                : "",
-              opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
-              cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
-            }}
-          >
-            {isLikeLoading ? (
-              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "28px", height: "28px" }} />
-            ) : (
-              <svg
-                className="commentIco"
-                xmlns="http://www.w3.org/2000/svg"
-                height="28"
-                viewBox="0 -960 960 960"
-                width="28"
-                style={{ width: "28px", height: "28px" }}
-              >
-                <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
-              </svg>
-            )}
-            <span className="btn-count">{likecount}</span>
-          </button>
+      <div className="interaction-layout-new">
+        {/* 顶部标题和点赞按钮 */}
+        <div className="liked-users-header">
+          <h4 className="liked-users-title">{loc("LikedBy")}</h4>
+          <div className="interaction-buttons-inline">
+            <button
+              className="linkContentWithBorder modern-interaction-btn compact-interaction-btn"
+              id="submitbuttonlike"
+              type="button"
+              onClick={() => onSubmit("like")}
+              disabled={isLikeLoading || isDislikeLoading}
+              style={{
+                background: data.isLiked
+                  ? "linear-gradient(135deg, #10b981, #059669)"
+                  : "",
+                opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
+                cursor:
+                  isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
+              }}
+            >
+              {isLikeLoading ? (
+                <AiOutlineLoading3Quarters
+                  className="loading-icon-spin"
+                  style={{ width: "16px", height: "16px" }}
+                />
+              ) : (
+                <svg
+                  className="commentIco"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  viewBox="0 -960 960 960"
+                  width="16"
+                  style={{ width: "16px", height: "16px" }}
+                >
+                  <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
+                </svg>
+              )}
+              <span className="btn-count">{likecount}</span>
+            </button>
 
-          <button
-            className="linkContentWithBorder modern-interaction-btn large-interaction-btn"
-            id="submitbuttondislike"
-            type="button"
-            onClick={() => onSubmit("dislike")}
-            disabled={isLikeLoading || isDislikeLoading}
-            style={{
-              background: data.isDisLiked
-                ? "linear-gradient(135deg, #ef4444, #dc2626)"
-                : "",
-              opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
-              cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
-            }}
-          >
-            {isDislikeLoading ? (
-              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "28px", height: "28px" }} />
-            ) : (
-              <svg
-                className="commentIco"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 -960 960 960"
-                style={{ width: "28px", height: "28px" }}
-              >
-                <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
-              </svg>
-            )}
-            <span className="btn-count">{dislikecount}</span>
-          </button>
+            <button
+              className="linkContentWithBorder modern-interaction-btn compact-interaction-btn"
+              id="submitbuttondislike"
+              type="button"
+              onClick={() => onSubmit("dislike")}
+              disabled={isLikeLoading || isDislikeLoading}
+              style={{
+                background: data.isDisLiked
+                  ? "linear-gradient(135deg, #ef4444, #dc2626)"
+                  : "",
+                opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
+                cursor:
+                  isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
+              }}
+            >
+              {isDislikeLoading ? (
+                <AiOutlineLoading3Quarters
+                  className="loading-icon-spin"
+                  style={{ width: "16px", height: "16px" }}
+                />
+              ) : (
+                <svg
+                  className="commentIco"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 -960 960 960"
+                  style={{ width: "16px", height: "16px" }}
+                >
+                  <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
+                </svg>
+              )}
+              <span className="btn-count">{dislikecount}</span>
+            </button>
+          </div>
         </div>
 
-        {/* 中间：分割线 */}
-        <div className="interaction-divider"></div>
-
-        {/* 右侧：点赞用户头像区域 */}
-        <div className="liked-users-section">
-          <h4 className="liked-users-title">{loc("LikedBy")}</h4>
+        {/* 点赞用户头像区域 */}
+        <div className="liked-users-section-new">
           <div className="liked-users-grid">
-            {data.likes && data.likes.length > 0
-              ? (
-                data.likes.map((username, index) => (
+            {data.likes && data.likes.length > 0 ? (
+              <>
+                {data.likes.slice(0, 40).map((username, index) => (
                   <a
                     key={username}
                     href={"/space?id=" + username}
@@ -495,14 +579,26 @@ function LikeSender({ songid }) {
                       title={username}
                     />
                   </a>
-                ))
-              )
-              : (
-                <div className="no-likes-placeholder">
-                  <div className="placeholder-icon">👍</div>
-                  <p className="placeholder-text">{loc("BeFirstToLike")}</p>
-                </div>
-              )}
+                ))}
+                {data.likes.length > 40 && (
+                  <div
+                    className="liked-user-avatar"
+                    style={{ animationDelay: `${40 * 0.1}s` }}
+                  >
+                    <div
+                      className="more-likes"
+                      title={`还有 ${data.likes.length - 40} 位用户点赞`}
+                    >
+                      +{data.likes.length - 40}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="no-likes-placeholder">
+                <p className="placeholder-text">{loc("BeFirstToLike")}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -524,7 +620,9 @@ function CommentComposer({
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
+    <div
+      className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}
+    >
       <textarea
         className="userinput commentbox modern-textarea"
         placeholder={placeholder}
@@ -548,7 +646,9 @@ function CommentComposer({
           {value.trim() ? (
             <MarkdownCommentContent content={value} />
           ) : (
-            <div className="preview-placeholder">{loc("PreviewPlaceholder")}</div>
+            <div className="preview-placeholder">
+              {loc("PreviewPlaceholder")}
+            </div>
           )}
         </div>
       )}
@@ -560,13 +660,16 @@ function CommentComposer({
           onClick={onSubmit}
           disabled={!value.trim() || isSubmitting}
           style={{
-            opacity: (!value.trim() || isSubmitting) ? 0.6 : 1,
-            cursor: (!value.trim() || isSubmitting) ? "not-allowed" : "pointer",
+            opacity: !value.trim() || isSubmitting ? 0.6 : 1,
+            cursor: !value.trim() || isSubmitting ? "not-allowed" : "pointer",
           }}
         >
           {isSubmitting ? (
             <>
-              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "16px", height: "16px", marginRight: "4px" }} />
+              <AiOutlineLoading3Quarters
+                className="loading-icon-spin"
+                style={{ width: "16px", height: "16px", marginRight: "4px" }}
+              />
               {loc("PleaseWait")}
             </>
           ) : (
@@ -595,9 +698,7 @@ function CommentComposer({
 function CommentSender({ songid }) {
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { mutate } = useSWR(
-    apiroot3 + "/maichart/" + songid + "/interact",
-  );
+  const { mutate } = useSWR(apiroot3 + "/maichart/" + songid + "/interact");
 
   const onSubmit = async () => {
     if (comment.trim() === "") {
@@ -666,20 +767,29 @@ function MarkdownCommentContent({ content, comment }) {
   let processedContent = "";
   if (comment) {
     if (comment.contentBody) {
-      processedContent = comment.contentPrefix + comment.contentBody.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
-        return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-      });
+      processedContent =
+        comment.contentPrefix +
+        comment.contentBody.replace(
+          /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+          (match, username) => {
+            return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+          },
+        );
+    } else {
+      processedContent = comment.content.replace(
+        /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+        (match, username) => {
+          return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+        },
+      );
     }
-    else {
-      processedContent = comment.content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+  } else {
+    processedContent = content.replace(
+      /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+      (match, username) => {
         return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-      });
-    }
-  }
-  else {
-    processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
-      return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-    });
+      },
+    );
   }
   //console.log(processedContent)
   return (
@@ -701,7 +811,13 @@ function MarkdownCommentContent({ content, comment }) {
         a(props) {
           const { href, children, ...rest } = props;
           // 检查是否是@mention链接
-          if (href && href.startsWith('/space?id=') && children && typeof children[0] === 'string' && children[0].startsWith('@')) {
+          if (
+            href &&
+            href.startsWith("/space?id=") &&
+            children &&
+            typeof children[0] === "string" &&
+            children[0].startsWith("@")
+          ) {
             return (
               <a
                 href={href}
@@ -719,12 +835,7 @@ function MarkdownCommentContent({ content, comment }) {
           }
           // 普通链接在新窗口打开
           return (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              {...rest}
-            >
+            <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
               {children}
             </a>
           );
@@ -735,7 +846,6 @@ function MarkdownCommentContent({ content, comment }) {
     </Markdown>
   );
 }
-
 
 // CommentCard - 单条评论卡片（仅用于子回复）
 function CommentCard({
@@ -764,7 +874,9 @@ function CommentCard({
   }, [comment.content]);
 
   return (
-    <div className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}>
+    <div
+      className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}
+    >
       <div className="comment-header">
         <a href={"/space?id=" + comment.sender} className="commenter-link">
           <img
@@ -843,7 +955,9 @@ function CommentCard({
               cursor: isCommentPending ? "not-allowed" : "pointer",
             }}
           >
-            {isRepliesExpanded ? `收起 ${replyCount} 条回复` : `展开 ${replyCount} 条回复`}
+            {isRepliesExpanded
+              ? `收起 ${replyCount} 条回复`
+              : `展开 ${replyCount} 条回复`}
           </button>
         )}
       </div>
@@ -863,7 +977,6 @@ function CommentThread({
   onToggleReplies,
   replyComposer,
 }) {
-
   function flattenComments(comments, parentComment) {
     const result = [];
     if (!comments) {
@@ -893,18 +1006,16 @@ function CommentThread({
         comment.replyTo = parentComment.id;
         comment.contentPrefix = "";
         comment.contentBody = comment.content;
-      }
-      else {
-        const target = result.find(c => c.id === comment.replyTo);
+      } else {
+        const target = result.find((c) => c.id === comment.replyTo);
         const origContent = comment.content;
         comment.contentPrefix = `${loc("ReplyTo")} [@${target.sender}](/space?id=${encodeURIComponent(target.sender)}): `;
-        comment.contentBody = origContent
+        comment.contentBody = origContent;
         comment.content = comment.contentPrefix + comment.contentBody;
       }
     }
 
-    return result.sort(
-      (a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    return result.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   }
   const canDelete = currentUser && comment.sender === currentUser;
   const replies = flattenComments(comment.replies, comment.id);
@@ -1006,7 +1117,9 @@ function CommentThread({
               cursor: isCommentPending ? "not-allowed" : "pointer",
             }}
           >
-            {isExpanded ? `收起 ${replies.length} 条回复` : `展开 ${replies.length} 条回复`}
+            {isExpanded
+              ? `收起 ${replies.length} 条回复`
+              : `展开 ${replies.length} 条回复`}
           </button>
         )}
       </div>
@@ -1033,7 +1146,6 @@ function CommentThread({
     </div>
   );
 }
-
 
 function CommentList({ songid }) {
   //表示回复对象
@@ -1069,12 +1181,12 @@ function CommentList({ songid }) {
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
     {
-      refreshInterval: replyThreadId ? 0 : 3000 // 回复输入时暂停自动刷新
+      refreshInterval: replyThreadId ? 0 : 3000, // 回复输入时暂停自动刷新
     },
   );
 
   const handleToggleReplies = (commentId) => {
-    setExpandedComments(prev => {
+    setExpandedComments((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(commentId)) {
         newSet.delete(commentId);
@@ -1089,7 +1201,10 @@ function CommentList({ songid }) {
     // 找到顶层评论的 ID
     const topLevelCommentId = parentComment ? parentComment.id : comment.id;
 
-    if (replyThreadId === topLevelCommentId && replyTargetUser === comment.sender) {
+    if (
+      replyThreadId === topLevelCommentId &&
+      replyTargetUser === comment.sender
+    ) {
       // 再次点击同一评论，关闭输入框
       setReplyTargetId(null);
       setReplyThreadId(null);
@@ -1106,11 +1221,11 @@ function CommentList({ songid }) {
       } else {
         setReplyTargetUser(null);
         setReplyTargetId(topLevelCommentId);
-        console.log(comment.id)
+        console.log(comment.id);
       }
       setReplyContent("");
       // 自动展开回复列表
-      setExpandedComments(prev => new Set(prev).add(topLevelCommentId));
+      setExpandedComments((prev) => new Set(prev).add(topLevelCommentId));
     }
   };
 
@@ -1292,7 +1407,7 @@ function ScoreList({ songid }) {
   const scoreList = data.scores;
   console.log(scoreList);
   const objlist = scoreList.map((p, index) =>
-    p.length !== 0 ? ScoreListLevel(p, index) : <></>
+    p.length !== 0 ? ScoreListLevel(p, index) : <></>,
   );
   return (
     <div className="song-score-list">
@@ -1367,12 +1482,13 @@ function scoreCard(score, index) {
         </div>
         <div className="score-results">
           <div
-            className={`score-accuracy ${comboState === "AP+" || comboState === "AP"
-              ? "score-accuracy-ap"
-              : comboState === "FC+" || comboState === "FC"
-                ? "score-accuracy-fc"
-                : ""
-              }`}
+            className={`score-accuracy ${
+              comboState === "AP+" || comboState === "AP"
+                ? "score-accuracy-ap"
+                : comboState === "FC+" || comboState === "FC"
+                  ? "score-accuracy-fc"
+                  : ""
+            }`}
           >
             {score.acc.toFixed(4)}%
           </div>
