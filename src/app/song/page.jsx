@@ -18,9 +18,9 @@ import {
   TagManageWidget,
 } from "../widgets";
 import SongDifficultyLevels from "./SongDifficultyLevels";
-import { FaComments } from 'react-icons/fa';
-import { AiFillDelete } from 'react-icons/ai';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaComments } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -52,8 +52,7 @@ export default function Page() {
       <div
         className="bg song-bg"
         style={{ backgroundImage: `url(${apiroot3}/maichart/${param}/image)` }}
-      >
-      </div>
+      ></div>
 
       <Tippy
         singleton={source}
@@ -80,7 +79,7 @@ export default function Page() {
 
 const fetcher = (url) =>
   fetch(url, { mode: "cors", credentials: "include" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 function SongDetailsContainer({ id, tippy }) {
@@ -93,6 +92,7 @@ function SongDetailsContainer({ id, tippy }) {
 
 function SongInfo({ id, tippy }) {
   const tagButtonRef = useState();
+  const [isLoadMajdata, setIsLoadMajdata] = useState(false);
   const { data, error, isLoading } = useSWR(
     apiroot3 + "/maichart/" + id + "/summary",
     fetcher,
@@ -146,7 +146,13 @@ function SongInfo({ id, tippy }) {
         </div>
 
         <div className="flex flex-col justify-between gap-3">
-          <div style={{ marginTop: '20px', lineHeight: '5.5', textAlign: 'center' }}>
+          <div
+            style={{
+              marginTop: "20px",
+              lineHeight: "5.5",
+              textAlign: "center",
+            }}
+          >
             <Tippy
               content={loc("SearchForTitle") || "点击搜索该歌曲"}
               singleton={tippy}
@@ -186,10 +192,12 @@ function SongInfo({ id, tippy }) {
           </div>
 
           <div className="difficulty-display-container">
-            <h3 className="difficulty-display-title">
-              All Difficulties
-            </h3>
-            <SongDifficultyLevels levels={o.levels} songid={o.id} isPlayer={true} />
+            <h3 className="difficulty-display-title">All Difficulties</h3>
+            <SongDifficultyLevels
+              levels={o.levels}
+              songid={o.id}
+              isPlayer={true}
+            />
           </div>
         </div>
       </section>
@@ -220,42 +228,40 @@ function SongInfo({ id, tippy }) {
               </h3>
               <div className="meta-tags-container">
                 {(o.tags || o.publicTags) &&
-                  (o.tags.length > 0 || o.publicTags.length > 0)
-                  ? (
-                    <>
-                      {o.tags.map((tag, index) => (
-                        <Tippy content={loc("SearchForTag")} key={index}>
-                          <span
-                            className="tag-chip tag-private"
-                            onClick={() => {
-                              localStorage.setItem("search", tag);
-                              window.location.href = "/";
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        </Tippy>
-                      ))}
-                      {o.publicTags?.map((tag, index) => (
-                        <Tippy content={loc("SearchForTag")} key={index}>
-                          <span
-                            className="tag-chip tag-public"
-                            onClick={() => {
-                              localStorage.setItem("search", "tag:" + tag);
-                              window.location.href = "/";
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        </Tippy>
-                      ))}
-                    </>
-                  )
-                  : (
-                    <span className="no-tags-text">
-                      {loc("NoTags") || "暂无标签"}
-                    </span>
-                  )}
+                (o.tags.length > 0 || o.publicTags.length > 0) ? (
+                  <>
+                    {o.tags.map((tag, index) => (
+                      <Tippy content={loc("SearchForTag")} key={index}>
+                        <span
+                          className="tag-chip tag-private"
+                          onClick={() => {
+                            localStorage.setItem("search", tag);
+                            window.location.href = "/";
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      </Tippy>
+                    ))}
+                    {o.publicTags?.map((tag, index) => (
+                      <Tippy content={loc("SearchForTag")} key={index}>
+                        <span
+                          className="tag-chip tag-public"
+                          onClick={() => {
+                            localStorage.setItem("search", "tag:" + tag);
+                            window.location.href = "/";
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      </Tippy>
+                    ))}
+                  </>
+                ) : (
+                  <span className="no-tags-text">
+                    {loc("NoTags") || "暂无标签"}
+                  </span>
+                )}
                 <TagManageTagLauncher
                   onClick={() => {
                     tagButtonRef.current?.toggleWindow();
@@ -311,7 +317,7 @@ function SongInfo({ id, tippy }) {
           <div className="glass-panel p-5 rounded-2xl relative overflow-hidden flex flex-col sidebar-info-panel">
             <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm">
               <span className="text-white/40">ID</span>
-              <code 
+              <code
                 className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
                 style={{ cursor: "pointer" }}
                 title="点击复制"
@@ -324,7 +330,7 @@ function SongInfo({ id, tippy }) {
               </code>
 
               <span className="text-white/40">HASH</span>
-              <code 
+              <code
                 className="font-mono bg-black/20 px-2 py-0.5 rounded text-white/80 w-fit text-xs break-all text-center"
                 style={{ cursor: "pointer" }}
                 title="点击复制"
@@ -336,9 +342,11 @@ function SongInfo({ id, tippy }) {
                 {o.hash}
               </code>
 
-              <span className="text-white/40 text-xs">{loc("UploadTime") || "上传时间"}</span>
+              <span className="text-white/40 text-xs">
+                {loc("UploadTime") || "上传时间"}
+              </span>
               <span className="text-white/80 w-fit text-xs text-center pl-[7px]">
-                {(new Date(o.timestamp)).toLocaleString()}
+                {new Date(o.timestamp).toLocaleString()}
               </span>
             </div>
 
@@ -349,7 +357,27 @@ function SongInfo({ id, tippy }) {
         </aside>
 
         <main className="flex flex-col gap-8">
-          <MajdataView id={o.id} />
+          {isLoadMajdata ? (
+            <MajdataView id={o.id} />
+          ) : (
+            <button className="btn-glass majViewPort rounded-xl font-bold text-base shadow-lg transition-all border border-white/20"
+              onClick={()=>setIsLoadMajdata(true)}
+            >
+              <span className="inline-flex items-center gap-2 justify-center w-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="120px"
+                  viewBox="0 -960 960 960"
+                  width="120px"
+                  fill="#e3e3e3"
+                >
+                  <path d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg>
+              </span>
+            </button>
+          )}
+
+          {/*  */}
         </main>
       </div>
     </div>
@@ -479,11 +507,15 @@ function LikeSender({ songid }) {
                   ? "linear-gradient(135deg, #10b981, #059669)"
                   : "",
                 opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
-                cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
+                cursor:
+                  isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
               }}
             >
               {isLikeLoading ? (
-                <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "16px", height: "16px" }} />
+                <AiOutlineLoading3Quarters
+                  className="loading-icon-spin"
+                  style={{ width: "16px", height: "16px" }}
+                />
               ) : (
                 <svg
                   className="commentIco"
@@ -510,11 +542,15 @@ function LikeSender({ songid }) {
                   ? "linear-gradient(135deg, #ef4444, #dc2626)"
                   : "",
                 opacity: isLikeLoading || isDislikeLoading ? 0.6 : 1,
-                cursor: isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
+                cursor:
+                  isLikeLoading || isDislikeLoading ? "not-allowed" : "pointer",
               }}
             >
               {isDislikeLoading ? (
-                <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "16px", height: "16px" }} />
+                <AiOutlineLoading3Quarters
+                  className="loading-icon-spin"
+                  style={{ width: "16px", height: "16px" }}
+                />
               ) : (
                 <svg
                   className="commentIco"
@@ -533,38 +569,42 @@ function LikeSender({ songid }) {
         {/* 点赞用户头像区域 */}
         <div className="liked-users-section-new">
           <div className="liked-users-grid">
-            {data.likes && data.likes.length > 0
-              ? (
-                <>
-                  {data.likes.slice(0, 40).map((username, index) => (
-                    <a
-                      key={username}
-                      href={"/space?id=" + username}
-                      className="liked-user-avatar"
-                      style={{ animationDelay: `${index * 0.1}s` }}
+            {data.likes && data.likes.length > 0 ? (
+              <>
+                {data.likes.slice(0, 40).map((username, index) => (
+                  <a
+                    key={username}
+                    href={"/space?id=" + username}
+                    className="liked-user-avatar"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <img
+                      className="user-avatar-img"
+                      src={apiroot3 + "/account/Icon?username=" + username}
+                      alt={username}
+                      title={username}
+                    />
+                  </a>
+                ))}
+                {data.likes.length > 40 && (
+                  <div
+                    className="liked-user-avatar"
+                    style={{ animationDelay: `${40 * 0.1}s` }}
+                  >
+                    <div
+                      className="more-likes"
+                      title={`还有 ${data.likes.length - 40} 位用户点赞`}
                     >
-                      <img
-                        className="user-avatar-img"
-                        src={apiroot3 + "/account/Icon?username=" + username}
-                        alt={username}
-                        title={username}
-                      />
-                    </a>
-                  ))}
-                  {data.likes.length > 40 && (
-                    <div className="liked-user-avatar" style={{ animationDelay: `${40 * 0.1}s` }}>
-                      <div className="more-likes" title={`还有 ${data.likes.length - 40} 位用户点赞`}>
-                        +{data.likes.length - 40}
-                      </div>
+                      +{data.likes.length - 40}
                     </div>
-                  )}
-                </>
-              )
-              : (
-                <div className="no-likes-placeholder">
-                  <p className="placeholder-text">{loc("BeFirstToLike")}</p>
-                </div>
-              )}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="no-likes-placeholder">
+                <p className="placeholder-text">{loc("BeFirstToLike")}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -586,7 +626,9 @@ function CommentComposer({
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
+    <div
+      className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}
+    >
       <textarea
         className="userinput commentbox modern-textarea"
         placeholder={placeholder}
@@ -610,7 +652,9 @@ function CommentComposer({
           {value.trim() ? (
             <MarkdownCommentContent content={value} />
           ) : (
-            <div className="preview-placeholder">{loc("PreviewPlaceholder")}</div>
+            <div className="preview-placeholder">
+              {loc("PreviewPlaceholder")}
+            </div>
           )}
         </div>
       )}
@@ -622,13 +666,16 @@ function CommentComposer({
           onClick={onSubmit}
           disabled={!value.trim() || isSubmitting}
           style={{
-            opacity: (!value.trim() || isSubmitting) ? 0.6 : 1,
-            cursor: (!value.trim() || isSubmitting) ? "not-allowed" : "pointer",
+            opacity: !value.trim() || isSubmitting ? 0.6 : 1,
+            cursor: !value.trim() || isSubmitting ? "not-allowed" : "pointer",
           }}
         >
           {isSubmitting ? (
             <>
-              <AiOutlineLoading3Quarters className="loading-icon-spin" style={{ width: "16px", height: "16px", marginRight: "4px" }} />
+              <AiOutlineLoading3Quarters
+                className="loading-icon-spin"
+                style={{ width: "16px", height: "16px", marginRight: "4px" }}
+              />
               {loc("PleaseWait")}
             </>
           ) : (
@@ -657,9 +704,7 @@ function CommentComposer({
 function CommentSender({ songid }) {
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { mutate } = useSWR(
-    apiroot3 + "/maichart/" + songid + "/interact",
-  );
+  const { mutate } = useSWR(apiroot3 + "/maichart/" + songid + "/interact");
 
   const onSubmit = async () => {
     if (comment.trim() === "") {
@@ -728,20 +773,29 @@ function MarkdownCommentContent({ content, comment }) {
   let processedContent = "";
   if (comment) {
     if (comment.contentBody) {
-      processedContent = comment.contentPrefix + comment.contentBody.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
-        return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-      });
+      processedContent =
+        comment.contentPrefix +
+        comment.contentBody.replace(
+          /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+          (match, username) => {
+            return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+          },
+        );
+    } else {
+      processedContent = comment.content.replace(
+        /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+        (match, username) => {
+          return `[@${username}](/space?id=${encodeURIComponent(username)})`;
+        },
+      );
     }
-    else {
-      processedContent = comment.content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
+  } else {
+    processedContent = content.replace(
+      /@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g,
+      (match, username) => {
         return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-      });
-    }
-  }
-  else {
-    processedContent = content.replace(/@([a-zA-Z0-9_\u4e00-\u9fa5]+)/g, (match, username) => {
-      return `[@${username}](/space?id=${encodeURIComponent(username)})`;
-    });
+      },
+    );
   }
   //console.log(processedContent)
   return (
@@ -763,7 +817,13 @@ function MarkdownCommentContent({ content, comment }) {
         a(props) {
           const { href, children, ...rest } = props;
           // 检查是否是@mention链接
-          if (href && href.startsWith('/space?id=') && children && typeof children[0] === 'string' && children[0].startsWith('@')) {
+          if (
+            href &&
+            href.startsWith("/space?id=") &&
+            children &&
+            typeof children[0] === "string" &&
+            children[0].startsWith("@")
+          ) {
             return (
               <a
                 href={href}
@@ -781,12 +841,7 @@ function MarkdownCommentContent({ content, comment }) {
           }
           // 普通链接在新窗口打开
           return (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              {...rest}
-            >
+            <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
               {children}
             </a>
           );
@@ -797,7 +852,6 @@ function MarkdownCommentContent({ content, comment }) {
     </Markdown>
   );
 }
-
 
 // CommentCard - 单条评论卡片（仅用于子回复）
 function CommentCard({
@@ -816,7 +870,9 @@ function CommentCard({
   const isCommentPending = isPending === comment.id;
 
   return (
-    <div className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}>
+    <div
+      className={`comment-card modern-comment-card ${isReply ? "comment-card--reply" : ""}`}
+    >
       <div className="comment-header">
         <a href={"/space?id=" + comment.sender} className="commenter-link">
           <img
@@ -882,7 +938,9 @@ function CommentCard({
               cursor: isCommentPending ? "not-allowed" : "pointer",
             }}
           >
-            {isRepliesExpanded ? `收起 ${replyCount} 条回复` : `展开 ${replyCount} 条回复`}
+            {isRepliesExpanded
+              ? `收起 ${replyCount} 条回复`
+              : `展开 ${replyCount} 条回复`}
           </button>
         )}
       </div>
@@ -902,7 +960,6 @@ function CommentThread({
   onToggleReplies,
   replyComposer,
 }) {
-
   function flattenComments(comments, parentComment) {
     const result = [];
     if (!comments) {
@@ -932,18 +989,16 @@ function CommentThread({
         comment.replyTo = parentComment.id;
         comment.contentPrefix = "";
         comment.contentBody = comment.content;
-      }
-      else {
-        const target = result.find(c => c.id === comment.replyTo);
+      } else {
+        const target = result.find((c) => c.id === comment.replyTo);
         const origContent = comment.content;
         comment.contentPrefix = `${loc("ReplyTo")} [@${target.sender}](/space?id=${encodeURIComponent(target.sender)}): `;
-        comment.contentBody = origContent
+        comment.contentBody = origContent;
         comment.content = comment.contentPrefix + comment.contentBody;
       }
     }
 
-    return result.sort(
-      (a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    return result.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   }
   const canDelete = currentUser && comment.sender === currentUser;
   const replies = flattenComments(comment.replies, comment.id);
@@ -1020,7 +1075,9 @@ function CommentThread({
               cursor: isCommentPending ? "not-allowed" : "pointer",
             }}
           >
-            {isExpanded ? `收起 ${replies.length} 条回复` : `展开 ${replies.length} 条回复`}
+            {isExpanded
+              ? `收起 ${replies.length} 条回复`
+              : `展开 ${replies.length} 条回复`}
           </button>
         )}
       </div>
@@ -1047,7 +1104,6 @@ function CommentThread({
     </div>
   );
 }
-
 
 function CommentList({ songid }) {
   //表示回复对象
@@ -1083,12 +1139,12 @@ function CommentList({ songid }) {
     apiroot3 + "/maichart/" + songid + "/interact",
     fetcher,
     {
-      refreshInterval: replyThreadId ? 0 : 3000 // 回复输入时暂停自动刷新
+      refreshInterval: replyThreadId ? 0 : 3000, // 回复输入时暂停自动刷新
     },
   );
 
   const handleToggleReplies = (commentId) => {
-    setExpandedComments(prev => {
+    setExpandedComments((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(commentId)) {
         newSet.delete(commentId);
@@ -1103,7 +1159,10 @@ function CommentList({ songid }) {
     // 找到顶层评论的 ID
     const topLevelCommentId = parentComment ? parentComment.id : comment.id;
 
-    if (replyThreadId === topLevelCommentId && replyTargetUser === comment.sender) {
+    if (
+      replyThreadId === topLevelCommentId &&
+      replyTargetUser === comment.sender
+    ) {
       // 再次点击同一评论，关闭输入框
       setReplyTargetId(null);
       setReplyThreadId(null);
@@ -1120,11 +1179,11 @@ function CommentList({ songid }) {
       } else {
         setReplyTargetUser(null);
         setReplyTargetId(topLevelCommentId);
-        console.log(comment.id)
+        console.log(comment.id);
       }
       setReplyContent("");
       // 自动展开回复列表
-      setExpandedComments(prev => new Set(prev).add(topLevelCommentId));
+      setExpandedComments((prev) => new Set(prev).add(topLevelCommentId));
     }
   };
 
@@ -1306,7 +1365,7 @@ function ScoreList({ songid }) {
   const scoreList = data.scores;
   console.log(scoreList);
   const objlist = scoreList.map((p, index) =>
-    p.length !== 0 ? ScoreListLevel(p, index) : <></>
+    p.length !== 0 ? ScoreListLevel(p, index) : <></>,
   );
   return (
     <div className="song-score-list">
@@ -1381,12 +1440,13 @@ function scoreCard(score, index) {
         </div>
         <div className="score-results">
           <div
-            className={`score-accuracy ${comboState === "AP+" || comboState === "AP"
-              ? "score-accuracy-ap"
-              : comboState === "FC+" || comboState === "FC"
-                ? "score-accuracy-fc"
-                : ""
-              }`}
+            className={`score-accuracy ${
+              comboState === "AP+" || comboState === "AP"
+                ? "score-accuracy-ap"
+                : comboState === "FC+" || comboState === "FC"
+                  ? "score-accuracy-fc"
+                  : ""
+            }`}
           >
             {score.acc.toFixed(4)}%
           </div>
@@ -1396,4 +1456,3 @@ function scoreCard(score, index) {
     </div>
   );
 }
-
