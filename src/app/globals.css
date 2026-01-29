@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 /* Component Styles - 组件样式 */
-@import '../styles/components/unifiedHeader.css';
-@import '../styles/components/pageLayout.css';
-@import '../styles/components/floatingButtons.css';
-@import '../styles/components/events.css';
+@import "../styles/components/unifiedHeader.css";
+@import "../styles/components/pageLayout.css";
+@import "../styles/components/floatingButtons.css";
+@import "../styles/components/events.css";
 
 :root {
   --foreground-rgb: 255, 255, 255, 100;
@@ -66,7 +66,6 @@ p {
   margin: 1rem;
 }
 
-
 h1 {
   color: whitesmoke;
   text-align: center;
@@ -94,7 +93,6 @@ h2 {
 
 /* Mobile Responsive */
 @media screen and (width <=768px) {
-
   .search-container {
     padding: 0.5rem;
     margin-top: 0.5rem;
@@ -165,7 +163,6 @@ h2 {
     user-select: text;
   }
 
-
   .hero-content {
     padding: 0 0.5rem;
   }
@@ -181,8 +178,6 @@ h2 {
     z-index: 10000;
   }
 
-
-
   .setting-item {
     padding: 1rem;
   }
@@ -190,7 +185,6 @@ h2 {
   .setting-icon {
     font-size: 1.3rem;
   }
-
 
   .setting-label {
     font-size: 0.85rem;
@@ -694,7 +688,9 @@ h2 {
   border-radius: 24px;
   padding: 3rem 2rem;
   border: var(--glassmorphism-border);
-  box-shadow: 0 20px 60px rgb(0 0 0 / 30%), 0 4px 20px rgb(59 130 246 / 10%);
+  box-shadow:
+    0 20px 60px rgb(0 0 0 / 30%),
+    0 4px 20px rgb(59 130 246 / 10%);
 }
 
 .edit-logo {
@@ -780,13 +776,17 @@ h2 {
   font-weight: 600;
   transition: all 0.3s ease;
   border: none;
-  box-shadow: 0 8px 25px rgb(16 185 129 / 30%), 0 2px 10px rgb(0 0 0 / 20%);
+  box-shadow:
+    0 8px 25px rgb(16 185 129 / 30%),
+    0 2px 10px rgb(0 0 0 / 20%);
 }
 
 .primary-download-button:hover .download-button-content {
   background: linear-gradient(135deg, #059669, #047857);
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgb(16 185 129 / 40%), 0 4px 15px rgb(0 0 0 / 30%);
+  box-shadow:
+    0 12px 35px rgb(16 185 129 / 40%),
+    0 4px 15px rgb(0 0 0 / 30%);
 }
 
 /* Section Styles */
@@ -831,7 +831,9 @@ h2 {
   background: rgb(35 35 40 / 95%);
   border-color: rgb(59 130 246 / 30%);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 30%), 0 4px 15px rgb(59 130 246 / 10%);
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 30%),
+    0 4px 15px rgb(59 130 246 / 10%);
 }
 
 .tutorial-content {
@@ -876,7 +878,9 @@ h2 {
   background: rgb(35 35 40 / 95%);
   border-color: rgb(59 130 246 / 30%);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 30%), 0 4px 15px rgb(59 130 246 / 10%);
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 30%),
+    0 4px 15px rgb(59 130 246 / 10%);
 }
 
 .video-player {
@@ -943,7 +947,9 @@ h2 {
   background: rgb(35 35 40 / 95%);
   border-color: rgb(59 130 246 / 30%);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 30%), 0 4px 15px rgb(59 130 246 / 10%);
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 30%),
+    0 4px 15px rgb(59 130 246 / 10%);
 }
 
 .discord-card:hover {
@@ -1001,7 +1007,9 @@ h2 {
   background: rgb(35 35 40 / 95%);
   border-color: rgb(59 130 246 / 30%);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 30%), 0 4px 15px rgb(59 130 246 / 10%);
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 30%),
+    0 4px 15px rgb(59 130 246 / 10%);
 }
 
 .link-content {
@@ -1676,7 +1684,6 @@ h2 {
   border-radius: 2px;
 }
 
-
 @media (width <=768px) {
   .settings-grid {
     gap: 1.5rem;
@@ -1742,7 +1749,9 @@ img.songImg {
   border-radius: 10px;
   padding: 0.8rem;
   margin: auto;
-  box-shadow: 0 20px 60px rgb(0 0 0 / 40%), 0 8px 32px rgb(0 0 0 / 20%),
+  box-shadow:
+    0 20px 60px rgb(0 0 0 / 40%),
+    0 8px 32px rgb(0 0 0 / 20%),
     0 2px 0 rgb(255 255 255 / 8%) inset;
   height: 10rem;
   width: 20rem;
@@ -1774,20 +1783,17 @@ img.songImg {
 @media (width <=768px) {
   .songCardWrapper {
     flex: 1 1 150px;
-
   }
 }
 
 @media (width <=480px) {
   .songCardWrapper {
     flex: 1 1 100%;
-
   }
 }
 
 .songInfo {
   margin-left: 8.9rem;
-
 }
 
 .songTitle {
@@ -1940,7 +1946,6 @@ img.songImg {
     justify-content: space-between;
 
     align-items: center;
-
   }
 
   .sort-selector,
@@ -1968,7 +1973,6 @@ img.songImg {
     overflow: hidden;
 
     text-overflow: ellipsis;
-
   }
 
   .modern-select {
@@ -2073,7 +2077,9 @@ img.songImg {
   background: rgb(255 255 255 / 6%);
   color: rgb(255 255 255 / 80%);
   transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 0 0 8px rgb(255 255 255 / 2%), 0 0 12px rgb(255 255 255 / 8%);
+  box-shadow:
+    0 0 0 8px rgb(255 255 255 / 2%),
+    0 0 12px rgb(255 255 255 / 8%);
 }
 
 .search-clear-button:active {
@@ -2089,13 +2095,17 @@ img.songImg {
 .modern-search:hover {
   border-color: rgb(255 255 255 / 25%);
   background: rgb(25 25 30 / 85%);
-  box-shadow: 0 12px 40px rgb(0 0 0 / 40%), 0 2px 0 rgb(255 255 255 / 8%) inset;
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 40%),
+    0 2px 0 rgb(255 255 255 / 8%) inset;
 }
 
 .modern-search:focus {
   border-color: #3b82f6;
   background: rgb(30 30 35 / 90%);
-  box-shadow: 0 0 20px rgb(59 130 246 / 30%), 0 8px 32px rgb(0 0 0 / 40%),
+  box-shadow:
+    0 0 20px rgb(59 130 246 / 30%),
+    0 8px 32px rgb(0 0 0 / 40%),
     0 2px 0 rgb(59 130 246 / 20%) inset;
   outline: none;
 }
@@ -2210,7 +2220,6 @@ img.songImg {
     flex-wrap: nowrap;
 
     align-items: center;
-
   }
 
   /* 小屏幕下确保label隐藏 */
@@ -2227,7 +2236,6 @@ img.songImg {
     overflow: hidden;
 
     text-overflow: ellipsis;
-
   }
 
   .modern-select {
@@ -2237,7 +2245,6 @@ img.songImg {
     white-space: nowrap;
 
     overflow: hidden;
-
   }
 
   /* 小屏幕下拉框的placeholder样式 */
@@ -2266,7 +2273,6 @@ img.songImg {
   text-align: center;
   height: 2rem;
 
-
   width: auto;
   min-width: 80px;
   max-width: 100%;
@@ -2277,7 +2283,6 @@ img.songImg {
   padding: 0 1.2em;
 
   font-size: 1rem;
-
 
   white-space: nowrap;
 }
@@ -2339,7 +2344,6 @@ img.songImg {
   line-height: 1.8;
   color: #333;
   white-space: pre-line;
-
 }
 
 @media screen and (width <=700px) {
@@ -2453,7 +2457,6 @@ img.songImg {
   opacity: 1;
 }
 
-
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -2465,7 +2468,6 @@ img.songImg {
     transform: translateY(0);
   }
 }
-
 
 .setting-item {
   display: flex;
@@ -2640,7 +2642,6 @@ img.songImg {
   }
 }
 
-
 .commentbox {
   color: white;
   margin: auto;
@@ -2718,8 +2719,6 @@ img.songImg {
     border-top-color: rgb(255 255 255);
   }
 }
-
-
 
 .sortButton {
   bottom: 8rem;
@@ -2868,8 +2867,6 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: var(--background-start) !important;
 }
 
-
-
 .markdown-body ul,
 .markdown-body ol {
   display: table;
@@ -2992,7 +2989,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(35 35 40 / 95%);
   border-color: rgb(255 255 255 / 20%);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgb(0 0 0 / 40%), 0 4px 12px rgb(0 0 0 / 30%);
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 40%),
+    0 4px 12px rgb(0 0 0 / 30%);
 }
 
 .mmfc-button-icon {
@@ -3057,41 +3056,57 @@ input[type="number"]::-webkit-inner-spin-button {
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 12px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgb(0 0 0 / 20%), 0 2px 8px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 4px 15px rgb(0 0 0 / 20%),
+    0 2px 8px rgb(0 0 0 / 10%);
 }
 
 .score-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 20%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    0 4px 12px rgb(0 0 0 / 20%);
   border-color: rgb(255 255 255 / 20%);
 }
 
 /* FC/FC+ 更强荧光蓝边框（更亮但不加粗） */
 .score-card.score-card-fc {
   border: 1.5px solid rgb(59 130 246 / 45%) !important;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%), 0 0 10px 2px rgb(59 130 246 / 32%),
-    0 0 6px 1px rgb(59 130 246 / 22%), inset 0 0 8px 1px rgb(59 130 246 / 18%) !important;
+  box-shadow:
+    0 2px 8px rgb(0 0 0 / 12%),
+    0 0 10px 2px rgb(59 130 246 / 32%),
+    0 0 6px 1px rgb(59 130 246 / 22%),
+    inset 0 0 8px 1px rgb(59 130 246 / 18%) !important;
 }
 
 .score-card.score-card-fc:hover {
   transform: translateY(-2px);
   border-color: rgb(59 130 246 / 65%) !important;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 18%), 0 0 16px 3px rgb(59 130 246 / 45%),
-    0 0 10px 2px rgb(59 130 246 / 32%), inset 0 0 12px 2px rgb(59 130 246 / 22%) !important;
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 18%),
+    0 0 16px 3px rgb(59 130 246 / 45%),
+    0 0 10px 2px rgb(59 130 246 / 32%),
+    inset 0 0 12px 2px rgb(59 130 246 / 22%) !important;
 }
 
 /* AP/AP+ 更强荧光金边框（更亮但不加粗） */
 .score-card.score-card-ap {
   border: 1.5px solid rgb(251 191 36 / 45%) !important;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%), 0 0 10px 2px rgb(251 191 36 / 32%),
-    0 0 6px 1px rgb(251 191 36 / 22%), inset 0 0 8px 1px rgb(251 191 36 / 18%) !important;
+  box-shadow:
+    0 2px 8px rgb(0 0 0 / 12%),
+    0 0 10px 2px rgb(251 191 36 / 32%),
+    0 0 6px 1px rgb(251 191 36 / 22%),
+    inset 0 0 8px 1px rgb(251 191 36 / 18%) !important;
 }
 
 .score-card.score-card-ap:hover {
   transform: translateY(-2px);
   border-color: rgb(251 191 36 / 65%) !important;
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 20%),
-    0 0 20px rgb(251 191 36 / 25%), inset 0 0 20px rgb(251 191 36 / 12%) !important;
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    0 4px 12px rgb(0 0 0 / 20%),
+    0 0 20px rgb(251 191 36 / 25%),
+    inset 0 0 20px rgb(251 191 36 / 12%) !important;
 }
 
 .score-rank-display {
@@ -3113,7 +3128,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .rank-number.top-three {
   font-size: 1.6rem;
   color: #fbbf24;
-  text-shadow: 0 0 8px rgb(251 191 36 / 60%), 0 0 16px rgb(251 191 36 / 40%),
+  text-shadow:
+    0 0 8px rgb(251 191 36 / 60%),
+    0 0 16px rgb(251 191 36 / 40%),
     0 2px 4px rgb(0 0 0 / 40%);
   animation: glow 2s ease-in-out infinite alternate;
 }
@@ -3131,12 +3148,13 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 12px rgb(251 191 36 / 70%), 0 0 20px rgb(251 191 36 / 50%),
+  text-shadow:
+    0 0 12px rgb(251 191 36 / 70%),
+    0 0 20px rgb(251 191 36 / 50%),
     0 2px 4px rgb(0 0 0 / 50%);
   filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
   animation: mmfcGoldenGlow 2s ease-in-out infinite alternate;
 }
-
 
 .rank-number.rank-second,
 .rank-number.rank-third {
@@ -3146,7 +3164,9 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 10px rgb(59 130 246 / 60%), 0 0 18px rgb(59 130 246 / 40%),
+  text-shadow:
+    0 0 10px rgb(59 130 246 / 60%),
+    0 0 18px rgb(59 130 246 / 40%),
     0 2px 4px rgb(0 0 0 / 50%);
   filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
   animation: mmfcBlueGlow 2s ease-in-out infinite alternate;
@@ -3159,13 +3179,17 @@ input[type="number"]::-webkit-inner-spin-button {
 @keyframes mmfcGoldenGlow {
   from {
     filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
-    text-shadow: 0 0 12px rgb(251 191 36 / 70%), 0 0 20px rgb(251 191 36 / 50%),
+    text-shadow:
+      0 0 12px rgb(251 191 36 / 70%),
+      0 0 20px rgb(251 191 36 / 50%),
       0 2px 4px rgb(0 0 0 / 50%);
   }
 
   to {
     filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.9));
-    text-shadow: 0 0 16px rgb(251 191 36 / 85%), 0 0 28px rgb(251 191 36 / 65%),
+    text-shadow:
+      0 0 16px rgb(251 191 36 / 85%),
+      0 0 28px rgb(251 191 36 / 65%),
       0 2px 4px rgb(0 0 0 / 50%);
   }
 }
@@ -3173,26 +3197,35 @@ input[type="number"]::-webkit-inner-spin-button {
 @keyframes mmfcBlueGlow {
   from {
     filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
-    text-shadow: 0 0 10px rgb(59 130 246 / 60%), 0 0 18px rgb(59 130 246 / 40%),
+    text-shadow:
+      0 0 10px rgb(59 130 246 / 60%),
+      0 0 18px rgb(59 130 246 / 40%),
       0 2px 4px rgb(0 0 0 / 50%);
   }
 
   to {
     filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
-    text-shadow: 0 0 14px rgb(59 130 246 / 75%), 0 0 24px rgb(59 130 246 / 55%),
+    text-shadow:
+      0 0 14px rgb(59 130 246 / 75%),
+      0 0 24px rgb(59 130 246 / 55%),
       0 2px 4px rgb(0 0 0 / 50%);
   }
 }
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 8px rgb(251 191 36 / 60%), 0 0 16px rgb(251 191 36 / 40%),
+    text-shadow:
+      0 0 8px rgb(251 191 36 / 60%),
+      0 0 16px rgb(251 191 36 / 40%),
       0 2px 4px rgb(0 0 0 / 40%);
   }
 
   to {
-    text-shadow: 0 0 12px rgb(251 191 36 / 80%), 0 0 24px rgb(251 191 36 / 60%),
-      0 0 32px rgb(251 191 36 / 30%), 0 2px 4px rgb(0 0 0 / 40%);
+    text-shadow:
+      0 0 12px rgb(251 191 36 / 80%),
+      0 0 24px rgb(251 191 36 / 60%),
+      0 0 32px rgb(251 191 36 / 30%),
+      0 2px 4px rgb(0 0 0 / 40%);
   }
 }
 
@@ -3280,7 +3313,8 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 800 !important;
   text-shadow:
     0 0 8px rgb(253 230 138 / 60%),
-    0 0 12px rgb(251 191 36 / 40%), 0 0 16px rgb(251 191 36 / 20%),
+    0 0 12px rgb(251 191 36 / 40%),
+    0 0 16px rgb(251 191 36 / 20%),
     0 2px 4px rgb(0 0 0 / 40%) !important;
   filter: brightness(1.1) contrast(1.1);
 }
@@ -3291,7 +3325,8 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 800 !important;
   text-shadow:
     0 0 8px rgb(147 197 253 / 60%),
-    0 0 12px rgb(59 130 246 / 40%), 0 0 16px rgb(59 130 246 / 20%),
+    0 0 12px rgb(59 130 246 / 40%),
+    0 0 16px rgb(59 130 246 / 20%),
     0 2px 4px rgb(0 0 0 / 40%) !important;
   filter: brightness(1.1) contrast(1.1);
 }
@@ -3311,12 +3346,16 @@ input[type="number"]::-webkit-inner-spin-button {
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 12px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgb(0 0 0 / 20%), 0 2px 8px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 4px 15px rgb(0 0 0 / 20%),
+    0 2px 8px rgb(0 0 0 / 10%);
 }
 
 .comment-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgb(0 0 0 / 25%), 0 3px 10px rgb(0 0 0 / 15%);
+  box-shadow:
+    0 6px 20px rgb(0 0 0 / 25%),
+    0 3px 10px rgb(0 0 0 / 15%);
   border-color: rgb(255 255 255 / 15%);
 }
 
@@ -3402,13 +3441,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .comment-content-collapsed::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100px;
-  background: linear-gradient(to bottom, transparent, rgba(20, 20, 30, 0.4) 30%, rgba(20, 20, 30, 0.95) 90%);
+  background: linear-gradient(to bottom,
+      transparent,
+      rgba(20, 20, 30, 0.4) 30%,
+      rgba(20, 20, 30, 0.95) 90%);
   pointer-events: none;
   z-index: 1;
 }
@@ -3575,7 +3617,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 子回复列表 - 在同一个框内 */
 .comment-reply-list {
-
   padding-left: 1.5rem;
   padding-top: 1rem;
 
@@ -3583,15 +3624,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .comment-reply-list::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -2px;
   top: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom,
-      rgba(255, 255, 255, 0.3),
-      transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
 }
 
 /* 子回复卡片 - 完全透明，只显示内容 */
@@ -3722,7 +3761,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .song-detail-modern:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgb(0 0 0 / 40%), 0 4px 15px rgb(0 0 0 / 30%);
+  box-shadow:
+    0 12px 35px rgb(0 0 0 / 40%),
+    0 4px 15px rgb(0 0 0 / 30%);
 }
 
 .song-interaction-container {
@@ -3755,7 +3796,9 @@ input[type="number"]::-webkit-inner-spin-button {
       rgb(37 99 235 / 40%));
   border-color: rgb(59 130 246 / 50%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(59 130 246 / 20%), 0 4px 12px rgb(0 0 0 / 30%);
+  box-shadow:
+    0 8px 25px rgb(59 130 246 / 20%),
+    0 4px 12px rgb(0 0 0 / 30%);
 }
 
 /* 评论发送器 - 与hr-solid保持一致的宽度 */
@@ -3769,7 +3812,9 @@ input[type="number"]::-webkit-inner-spin-button {
   backdrop-filter: blur(10px);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 20%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    0 4px 12px rgb(0 0 0 / 20%);
 }
 
 /* 高级评论输入框样式 */
@@ -3788,7 +3833,9 @@ input[type="number"]::-webkit-inner-spin-button {
   resize: vertical;
   min-height: 120px;
   width: 100%;
-  box-shadow: 0 4px 15px rgb(0 0 0 / 15%), inset 0 1px 0 rgb(255 255 255 / 10%);
+  box-shadow:
+    0 4px 15px rgb(0 0 0 / 15%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
   font-family: inherit;
 }
 
@@ -3798,7 +3845,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: linear-gradient(135deg,
       rgb(255 255 255 / 12%),
       rgb(255 255 255 / 6%));
-  box-shadow: 0 6px 20px rgb(0 0 0 / 20%), 0 0 0 2px rgb(59 130 246 / 20%),
+  box-shadow:
+    0 6px 20px rgb(0 0 0 / 20%),
+    0 0 0 2px rgb(59 130 246 / 20%),
     inset 0 1px 0 rgb(255 255 255 / 15%);
   transform: translateY(-1px);
 }
@@ -3821,7 +3870,9 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #fff !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
-  box-shadow: 0 4px 15px rgb(16 185 129 / 30%), 0 2px 8px rgb(0 0 0 / 20%) !important;
+  box-shadow:
+    0 4px 15px rgb(16 185 129 / 30%),
+    0 2px 8px rgb(0 0 0 / 20%) !important;
   text-transform: none !important;
   letter-spacing: 0.02em !important;
   margin-top: 1rem !important;
@@ -3830,12 +3881,16 @@ input[type="number"]::-webkit-inner-spin-button {
 .comment-submit-button:hover {
   background: linear-gradient(135deg, #059669, #047857) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgb(16 185 129 / 40%), 0 4px 12px rgb(0 0 0 / 30%) !important;
+  box-shadow:
+    0 6px 20px rgb(16 185 129 / 40%),
+    0 4px 12px rgb(0 0 0 / 30%) !important;
 }
 
 .comment-submit-button:active {
   transform: translateY(0) !important;
-  box-shadow: 0 2px 8px rgb(16 185 129 / 40%), 0 1px 4px rgb(0 0 0 / 30%) !important;
+  box-shadow:
+    0 2px 8px rgb(16 185 129 / 40%),
+    0 1px 4px rgb(0 0 0 / 30%) !important;
 }
 
 .comment-submit-button:disabled {
@@ -3901,7 +3956,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .modern-comment-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 20%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    0 4px 12px rgb(0 0 0 / 20%);
 }
 
 .song-score-list {
@@ -3922,7 +3979,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .modern-score-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 20%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    0 4px 12px rgb(0 0 0 / 20%);
   border-color: rgb(255 255 255 / 20%);
 }
 
@@ -3958,7 +4017,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .large-interaction-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 30px rgb(59 130 246 / 30%), 0 6px 20px rgb(0 0 0 / 40%);
+  box-shadow:
+    0 12px 30px rgb(59 130 246 / 30%),
+    0 6px 20px rgb(0 0 0 / 40%);
 }
 
 .btn-count {
@@ -4048,7 +4109,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .liked-user-avatar:hover .user-avatar-img,
 .liked-user-avatar:hover .more-likes {
   border-color: rgb(59 130 246 / 60%);
-  box-shadow: 0 8px 25px rgb(59 130 246 / 30%), 0 0 0 2px rgb(59 130 246 / 20%);
+  box-shadow:
+    0 8px 25px rgb(59 130 246 / 30%),
+    0 0 0 2px rgb(59 130 246 / 20%);
 }
 
 .no-likes-placeholder {
@@ -4291,7 +4354,6 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-
 /* Song页面排行榜和评论响应式样式 - 768px */
 @media (width <=768px) {
   .ranking-main-title {
@@ -4358,9 +4420,6 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 1.5rem;
     margin-bottom: 1rem;
   }
-
-
-
 
   .rank-number {
     font-size: 1rem;
@@ -4434,14 +4493,16 @@ input[type="number"]::-webkit-inner-spin-button {
   backdrop-filter: blur(24px) saturate(160%);
   border: none;
   border-radius: var(--glassmorphism-border-radius);
-  box-shadow: 0 20px 50px rgb(0 0 0 / 35%),
+  box-shadow:
+    0 20px 50px rgb(0 0 0 / 35%),
     inset 0 1px 0 rgb(255 255 255 / 25%);
   transition: all 0.3s ease;
 }
 
 .song-details-main-container:hover {
   transform: translateY(-2px);
-  box-shadow: 0 22px 60px rgb(0 0 0 / 35%),
+  box-shadow:
+    0 22px 60px rgb(0 0 0 / 35%),
     inset 0 1px 0 rgb(255 255 255 / 28%);
 }
 
@@ -4502,7 +4563,8 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 1rem;
   border-radius: 2rem;
   border: 1px solid rgb(255 255 255 / 20%);
-  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 30%),
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 30%),
     0 12px 30px rgb(0 0 0 / 35%);
   min-width: 6rem;
 }
@@ -4542,7 +4604,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .hero-badge.clickable:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 40%),
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 40%),
     0 15px 40px rgb(0 0 0 / 45%);
 }
 
@@ -4639,31 +4702,45 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 各难度颜色 - 新版横向布局 */
 .difficulty-level-item.level-easy {
-  background: linear-gradient(90deg, rgb(59 130 246 / 60%), rgb(59 130 246 / 40%));
+  background: linear-gradient(90deg,
+      rgb(59 130 246 / 60%),
+      rgb(59 130 246 / 40%));
 }
 
 .difficulty-level-item.level-basic {
-  background: linear-gradient(90deg, rgb(34 197 94 / 60%), rgb(34 197 94 / 40%));
+  background: linear-gradient(90deg,
+      rgb(34 197 94 / 60%),
+      rgb(34 197 94 / 40%));
 }
 
 .difficulty-level-item.level-advanced {
-  background: linear-gradient(90deg, rgb(234 179 8 / 60%), rgb(234 179 8 / 40%));
+  background: linear-gradient(90deg,
+      rgb(234 179 8 / 60%),
+      rgb(234 179 8 / 40%));
 }
 
 .difficulty-level-item.level-expert {
-  background: linear-gradient(90deg, rgb(239 68 68 / 60%), rgb(239 68 68 / 40%));
+  background: linear-gradient(90deg,
+      rgb(239 68 68 / 60%),
+      rgb(239 68 68 / 40%));
 }
 
 .difficulty-level-item.level-master {
-  background: linear-gradient(90deg, rgb(168 85 247 / 60%), rgb(168 85 247 / 40%));
+  background: linear-gradient(90deg,
+      rgb(168 85 247 / 60%),
+      rgb(168 85 247 / 40%));
 }
 
 .difficulty-level-item.level-remaster {
-  background: linear-gradient(90deg, rgb(192 38 211 / 60%), rgb(192 38 211 / 40%));
+  background: linear-gradient(90deg,
+      rgb(192 38 211 / 60%),
+      rgb(192 38 211 / 40%));
 }
 
 .difficulty-level-item.level-utage {
-  background: linear-gradient(90deg, rgb(139 92 246 / 60%), rgb(139 92 246 / 40%));
+  background: linear-gradient(90deg,
+      rgb(139 92 246 / 60%),
+      rgb(139 92 246 / 40%));
 }
 
 .song-info-sidebar .song-levels-container {
@@ -4673,7 +4750,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .song-info-sidebar {
   align-self: stretch;
 }
-
 
 .sidebar-top-row {
   display: flex;
@@ -4695,13 +4771,11 @@ input[type="number"]::-webkit-inner-spin-button {
   min-width: 0;
 }
 
-
 @media screen and (min-width: 480px) {
   .sidebar-top-row {
     flex-direction: row;
   }
 }
-
 
 @media screen and (min-width: 1024px) {
   .sidebar-top-row {
@@ -4716,7 +4790,6 @@ input[type="number"]::-webkit-inner-spin-button {
   justify-content: center;
 }
 
-
 .hero-section .glass-panel {
   max-width: fit-content;
 }
@@ -4727,7 +4800,6 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 1.5rem;
   background: transparent;
 }
-
 
 .clickable-title {
   cursor: pointer;
@@ -4754,7 +4826,6 @@ input[type="number"]::-webkit-inner-spin-button {
   z-index: -1;
 }
 
-
 .song-artist-modern {
   font-size: 1.2rem;
   color: rgb(255 255 255 / 80%);
@@ -4779,12 +4850,12 @@ input[type="number"]::-webkit-inner-spin-button {
   box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
 }
 
-.song-info-sidebar > .glass-panel:has(.designer-link) {
+.song-info-sidebar>.glass-panel:has(.designer-link) {
   padding: 0;
   overflow: hidden;
 }
 
-.song-info-sidebar > .glass-panel:has(.designer-link) .designer-link {
+.song-info-sidebar>.glass-panel:has(.designer-link) .designer-link {
   display: flex;
   width: 100%;
   padding: 1.25rem;
@@ -4808,7 +4879,7 @@ input[type="number"]::-webkit-inner-spin-button {
   box-shadow: none;
 }
 
-.song-info-sidebar > .glass-panel:has(.designer-link) .designer-link:hover {
+.song-info-sidebar>.glass-panel:has(.designer-link) .designer-link:hover {
   background: rgb(255 255 255 / 8%);
   transform: none;
   box-shadow: none;
@@ -4832,7 +4903,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 10%);
   backdrop-filter: blur(16px);
   border: 1px solid rgb(255 255 255 / 20%);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 10%);
+  box-shadow:
+    0 4px 12px rgb(0 0 0 / 20%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
 }
 
 .designer-link:hover {
@@ -4840,7 +4913,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 15%);
   border-color: rgb(255 255 255 / 30%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 30%), inset 0 1px 0 rgb(255 255 255 / 15%);
+  box-shadow:
+    0 6px 16px rgb(0 0 0 / 30%),
+    inset 0 1px 0 rgb(255 255 255 / 15%);
 }
 
 .designer-avatar {
@@ -4918,7 +4993,9 @@ input[type="number"]::-webkit-inner-spin-button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid rgb(255 255 255 / 20%);
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 20%);
+  box-shadow:
+    0 4px 15px rgb(0 0 0 / 20%),
+    inset 0 1px 0 rgb(255 255 255 / 20%);
 }
 
 .song-level-chip::before {
@@ -4942,7 +5019,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .song-level-chip.clickable:hover {
   transform: translateY(-2px) scale(1.05);
   border-color: rgb(255 255 255 / 40%);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 30%), inset 0 1px 0 rgb(255 255 255 / 30%),
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 30%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
     0 0 20px rgb(255 255 255 / 10%);
 }
 
@@ -4987,8 +5066,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-easy.clickable:hover {
   background: linear-gradient(135deg, rgb(131 191 255), rgb(111 171 250));
-  box-shadow: 0 8px 25px rgb(111 171 250 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(111 171 250 / 30%);
+  box-shadow:
+    0 8px 25px rgb(111 171 250 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(111 171 250 / 30%);
 }
 
 /* lv1 - Basic: rgb(93, 212, 93) 绿色 */
@@ -4999,8 +5080,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-basic.clickable:hover {
   background: linear-gradient(135deg, rgb(113 232 113), rgb(93 212 93));
-  box-shadow: 0 8px 25px rgb(93 212 93 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(93 212 93 / 30%);
+  box-shadow:
+    0 8px 25px rgb(93 212 93 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(93 212 93 / 30%);
 }
 
 /* lv2 - Advanced: rgb(202, 202, 84) 黄色 */
@@ -5011,8 +5094,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-advanced.clickable:hover {
   background: linear-gradient(135deg, rgb(222 222 104), rgb(202 202 84));
-  box-shadow: 0 8px 25px rgb(202 202 84 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(202 202 84 / 30%);
+  box-shadow:
+    0 8px 25px rgb(202 202 84 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(202 202 84 / 30%);
 }
 
 /* lv3 - Expert: rgb(255, 91, 91) 红色 */
@@ -5023,8 +5108,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-expert.clickable:hover {
   background: linear-gradient(135deg, rgb(255 111 111), rgb(255 91 91));
-  box-shadow: 0 8px 25px rgb(255 91 91 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(255 91 91 / 30%);
+  box-shadow:
+    0 8px 25px rgb(255 91 91 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(255 91 91 / 30%);
 }
 
 /* lv4 - Master: rgb(134, 23, 134) 深紫色 */
@@ -5035,8 +5122,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-master.clickable:hover {
   background: linear-gradient(135deg, rgb(154 43 154), rgb(134 23 134));
-  box-shadow: 0 8px 25px rgb(134 23 134 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(134 23 134 / 30%);
+  box-shadow:
+    0 8px 25px rgb(134 23 134 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(134 23 134 / 30%);
 }
 
 /* lv5 - Re:Master: rgb(189, 63, 189) 亮紫色 */
@@ -5047,8 +5136,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-remaster.clickable:hover {
   background: linear-gradient(135deg, rgb(209 83 209), rgb(189 63 189));
-  box-shadow: 0 8px 25px rgb(189 63 189 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(189 63 189 / 30%);
+  box-shadow:
+    0 8px 25px rgb(189 63 189 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(189 63 189 / 30%);
 }
 
 /* lv6 - UTAGE: rgb(255, 145, 0) 橙色 */
@@ -5059,8 +5150,10 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .level-utage.clickable:hover {
   background: linear-gradient(135deg, rgb(255 165 20), rgb(255 145 0));
-  box-shadow: 0 8px 25px rgb(255 145 0 / 40%),
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 0 20px rgb(255 145 0 / 30%);
+  box-shadow:
+    0 8px 25px rgb(255 145 0 / 40%),
+    inset 0 1px 0 rgb(255 255 255 / 30%),
+    0 0 20px rgb(255 145 0 / 30%);
 }
 
 /* 操作按钮区域 */
@@ -5094,12 +5187,16 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 15%);
   border-color: rgb(255 255 255 / 30%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 2px 8px rgb(0 0 0 / 15%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 25%),
+    0 2px 8px rgb(0 0 0 / 15%);
 }
 
 .action-button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 15px rgb(0 0 0 / 20%), 0 1px 4px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 4px 15px rgb(0 0 0 / 20%),
+    0 1px 4px rgb(0 0 0 / 10%);
 }
 
 .share-button:hover {
@@ -5306,7 +5403,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 16%);
   border-color: rgb(255 255 255 / 28%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 20%), 0 2px 8px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 20%),
+    0 2px 8px rgb(0 0 0 / 10%);
 }
 
 /* 调整交互按钮的样式 */
@@ -5321,7 +5420,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 20%);
   border-color: rgb(255 255 255 / 35%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 2px 8px rgb(0 0 0 / 15%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 25%),
+    0 2px 8px rgb(0 0 0 / 15%);
 }
 
 .song-interaction-section .interaction-buttons {
@@ -5436,7 +5537,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: rgb(255 255 255 / 20%);
   border-color: rgb(255 255 255 / 35%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 25%), 0 2px 8px rgb(0 0 0 / 15%);
+  box-shadow:
+    0 8px 25px rgb(0 0 0 / 25%),
+    0 2px 8px rgb(0 0 0 / 15%);
 }
 
 .compact-interaction-btn .btn-count {
@@ -5460,7 +5563,6 @@ input[type="number"]::-webkit-inner-spin-button {
   gap: 0.5rem;
   padding: 0.375rem 0 0 0;
 }
-
 
 @media (width <=1024px) {
   .song-details-main-container {
@@ -5531,7 +5633,7 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 0.9rem;
   }
 
-  .song-info-sidebar > .glass-panel:has(.designer-link) .designer-link {
+  .song-info-sidebar>.glass-panel:has(.designer-link) .designer-link {
     padding: 1rem;
   }
 
@@ -5823,7 +5925,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: rgba(0, 0, 0, 0.2);
   padding: 2px 4px;
   border-radius: 3px;
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
   font-size: 0.9em;
 }
 
