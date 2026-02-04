@@ -1,4 +1,15 @@
 [
+  {
+    "id": "agcc",
+    "href": "/space?id=AGCC",
+    "src": "/events/agcc4.jpg",
+    "alt": "agcc",
+    "title": "AGCC4",
+    "category": "高校赛事",
+    "createDate": "2026-02-03",
+    "endDate": "2026-03-15",
+    "description": ""
+  },
     {
     "id": "hajicup2",
     "href": "/space?id=哈基杯",
